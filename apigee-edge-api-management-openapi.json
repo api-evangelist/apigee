@@ -1,0 +1,503 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "",
+        "title": "Apigee Edge API Management",
+        "description": "",
+        "termsOfService": ""
+    },
+    "servers": [],
+    "paths": {
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/e\/{{ENV}}\/keyvaluemaps\/_kvm_": {
+            "GET": {
+                "summary": "KVM Get",
+                "description": "",
+                "operationId": "KvmGet",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "DELETE": {
+                "summary": "KVM Delete (Entire KVM)",
+                "description": "",
+                "operationId": "KvmDelete(entireKvm)",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/userroles\/user\/permissions": {
+            "GET": {
+                "summary": "Get permissions for a role",
+                "description": "",
+                "operationId": "GetPermissionsForARole",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/pods": {
+            "GET": {
+                "summary": "Get Associated  Pods",
+                "description": "",
+                "operationId": "GetAssociatedPods",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "POST": {
+                "summary": "Associate Org to POD",
+                "description": "Associate a pod with an organization",
+                "operationId": "AssociateOrgToPod",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apis?action=import&name=_API_": {
+            "POST": {
+                "summary": "Import Bundle",
+                "description": "Import a bundle. Replace {{API}} with the api the bundle is being imported into and upload the .zip file below.\n    \n    If you wish to verify syntax as part of the upload. Add \\&validate=true after {{API}}\n\n`curl -v -u username:password -X POST http:\/\/localhost:8080\/v1\/organizations\/\/apis?action=import\\&name={{API}} -H \"Content-Type: application\/octet-stream\" -T .zip`",
+                "operationId": "ImportBundle",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/servers\/35553ca7-9b49-4b1e-94d0-bda583836c6d": {
+            "POST": {
+                "summary": "Set not reachable",
+                "description": "Set a server as reachable or not reachable by variable.. Change  with the UUID of the server.",
+                "operationId": "SetNotReachable",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{PROTO}}:\/\/{{HOST}}:{{PORT}}\/v1\/buildinfo": {
+            "GET": {
+                "summary": "Build Info",
+                "description": "",
+                "operationId": "BuildInfo",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/environments": {
+            "POST": {
+                "summary": "Create New ENV in ORG",
+                "description": "Update {{ORG}} and {{ENV}} variables as necessary to create a new environment",
+                "operationId": "CreateNewEnvInOrg",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/audits\/o\/{{ORG}}\/companies?expand=true&timeline=month": {
+            "GET": {
+                "summary": "Audit",
+                "description": "",
+                "operationId": "Audit",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/environments\/{{ENV}}\/servers": {
+            "POST": {
+                "summary": "Associate  environments to MP",
+                "description": "Update {{ORG}} and {{ENV}} variables as necessary to create a new environment\n    \n    Replace  with the UUID of the Message Processor(s).",
+                "operationId": "AssociateEnvironmentsToMp",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apis": {
+            "GET": {
+                "summary": "Api list",
+                "description": "",
+                "operationId": "ApiList",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apps\/_appid_": {
+            "GET": {
+                "summary": "List app",
+                "description": "List out an app details",
+                "operationId": "ListApp",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/environments\/{{ENV}}\/virtualhosts": {
+            "POST": {
+                "summary": "Add Virtual Host",
+                "description": "Update {{ORG}} and {{ENV}} variables as necessary to create a new environment\n    \n  Update HostAlias",
+                "operationId": "AddVirtualHost",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "GET": {
+                "summary": "List VirtualHosts",
+                "description": "Update {{ORG}} and {{ENV}} variables as necessary to create a new environment",
+                "operationId": "ListVirtualhosts",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apiproducts": {
+            "GET": {
+                "summary": "Api Products",
+                "description": "",
+                "operationId": "ApiProducts",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{PROTO}}:\/\/{{HOST}}:8081\/v1\/classification\/tree": {
+            "GET": {
+                "summary": "Classifications",
+                "description": "This is an API call to verify api deployment status",
+                "operationId": "Classifications",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/developers\/_devemail_\/apps\/_app_": {
+            "GET": {
+                "summary": "Developer App Details Get",
+                "description": "",
+                "operationId": "DeveloperAppDetailsGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/oauth2\/accesstokens\/_tokenid_": {
+            "GET": {
+                "summary": "OAuth2 Token Details Get",
+                "description": "",
+                "operationId": "Oauth2TokenDetailsGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/users": {
+            "GET": {
+                "summary": "List Users",
+                "description": "",
+                "operationId": "ListUsers",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/e\/{{ENV}}\/targetservers": {
+            "POST": {
+                "summary": "Add Target",
+                "description": "",
+                "operationId": "AddTarget",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "GET": {
+                "summary": "List Target Servers",
+                "description": "List all the target servers for the org and env",
+                "operationId": "ListTargetServers",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations": {
+            "GET": {
+                "summary": "List organizations",
+                "description": "",
+                "operationId": "ListOrganizations",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/e\/{{ENV}}\/caches": {
+            "GET": {
+                "summary": "List caches",
+                "description": "",
+                "operationId": "ListCaches",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/servers": {
+            "GET": {
+                "summary": "List Servers",
+                "description": "Add the below and pod name for servers from different pods.",
+                "operationId": "ListServers",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "POST": {
+                "summary": "Deregister",
+                "description": "Deregister a Server",
+                "operationId": "Deregister",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/logsessions?session=logsession_name": {
+            "POST": {
+                "summary": "Enable Debug w\/o Restart ",
+                "description": "To enable debug on components without restart\n    \n\n`curl -v -u sysadmin_user:sysadmin_pass -X POST \"http:\/\/localhost:8082\/v1\/logsessions?session=logsession_name\" `\n  \n      To View\n  tail -f \/opt\/apigee4\/var\/log\/apigee\/{message-processor|router|management-server}\/logs\/system.log\n\n  The port on is 8080 , routers 8081 and Mp 8082",
+                "operationId": "EnableDebugWORestart",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apis\/_API_\/revisions\/_revision_\/deployments?action=undeploy&env={{ENV}}": {
+            "POST": {
+                "summary": "Undeploy Revisions",
+                "description": "Undeploy revision before going ahead and removing any API's.\n    \n`curl -v -u username:password http:\/\/localhost:8080\/v1\/organizations\/\/apis\/\/revisions\/\/deployments?action=undeploy\\&env=\\&force=true -X POST`",
+                "operationId": "UndeployRevisions",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/servers?pod=analytics": {
+            "GET": {
+                "summary": "Analytics pod",
+                "description": "",
+                "operationId": "AnalyticsPod",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/users\/_devemail_\/userroles\/user?org={{ORG}}": {
+            "DELETE": {
+                "summary": "Delete an organization userrole",
+                "description": "",
+                "operationId": "DeleteAnOrganizationUserrole",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/deployments": {
+            "GET": {
+                "summary": "List Deployments",
+                "description": "Gets all the deployments of an organization",
+                "operationId": "ListDeployments",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/users": {
+            "POST": {
+                "summary": "Create User in ORG",
+                "description": "Replace  with Organization user needs to be added to\n\n  Change details with that of the users.",
+                "operationId": "CreateUserInOrg",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{PROTO}}:\/\/{{HOST}}:8080\/v1\/runtime\/metrics\/QPID-CLIENT": {
+            "GET": {
+                "summary": "QPID Metrics",
+                "description": "",
+                "operationId": "QpidMetrics",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/apiproducts": {
+            "POST": {
+                "summary": "APIproduct Creation",
+                "description": "",
+                "operationId": "ApiproductCreation",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/e\/{{ENV}}\/servers": {
+            "GET": {
+                "summary": "List org\/env servers",
+                "description": "",
+                "operationId": "ListOrgEnvServers",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "POST": {
+                "summary": "Register server with org",
+                "description": "",
+                "operationId": "RegisterServerWithOrg",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/servers\/<uuid>": {
+            "GET": {
+                "summary": "List Server by UUID",
+                "description": "Replace  with the UUID of the server whose information is needed",
+                "operationId": "ListServerByUuid",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apis\/testing": {
+            "DELETE": {
+                "summary": "Delete an API",
+                "description": "Make sure all revisions of an API are removed before going ahead and undeploying an API\n\n`curl -v -u username:password http:\/\/localhost:8080\/v1\/organizations\/\/apis\/ -X DELETE`",
+                "operationId": "DeleteAnApi",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apis\/_api_\/revisions\/_revision_\/deployments": {
+            "GET": {
+                "summary": "Deployments",
+                "description": "",
+                "operationId": "Deployments",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/developers": {
+            "GET": {
+                "summary": "Get Developers",
+                "description": "",
+                "operationId": "GetDevelopers",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "POST": {
+                "summary": "Create Developer",
+                "description": "",
+                "operationId": "CreateDeveloper",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/users\/_email_\/userroles": {
+            "POST": {
+                "summary": "User Roles Update",
+                "description": "",
+                "operationId": "UserRolesUpdate",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/environments\/{{ENV}}": {
+            "POST": {
+                "summary": "Update Environments",
+                "description": "Updates a specific environment in an organization.Descriptionn could be updated using the same.\n\n`curl -u user:passwd \"http:\/\/localhost:8080\/v1\/organizations\/{{ORG}}\/environments\/{{ENV}}\" `",
+                "operationId": "UpdateEnvironments",
+                "deprecated": 0,
+                "parameters": []
+            },
+            "DELETE": {
+                "summary": "Delete Environment",
+                "description": "Deletes a specific environment in an organization.\n\n`curl \"http:\/\/localhost:8080\/v1\/organizations\/{ORG}\/environments\/{ENV}\" -X DELETE -u user:passwd `",
+                "operationId": "DeleteEnvironment",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/users\/shezze@ab.com\/userroles\/": {
+            "POST": {
+                "summary": "Add user as Orgadmin",
+                "description": "Replace  with Organization name and  with users email\n\n  If A different Role needs to be created the available options are\n\n  -  orgadmin\n    -  opsadmin\n    -  user\n    -  businessuser\n    \n  All have default permissions and full access to all entitires (APIs,API Products,Apps, Developers and Reports)\n\n  More complex roles and permissions can be configured using the RBAC API",
+                "operationId": "AddUserAsOrgadmin",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/developers\/_devemail_": {
+            "GET": {
+                "summary": "Developer Details Get",
+                "description": "",
+                "operationId": "DeveloperDetailsGet",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/companies": {
+            "POST": {
+                "summary": "Create Company",
+                "description": "",
+                "operationId": "CreateCompany",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/developers\/_devemail_\/apps\/_appname_\/keys\/create": {
+            "POST": {
+                "summary": "Add app credentials",
+                "description": "",
+                "operationId": "AddAppCredentials",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/companies\/{{COMPANY}}\/apps": {
+            "POST": {
+                "summary": "Create Company APP",
+                "description": "",
+                "operationId": "CreateCompanyApp",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/developers\/_devemail_\/apps\/_appname_\/keys\/_key_": {
+            "DELETE": {
+                "summary": "Delete app credentials",
+                "description": "",
+                "operationId": "DeleteAppCredentials",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/cluster": {
+            "GET": {
+                "summary": "Cluster Status",
+                "description": "If memberCount and the reachableCount are not the same check firewall connectivity PORT:4526 between the nodes.\n    \n    Add \/members to see individual node information for each cluster member",
+                "operationId": "ClusterStatus",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/servers?pod=gateway": {
+            "GET": {
+                "summary": "Gateway Pod",
+                "description": "",
+                "operationId": "GatewayPod",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/apps": {
+            "GET": {
+                "summary": "List apps ",
+                "description": "add expand=true to the QS to get more info",
+                "operationId": "ListApps",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/o\/{{ORG}}\/e\/{{ENV}}\/keystores": {
+            "GET": {
+                "summary": "List Keystores",
+                "description": "List the keystores in the environment",
+                "operationId": "ListKeystores",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/organizations\/{{ORG}}\/companies\/{{COMPANY}}\/developers": {
+            "POST": {
+                "summary": "Create Company Developer",
+                "description": "",
+                "operationId": "CreateCompanyDeveloper",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "{{MGMTSVR}}\/v1\/logsessions\/logsession_name": {
+            "DELETE": {
+                "summary": "Disable Debug w\/o Restart",
+                "description": "To disable\n\n```  curl -v -u sysadmin_user:sysadmin_pass \"http:\/\/localhost:8082\/v1\/logsessions\/logsession_name\" -X DELETE```\n\n  The port on MS is 8080 , routers 8081 and Mp 8082",
+                "operationId": "DisableDebugWORestart",
+                "deprecated": 0,
+                "parameters": []
+            }
+        }
+    },
+    "components": {
+        "schemas": []
+    }
+}
