@@ -7,29 +7,30 @@
         "deployment",
         "have api",
         "management",
+        "postman collections",
         "proxies",
         "relative data"
     ],
-    "created": "2019-12-20",
-    "modified": "2019-12-20",
+    "created": "2019-12-25",
+    "modified": "2019-12-25",
     "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/apigee\/master\/apis.json",
     "specificationVersion": "0.14",
     "apis": [
         {
-            "name": "Apigee Edge",
+            "name": "Apigee Edge API Management",
             "description": null,
             "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/apigee-edge.png",
-            "humanURL": "https:\/\/docs.apigee.com\/api-platform\/get-started\/what-apigee-edge",
+            "humanURL": "https:\/\/cloud.google.com\/apigee\/",
             "baseURL": "",
             "tags": [],
             "properties": [
                 {
                     "type": "x-openapi",
-                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/apigee\/master\/apigee-edge-openapi.json"
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/apigee\/master\/apigee-edge-api-management-openapi.json"
                 },
                 {
-                    "type": "x-openapi",
-                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/apigee-edge.json"
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/apigee\/master\/apigee-edge-api-management-postman-collection.json"
                 }
             ]
         }
@@ -37,12 +38,8 @@
     "include": [],
     "x-common": [
         {
-            "type": "APIs.json",
-            "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/apis.json"
-        },
-        {
             "type": "Website",
-            "url": "https:\/\/docs.apigee.com\/api-platform\/get-started\/what-apigee-edge"
+            "url": "https:\/\/cloud.google.com\/apigee\/"
         }
     ]
 }
