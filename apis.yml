@@ -1,0 +1,68 @@
+name: Apigee
+description: Apigee is a platform for developing and managing APIs. By fronting services with a proxy layer, Apigee provides an abstraction or facade for your backend service APIs and provides security, rate limiting, quotas, analytics, and more.
+image: https://www.apigee.com/about/sites/default/files/apigee-logo.png
+created: '2024-01-01'
+modified: '2024-01-01'
+url: https://apigee.com
+specificationVersion: '0.18'
+apis:
+- name: Apigee API Management
+  description: APIs for managing API proxies, products, developers, and apps
+  image: https://www.apigee.com/about/sites/default/files/apigee-logo.png
+  humanURL: https://cloud.google.com/apigee/docs
+  baseURL: https://apigee.googleapis.com
+  tags:
+  - APIs
+  - API Management
+  - Proxies
+  - Analytics
+  properties:
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/what-apigee
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/apigee/apigee-client-php/master/spec/openapi.yaml
+  - type: Authentication
+    url: https://cloud.google.com/apigee/docs/api-platform/system-administration/auth-tools
+  - type: Pricing
+    url: https://cloud.google.com/apigee/pricing
+  - type: Status
+    url: https://status.cloud.google.com/
+  - type: Support
+    url: https://cloud.google.com/apigee/support
+  - type: Getting Started
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
+  - type: SDKs
+    url: https://cloud.google.com/apigee/docs/api-platform/reference/apis
+  - type: Terms of Service
+    url: https://cloud.google.com/terms
+  - type: Privacy Policy
+    url: https://cloud.google.com/terms/cloud-privacy-notice
+maintainers:
+- name: Google Cloud
+  email: apigee-support@google.com
+  url: https://cloud.google.com/apigee
+tags:
+- API Management
+- API Gateway
+- Analytics
+- Developer Portal
+- Microservices
+- Enterprise
+include:
+- name: API Products
+  url: https://cloud.google.com/apigee/docs/api-platform/publish/what-api-product
+- name: Developer Portal
+  url: https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-overview
+- name: Analytics Services
+  url: https://cloud.google.com/apigee/docs/api-platform/analytics/analytics-services-overview
+common:
+- type: Portal
+  url: https://cloud.google.com/apigee
+- type: Blog
+  url: https://cloud.google.com/blog/products/api-management
+- type: Community
+  url: https://www.googlecloudcommunity.com/gc/Apigee/bd-p/cloud-apigee
+- type: Learning Resources
+  url: https://cloud.google.com/apigee/docs/api-platform/get-started/learning-path
+- type: GitHub
+  url: https://github.com/apigee
