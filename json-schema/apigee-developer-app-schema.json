@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apigee/apigee-developer-app-schema.json",
+  "title": "Apigee Developer App",
+  "description": "A developer app registered in Apigee. Apps are associated with developers and contain API keys (credentials) that provide access to API products.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the developer app."
+    },
+    "appId": {
+      "type": "string",
+      "description": "Output only. ID of the developer app.",
+      "readOnly": true
+    },
+    "developerId": {
+      "type": "string",
+      "description": "Output only. Developer ID of the owning developer.",
+      "readOnly": true
+    },
+    "apiProducts": {
+      "type": "array",
+      "description": "List of API products associated with the app.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for the developer app.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "value": { "type": "string" }
+        },
+        "required": ["name", "value"]
+      }
+    },
+    "callbackUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Callback URL used by OAuth 2.0 authorization servers."
+    },
+    "credentials": {
+      "type": "array",
+      "description": "Output only. Credentials (API keys) for the app.",
+      "readOnly": true,
+      "items": {
+        "$ref": "#/$defs/DeveloperAppKey"
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the developer app.",
+      "enum": ["approved", "revoked"]
+    },
+    "scopes": {
+      "type": "array",
+      "description": "OAuth scopes associated with the app.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Output only. Time the app was created in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "description": "Output only. Time the app was last modified.",
+      "readOnly": true
+    }
+  },
+  "required": ["name"],
+  "$defs": {
+    "DeveloperAppKey": {
+      "type": "object",
+      "description": "Consumer key and secret for a developer app.",
+      "properties": {
+        "consumerKey": {
+          "type": "string",
+          "description": "Consumer key (API key) for the developer app."
+        },
+        "consumerSecret": {
+          "type": "string",
+          "description": "Consumer secret for the developer app."
+        },
+        "apiProducts": {
+          "type": "array",
+          "description": "API products associated with this key.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "apiproduct": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the credential.",
+          "enum": ["approved", "revoked"]
+        },
+        "expiresAt": {
+          "type": "string",
+          "description": "Time the key expires in milliseconds since epoch."
+        },
+        "issuedAt": {
+          "type": "string",
+          "description": "Output only. Time the key was issued.",
+          "readOnly": true
+        },
+        "scopes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

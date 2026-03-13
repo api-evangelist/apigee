@@ -1,0 +1,1601 @@
+openapi: 3.1.0
+info:
+  title: Apigee Registry API
+  description: >-
+    API for tracking and managing machine-readable descriptions of APIs,
+    including specifications, versions, deployments, and related metadata.
+    This is a legacy API and Google recommends using the Apigee API Hub
+    APIs instead.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigeeregistry/rest
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+externalDocs:
+  description: Apigee Registry API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apigeeregistry/rest
+servers:
+  - url: https://apigeeregistry.googleapis.com/v1
+    description: Apigee Registry API Production Server
+security:
+  - oauth2: []
+tags:
+  - name: APIs
+    description: Manage API definitions in the registry
+  - name: API Versions
+    description: Manage API version records
+  - name: API Specs
+    description: Manage API specification documents
+  - name: API Deployments
+    description: Track API deployment records
+  - name: Artifacts
+    description: Manage metadata artifacts
+  - name: Instances
+    description: Manage Registry instances
+paths:
+  /projects/{projectId}/locations/{locationId}/apis:
+    get:
+      operationId: listApis
+      summary: List APIs
+      description: >-
+        Lists all APIs in the specified project and location. Returns
+        API metadata including name, display name, description, and labels.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of APIs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApisResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApi
+      summary: Create an API
+      description: >-
+        Creates a new API entry in the registry. An API represents a
+        logical grouping of related API versions.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: apiId
+          in: query
+          description: Required. The ID to use for the API.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api'
+      responses:
+        '200':
+          description: Successful response with the created API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}:
+    get:
+      operationId: getApi
+      summary: Get an API
+      description: >-
+        Gets the details of a specific API entry in the registry.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with API details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApi
+      summary: Update an API
+      description: >-
+        Updates an existing API entry. Use updateMask to specify fields.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+        - name: allowMissing
+          in: query
+          description: If true, create the API if it does not exist.
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api'
+      responses:
+        '200':
+          description: Successful response with updated API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApi
+      summary: Delete an API
+      description: >-
+        Deletes an API and all of its owned resources (versions, specs,
+        deployments, artifacts).
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - name: force
+          in: query
+          description: If true, delete child resources as well.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions:
+    get:
+      operationId: listApiVersions
+      summary: List API versions
+      description: >-
+        Lists all versions of an API in the registry.
+      tags:
+        - API Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of API versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiVersionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiVersion
+      summary: Create an API version
+      description: >-
+        Creates a new version for an API in the registry.
+      tags:
+        - API Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - name: apiVersionId
+          in: query
+          description: Required. The ID to use for the version.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiVersion'
+      responses:
+        '200':
+          description: Successful response with the created version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}:
+    get:
+      operationId: getApiVersion
+      summary: Get an API version
+      description: >-
+        Gets the details of a specific API version.
+      tags:
+        - API Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response with version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApiVersion
+      summary: Update an API version
+      description: >-
+        Updates an existing API version.
+      tags:
+        - API Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+        - name: allowMissing
+          in: query
+          description: If true, create if it does not exist.
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiVersion'
+      responses:
+        '200':
+          description: Successful response with updated version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiVersion
+      summary: Delete an API version
+      description: >-
+        Deletes an API version and all its owned resources.
+      tags:
+        - API Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - name: force
+          in: query
+          description: If true, delete child resources as well.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs:
+    get:
+      operationId: listApiSpecs
+      summary: List API specs
+      description: >-
+        Lists all specs for an API version.
+      tags:
+        - API Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of specs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiSpecsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiSpec
+      summary: Create an API spec
+      description: >-
+        Creates a new specification for an API version in the registry.
+      tags:
+        - API Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - name: apiSpecId
+          in: query
+          description: Required. The ID to use for the spec.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with the created spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:
+    get:
+      operationId: getApiSpec
+      summary: Get an API spec
+      description: >-
+        Gets details about a specific API specification.
+      tags:
+        - API Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApiSpec
+      summary: Update an API spec
+      description: >-
+        Updates an existing API spec. A new revision is created if
+        the spec content changes.
+      tags:
+        - API Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+        - name: allowMissing
+          in: query
+          description: If true, create if it does not exist.
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with updated spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiSpec
+      summary: Delete an API spec
+      description: >-
+        Deletes an API spec and all its revisions and child resources.
+      tags:
+        - API Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+        - name: force
+          in: query
+          description: If true, delete child resources as well.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents:
+    get:
+      operationId: getApiSpecContents
+      summary: Get API spec contents
+      description: >-
+        Retrieves the raw content of an API specification.
+      tags:
+        - API Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec contents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:rollback:
+    post:
+      operationId: rollbackApiSpec
+      summary: Rollback an API spec
+      description: >-
+        Rolls back an API spec to a previous revision.
+      tags:
+        - API Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                revisionId:
+                  type: string
+                  description: Required. Revision ID to roll back to.
+              required:
+                - revisionId
+      responses:
+        '200':
+          description: Successful response with rolled-back spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments:
+    get:
+      operationId: listApiDeployments
+      summary: List API deployments
+      description: >-
+        Lists all deployment records for an API.
+      tags:
+        - API Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiDeploymentsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiDeployment
+      summary: Create an API deployment
+      description: >-
+        Creates a new deployment record for an API, tracking where
+        a version is deployed.
+      tags:
+        - API Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - name: apiDeploymentId
+          in: query
+          description: Required. The ID to use for the deployment.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiDeployment'
+      responses:
+        '200':
+          description: Successful response with the created deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiDeployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:
+    get:
+      operationId: getApiDeployment
+      summary: Get an API deployment
+      description: >-
+        Gets the details of a specific API deployment record.
+      tags:
+        - API Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/deploymentId'
+      responses:
+        '200':
+          description: Successful response with deployment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiDeployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApiDeployment
+      summary: Update an API deployment
+      description: >-
+        Updates an existing API deployment record.
+      tags:
+        - API Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/deploymentId'
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+        - name: allowMissing
+          in: query
+          description: If true, create if it does not exist.
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiDeployment'
+      responses:
+        '200':
+          description: Successful response with updated deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiDeployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiDeployment
+      summary: Delete an API deployment
+      description: >-
+        Deletes an API deployment record.
+      tags:
+        - API Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/deploymentId'
+        - name: force
+          in: query
+          description: If true, force delete.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:rollback:
+    post:
+      operationId: rollbackApiDeployment
+      summary: Rollback an API deployment
+      description: >-
+        Rolls back an API deployment to a previous revision.
+      tags:
+        - API Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/deploymentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                revisionId:
+                  type: string
+                  description: Required. Revision ID to roll back to.
+              required:
+                - revisionId
+      responses:
+        '200':
+          description: Successful response with rolled-back deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiDeployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/artifacts:
+    get:
+      operationId: listArtifacts
+      summary: List artifacts
+      description: >-
+        Lists all artifacts at the specified project/location level.
+      tags:
+        - Artifacts
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of artifacts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListArtifactsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createArtifact
+      summary: Create an artifact
+      description: >-
+        Creates a new artifact at the project/location level.
+      tags:
+        - Artifacts
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: artifactId
+          in: query
+          description: Required. The ID to use for the artifact.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artifact'
+      responses:
+        '200':
+          description: Successful response with the created artifact
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:
+    get:
+      operationId: getArtifact
+      summary: Get an artifact
+      description: >-
+        Gets details about a specific artifact.
+      tags:
+        - Artifacts
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/artifactId'
+      responses:
+        '200':
+          description: Successful response with artifact details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceArtifact
+      summary: Replace an artifact
+      description: >-
+        Replaces the contents of an existing artifact.
+      tags:
+        - Artifacts
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/artifactId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artifact'
+      responses:
+        '200':
+          description: Successful response with replaced artifact
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteArtifact
+      summary: Delete an artifact
+      description: >-
+        Deletes an artifact from the registry.
+      tags:
+        - Artifacts
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/artifactId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:getContents:
+    get:
+      operationId: getArtifactContents
+      summary: Get artifact contents
+      description: >-
+        Retrieves the raw content of an artifact.
+      tags:
+        - Artifacts
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/artifactId'
+      responses:
+        '200':
+          description: Successful response with artifact contents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/instances:
+    post:
+      operationId: createInstance
+      summary: Create a Registry instance
+      description: >-
+        Provisions a new Apigee Registry instance in the specified
+        project and location.
+      tags:
+        - Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: instanceId
+          in: query
+          description: Required. The ID to use for the instance.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Instance'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/instances/{instanceId}:
+    get:
+      operationId: getInstance
+      summary: Get a Registry instance
+      description: >-
+        Gets details about a specific Registry instance.
+      tags:
+        - Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: instanceId
+          in: path
+          description: ID of the instance.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with instance details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteInstance
+      summary: Delete a Registry instance
+      description: >-
+        Deletes a Registry instance.
+      tags:
+        - Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: instanceId
+          in: path
+          description: ID of the instance.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version.
+      required: true
+      schema:
+        type: string
+    specId:
+      name: specId
+      in: path
+      description: ID of the API spec.
+      required: true
+      schema:
+        type: string
+    deploymentId:
+      name: deploymentId
+      in: path
+      description: ID of the API deployment.
+      required: true
+      schema:
+        type: string
+    artifactId:
+      name: artifactId
+      in: path
+      description: ID of the artifact.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+  schemas:
+    Api:
+      type: object
+      description: An API resource in the registry.
+      properties:
+        name:
+          type: string
+          description: Resource name of the API.
+        displayName:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+          description: Description of the API.
+        availability:
+          type: string
+          description: Availability of the API.
+        recommendedVersion:
+          type: string
+          description: Resource name of the recommended API version.
+        recommendedDeployment:
+          type: string
+          description: Resource name of the recommended deployment.
+        labels:
+          type: object
+          description: User-defined labels.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: User-defined annotations.
+          additionalProperties:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+    ApiVersion:
+      type: object
+      description: A version of an API.
+      properties:
+        name:
+          type: string
+          description: Resource name of the version.
+        displayName:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+          description: Description of the version.
+        state:
+          type: string
+          description: Lifecycle state of the version.
+        labels:
+          type: object
+          description: User-defined labels.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: User-defined annotations.
+          additionalProperties:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+    ApiSpec:
+      type: object
+      description: A specification for an API version.
+      properties:
+        name:
+          type: string
+          description: Resource name of the spec.
+        filename:
+          type: string
+          description: Name of the spec file.
+        description:
+          type: string
+          description: Description of the spec.
+        mimeType:
+          type: string
+          description: MIME type of the spec content.
+        sourceUri:
+          type: string
+          description: URI of the original spec source.
+        sizeBytes:
+          type: integer
+          format: int32
+          description: Output only. Size of the spec in bytes.
+          readOnly: true
+        hash:
+          type: string
+          description: Output only. Hash of the spec content.
+          readOnly: true
+        revisionId:
+          type: string
+          description: Output only. Immutable revision identifier.
+          readOnly: true
+        revisionCreateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was created.
+          readOnly: true
+        revisionUpdateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was last updated.
+          readOnly: true
+        contents:
+          type: string
+          format: byte
+          description: Raw spec content.
+        labels:
+          type: object
+          description: User-defined labels.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: User-defined annotations.
+          additionalProperties:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+    ApiDeployment:
+      type: object
+      description: A deployment record for an API.
+      properties:
+        name:
+          type: string
+          description: Resource name of the deployment.
+        displayName:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+          description: Description of the deployment.
+        apiSpecRevision:
+          type: string
+          description: Resource name of the associated spec revision.
+        endpointUri:
+          type: string
+          description: URI of the deployment endpoint.
+        externalChannelUri:
+          type: string
+          description: URI of an external channel.
+        intendedAudience:
+          type: string
+          description: Intended audience for the deployment.
+        accessGuidance:
+          type: string
+          description: Guidance for accessing the deployment.
+        revisionId:
+          type: string
+          description: Output only. Immutable revision identifier.
+          readOnly: true
+        revisionCreateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was created.
+          readOnly: true
+        revisionUpdateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was last updated.
+          readOnly: true
+        labels:
+          type: object
+          description: User-defined labels.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: User-defined annotations.
+          additionalProperties:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+    Artifact:
+      type: object
+      description: A metadata artifact associated with a registry resource.
+      properties:
+        name:
+          type: string
+          description: Resource name of the artifact.
+        mimeType:
+          type: string
+          description: MIME type of the artifact content.
+        sizeBytes:
+          type: integer
+          format: int32
+          description: Output only. Size of the artifact in bytes.
+          readOnly: true
+        hash:
+          type: string
+          description: Output only. Hash of the artifact content.
+          readOnly: true
+        contents:
+          type: string
+          format: byte
+          description: Raw artifact content.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+    Instance:
+      type: object
+      description: A Registry instance.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the instance.
+          readOnly: true
+        state:
+          type: string
+          description: Output only. State of the instance.
+          readOnly: true
+          enum:
+            - STATE_UNSPECIFIED
+            - INACTIVE
+            - CREATING
+            - ACTIVE
+            - UPDATING
+            - DELETING
+            - FAILED
+        stateMessage:
+          type: string
+          description: Output only. Extra information about the instance state.
+          readOnly: true
+        config:
+          type: object
+          description: Required. Configuration of the instance.
+          properties:
+            location:
+              type: string
+              description: Output only. Location of the instance.
+              readOnly: true
+            cmekKeyName:
+              type: string
+              description: Customer-managed encryption key name.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data.
+        extensions:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Operation:
+      type: object
+      description: A long-running operation.
+      properties:
+        name:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+        done:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          additionalProperties: true
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListApisResponse:
+      type: object
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+        nextPageToken:
+          type: string
+    ListApiVersionsResponse:
+      type: object
+      properties:
+        apiVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        nextPageToken:
+          type: string
+    ListApiSpecsResponse:
+      type: object
+      properties:
+        apiSpecs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSpec'
+        nextPageToken:
+          type: string
+    ListApiDeploymentsResponse:
+      type: object
+      properties:
+        apiDeployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiDeployment'
+        nextPageToken:
+          type: string
+    ListArtifactsResponse:
+      type: object
+      properties:
+        artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artifact'
+        nextPageToken:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

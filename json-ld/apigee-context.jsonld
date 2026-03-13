@@ -1,0 +1,198 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "apigee": "https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/",
+    "apihub": "https://cloud.google.com/apigee/docs/reference/apis/apihub/rest/v1/",
+    "gcp": "https://cloud.google.com/apis/design/",
+    "iana": "https://www.iana.org/assignments/link-relations/",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+
+    "Organization": {
+      "@id": "schema:Organization",
+      "@context": {
+        "name": "schema:name",
+        "displayName": "schema:alternateName",
+        "description": "schema:description",
+        "projectId": "schema:identifier",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified",
+        "state": "schema:status",
+        "analyticsRegion": "schema:areaServed",
+        "environments": "schema:hasPart",
+        "billingType": "schema:paymentAccepted"
+      }
+    },
+
+    "ApiProxy": {
+      "@id": "schema:WebAPI",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "revision": "schema:version",
+        "latestRevisionId": "schema:softwareVersion",
+        "labels": "schema:keywords",
+        "apiProxyType": "schema:applicationCategory",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified"
+      }
+    },
+
+    "ApiProduct": {
+      "@id": "schema:Product",
+      "@context": {
+        "name": "schema:name",
+        "displayName": "schema:alternateName",
+        "description": "schema:description",
+        "approvalType": "schema:availability",
+        "environments": "schema:areaServed",
+        "proxies": "schema:hasPart",
+        "scopes": "schema:permissionType",
+        "quota": "schema:inventoryLevel",
+        "quotaInterval": "schema:repeatFrequency",
+        "quotaTimeUnit": "schema:duration",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified"
+      }
+    },
+
+    "Developer": {
+      "@id": "foaf:Person",
+      "@context": {
+        "email": "schema:email",
+        "firstName": "schema:givenName",
+        "lastName": "schema:familyName",
+        "userName": "foaf:accountName",
+        "developerId": "schema:identifier",
+        "organizationName": "schema:memberOf",
+        "status": "schema:status",
+        "apps": "schema:owns",
+        "companies": "schema:worksFor",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified"
+      }
+    },
+
+    "DeveloperApp": {
+      "@id": "schema:SoftwareApplication",
+      "@context": {
+        "name": "schema:name",
+        "appId": "schema:identifier",
+        "developerId": "schema:author",
+        "apiProducts": "schema:isPartOf",
+        "callbackUrl": "schema:url",
+        "status": "schema:creativeWorkStatus",
+        "scopes": "schema:permissionType",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified"
+      }
+    },
+
+    "Environment": {
+      "@id": "schema:Place",
+      "@context": {
+        "name": "schema:name",
+        "displayName": "schema:alternateName",
+        "description": "schema:description",
+        "state": "schema:status",
+        "deploymentType": "schema:additionalType",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified"
+      }
+    },
+
+    "Deployment": {
+      "@id": "schema:DeployAction",
+      "@context": {
+        "environment": "schema:location",
+        "apiProxy": "schema:object",
+        "revision": "schema:version",
+        "deployStartTime": "schema:startTime",
+        "state": "schema:actionStatus"
+      }
+    },
+
+    "SharedFlow": {
+      "@id": "schema:SoftwareSourceCode",
+      "@context": {
+        "name": "schema:name",
+        "revision": "schema:version",
+        "latestRevisionId": "schema:softwareVersion",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified"
+      }
+    },
+
+    "TargetServer": {
+      "@id": "schema:WebAPI",
+      "@context": {
+        "name": "schema:name",
+        "host": "schema:url",
+        "port": "schema:identifier",
+        "isEnabled": "schema:status",
+        "protocol": "schema:applicationCategory",
+        "description": "schema:description"
+      }
+    },
+
+    "KeyValueMap": {
+      "@id": "schema:DataCatalog",
+      "@context": {
+        "name": "schema:name",
+        "encrypted": "schema:accessMode"
+      }
+    },
+
+    "Integration": {
+      "@id": "schema:SoftwareApplication",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "state": "schema:creativeWorkStatus",
+        "createTime": "schema:dateCreated",
+        "lastModifierEmail": "schema:editor"
+      }
+    },
+
+    "ApiObservation": {
+      "@id": "schema:Observation",
+      "@context": {
+        "hostname": "schema:url",
+        "serverIps": "schema:identifier",
+        "requestCount": "schema:interactionCount",
+        "lastEventDetectedTime": "schema:dateModified",
+        "firstEventDetectedTime": "schema:dateCreated",
+        "style": "schema:additionalType",
+        "tags": "schema:keywords"
+      }
+    },
+
+    "Artifact": {
+      "@id": "schema:DigitalDocument",
+      "@context": {
+        "name": "schema:name",
+        "mimeType": "schema:encodingFormat",
+        "sizeBytes": "schema:contentSize",
+        "hash": "schema:sha256",
+        "createTime": "schema:dateCreated",
+        "updateTime": "schema:dateModified"
+      }
+    },
+
+    "Instance": {
+      "@id": "schema:SoftwareApplication",
+      "@context": {
+        "name": "schema:name",
+        "location": "schema:contentLocation",
+        "host": "schema:url",
+        "state": "schema:status",
+        "description": "schema:description",
+        "displayName": "schema:alternateName",
+        "createdAt": "schema:dateCreated",
+        "lastModifiedAt": "schema:dateModified"
+      }
+    }
+  }
+}

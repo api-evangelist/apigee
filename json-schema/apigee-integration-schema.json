@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apigee/apigee-integration-schema.json",
+  "title": "Apigee Integration Version",
+  "description": "A version of an integration containing the complete configuration including triggers, tasks, and parameters for automating workflows within Google Cloud.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the version.",
+      "readOnly": true
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the integration version."
+    },
+    "taskConfigs": {
+      "type": "array",
+      "description": "List of task configurations in the integration.",
+      "items": {
+        "$ref": "#/$defs/TaskConfig"
+      }
+    },
+    "triggerConfigs": {
+      "type": "array",
+      "description": "List of trigger configurations.",
+      "items": {
+        "$ref": "#/$defs/TriggerConfig"
+      }
+    },
+    "integrationParameters": {
+      "type": "array",
+      "description": "Parameters used by the integration.",
+      "items": {
+        "$ref": "#/$defs/IntegrationParameter"
+      }
+    },
+    "state": {
+      "type": "string",
+      "description": "State of the integration version.",
+      "enum": ["INTEGRATION_STATE_UNSPECIFIED", "DRAFT", "ACTIVE", "ARCHIVED", "SNAPSHOT"]
+    },
+    "snapshotNumber": {
+      "type": "string",
+      "description": "Output only. Auto-incrementing snapshot number.",
+      "readOnly": true
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the version was created.",
+      "readOnly": true
+    },
+    "lastModifierEmail": {
+      "type": "string",
+      "description": "Output only. Email of the last modifier.",
+      "readOnly": true
+    },
+    "parentTemplateId": {
+      "type": "string",
+      "description": "ID of the template this version was created from."
+    },
+    "userLabel": {
+      "type": "string",
+      "description": "User-defined label for the version."
+    },
+    "databasePersistencePolicy": {
+      "type": "string",
+      "description": "Database persistence policy for execution logs.",
+      "enum": ["DATABASE_PERSISTENCE_POLICY_UNSPECIFIED", "DATABASE_PERSISTENCE_DISABLED", "DATABASE_PERSISTENCE_ASYNC"]
+    }
+  },
+  "$defs": {
+    "TaskConfig": {
+      "type": "object",
+      "description": "Configuration for a task in an integration.",
+      "properties": {
+        "task": {
+          "type": "string",
+          "description": "Type of the task."
+        },
+        "taskId": {
+          "type": "string",
+          "description": "Unique ID of the task within the integration."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name for the task."
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Task parameters.",
+          "additionalProperties": true
+        },
+        "nextTasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "taskId": { "type": "string" },
+              "condition": { "type": "string" },
+              "displayName": { "type": "string" }
+            }
+          }
+        },
+        "taskExecutionStrategy": {
+          "type": "string",
+          "enum": ["WHEN_ALL_SUCCEED", "WHEN_ANY_SUCCEED", "WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED"]
+        },
+        "failurePolicy": {
+          "type": "object",
+          "properties": {
+            "retryStrategy": {
+              "type": "string",
+              "enum": ["RETRY_STRATEGY_UNSPECIFIED", "IGNORE", "NONE", "FATAL", "FIXED_INTERVAL", "LINEAR_BACKOFF", "EXPONENTIAL_BACKOFF", "RESTART_INTEGRATION_WITH_BACKOFF"]
+            },
+            "maxRetries": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "required": ["task", "taskId"]
+    },
+    "TriggerConfig": {
+      "type": "object",
+      "description": "Configuration for a trigger that starts an integration.",
+      "properties": {
+        "trigger": { "type": "string" },
+        "triggerId": { "type": "string" },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "triggerType": {
+          "type": "string",
+          "enum": ["TRIGGER_TYPE_UNSPECIFIED", "CRON", "API", "SFDC_CHANNEL", "CLOUD_PUBSUB_EXTERNAL", "SFDC_CDC_CHANNEL", "CLOUD_SCHEDULER", "INTEGRATION_CONNECTOR_TRIGGER"]
+        },
+        "startTasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "taskId": { "type": "string" },
+              "condition": { "type": "string" }
+            }
+          }
+        }
+      },
+      "required": ["triggerId"]
+    },
+    "IntegrationParameter": {
+      "type": "object",
+      "description": "A parameter used in an integration.",
+      "properties": {
+        "key": { "type": "string" },
+        "dataType": {
+          "type": "string",
+          "enum": ["INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED", "STRING_VALUE", "INT_VALUE", "DOUBLE_VALUE", "BOOLEAN_VALUE", "STRING_ARRAY", "INT_ARRAY", "DOUBLE_ARRAY", "BOOLEAN_ARRAY", "JSON_VALUE", "PROTO_VALUE", "PROTO_ARRAY"]
+        },
+        "inputOutputType": {
+          "type": "string",
+          "enum": ["IN_OUT_TYPE_UNSPECIFIED", "IN", "OUT", "IN_OUT"]
+        },
+        "isTransient": { "type": "boolean" },
+        "producer": { "type": "string" }
+      },
+      "required": ["key"]
+    }
+  }
+}

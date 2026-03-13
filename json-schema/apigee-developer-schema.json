@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apigee/apigee-developer-schema.json",
+  "title": "Apigee Developer",
+  "description": "A developer registered in an Apigee organization. Developers are consumers of APIs who register apps and obtain API keys to access API products.",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Required. Email address of the developer. Used as the unique identifier."
+    },
+    "firstName": {
+      "type": "string",
+      "description": "Required. First name of the developer."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Required. Last name of the developer."
+    },
+    "userName": {
+      "type": "string",
+      "description": "Required. User name of the developer."
+    },
+    "developerId": {
+      "type": "string",
+      "description": "Output only. System-generated developer ID.",
+      "readOnly": true
+    },
+    "organizationName": {
+      "type": "string",
+      "description": "Output only. Name of the Apigee organization.",
+      "readOnly": true
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the developer account.",
+      "enum": ["active", "inactive"]
+    },
+    "apps": {
+      "type": "array",
+      "description": "Output only. List of apps owned by the developer.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for the developer (maximum 18).",
+      "maxItems": 18,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "value": { "type": "string" }
+        },
+        "required": ["name", "value"]
+      }
+    },
+    "companies": {
+      "type": "array",
+      "description": "Output only. Companies associated with the developer.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Output only. Time the developer was created in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "description": "Output only. Time the developer was last modified in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "accessType": {
+      "type": "string",
+      "description": "Access type of the developer."
+    }
+  },
+  "required": ["email", "firstName", "lastName", "userName"]
+}

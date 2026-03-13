@@ -1,0 +1,976 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Management API
+  description: >-
+    API for discovering and observing shadow APIs in existing Google Cloud
+    infrastructure, enabling organizations to identify undocumented or unmanaged
+    APIs operating within their environments.
+  version: 1.0.0-alpha
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+externalDocs:
+  description: Apigee APIM API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+servers:
+  - url: https://apim.googleapis.com/v1alpha
+    description: Apigee APIM API (Alpha)
+security:
+  - oauth2: []
+tags:
+  - name: Observation Jobs
+    description: Manage API observation jobs for shadow API discovery
+  - name: API Observations
+    description: View and manage discovered API observations
+  - name: API Operations
+    description: View discovered API operations
+  - name: Observation Sources
+    description: Manage sources for API observation
+  - name: Operations
+    description: Manage long-running operations
+paths:
+  /projects/{projectId}/locations/{locationId}/observationJobs:
+    get:
+      operationId: listObservationJobs
+      summary: List observation jobs
+      description: >-
+        Lists all API observation jobs in the specified project and location.
+        Observation jobs analyze network traffic to discover shadow APIs.
+      tags:
+        - Observation Jobs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of observation jobs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListObservationJobsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createObservationJob
+      summary: Create an observation job
+      description: >-
+        Creates a new API observation job that analyzes network traffic
+        to discover and catalog undocumented APIs operating in the
+        specified infrastructure.
+      tags:
+        - Observation Jobs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: observationJobId
+          in: query
+          description: Required. The ID to use for the observation job.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObservationJob'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:
+    get:
+      operationId: getObservationJob
+      summary: Get an observation job
+      description: >-
+        Gets details for a specific API observation job, including its
+        state, configuration, and observation sources.
+      tags:
+        - Observation Jobs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with observation job details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteObservationJob
+      summary: Delete an observation job
+      description: >-
+        Deletes an API observation job. The job must be disabled before
+        it can be deleted.
+      tags:
+        - Observation Jobs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:enable:
+    post:
+      operationId: enableObservationJob
+      summary: Enable an observation job
+      description: >-
+        Enables a disabled observation job, resuming API traffic analysis
+        and shadow API discovery.
+      tags:
+        - Observation Jobs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:disable:
+    post:
+      operationId: disableObservationJob
+      summary: Disable an observation job
+      description: >-
+        Disables an active observation job, pausing API traffic analysis.
+      tags:
+        - Observation Jobs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:
+    get:
+      operationId: listApiObservations
+      summary: List API observations
+      description: >-
+        Lists all API observations discovered by the specified observation
+        job. Each observation represents a shadow API endpoint detected
+        through traffic analysis.
+      tags:
+        - API Observations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of API observations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiObservationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}:
+    get:
+      operationId: getApiObservation
+      summary: Get an API observation
+      description: >-
+        Gets details for a specific API observation, including the
+        discovered hostname, server IPs, request count, and last seen time.
+      tags:
+        - API Observations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+        - $ref: '#/components/parameters/apiObservationId'
+      responses:
+        '200':
+          description: Successful response with API observation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiObservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:batchEditTags:
+    post:
+      operationId: batchEditApiObservationTags
+      summary: Batch edit API observation tags
+      description: >-
+        Updates tags on multiple API observations in a single batch operation.
+        Tags help categorize and organize discovered APIs.
+      tags:
+        - API Observations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchEditTagsRequest'
+      responses:
+        '200':
+          description: Successful response with updated observations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchEditTagsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations:
+    get:
+      operationId: listApiOperations
+      summary: List API operations
+      description: >-
+        Lists all API operations discovered within a specific API
+        observation. Operations represent individual HTTP endpoints
+        with their methods, paths, and response codes.
+      tags:
+        - API Operations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+        - $ref: '#/components/parameters/apiObservationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of API operations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiOperationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations/{apiOperationId}:
+    get:
+      operationId: getApiOperation
+      summary: Get an API operation
+      description: >-
+        Gets details for a specific discovered API operation, including
+        HTTP method, path, request/response details, and traffic statistics.
+      tags:
+        - API Operations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/observationJobId'
+        - $ref: '#/components/parameters/apiObservationId'
+        - name: apiOperationId
+          in: path
+          description: ID of the API operation.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with API operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiOperation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/observationSources:
+    get:
+      operationId: listObservationSources
+      summary: List observation sources
+      description: >-
+        Lists all observation sources configured in the specified project
+        and location. Sources define the network infrastructure to monitor.
+      tags:
+        - Observation Sources
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of observation sources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListObservationSourcesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createObservationSource
+      summary: Create an observation source
+      description: >-
+        Creates a new observation source that defines which network
+        infrastructure to monitor for API traffic.
+      tags:
+        - Observation Sources
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: observationSourceId
+          in: query
+          description: Required. The ID to use for the observation source.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObservationSource'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/observationSources/{observationSourceId}:
+    get:
+      operationId: getObservationSource
+      summary: Get an observation source
+      description: >-
+        Gets details for a specific observation source.
+      tags:
+        - Observation Sources
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: observationSourceId
+          in: path
+          description: ID of the observation source.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with observation source details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationSource'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteObservationSource
+      summary: Delete an observation source
+      description: >-
+        Deletes an observation source. The source must not be in use by
+        any active observation jobs.
+      tags:
+        - Observation Sources
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: observationSourceId
+          in: path
+          description: ID of the observation source.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/operations:
+    get:
+      operationId: listOperations
+      summary: List operations
+      description: >-
+        Lists long-running operations in the specified project and location.
+      tags:
+        - Operations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of operations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOperationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/operations/{operationId}:
+    get:
+      operationId: getOperation
+      summary: Get an operation
+      description: >-
+        Gets the status of a long-running operation.
+      tags:
+        - Operations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: operationId
+          in: path
+          description: Operation identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with operation status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/operations/{operationId}:cancel:
+    post:
+      operationId: cancelOperation
+      summary: Cancel an operation
+      description: >-
+        Cancels a long-running operation.
+      tags:
+        - Operations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: operationId
+          in: path
+          description: Operation identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response confirming cancellation
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    observationJobId:
+      name: observationJobId
+      in: path
+      description: ID of the observation job.
+      required: true
+      schema:
+        type: string
+    apiObservationId:
+      name: apiObservationId
+      in: path
+      description: ID of the API observation.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+  schemas:
+    ObservationJob:
+      type: object
+      description: An API observation job that analyzes traffic to discover shadow APIs.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the observation job.
+          readOnly: true
+        state:
+          type: string
+          description: State of the observation job.
+          enum:
+            - STATE_UNSPECIFIED
+            - CREATING
+            - ENABLING
+            - ENABLED
+            - DISABLING
+            - DISABLED
+            - DELETING
+        sources:
+          type: array
+          description: Observation sources for this job.
+          items:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the job was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the job was last updated.
+          readOnly: true
+    ApiObservation:
+      type: object
+      description: A discovered shadow API from traffic observation.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the observation.
+          readOnly: true
+        hostname:
+          type: string
+          description: Hostname of the discovered API.
+        serverIps:
+          type: array
+          description: Server IP addresses serving the API.
+          items:
+            type: string
+        sourceLocations:
+          type: array
+          description: Locations where the API was observed.
+          items:
+            type: string
+        apiOperationCount:
+          type: string
+          format: int64
+          description: Number of operations discovered in this API.
+        requestCount:
+          type: string
+          format: int64
+          description: Total number of requests observed.
+        lastEventDetectedTime:
+          type: string
+          format: date-time
+          description: Time of the last observed event.
+        firstEventDetectedTime:
+          type: string
+          format: date-time
+          description: Time of the first observed event.
+        style:
+          type: string
+          description: Inferred API style.
+          enum:
+            - STYLE_UNSPECIFIED
+            - REST
+            - GRPC
+            - GRAPHQL
+        tags:
+          type: array
+          description: User-defined tags for the observation.
+          items:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the observation was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the observation was last updated.
+          readOnly: true
+    ApiOperation:
+      type: object
+      description: A discovered API operation from traffic observation.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the operation.
+          readOnly: true
+        httpOperation:
+          type: object
+          description: HTTP operation details.
+          properties:
+            method:
+              type: string
+              description: HTTP method (GET, POST, PUT, DELETE, etc.).
+              enum:
+                - METHOD_UNSPECIFIED
+                - GET
+                - HEAD
+                - POST
+                - PUT
+                - PATCH
+                - DELETE
+                - TRACE
+                - OPTIONS
+                - CONNECT
+            path:
+              type: object
+              description: Path details.
+              properties:
+                segments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - SEGMENT_TYPE_UNSPECIFIED
+                          - LITERAL
+                          - WILDCARD
+            pathItem:
+              type: string
+              description: Full path string.
+            queryParams:
+              type: object
+              description: Query parameters observed.
+              additionalProperties:
+                type: integer
+                format: int64
+            responseCodes:
+              type: object
+              description: Response codes and their counts.
+              additionalProperties:
+                type: integer
+                format: int64
+        requestCount:
+          type: string
+          format: int64
+          description: Number of requests for this operation.
+        firstSeenTime:
+          type: string
+          format: date-time
+          description: Time the operation was first observed.
+        lastSeenTime:
+          type: string
+          format: date-time
+          description: Time the operation was last observed.
+    ObservationSource:
+      type: object
+      description: A source of network traffic for API observation.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the source.
+          readOnly: true
+        gclbObservationSource:
+          type: object
+          description: Google Cloud Load Balancer as observation source.
+          properties:
+            pscNetworkConfigs:
+              type: array
+              description: Private Service Connect network configurations.
+              items:
+                type: object
+                properties:
+                  network:
+                    type: string
+                    description: VPC network resource name.
+                  subnetwork:
+                    type: string
+                    description: Subnetwork resource name.
+        state:
+          type: string
+          description: State of the observation source.
+          enum:
+            - STATE_UNSPECIFIED
+            - CREATING
+            - CREATED
+            - DELETING
+            - ERROR
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the source was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the source was last updated.
+          readOnly: true
+    BatchEditTagsRequest:
+      type: object
+      description: Request for batch editing tags on API observations.
+      properties:
+        requests:
+          type: array
+          description: List of tag edit requests.
+          items:
+            type: object
+            properties:
+              apiObservationId:
+                type: string
+              tagActions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag:
+                      type: string
+                    action:
+                      type: string
+                      enum:
+                        - ACTION_UNSPECIFIED
+                        - ADD
+                        - REMOVE
+    BatchEditTagsResponse:
+      type: object
+      description: Response from batch editing tags.
+      properties:
+        apiObservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiObservation'
+    Operation:
+      type: object
+      description: A long-running operation.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListObservationJobsResponse:
+      type: object
+      properties:
+        observationJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationJob'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
+    ListApiObservationsResponse:
+      type: object
+      properties:
+        apiObservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiObservation'
+        nextPageToken:
+          type: string
+    ListApiOperationsResponse:
+      type: object
+      properties:
+        apiOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiOperation'
+        nextPageToken:
+          type: string
+    ListObservationSourcesResponse:
+      type: object
+      properties:
+        observationSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationSource'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
+    ListOperationsResponse:
+      type: object
+      properties:
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
+        nextPageToken:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

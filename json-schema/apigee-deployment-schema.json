@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apigee/apigee-deployment-schema.json",
+  "title": "Apigee Deployment",
+  "description": "Represents a deployment of an API proxy revision to an environment in Apigee. Deployments make API proxies available to receive and process client requests.",
+  "type": "object",
+  "properties": {
+    "environment": {
+      "type": "string",
+      "description": "Environment where the proxy is deployed."
+    },
+    "apiProxy": {
+      "type": "string",
+      "description": "API proxy name."
+    },
+    "revision": {
+      "type": "string",
+      "description": "API proxy revision number."
+    },
+    "deployStartTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the deployment was initiated."
+    },
+    "state": {
+      "type": "string",
+      "description": "Current state of the deployment.",
+      "enum": ["RUNTIME_STATE_UNSPECIFIED", "READY", "PROGRESSING", "ERROR"]
+    },
+    "pods": {
+      "type": "array",
+      "description": "Status reported by individual runtime pods.",
+      "items": {
+        "$ref": "#/$defs/PodStatus"
+      }
+    },
+    "routeConflicts": {
+      "type": "array",
+      "description": "Conflicts with other deployments sharing the same base path.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "deployedRevision": { "type": "string" },
+          "environmentGroup": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "PodStatus": {
+      "type": "object",
+      "description": "Status of a runtime pod.",
+      "properties": {
+        "podName": {
+          "type": "string",
+          "description": "Name of the pod."
+        },
+        "podStatus": {
+          "type": "string",
+          "description": "Current status of the pod."
+        },
+        "podStatusTime": {
+          "type": "string",
+          "description": "Time the status was last reported."
+        },
+        "deploymentStatus": {
+          "type": "string",
+          "description": "Deployment status within the pod."
+        },
+        "deploymentStatusTime": {
+          "type": "string",
+          "description": "Time the deployment status was reported."
+        },
+        "deploymentTime": {
+          "type": "string",
+          "description": "Time the deployment was last updated in the pod."
+        },
+        "appVersion": {
+          "type": "string",
+          "description": "Version of the app running in the pod."
+        },
+        "statusCode": {
+          "type": "string",
+          "description": "Status code."
+        },
+        "statusCodeDetails": {
+          "type": "string",
+          "description": "Human-readable details for the status code."
+        }
+      }
+    }
+  }
+}

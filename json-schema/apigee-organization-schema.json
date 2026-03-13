@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apigee/apigee-organization-schema.json",
+  "title": "Apigee Organization",
+  "description": "Represents an Apigee organization, the top-level container for all Apigee resources including API proxies, products, developers, and environments.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Name of the Apigee organization.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the organization."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the organization."
+    },
+    "projectId": {
+      "type": "string",
+      "description": "Output only. Project ID associated with the organization.",
+      "readOnly": true
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Output only. Time the organization was created in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "description": "Output only. Time the organization was last modified in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "subscriptionType": {
+      "type": "string",
+      "description": "Output only. Subscription type of the organization.",
+      "readOnly": true,
+      "enum": ["SUBSCRIPTION_TYPE_UNSPECIFIED", "PAID", "TRIAL"]
+    },
+    "state": {
+      "type": "string",
+      "description": "Output only. State of the organization.",
+      "readOnly": true,
+      "enum": ["STATE_UNSPECIFIED", "CREATING", "ACTIVE", "DELETING", "UPDATING"]
+    },
+    "analyticsRegion": {
+      "type": "string",
+      "description": "Required. Primary Google Cloud region for analytics data storage."
+    },
+    "runtimeType": {
+      "type": "string",
+      "description": "Required. Runtime type of the Apigee organization.",
+      "enum": ["RUNTIME_TYPE_UNSPECIFIED", "CLOUD", "HYBRID"]
+    },
+    "authorizedNetwork": {
+      "type": "string",
+      "description": "VPC network used for service networking."
+    },
+    "environments": {
+      "type": "array",
+      "description": "Output only. List of environments in the organization.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "billingType": {
+      "type": "string",
+      "description": "Billing type of the organization.",
+      "enum": ["BILLING_TYPE_UNSPECIFIED", "SUBSCRIPTION", "EVALUATION", "PAYG"]
+    },
+    "properties": {
+      "type": "object",
+      "description": "A collection of key-value property pairs.",
+      "properties": {
+        "property": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["analyticsRegion", "runtimeType"]
+}

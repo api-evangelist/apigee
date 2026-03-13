@@ -1,0 +1,2027 @@
+openapi: 3.1.0
+info:
+  title: Apigee Integrations API
+  description: >-
+    API for creating, managing, and executing integrations within Google Cloud.
+    Supports authentication, certificate management, scheduled execution, and
+    connectors for third-party services.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+externalDocs:
+  description: Apigee Integrations API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/integrations/rest
+servers:
+  - url: https://integrations.googleapis.com/v1
+    description: Apigee Integrations API Production Server
+security:
+  - oauth2: []
+tags:
+  - name: Integrations
+    description: Manage and execute integrations
+  - name: Integration Versions
+    description: Manage integration versions and publishing
+  - name: Auth Configs
+    description: Manage authentication configurations
+  - name: Certificates
+    description: Manage SSL/TLS certificates
+  - name: Executions
+    description: View integration execution results
+  - name: Suspensions
+    description: Manage integration execution suspensions
+  - name: SFDC Instances
+    description: Manage Salesforce instances
+  - name: SFDC Channels
+    description: Manage Salesforce channels
+paths:
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations:
+    get:
+      operationId: listIntegrations
+      summary: List integrations
+      description: >-
+        Lists all integrations in the specified project, location, and product.
+        Returns integration metadata including name and description.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of integrations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListIntegrationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:
+    delete:
+      operationId: deleteIntegration
+      summary: Delete an integration
+      description: >-
+        Deletes an integration and all its versions. The integration must
+        not have any active versions before deletion.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:execute:
+    post:
+      operationId: executeIntegration
+      summary: Execute an integration
+      description: >-
+        Executes an integration synchronously. The caller blocks until
+        the integration execution completes or times out.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteIntegrationRequest'
+      responses:
+        '200':
+          description: Successful response with execution results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteIntegrationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:schedule:
+    post:
+      operationId: scheduleIntegration
+      summary: Schedule an integration execution
+      description: >-
+        Schedules an integration for execution at a specified time. The
+        execution happens asynchronously.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleIntegrationRequest'
+      responses:
+        '200':
+          description: Successful response with schedule confirmation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleIntegrationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:
+    get:
+      operationId: listIntegrationVersions
+      summary: List integration versions
+      description: >-
+        Lists all versions of an integration. Returns version metadata
+        including status, snapshot number, and creation time.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+        - name: fieldMask
+          in: query
+          description: Fields to include in the response.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of integration versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListIntegrationVersionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createIntegrationVersion
+      summary: Create an integration version
+      description: >-
+        Creates a new version of an integration. A version contains
+        the complete integration configuration including triggers,
+        tasks, and parameters.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - name: newIntegration
+          in: query
+          description: Set to true to create a new integration and initial version.
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationVersion'
+      responses:
+        '200':
+          description: Successful response with the created version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:
+    get:
+      operationId: getIntegrationVersion
+      summary: Get an integration version
+      description: >-
+        Gets the details for a specific integration version, including
+        the complete configuration of triggers, tasks, and parameters.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response with integration version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateIntegrationVersion
+      summary: Update an integration version
+      description: >-
+        Updates an existing integration version. Only draft versions
+        can be updated.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/versionId'
+        - name: updateMask
+          in: query
+          description: Comma-separated list of fields to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationVersion'
+      responses:
+        '200':
+          description: Successful response with updated version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteIntegrationVersion
+      summary: Delete an integration version
+      description: >-
+        Deletes an integration version. Active (published) versions
+        cannot be deleted directly.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish:
+    post:
+      operationId: publishIntegrationVersion
+      summary: Publish an integration version
+      description: >-
+        Publishes a draft integration version, making it the active version
+        that receives new execution requests.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response with published version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish:
+    post:
+      operationId: unpublishIntegrationVersion
+      summary: Unpublish an integration version
+      description: >-
+        Unpublishes a published integration version, returning it to
+        draft status so it no longer receives execution requests.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response confirming unpublication
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download:
+    get:
+      operationId: downloadIntegrationVersion
+      summary: Download an integration version
+      description: >-
+        Downloads the complete configuration of an integration version
+        as a JSON bundle.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/versionId'
+        - name: fileFormat
+          in: query
+          description: File format for the download.
+          schema:
+            type: string
+            enum:
+              - FILE_FORMAT_UNSPECIFIED
+              - JSON
+              - YAML
+      responses:
+        '200':
+          description: Successful response with integration bundle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadIntegrationVersionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:upload:
+    post:
+      operationId: uploadIntegrationVersion
+      summary: Upload an integration version
+      description: >-
+        Uploads an integration version configuration bundle, creating
+        a new version.
+      tags:
+        - Integration Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadIntegrationVersionRequest'
+      responses:
+        '200':
+          description: Successful response with uploaded version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadIntegrationVersionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs:
+    get:
+      operationId: listAuthConfigs
+      summary: List auth configs
+      description: >-
+        Lists all authentication configurations for the specified product.
+        Auth configs define credentials used by integrations to connect
+        to external services.
+      tags:
+        - Auth Configs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of auth configs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAuthConfigsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createAuthConfig
+      summary: Create an auth config
+      description: >-
+        Creates a new authentication configuration. Auth configs store
+        credentials like OAuth tokens, API keys, or service account keys.
+      tags:
+        - Auth Configs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthConfig'
+      responses:
+        '200':
+          description: Successful response with the created auth config
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs/{authConfigId}:
+    get:
+      operationId: getAuthConfig
+      summary: Get an auth config
+      description: >-
+        Gets the details for a specific authentication configuration.
+      tags:
+        - Auth Configs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/authConfigId'
+      responses:
+        '200':
+          description: Successful response with auth config details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateAuthConfig
+      summary: Update an auth config
+      description: >-
+        Updates an existing authentication configuration.
+      tags:
+        - Auth Configs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/authConfigId'
+        - name: updateMask
+          in: query
+          description: Comma-separated list of fields to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthConfig'
+      responses:
+        '200':
+          description: Successful response with updated auth config
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAuthConfig
+      summary: Delete an auth config
+      description: >-
+        Deletes an authentication configuration. The auth config must not
+        be in use by any active integration version.
+      tags:
+        - Auth Configs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/authConfigId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/certificates:
+    get:
+      operationId: listCertificates
+      summary: List certificates
+      description: >-
+        Lists all certificates for the specified product. Certificates
+        are used for TLS/SSL authentication with external services.
+      tags:
+        - Certificates
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of certificates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCertificatesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createCertificate
+      summary: Create a certificate
+      description: >-
+        Creates a new certificate for use with integrations that require
+        TLS/SSL authentication.
+      tags:
+        - Certificates
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Certificate'
+      responses:
+        '200':
+          description: Successful response with the created certificate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Certificate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/certificates/{certificateId}:
+    get:
+      operationId: getCertificate
+      summary: Get a certificate
+      description: >-
+        Gets details for a specific certificate.
+      tags:
+        - Certificates
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/certificateId'
+      responses:
+        '200':
+          description: Successful response with certificate details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Certificate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateCertificate
+      summary: Update a certificate
+      description: >-
+        Updates an existing certificate.
+      tags:
+        - Certificates
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/certificateId'
+        - name: updateMask
+          in: query
+          description: Comma-separated list of fields to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Certificate'
+      responses:
+        '200':
+          description: Successful response with updated certificate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Certificate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCertificate
+      summary: Delete a certificate
+      description: >-
+        Deletes a certificate. The certificate must not be in use by
+        any active integration version.
+      tags:
+        - Certificates
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/certificateId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions:
+    get:
+      operationId: listExecutions
+      summary: List executions
+      description: >-
+        Lists execution results for an integration. Returns execution
+        metadata including status, start time, and trigger information.
+      tags:
+        - Executions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression (e.g., by status or time range).
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of executions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListExecutionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}:
+    get:
+      operationId: getExecution
+      summary: Get an execution
+      description: >-
+        Gets details for a specific integration execution, including
+        input/output parameters and execution steps.
+      tags:
+        - Executions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/executionId'
+      responses:
+        '200':
+          description: Successful response with execution details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Execution'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions:
+    get:
+      operationId: listSuspensions
+      summary: List suspensions
+      description: >-
+        Lists all suspensions for a specific execution. Suspensions
+        pause execution flow pending human review or approval.
+      tags:
+        - Suspensions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/executionId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow results.
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Field to order results by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of suspensions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSuspensionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift:
+    post:
+      operationId: liftSuspension
+      summary: Lift a suspension
+      description: >-
+        Lifts a suspension, allowing the paused execution to continue
+        processing from where it stopped.
+      tags:
+        - Suspensions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/executionId'
+        - $ref: '#/components/parameters/suspensionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LiftSuspensionRequest'
+      responses:
+        '200':
+          description: Successful response with lift result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiftSuspensionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve:
+    post:
+      operationId: resolveSuspension
+      summary: Resolve a suspension
+      description: >-
+        Resolves a suspension with a final decision, completing the
+        suspended task in the execution.
+      tags:
+        - Suspensions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/integrationId'
+        - $ref: '#/components/parameters/executionId'
+        - $ref: '#/components/parameters/suspensionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveSuspensionRequest'
+      responses:
+        '200':
+          description: Successful response with resolution result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveSuspensionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances:
+    get:
+      operationId: listSfdcInstances
+      summary: List SFDC instances
+      description: >-
+        Lists all Salesforce instances configured for the product.
+      tags:
+        - SFDC Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of SFDC instances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSfdcInstancesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createSfdcInstance
+      summary: Create an SFDC instance
+      description: >-
+        Creates a new Salesforce instance configuration for connecting
+        integrations to Salesforce.
+      tags:
+        - SFDC Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SfdcInstance'
+      responses:
+        '200':
+          description: Successful response with the created instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}:
+    get:
+      operationId: getSfdcInstance
+      summary: Get an SFDC instance
+      description: >-
+        Gets details for a specific Salesforce instance configuration.
+      tags:
+        - SFDC Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/sfdcInstanceId'
+      responses:
+        '200':
+          description: Successful response with SFDC instance details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcInstance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateSfdcInstance
+      summary: Update an SFDC instance
+      description: >-
+        Updates an existing Salesforce instance configuration.
+      tags:
+        - SFDC Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/sfdcInstanceId'
+        - name: updateMask
+          in: query
+          description: Comma-separated list of fields to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SfdcInstance'
+      responses:
+        '200':
+          description: Successful response with updated instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSfdcInstance
+      summary: Delete an SFDC instance
+      description: >-
+        Deletes a Salesforce instance configuration.
+      tags:
+        - SFDC Instances
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/sfdcInstanceId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels:
+    get:
+      operationId: listSfdcChannels
+      summary: List SFDC channels
+      description: >-
+        Lists all Salesforce channels configured for an SFDC instance.
+      tags:
+        - SFDC Channels
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/sfdcInstanceId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of channels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSfdcChannelsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createSfdcChannel
+      summary: Create an SFDC channel
+      description: >-
+        Creates a new Salesforce channel within an SFDC instance.
+      tags:
+        - SFDC Channels
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/productId'
+        - $ref: '#/components/parameters/sfdcInstanceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SfdcChannel'
+      responses:
+        '200':
+          description: Successful response with the created channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcChannel'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: Integration version identifier.
+      required: true
+      schema:
+        type: string
+    executionId:
+      name: executionId
+      in: path
+      description: Execution identifier.
+      required: true
+      schema:
+        type: string
+    suspensionId:
+      name: suspensionId
+      in: path
+      description: Suspension identifier.
+      required: true
+      schema:
+        type: string
+    authConfigId:
+      name: authConfigId
+      in: path
+      description: Auth config identifier.
+      required: true
+      schema:
+        type: string
+    certificateId:
+      name: certificateId
+      in: path
+      description: Certificate identifier.
+      required: true
+      schema:
+        type: string
+    sfdcInstanceId:
+      name: sfdcInstanceId
+      in: path
+      description: SFDC instance identifier.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+  schemas:
+    IntegrationVersion:
+      type: object
+      description: A version of an integration containing the complete configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the version.
+          readOnly: true
+        description:
+          type: string
+          description: Description of the integration version.
+        taskConfigs:
+          type: array
+          description: List of task configurations in the integration.
+          items:
+            $ref: '#/components/schemas/TaskConfig'
+        triggerConfigs:
+          type: array
+          description: List of trigger configurations.
+          items:
+            $ref: '#/components/schemas/TriggerConfig'
+        integrationParameters:
+          type: array
+          description: Parameters used by the integration.
+          items:
+            $ref: '#/components/schemas/IntegrationParameter'
+        state:
+          type: string
+          description: State of the integration version.
+          enum:
+            - INTEGRATION_STATE_UNSPECIFIED
+            - DRAFT
+            - ACTIVE
+            - ARCHIVED
+            - SNAPSHOT
+        snapshotNumber:
+          type: string
+          format: int64
+          description: Output only. Auto-incrementing snapshot number.
+          readOnly: true
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the version was created.
+          readOnly: true
+        lastModifierEmail:
+          type: string
+          description: Output only. Email of the last person who modified.
+          readOnly: true
+        parentTemplateId:
+          type: string
+          description: ID of the template this version was created from.
+        userLabel:
+          type: string
+          description: User-defined label for the version.
+        databasePersistencePolicy:
+          type: string
+          description: Database persistence policy for execution logs.
+          enum:
+            - DATABASE_PERSISTENCE_POLICY_UNSPECIFIED
+            - DATABASE_PERSISTENCE_DISABLED
+            - DATABASE_PERSISTENCE_ASYNC
+    TaskConfig:
+      type: object
+      description: Configuration for a task in an integration.
+      properties:
+        task:
+          type: string
+          description: Type of the task (e.g., GenericRestV2Task, FieldMappingTask).
+        taskId:
+          type: string
+          description: Unique ID of the task within the integration.
+        displayName:
+          type: string
+          description: Display name for the task.
+        parameters:
+          type: object
+          description: Task parameters.
+          additionalProperties:
+            $ref: '#/components/schemas/EventParameter'
+        nextTasks:
+          type: array
+          description: Tasks to execute next.
+          items:
+            type: object
+            properties:
+              taskId:
+                type: string
+              condition:
+                type: string
+              displayName:
+                type: string
+              description:
+                type: string
+        taskExecutionStrategy:
+          type: string
+          description: Execution strategy for the task.
+          enum:
+            - WHEN_ALL_SUCCEED
+            - WHEN_ANY_SUCCEED
+            - WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED
+        failurePolicy:
+          type: object
+          description: Policy for handling task failures.
+          properties:
+            retryStrategy:
+              type: string
+              enum:
+                - RETRY_STRATEGY_UNSPECIFIED
+                - IGNORE
+                - NONE
+                - FATAL
+                - FIXED_INTERVAL
+                - LINEAR_BACKOFF
+                - EXPONENTIAL_BACKOFF
+                - RESTART_INTEGRATION_WITH_BACKOFF
+            maxRetries:
+              type: integer
+              format: int32
+            intervalTime:
+              type: string
+              format: date-time
+    TriggerConfig:
+      type: object
+      description: Configuration for a trigger that starts an integration.
+      properties:
+        trigger:
+          type: string
+          description: Type of the trigger.
+        triggerId:
+          type: string
+          description: Unique ID of the trigger.
+        label:
+          type: string
+          description: Label for the trigger.
+        description:
+          type: string
+          description: Description of the trigger.
+        triggerType:
+          type: string
+          description: Trigger type.
+          enum:
+            - TRIGGER_TYPE_UNSPECIFIED
+            - CRON
+            - API
+            - SFDC_CHANNEL
+            - CLOUD_PUBSUB_EXTERNAL
+            - SFDC_CDC_CHANNEL
+            - CLOUD_SCHEDULER
+            - INTEGRATION_CONNECTOR_TRIGGER
+        triggerNumber:
+          type: string
+          description: Number for ordering triggers.
+        startTasks:
+          type: array
+          description: Tasks to start when trigger fires.
+          items:
+            type: object
+            properties:
+              taskId:
+                type: string
+              condition:
+                type: string
+              displayName:
+                type: string
+        properties:
+          type: object
+          description: Trigger-specific properties.
+          additionalProperties:
+            type: string
+    IntegrationParameter:
+      type: object
+      description: A parameter used in an integration.
+      properties:
+        key:
+          type: string
+          description: Name of the parameter.
+        dataType:
+          type: string
+          description: Data type of the parameter.
+          enum:
+            - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
+            - STRING_VALUE
+            - INT_VALUE
+            - DOUBLE_VALUE
+            - BOOLEAN_VALUE
+            - STRING_ARRAY
+            - INT_ARRAY
+            - DOUBLE_ARRAY
+            - BOOLEAN_ARRAY
+            - JSON_VALUE
+            - PROTO_VALUE
+            - PROTO_ARRAY
+        defaultValue:
+          $ref: '#/components/schemas/ValueType'
+        inputOutputType:
+          type: string
+          description: Whether the parameter is input, output, or both.
+          enum:
+            - IN_OUT_TYPE_UNSPECIFIED
+            - IN
+            - OUT
+            - IN_OUT
+        isTransient:
+          type: boolean
+          description: Whether the parameter is transient.
+        producer:
+          type: string
+          description: Task that produces this parameter.
+    ValueType:
+      type: object
+      description: A value with a specific type.
+      properties:
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
+    Execution:
+      type: object
+      description: An integration execution record.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the execution.
+          readOnly: true
+        executionMethod:
+          type: string
+          description: Method by which the execution was triggered.
+          enum:
+            - EXECUTION_METHOD_UNSPECIFIED
+            - POST
+            - POST_TO_QUEUE
+            - SCHEDULE
+        requestParams:
+          type: object
+          description: Input parameters for the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/EventParameter'
+        responseParams:
+          type: object
+          description: Output parameters from the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/EventParameter'
+        executionDetails:
+          type: object
+          description: Detailed execution information.
+          properties:
+            state:
+              type: string
+              enum:
+                - STATE_UNSPECIFIED
+                - PENDING
+                - PROCESSING
+                - SUCCEEDED
+                - FAILED
+                - CANCELLED
+                - RETRY_ON_HOLD
+                - SUSPENDED
+            executionSnapshots:
+              type: array
+              items:
+                type: object
+                properties:
+                  checkpointTaskNumber:
+                    type: string
+                  executionSnapshotMetadata:
+                    type: object
+                    properties:
+                      executionAttempt:
+                        type: integer
+                        format: int32
+                      task:
+                        type: string
+                      taskLabel:
+                        type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the execution was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the execution was last updated.
+          readOnly: true
+        triggerId:
+          type: string
+          description: ID of the trigger that started the execution.
+        integrationVersionId:
+          type: string
+          description: ID of the integration version executed.
+    AuthConfig:
+      type: object
+      description: Authentication configuration for connecting to external services.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the auth config.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the auth config.
+        description:
+          type: string
+          description: Description of the auth config.
+        certificateId:
+          type: string
+          description: Certificate to use for authentication.
+        credentialType:
+          type: string
+          description: Type of credential stored.
+          enum:
+            - CREDENTIAL_TYPE_UNSPECIFIED
+            - USERNAME_AND_PASSWORD
+            - API_KEY
+            - OAUTH2_AUTHORIZATION_CODE
+            - OAUTH2_IMPLICIT
+            - OAUTH2_CLIENT_CREDENTIALS
+            - OAUTH2_RESOURCE_OWNER_CREDENTIALS
+            - JWT
+            - AUTH_TOKEN
+            - SERVICE_ACCOUNT
+            - CLIENT_CERTIFICATE_ONLY
+            - OIDC_TOKEN
+        visibility:
+          type: string
+          description: Visibility of the auth config.
+          enum:
+            - AUTH_CONFIG_VISIBILITY_UNSPECIFIED
+            - PRIVATE
+            - CLIENT_VISIBLE
+        state:
+          type: string
+          description: State of the auth config.
+          enum:
+            - STATE_UNSPECIFIED
+            - VALID
+            - INVALID
+            - SOFT_DELETED
+            - EXPIRED
+            - UNAUTHORIZED
+            - UNSUPPORTED
+        expiryNotificationDuration:
+          type: array
+          description: Notification durations before expiry.
+          items:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the config was created.
+          readOnly: true
+        lastModifierEmail:
+          type: string
+          description: Output only. Email of the last modifier.
+          readOnly: true
+        validTime:
+          type: string
+          format: date-time
+          description: Output only. Time until which the config is valid.
+          readOnly: true
+    Certificate:
+      type: object
+      description: An SSL/TLS certificate.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the certificate.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name of the certificate.
+        description:
+          type: string
+          description: Description of the certificate.
+        rawCertificate:
+          type: object
+          description: Raw certificate data.
+          properties:
+            sslCertificate:
+              type: string
+              description: PEM-encoded SSL certificate.
+            encryptedPrivateKey:
+              type: string
+              description: Encrypted private key.
+            passphrase:
+              type: string
+              description: Passphrase for the private key.
+        certificateStatus:
+          type: string
+          description: Output only. Status of the certificate.
+          readOnly: true
+          enum:
+            - STATE_UNSPECIFIED
+            - ACTIVE
+            - EXPIRED
+        validStartTime:
+          type: string
+          format: date-time
+          description: Output only. Start of validity period.
+          readOnly: true
+        validEndTime:
+          type: string
+          format: date-time
+          description: Output only. End of validity period.
+          readOnly: true
+    SfdcInstance:
+      type: object
+      description: A Salesforce instance configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the SFDC instance.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the instance.
+        description:
+          type: string
+          description: Description of the SFDC instance.
+        sfdcOrgId:
+          type: string
+          description: Salesforce organization ID.
+        authConfigId:
+          type: array
+          description: Auth configs associated with this instance.
+          items:
+            type: string
+        serviceAuthority:
+          type: string
+          description: Service authority URL for the Salesforce instance.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the instance was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the instance was last updated.
+          readOnly: true
+        deleteTime:
+          type: string
+          format: date-time
+          description: Output only. Time the instance was deleted.
+          readOnly: true
+    SfdcChannel:
+      type: object
+      description: A Salesforce channel configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the SFDC channel.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the channel.
+        description:
+          type: string
+          description: Description of the channel.
+        channelTopic:
+          type: string
+          description: Salesforce PushTopic or CDC channel name.
+        isActive:
+          type: boolean
+          description: Whether the channel is active.
+        lastReplayId:
+          type: string
+          description: Last replay ID used for event replay.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the channel was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the channel was last updated.
+          readOnly: true
+        deleteTime:
+          type: string
+          format: date-time
+          description: Output only. Time the channel was deleted.
+          readOnly: true
+    ExecuteIntegrationRequest:
+      type: object
+      description: Request to execute an integration synchronously.
+      properties:
+        triggerId:
+          type: string
+          description: Trigger to use for the execution.
+        inputParameters:
+          type: object
+          description: Input parameters for the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/ValueType'
+        parameterEntries:
+          type: array
+          description: Alternative way to pass parameters.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+        doNotPropagateError:
+          type: boolean
+          description: Whether to propagate errors to the caller.
+        requestId:
+          type: string
+          description: Unique request ID for idempotency.
+    ExecuteIntegrationResponse:
+      type: object
+      description: Response from a synchronous integration execution.
+      properties:
+        executionId:
+          type: string
+          description: ID of the execution.
+        outputParameters:
+          type: object
+          description: Output parameters from the execution.
+          additionalProperties:
+            type: object
+        parameterEntries:
+          type: array
+          description: Output parameter entries.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+    ScheduleIntegrationRequest:
+      type: object
+      description: Request to schedule an integration execution.
+      properties:
+        triggerId:
+          type: string
+          description: Trigger to use for the execution.
+        inputParameters:
+          type: object
+          description: Input parameters for the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/ValueType'
+        parameterEntries:
+          type: array
+          description: Alternative way to pass parameters.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+        scheduleTime:
+          type: string
+          format: date-time
+          description: Time to schedule the execution.
+        requestId:
+          type: string
+          description: Unique request ID for idempotency.
+    ScheduleIntegrationResponse:
+      type: object
+      description: Response from scheduling an integration execution.
+      properties:
+        executionInfoIds:
+          type: array
+          description: Execution info IDs for the scheduled run.
+          items:
+            type: string
+    DownloadIntegrationVersionResponse:
+      type: object
+      description: Response for downloading an integration version.
+      properties:
+        content:
+          type: string
+          description: Integration version content.
+    UploadIntegrationVersionRequest:
+      type: object
+      description: Request to upload an integration version.
+      properties:
+        content:
+          type: string
+          description: Integration version content to upload.
+        fileFormat:
+          type: string
+          description: Format of the uploaded content.
+          enum:
+            - FILE_FORMAT_UNSPECIFIED
+            - JSON
+            - YAML
+    UploadIntegrationVersionResponse:
+      type: object
+      description: Response from uploading an integration version.
+      properties:
+        integrationVersion:
+          $ref: '#/components/schemas/IntegrationVersion'
+    LiftSuspensionRequest:
+      type: object
+      description: Request to lift a suspension.
+      properties:
+        suspensionResult:
+          type: string
+          description: Result of the suspension lift.
+    LiftSuspensionResponse:
+      type: object
+      description: Response from lifting a suspension.
+      properties:
+        eventExecutionInfoId:
+          type: string
+          description: ID of the event execution info.
+    ResolveSuspensionRequest:
+      type: object
+      description: Request to resolve a suspension.
+      properties:
+        suspension:
+          type: object
+          description: The suspension resolution details.
+    ResolveSuspensionResponse:
+      type: object
+      description: Response from resolving a suspension.
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListIntegrationsResponse:
+      type: object
+      properties:
+        integrations:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              updateTime:
+                type: string
+                format: date-time
+              active:
+                type: boolean
+        nextPageToken:
+          type: string
+    ListIntegrationVersionsResponse:
+      type: object
+      properties:
+        integrationVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationVersion'
+        nextPageToken:
+          type: string
+        noPermission:
+          type: boolean
+    ListAuthConfigsResponse:
+      type: object
+      properties:
+        authConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthConfig'
+        nextPageToken:
+          type: string
+    ListCertificatesResponse:
+      type: object
+      properties:
+        certificate:
+          type: array
+          items:
+            $ref: '#/components/schemas/Certificate'
+        nextPageToken:
+          type: string
+    ListExecutionsResponse:
+      type: object
+      properties:
+        executionInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Execution'
+        executions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Execution'
+        nextPageToken:
+          type: string
+    ListSuspensionsResponse:
+      type: object
+      properties:
+        suspensions:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              state:
+                type: string
+              eventExecutionInfoId:
+                type: string
+              taskId:
+                type: string
+              createTime:
+                type: string
+                format: date-time
+        nextPageToken:
+          type: string
+    ListSfdcInstancesResponse:
+      type: object
+      properties:
+        sfdcInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/SfdcInstance'
+        nextPageToken:
+          type: string
+    ListSfdcChannelsResponse:
+      type: object
+      properties:
+        sfdcChannels:
+          type: array
+          items:
+            $ref: '#/components/schemas/SfdcChannel'
+        nextPageToken:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

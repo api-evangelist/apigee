@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apigee/apigee-api-product-schema.json",
+  "title": "Apigee API Product",
+  "description": "An API product bundles API resources (proxies) for consumption by developers. Products define access control, quotas, and which API proxies and resources are available.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Internal name of the API product. Must be unique within the organization."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Name displayed in the developer portal."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the API product."
+    },
+    "approvalType": {
+      "type": "string",
+      "description": "How API keys are approved for the product.",
+      "enum": ["manual", "auto"]
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for the API product (maximum 18).",
+      "maxItems": 18,
+      "items": {
+        "$ref": "#/$defs/Attribute"
+      }
+    },
+    "environments": {
+      "type": "array",
+      "description": "Environments where this product is available.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proxies": {
+      "type": "array",
+      "description": "API proxies included in this product.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "description": "OAuth scopes associated with the product.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quota": {
+      "type": "string",
+      "description": "Number of requests permitted per quota interval."
+    },
+    "quotaInterval": {
+      "type": "string",
+      "description": "Time interval over which the quota is applied."
+    },
+    "quotaTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the quota interval.",
+      "enum": ["minute", "hour", "day", "month"]
+    },
+    "operationGroup": {
+      "$ref": "#/$defs/OperationGroup"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Output only. Unix time when the product was created.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "description": "Output only. Unix time when the product was last modified.",
+      "readOnly": true
+    }
+  },
+  "required": ["name"],
+  "$defs": {
+    "Attribute": {
+      "type": "object",
+      "description": "A key-value pair used for custom attributes.",
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "type": "string" }
+      },
+      "required": ["name", "value"]
+    },
+    "OperationGroup": {
+      "type": "object",
+      "description": "Groups operations for access control on an API product.",
+      "properties": {
+        "operationConfigs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "apiSource": { "type": "string" },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "resource": { "type": "string" },
+                    "methods": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              },
+              "quota": {
+                "type": "object",
+                "properties": {
+                  "limit": { "type": "string" },
+                  "interval": { "type": "string" },
+                  "timeUnit": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "operationConfigType": { "type": "string" }
+      }
+    }
+  }
+}

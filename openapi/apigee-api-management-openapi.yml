@@ -1,0 +1,3272 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Management
+  description: >-
+    APIs for programmatically managing Apigee organizations, API proxies,
+    products, developers, apps, environments, deployments, and analytics.
+    Provides full lifecycle management of APIs on the Apigee platform.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+externalDocs:
+  description: Apigee API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
+servers:
+  - url: https://apigee.googleapis.com/v1
+    description: Apigee API Production Server
+security:
+  - oauth2: []
+tags:
+  - name: Organizations
+    description: Manage Apigee organizations and their configuration
+  - name: API Proxies
+    description: Create, deploy, and manage API proxy definitions
+  - name: API Proxy Revisions
+    description: Manage revisions of API proxies
+  - name: API Products
+    description: Bundle APIs into products for consumption
+  - name: Developers
+    description: Manage developer accounts and credentials
+  - name: Developer Apps
+    description: Manage applications registered by developers
+  - name: Developer App Keys
+    description: Manage API keys and credentials for developer apps
+  - name: Environments
+    description: Manage runtime execution environments
+  - name: Deployments
+    description: Deploy and undeploy API proxies to environments
+  - name: Key Value Maps
+    description: Manage key-value storage maps
+  - name: Target Servers
+    description: Configure backend target server endpoints
+  - name: Shared Flows
+    description: Manage reusable shared flow logic
+  - name: Analytics
+    description: Query analytics data and manage data stores
+  - name: App Groups
+    description: Manage developer groups and their applications
+  - name: Instances
+    description: Manage Apigee runtime instances
+paths:
+  /organizations:
+    get:
+      operationId: listOrganizations
+      summary: List organizations
+      description: >-
+        Lists the Apigee organizations that are available to the caller.
+        Returns a list of organization names and metadata.
+      tags:
+        - Organizations
+      responses:
+        '200':
+          description: Successful response with list of organizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createOrganization
+      summary: Create an organization
+      description: >-
+        Creates an Apigee organization. The organization is the top-level
+        container for all Apigee resources including API proxies, products,
+        developers, and environments.
+      tags:
+        - Organizations
+      parameters:
+        - name: parent
+          in: query
+          description: >-
+            Required. Name of the Google Cloud project in which to associate
+            the Apigee organization. Pass the information as a query parameter
+            using the format: projects/{project}.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        '200':
+          description: Successful response with the created organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}:
+    get:
+      operationId: getOrganization
+      summary: Get an organization
+      description: >-
+        Retrieves the properties for an Apigee organization, including
+        configuration settings, subscription type, and metadata.
+      tags:
+        - Organizations
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with organization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateOrganization
+      summary: Update an organization
+      description: >-
+        Updates the properties for an Apigee organization. No other fields
+        in the organization profile will be updated.
+      tags:
+        - Organizations
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        '200':
+          description: Successful response with updated organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteOrganization
+      summary: Delete an organization
+      description: >-
+        Deletes an Apigee organization. This is a long-running operation
+        that deletes all resources associated with the organization.
+      tags:
+        - Organizations
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/apis:
+    get:
+      operationId: listApiProxies
+      summary: List API proxies
+      description: >-
+        Lists the names of all API proxies in an organization. The list
+        includes information about the API proxy revisions available.
+      tags:
+        - API Proxies
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of API proxies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiProxiesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiProxy
+      summary: Create an API proxy
+      description: >-
+        Creates an API proxy. The API proxy created will not be accessible
+        at runtime until it is deployed to an environment. Provide the proxy
+        configuration as an API proxy bundle or as an inline configuration.
+      tags:
+        - API Proxies
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: name
+          in: query
+          description: Name of the API proxy. Must be unique within the organization.
+          required: true
+          schema:
+            type: string
+        - name: action
+          in: query
+          description: >-
+            Action to perform when importing an API proxy configuration bundle.
+            Set to "import" when uploading a ZIP bundle.
+          schema:
+            type: string
+            enum:
+              - import
+      requestBody:
+        description: API proxy bundle or configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProxy'
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Successful response with the created API proxy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxyRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /organizations/{organizationId}/apis/{apiId}:
+    get:
+      operationId: getApiProxy
+      summary: Get an API proxy
+      description: >-
+        Gets an API proxy including a list of existing revisions, the
+        proxy metadata, and the last modified date.
+      tags:
+        - API Proxies
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with API proxy details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiProxy
+      summary: Delete an API proxy
+      description: >-
+        Deletes an API proxy and all associated endpoints, policies,
+        resources, and revisions. The proxy must be undeployed from all
+        environments before it can be deleted.
+      tags:
+        - API Proxies
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: patchApiProxy
+      summary: Update an API proxy
+      description: >-
+        Updates an existing API proxy metadata such as labels. Does not
+        update the proxy bundle or revision content.
+      tags:
+        - API Proxies
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiId'
+        - name: updateMask
+          in: query
+          description: >-
+            Required. List of fields to update. Use comma-separated field
+            names from the resource. Example: "labels".
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProxy'
+      responses:
+        '200':
+          description: Successful response with updated API proxy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxy'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/apis/{apiId}/revisions:
+    get:
+      operationId: listApiProxyRevisions
+      summary: List API proxy revisions
+      description: >-
+        Lists all revisions for an API proxy. Returns an array of revision
+        numbers in string format.
+      tags:
+        - API Proxy Revisions
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with list of revision numbers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/apis/{apiId}/revisions/{revisionId}:
+    get:
+      operationId: getApiProxyRevision
+      summary: Get an API proxy revision
+      description: >-
+        Gets an API proxy revision. Returns the configuration and metadata
+        for the specified revision of an API proxy.
+      tags:
+        - API Proxy Revisions
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/revisionId'
+      responses:
+        '200':
+          description: Successful response with API proxy revision details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxyRevision'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiProxyRevision
+      summary: Delete an API proxy revision
+      description: >-
+        Deletes an API proxy revision. The revision must be undeployed
+        from all environments before it can be deleted.
+      tags:
+        - API Proxy Revisions
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/revisionId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxyRevision'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/apiproducts:
+    get:
+      operationId: listApiProducts
+      summary: List API products
+      description: >-
+        Lists all API product names for an organization. Filter the
+        list using an attribute name and value query parameter.
+      tags:
+        - API Products
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: attributename
+          in: query
+          description: Name of the attribute used to filter the search.
+          schema:
+            type: string
+        - name: attributevalue
+          in: query
+          description: Value of the attribute used to filter the search.
+          schema:
+            type: string
+        - name: expand
+          in: query
+          description: >-
+            Set to true to get expanded details about each API product.
+          schema:
+            type: boolean
+        - name: count
+          in: query
+          description: Number of API products to return in the API call.
+          schema:
+            type: integer
+            format: int64
+        - name: startKey
+          in: query
+          description: >-
+            Name of the API product from which to start displaying the
+            list of API products.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of API products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiProductsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiProduct
+      summary: Create an API product
+      description: >-
+        Creates an API product in an organization. API products bundle
+        API resources for consumption by developers. An API product can
+        contain API proxies and quota settings.
+      tags:
+        - API Products
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProduct'
+      responses:
+        '200':
+          description: Successful response with the created API product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /organizations/{organizationId}/apiproducts/{apiProductId}:
+    get:
+      operationId: getApiProduct
+      summary: Get an API product
+      description: >-
+        Gets the configuration for an API product. The API product name
+        is required in the request URL.
+      tags:
+        - API Products
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiProductId'
+      responses:
+        '200':
+          description: Successful response with API product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateApiProduct
+      summary: Update an API product
+      description: >-
+        Updates an existing API product. The full API product object must
+        be included in the request body, even if only a subset of properties
+        are being updated.
+      tags:
+        - API Products
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiProductId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProduct'
+      responses:
+        '200':
+          description: Successful response with updated API product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiProduct
+      summary: Delete an API product
+      description: >-
+        Deletes an API product from an organization. Deleting an API
+        product causes apps that are associated with the product to be
+        unable to access the API resources defined in that product.
+      tags:
+        - API Products
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/apiProductId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/developers:
+    get:
+      operationId: listDevelopers
+      summary: List developers
+      description: >-
+        Lists all developers in an organization by email address. Returns
+        a list of developer email addresses or expanded developer objects.
+      tags:
+        - Developers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: expand
+          in: query
+          description: Set to true to return expanded developer details.
+          schema:
+            type: boolean
+        - name: count
+          in: query
+          description: Number of developers to return.
+          schema:
+            type: integer
+            format: int64
+        - name: startKey
+          in: query
+          description: Email of the developer from which to start the list.
+          schema:
+            type: string
+        - name: app
+          in: query
+          description: Filter by the name of the app owned by the developer.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of developers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDevelopersResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDeveloper
+      summary: Create a developer
+      description: >-
+        Creates a developer in an organization. A developer is a consumer
+        of APIs, typically represented by a person or company who registers
+        apps and obtains API keys.
+      tags:
+        - Developers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Developer'
+      responses:
+        '200':
+          description: Successful response with the created developer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /organizations/{organizationId}/developers/{developerId}:
+    get:
+      operationId: getDeveloper
+      summary: Get a developer
+      description: >-
+        Returns the developer profile by email address or developer ID.
+        Includes information about the developer apps and custom attributes.
+      tags:
+        - Developers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+      responses:
+        '200':
+          description: Successful response with developer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateDeveloper
+      summary: Update a developer
+      description: >-
+        Updates a developer with the properties specified in the request body.
+        The full developer object must be included in the request body.
+      tags:
+        - Developers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Developer'
+      responses:
+        '200':
+          description: Successful response with updated developer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeveloper
+      summary: Delete a developer
+      description: >-
+        Deletes a developer from the organization. All apps and API keys
+        associated with the developer are also removed. All pending push
+        notifications are also deleted.
+      tags:
+        - Developers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/developers/{developerId}/apps:
+    get:
+      operationId: listDeveloperApps
+      summary: List developer apps
+      description: >-
+        Lists all apps created by a developer in an organization.
+        Returns an array of app IDs or expanded app objects.
+      tags:
+        - Developer Apps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - name: expand
+          in: query
+          description: Set to true to return full app details.
+          schema:
+            type: boolean
+        - name: count
+          in: query
+          description: Number of developer apps to return.
+          schema:
+            type: integer
+            format: int64
+        - name: startKey
+          in: query
+          description: Name of the developer app from which to start the list.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of developer apps
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeveloperAppsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDeveloperApp
+      summary: Create a developer app
+      description: >-
+        Creates an app associated with a developer. This API associates the
+        developer app with the specified API product and auto-generates an
+        API key for the app to use in calls to API proxies inside that product.
+      tags:
+        - Developer Apps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeveloperApp'
+      responses:
+        '200':
+          description: Successful response with the created developer app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperApp'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/developers/{developerId}/apps/{appId}:
+    get:
+      operationId: getDeveloperApp
+      summary: Get a developer app
+      description: >-
+        Returns the details for a developer app, including the API keys
+        and API products associated with the app.
+      tags:
+        - Developer Apps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+      responses:
+        '200':
+          description: Successful response with developer app details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperApp'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateDeveloperApp
+      summary: Update a developer app
+      description: >-
+        Updates the attributes of the developer app. This API replaces
+        the current attributes with those specified in the request body.
+      tags:
+        - Developer Apps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeveloperApp'
+      responses:
+        '200':
+          description: Successful response with updated developer app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperApp'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeveloperApp
+      summary: Delete a developer app
+      description: >-
+        Deletes a developer app. This operation also removes all API keys
+        and associations to API products for the app.
+      tags:
+        - Developer Apps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperApp'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys:
+    get:
+      operationId: listDeveloperAppKeys
+      summary: List developer app keys
+      description: >-
+        Returns a list of all API keys for a developer app, including
+        consumer keys and secrets.
+      tags:
+        - Developer App Keys
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+      responses:
+        '200':
+          description: Successful response with list of app keys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeveloperAppKeysResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDeveloperAppKey
+      summary: Create a developer app key
+      description: >-
+        Creates a custom consumer key and secret for a developer app.
+        Useful when migrating existing consumer keys and secrets to Apigee.
+      tags:
+        - Developer App Keys
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeveloperAppKey'
+      responses:
+        '200':
+          description: Successful response with the created key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}:
+    get:
+      operationId: getDeveloperAppKey
+      summary: Get a developer app key
+      description: >-
+        Returns details for a consumer key for a developer app, including
+        the key, its status, and the associated API products.
+      tags:
+        - Developer App Keys
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+        - $ref: '#/components/parameters/keyId'
+      responses:
+        '200':
+          description: Successful response with key details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateDeveloperAppKey
+      summary: Update a developer app key
+      description: >-
+        Adds an API product to a developer app key, enabling the app to
+        access the API resources bundled in the API product.
+      tags:
+        - Developer App Keys
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+        - $ref: '#/components/parameters/keyId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeveloperAppKey'
+      responses:
+        '200':
+          description: Successful response with updated key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeveloperAppKey
+      summary: Delete a developer app key
+      description: >-
+        Deletes an app's consumer key. After the consumer key is deleted,
+        it cannot be used to access any APIs.
+      tags:
+        - Developer App Keys
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/developerId'
+        - $ref: '#/components/parameters/appId'
+        - $ref: '#/components/parameters/keyId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/environments:
+    get:
+      operationId: listEnvironments
+      summary: List environments
+      description: >-
+        Lists all environments in an organization. Returns a list of
+        environment names or expanded environment objects.
+      tags:
+        - Environments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with list of environments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createEnvironment
+      summary: Create an environment
+      description: >-
+        Creates an environment in an organization. Environments provide
+        a runtime execution context for API proxies, with separate
+        settings for caches, target servers, keystores, and more.
+      tags:
+        - Environments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/environments/{environmentId}:
+    get:
+      operationId: getEnvironment
+      summary: Get an environment
+      description: >-
+        Gets the profile for an environment in an organization, including
+        properties, state, and deployment type.
+      tags:
+        - Environments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: Successful response with environment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateEnvironment
+      summary: Update an environment
+      description: >-
+        Updates an existing environment. The full environment object must be
+        included in the request body.
+      tags:
+        - Environments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+      responses:
+        '200':
+          description: Successful response with updated environment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteEnvironment
+      summary: Delete an environment
+      description: >-
+        Deletes an environment from an organization. Before deleting,
+        all API proxies must be undeployed from the environment.
+      tags:
+        - Environments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments:
+    post:
+      operationId: deployApiProxyRevision
+      summary: Deploy an API proxy revision
+      description: >-
+        Deploys a revision of an API proxy to an environment. After
+        deployment, the API proxy revision can accept requests from clients.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/revisionId'
+        - name: override
+          in: query
+          description: >-
+            Set to true to force deployment of the new revision over
+            the currently deployed revision by overriding conflict checks.
+          schema:
+            type: boolean
+        - name: sequencedRollout
+          in: query
+          description: >-
+            Set to true to enable sequenced rollout, which deploys to pods
+            in a gradual manner.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response with deployment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: undeployApiProxyRevision
+      summary: Undeploy an API proxy revision
+      description: >-
+        Undeploys an API proxy revision from an environment. After undeployment,
+        the API proxy revision will no longer accept requests from clients.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/revisionId'
+        - name: sequencedRollout
+          in: query
+          description: >-
+            Set to true to enable sequenced rollout for undeployment.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response confirming undeployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/deployments:
+    get:
+      operationId: listOrganizationDeployments
+      summary: List organization deployments
+      description: >-
+        Lists all deployments across all environments in an organization,
+        including the API proxy name, revision, and environment.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: sharedFlows
+          in: query
+          description: >-
+            Set to true to return shared flow deployments instead of API proxy
+            deployments.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful response with list of deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/environments/{environmentId}/targetservers:
+    get:
+      operationId: listTargetServers
+      summary: List target servers
+      description: >-
+        Lists all target servers in the specified environment of an
+        organization. Target servers define backend service endpoints.
+      tags:
+        - Target Servers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: Successful response with list of target servers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createTargetServer
+      summary: Create a target server
+      description: >-
+        Creates a target server in the specified environment. Target servers
+        decouple TargetEndpoint configurations from concrete backend URLs.
+      tags:
+        - Target Servers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetServer'
+      responses:
+        '200':
+          description: Successful response with the created target server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetServer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}:
+    get:
+      operationId: getTargetServer
+      summary: Get a target server
+      description: >-
+        Gets the configuration of a target server in the specified environment.
+      tags:
+        - Target Servers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/targetServerId'
+      responses:
+        '200':
+          description: Successful response with target server details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetServer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateTargetServer
+      summary: Update a target server
+      description: >-
+        Updates an existing target server in the specified environment. The
+        full target server object must be included in the request body.
+      tags:
+        - Target Servers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/targetServerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetServer'
+      responses:
+        '200':
+          description: Successful response with updated target server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetServer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTargetServer
+      summary: Delete a target server
+      description: >-
+        Deletes a target server from an environment.
+      tags:
+        - Target Servers
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+        - $ref: '#/components/parameters/targetServerId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetServer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps:
+    get:
+      operationId: listKeyValueMaps
+      summary: List key value maps
+      description: >-
+        Lists the key value maps in the specified environment.
+      tags:
+        - Key Value Maps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: Successful response with list of key value map names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createKeyValueMap
+      summary: Create a key value map
+      description: >-
+        Creates a key value map in the specified environment. Key value
+        maps store data for retrieval at runtime by policies.
+      tags:
+        - Key Value Maps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyValueMap'
+      responses:
+        '200':
+          description: Successful response with the created key value map
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyValueMap'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}:
+    delete:
+      operationId: deleteKeyValueMap
+      summary: Delete a key value map
+      description: >-
+        Deletes a key value map from the specified environment.
+      tags:
+        - Key Value Maps
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+        - name: keyValueMapId
+          in: path
+          description: Name of the key value map.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyValueMap'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/sharedflows:
+    get:
+      operationId: listSharedFlows
+      summary: List shared flows
+      description: >-
+        Lists all shared flows in an organization. Shared flows contain
+        reusable logic that can be invoked from API proxy flows.
+      tags:
+        - Shared Flows
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with list of shared flows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSharedFlowsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createSharedFlow
+      summary: Create a shared flow
+      description: >-
+        Uploads a ZIP-formatted shared flow configuration bundle. The bundle
+        is imported into the organization as a new shared flow.
+      tags:
+        - Shared Flows
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: name
+          in: query
+          description: Name of the shared flow. Must be unique within the organization.
+          required: true
+          schema:
+            type: string
+        - name: action
+          in: query
+          description: Set to "import" when uploading a ZIP bundle.
+          schema:
+            type: string
+            enum:
+              - import
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Successful response with the created shared flow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedFlowRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/sharedflows/{sharedFlowId}:
+    get:
+      operationId: getSharedFlow
+      summary: Get a shared flow
+      description: >-
+        Gets a shared flow including a list of existing revisions.
+      tags:
+        - Shared Flows
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/sharedFlowId'
+      responses:
+        '200':
+          description: Successful response with shared flow details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedFlow'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSharedFlow
+      summary: Delete a shared flow
+      description: >-
+        Deletes a shared flow and all associated policies, resources,
+        and revisions. The shared flow must be undeployed from all environments.
+      tags:
+        - Shared Flows
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/sharedFlowId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedFlow'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}:
+    get:
+      operationId: getEnvironmentStats
+      summary: Get environment statistics
+      description: >-
+        Retrieves metrics for API proxy performance in an environment.
+        Provides traffic, latency, error counts, and other analytics data
+        across specified time ranges.
+      tags:
+        - Analytics
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/environmentId'
+        - name: dimensionName
+          in: path
+          description: >-
+            Name of the dimension to query. Common values include apiproxy,
+            developer_email, developer_app, access_token, and others.
+          required: true
+          schema:
+            type: string
+        - name: select
+          in: query
+          description: >-
+            Comma-separated list of metrics. Example: sum(message_count),
+            avg(total_response_time).
+          required: true
+          schema:
+            type: string
+        - name: timeRange
+          in: query
+          description: >-
+            Time range for the query in the format MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM.
+          required: true
+          schema:
+            type: string
+        - name: timeUnit
+          in: query
+          description: Granularity of the time series (second, minute, hour, day, week, month).
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+        - name: sortby
+          in: query
+          description: Comma-separated list of columns to sort the results.
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Sort order (ASC or DESC).
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+        - name: topk
+          in: query
+          description: Return the top k results.
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Maximum number of records to return.
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: Offset for pagination.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response with analytics data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/analytics/datastores:
+    get:
+      operationId: listDatastores
+      summary: List analytics data stores
+      description: >-
+        Lists the data stores available for exporting analytics data.
+      tags:
+        - Analytics
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with list of data stores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDatastoresResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDatastore
+      summary: Create an analytics data store
+      description: >-
+        Creates a data store for exporting analytics data from an
+        organization.
+      tags:
+        - Analytics
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Datastore'
+      responses:
+        '200':
+          description: Successful response with the created data store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Datastore'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/appgroups:
+    get:
+      operationId: listAppGroups
+      summary: List app groups
+      description: >-
+        Lists all app groups in an organization. App groups organize
+        developers and their applications.
+      tags:
+        - App Groups
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of app groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAppGroupsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createAppGroup
+      summary: Create an app group
+      description: >-
+        Creates an app group in an organization. App groups provide a
+        way to organize developers and their applications.
+      tags:
+        - App Groups
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppGroup'
+      responses:
+        '200':
+          description: Successful response with the created app group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/appgroups/{appGroupId}:
+    get:
+      operationId: getAppGroup
+      summary: Get an app group
+      description: >-
+        Returns the app group details for a specified app group.
+      tags:
+        - App Groups
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: appGroupId
+          in: path
+          description: Name of the app group.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with app group details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAppGroup
+      summary: Update an app group
+      description: >-
+        Updates an app group. The full app group object must be included
+        in the request body.
+      tags:
+        - App Groups
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: appGroupId
+          in: path
+          description: Name of the app group.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppGroup'
+      responses:
+        '200':
+          description: Successful response with updated app group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAppGroup
+      summary: Delete an app group
+      description: >-
+        Deletes an app group from an organization.
+      tags:
+        - App Groups
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: appGroupId
+          in: path
+          description: Name of the app group.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/instances:
+    get:
+      operationId: listInstances
+      summary: List runtime instances
+      description: >-
+        Lists all Apigee runtime instances for the organization.
+      tags:
+        - Instances
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of instances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInstancesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createInstance
+      summary: Create a runtime instance
+      description: >-
+        Creates an Apigee runtime instance. This is a long-running
+        operation that provisions the infrastructure for API runtime.
+      tags:
+        - Instances
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Instance'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/instances/{instanceId}:
+    get:
+      operationId: getInstance
+      summary: Get a runtime instance
+      description: >-
+        Gets the details for an Apigee runtime instance, including
+        state, host, port, and location.
+      tags:
+        - Instances
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: instanceId
+          in: path
+          description: Name of the runtime instance.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with instance details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteInstance
+      summary: Delete a runtime instance
+      description: >-
+        Deletes an Apigee runtime instance. This is a long-running
+        operation that deprovisions the runtime infrastructure.
+      tags:
+        - Instances
+      parameters:
+        - $ref: '#/components/parameters/organizationId'
+        - name: instanceId
+          in: path
+          description: Name of the runtime instance.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: Name of the API proxy.
+      required: true
+      schema:
+        type: string
+    revisionId:
+      name: revisionId
+      in: path
+      description: Revision number of the API proxy.
+      required: true
+      schema:
+        type: string
+    apiProductId:
+      name: apiProductId
+      in: path
+      description: Name of the API product.
+      required: true
+      schema:
+        type: string
+    developerId:
+      name: developerId
+      in: path
+      description: Email address or ID of the developer.
+      required: true
+      schema:
+        type: string
+    appId:
+      name: appId
+      in: path
+      description: Name of the developer app.
+      required: true
+      schema:
+        type: string
+    keyId:
+      name: keyId
+      in: path
+      description: Consumer key of the developer app.
+      required: true
+      schema:
+        type: string
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
+      required: true
+      schema:
+        type: string
+    targetServerId:
+      name: targetServerId
+      in: path
+      description: Name of the target server.
+      required: true
+      schema:
+        type: string
+    sharedFlowId:
+      name: sharedFlowId
+      in: path
+      description: Name of the shared flow.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+  schemas:
+    Organization:
+      type: object
+      description: Represents an Apigee organization.
+      properties:
+        name:
+          type: string
+          description: Output only. Name of the Apigee organization.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the organization.
+        description:
+          type: string
+          description: Description of the organization.
+        projectId:
+          type: string
+          description: Output only. Project ID associated with the organization.
+          readOnly: true
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the organization was created in milliseconds since epoch.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the organization was last modified in milliseconds since epoch.
+          readOnly: true
+        subscriptionType:
+          type: string
+          description: Output only. Subscription type of the organization.
+          readOnly: true
+          enum:
+            - SUBSCRIPTION_TYPE_UNSPECIFIED
+            - PAID
+            - TRIAL
+        state:
+          type: string
+          description: Output only. State of the organization.
+          readOnly: true
+          enum:
+            - STATE_UNSPECIFIED
+            - CREATING
+            - ACTIVE
+            - DELETING
+            - UPDATING
+        analyticsRegion:
+          type: string
+          description: Required. Primary Google Cloud region for analytics data storage.
+        runtimeType:
+          type: string
+          description: Required. Runtime type of the Apigee organization.
+          enum:
+            - RUNTIME_TYPE_UNSPECIFIED
+            - CLOUD
+            - HYBRID
+        authorizedNetwork:
+          type: string
+          description: VPC network used for service networking.
+        environments:
+          type: array
+          description: Output only. List of environments in the organization.
+          readOnly: true
+          items:
+            type: string
+        properties:
+          $ref: '#/components/schemas/Properties'
+        billingType:
+          type: string
+          description: Billing type of the organization.
+          enum:
+            - BILLING_TYPE_UNSPECIFIED
+            - SUBSCRIPTION
+            - EVALUATION
+            - PAYG
+    ApiProxy:
+      type: object
+      description: Metadata about an API proxy.
+      properties:
+        name:
+          type: string
+          description: Output only. Name of the API proxy.
+          readOnly: true
+        revision:
+          type: array
+          description: Output only. List of revisions defined for the API proxy.
+          readOnly: true
+          items:
+            type: string
+        latestRevisionId:
+          type: string
+          description: Output only. The ID of the most recently created revision.
+          readOnly: true
+        metaData:
+          $ref: '#/components/schemas/EntityMetadata'
+        labels:
+          type: object
+          description: User-defined labels for organizing API proxies.
+          additionalProperties:
+            type: string
+        readOnly:
+          type: boolean
+          description: Output only. Whether this proxy is read-only.
+          readOnly: true
+        apiProxyType:
+          type: string
+          description: Type of the API proxy.
+          enum:
+            - API_PROXY_TYPE_UNSPECIFIED
+            - PROGRAMMABLE
+            - CONFIGURABLE
+    ApiProxyRevision:
+      type: object
+      description: API proxy revision metadata and configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the API proxy revision.
+          readOnly: true
+        revision:
+          type: string
+          description: Output only. Revision number of the proxy.
+          readOnly: true
+        displayName:
+          type: string
+          description: Human-readable name of the API proxy.
+        description:
+          type: string
+          description: Description of the API proxy revision.
+        createdAt:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was last modified.
+          readOnly: true
+        basepaths:
+          type: array
+          description: Base path(s) for the API proxy.
+          items:
+            type: string
+        policies:
+          type: array
+          description: List of policy names included in this revision.
+          items:
+            type: string
+        resources:
+          type: array
+          description: List of resource files included in this revision.
+          items:
+            type: string
+        proxies:
+          type: array
+          description: List of proxy endpoint names in this revision.
+          items:
+            type: string
+        targets:
+          type: array
+          description: List of target endpoint names in this revision.
+          items:
+            type: string
+        sharedFlows:
+          type: array
+          description: List of shared flows referenced by this revision.
+          items:
+            type: string
+        type:
+          type: string
+          description: The type of the revision (e.g., Application).
+    ApiProduct:
+      type: object
+      description: An API product bundles API resources for consumption.
+      properties:
+        name:
+          type: string
+          description: Internal name of the API product. Must be unique.
+        displayName:
+          type: string
+          description: Name displayed in the developer portal.
+        description:
+          type: string
+          description: Description of the API product.
+        approvalType:
+          type: string
+          description: How API keys are approved for the product.
+          enum:
+            - manual
+            - auto
+        attributes:
+          type: array
+          description: Custom attributes for the API product (max 18).
+          items:
+            $ref: '#/components/schemas/Attribute'
+        environments:
+          type: array
+          description: Environments where this product is available.
+          items:
+            type: string
+        proxies:
+          type: array
+          description: API proxies included in this product.
+          items:
+            type: string
+        scopes:
+          type: array
+          description: OAuth scopes associated with the product.
+          items:
+            type: string
+        quota:
+          type: string
+          description: Number of requests permitted per quota interval.
+        quotaInterval:
+          type: string
+          description: Time interval over which the quota is applied.
+        quotaTimeUnit:
+          type: string
+          description: Time unit for the quota interval.
+          enum:
+            - minute
+            - hour
+            - day
+            - month
+        operationGroup:
+          $ref: '#/components/schemas/OperationGroup'
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Unix time when the product was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Unix time when the product was last modified.
+          readOnly: true
+    Developer:
+      type: object
+      description: A developer registered in an Apigee organization.
+      properties:
+        email:
+          type: string
+          format: email
+          description: >-
+            Required. Email address of the developer. Used as the unique
+            identifier for the developer.
+        firstName:
+          type: string
+          description: Required. First name of the developer.
+        lastName:
+          type: string
+          description: Required. Last name of the developer.
+        userName:
+          type: string
+          description: Required. User name of the developer.
+        developerId:
+          type: string
+          description: Output only. ID of the developer.
+          readOnly: true
+        organizationName:
+          type: string
+          description: Output only. Name of the Apigee organization.
+          readOnly: true
+        status:
+          type: string
+          description: Status of the developer. Valid values are active or inactive.
+        apps:
+          type: array
+          description: Output only. List of apps owned by the developer.
+          readOnly: true
+          items:
+            type: string
+        attributes:
+          type: array
+          description: Custom attributes for the developer (max 18).
+          items:
+            $ref: '#/components/schemas/Attribute'
+        companies:
+          type: array
+          description: Output only. Companies associated with the developer.
+          readOnly: true
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the developer was created in milliseconds since epoch.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the developer was last modified in milliseconds since epoch.
+          readOnly: true
+        accessType:
+          type: string
+          description: Access type of the developer.
+      required:
+        - email
+        - firstName
+        - lastName
+        - userName
+    DeveloperApp:
+      type: object
+      description: A developer app that is associated with a developer.
+      properties:
+        name:
+          type: string
+          description: Name of the developer app.
+        appId:
+          type: string
+          description: Output only. ID of the developer app.
+          readOnly: true
+        developerId:
+          type: string
+          description: Output only. Developer ID of the owning developer.
+          readOnly: true
+        apiProducts:
+          type: array
+          description: List of API products associated with the app.
+          items:
+            type: string
+        attributes:
+          type: array
+          description: Custom attributes for the developer app.
+          items:
+            $ref: '#/components/schemas/Attribute'
+        callbackUrl:
+          type: string
+          description: Callback URL used by OAuth 2.0 authorization servers.
+        credentials:
+          type: array
+          description: Output only. Credentials (API keys) for the app.
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/DeveloperAppKey'
+        status:
+          type: string
+          description: Status of the developer app (approved or revoked).
+        scopes:
+          type: array
+          description: OAuth scopes associated with the app.
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the app was created in milliseconds since epoch.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the app was last modified.
+          readOnly: true
+    DeveloperAppKey:
+      type: object
+      description: Consumer key and secret for a developer app.
+      properties:
+        consumerKey:
+          type: string
+          description: Consumer key (API key) for the developer app.
+        consumerSecret:
+          type: string
+          description: Consumer secret for the developer app.
+        apiProducts:
+          type: array
+          description: API products associated with this key.
+          items:
+            type: object
+            properties:
+              apiproduct:
+                type: string
+                description: Name of the API product.
+              status:
+                type: string
+                description: Approval status (approved, pending, revoked).
+        status:
+          type: string
+          description: Status of the credential (approved or revoked).
+        expiresAt:
+          type: string
+          format: int64
+          description: Time the key expires in milliseconds since epoch. -1 means never.
+        issuedAt:
+          type: string
+          format: int64
+          description: Output only. Time the key was issued in milliseconds since epoch.
+          readOnly: true
+        scopes:
+          type: array
+          description: OAuth scopes granted to the key.
+          items:
+            type: string
+        attributes:
+          type: array
+          description: Custom attributes for the key.
+          items:
+            $ref: '#/components/schemas/Attribute'
+    Environment:
+      type: object
+      description: An environment in an Apigee organization for API proxy deployment.
+      properties:
+        name:
+          type: string
+          description: Required. Name of the environment.
+        displayName:
+          type: string
+          description: Display name for the environment.
+        description:
+          type: string
+          description: Description of the environment.
+        state:
+          type: string
+          description: Output only. State of the environment.
+          readOnly: true
+          enum:
+            - STATE_UNSPECIFIED
+            - CREATING
+            - ACTIVE
+            - DELETING
+            - UPDATING
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Creation time in milliseconds since epoch.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Last modification time.
+          readOnly: true
+        deploymentType:
+          type: string
+          description: Deployment type of the environment.
+          enum:
+            - DEPLOYMENT_TYPE_UNSPECIFIED
+            - PROXY
+            - ARCHIVE
+        apiProxyType:
+          type: string
+          description: Type of API proxies deployed in this environment.
+          enum:
+            - API_PROXY_TYPE_UNSPECIFIED
+            - PROGRAMMABLE
+            - CONFIGURABLE
+        properties:
+          $ref: '#/components/schemas/Properties'
+        nodeConfig:
+          $ref: '#/components/schemas/NodeConfig'
+        forwardProxyUri:
+          type: string
+          description: Optional forward proxy URI for the environment.
+        type:
+          type: string
+          description: Type of the environment.
+          enum:
+            - ENVIRONMENT_TYPE_UNSPECIFIED
+            - BASE
+            - INTERMEDIATE
+            - COMPREHENSIVE
+    Deployment:
+      type: object
+      description: Represents a deployment of an API proxy revision to an environment.
+      properties:
+        environment:
+          type: string
+          description: Environment where the proxy is deployed.
+        apiProxy:
+          type: string
+          description: API proxy name.
+        revision:
+          type: string
+          description: API proxy revision number.
+        deployStartTime:
+          type: string
+          format: date-time
+          description: Time the deployment was initiated.
+        state:
+          type: string
+          description: Current state of the deployment.
+          enum:
+            - RUNTIME_STATE_UNSPECIFIED
+            - READY
+            - PROGRESSING
+            - ERROR
+        pods:
+          type: array
+          description: Status reported by individual runtime pods.
+          items:
+            $ref: '#/components/schemas/PodStatus'
+        routeConflicts:
+          type: array
+          description: Conflicts with other deployments that share the same base path.
+          items:
+            type: object
+            properties:
+              deployedRevision:
+                type: string
+              environmentGroup:
+                type: string
+    TargetServer:
+      type: object
+      description: Configuration for a backend target server.
+      properties:
+        name:
+          type: string
+          description: Required. Name of the target server.
+        host:
+          type: string
+          description: Required. Hostname or IP address of the backend service.
+        port:
+          type: integer
+          format: int32
+          description: Required. Port number of the backend service.
+        isEnabled:
+          type: boolean
+          description: Whether the target server is enabled.
+        protocol:
+          type: string
+          description: Protocol used to communicate with the target.
+          enum:
+            - HTTP
+            - HTTP2
+            - GRPC_TARGET
+            - GRPC
+            - EXTERNAL_CALLOUT
+        sSLInfo:
+          $ref: '#/components/schemas/TlsInfo'
+        description:
+          type: string
+          description: Optional description of the target server.
+      required:
+        - name
+        - host
+        - port
+    KeyValueMap:
+      type: object
+      description: A key value map used for runtime data storage.
+      properties:
+        name:
+          type: string
+          description: Required. Name of the key value map.
+        encrypted:
+          type: boolean
+          description: Whether the values in the map are encrypted.
+    SharedFlow:
+      type: object
+      description: A reusable shared flow containing common logic.
+      properties:
+        name:
+          type: string
+          description: Output only. Name of the shared flow.
+          readOnly: true
+        revision:
+          type: array
+          description: Output only. List of revisions for the shared flow.
+          readOnly: true
+          items:
+            type: string
+        latestRevisionId:
+          type: string
+          description: Output only. ID of the latest revision.
+          readOnly: true
+        metaData:
+          $ref: '#/components/schemas/EntityMetadata'
+    SharedFlowRevision:
+      type: object
+      description: Metadata and details for a specific shared flow revision.
+      properties:
+        name:
+          type: string
+          description: Resource name of the shared flow revision.
+        revision:
+          type: string
+          description: Revision number.
+        displayName:
+          type: string
+          description: Human-readable name.
+        description:
+          type: string
+          description: Description of the revision.
+        createdAt:
+          type: string
+          format: date-time
+          description: Time the revision was created.
+        lastModifiedAt:
+          type: string
+          format: date-time
+          description: Time the revision was last modified.
+        policies:
+          type: array
+          description: List of policies in the shared flow.
+          items:
+            type: string
+        resources:
+          type: array
+          description: List of resource files.
+          items:
+            type: string
+        sharedFlows:
+          type: array
+          description: List of referenced shared flows.
+          items:
+            type: string
+    AppGroup:
+      type: object
+      description: A group of developers and their applications.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the app group.
+          readOnly: true
+        appGroupId:
+          type: string
+          description: Output only. Internal ID of the app group.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name of the app group.
+        channelUri:
+          type: string
+          description: URI of the communication channel for the group.
+        channelId:
+          type: string
+          description: Channel ID for the group.
+        status:
+          type: string
+          description: Status of the app group.
+        attributes:
+          type: array
+          description: Custom attributes for the app group.
+          items:
+            $ref: '#/components/schemas/Attribute'
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the app group was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the app group was last modified.
+          readOnly: true
+    Instance:
+      type: object
+      description: An Apigee runtime instance.
+      properties:
+        name:
+          type: string
+          description: Required. Resource name of the instance.
+        location:
+          type: string
+          description: Required. Google Cloud region where the instance resides.
+        host:
+          type: string
+          description: Output only. Internal hostname of the instance.
+          readOnly: true
+        port:
+          type: string
+          description: Output only. Port number of the instance.
+          readOnly: true
+        state:
+          type: string
+          description: Output only. State of the instance.
+          readOnly: true
+          enum:
+            - STATE_UNSPECIFIED
+            - CREATING
+            - ACTIVE
+            - DELETING
+            - UPDATING
+        description:
+          type: string
+          description: Description of the instance.
+        displayName:
+          type: string
+          description: Display name for the instance.
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the instance was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the instance was last modified.
+          readOnly: true
+        diskEncryptionKeyName:
+          type: string
+          description: Customer-managed encryption key (CMEK) for the instance disk.
+        ipRange:
+          type: string
+          description: IP range for peering with the customer VPC.
+        peeringCidrRange:
+          type: string
+          description: Size of the CIDR block range for peering.
+          enum:
+            - SLASH_16
+            - SLASH_20
+            - SLASH_22
+            - SLASH_23
+            - SLASH_24
+    Datastore:
+      type: object
+      description: Configuration for an analytics data store.
+      properties:
+        displayName:
+          type: string
+          description: Required. Display name for the data store.
+        self:
+          type: string
+          description: Output only. Resource URI of the data store.
+          readOnly: true
+        org:
+          type: string
+          description: Output only. Organization associated with the data store.
+          readOnly: true
+        targetType:
+          type: string
+          description: Required. Type of target for data export.
+        datastoreConfig:
+          type: object
+          description: Configuration for the data store target.
+          properties:
+            projectId:
+              type: string
+              description: Google Cloud project ID.
+            bucketName:
+              type: string
+              description: Cloud Storage bucket name.
+            path:
+              type: string
+              description: Path within the bucket.
+            datasetName:
+              type: string
+              description: BigQuery dataset name.
+            tablePrefix:
+              type: string
+              description: Prefix for BigQuery table names.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the data store was created.
+          readOnly: true
+        lastUpdateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the data store was last updated.
+          readOnly: true
+    Stats:
+      type: object
+      description: Analytics statistics response.
+      properties:
+        environments:
+          type: array
+          description: List of environment statistics.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              dimensions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    metrics:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          values:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                timestamp:
+                                  type: string
+                                value:
+                                  type: string
+        metaData:
+          type: object
+          description: Metadata about the statistics response.
+          properties:
+            errors:
+              type: array
+              items:
+                type: string
+            notices:
+              type: array
+              items:
+                type: string
+    Attribute:
+      type: object
+      description: A key-value pair used for custom attributes.
+      properties:
+        name:
+          type: string
+          description: Name of the attribute.
+        value:
+          type: string
+          description: Value of the attribute.
+    EntityMetadata:
+      type: object
+      description: Metadata common to Apigee entities.
+      properties:
+        createdAt:
+          type: string
+          format: int64
+          description: Time the entity was created in milliseconds since epoch.
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Time the entity was last modified in milliseconds since epoch.
+        subType:
+          type: string
+          description: Subtype of the entity.
+    Properties:
+      type: object
+      description: A collection of key-value property pairs.
+      properties:
+        property:
+          type: array
+          description: List of properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+    OperationGroup:
+      type: object
+      description: Groups operations for access control on an API product.
+      properties:
+        operationConfigs:
+          type: array
+          description: List of operation configurations.
+          items:
+            $ref: '#/components/schemas/OperationConfig'
+        operationConfigType:
+          type: string
+          description: Type of operation configuration.
+    OperationConfig:
+      type: object
+      description: Configuration for a set of operations on an API proxy.
+      properties:
+        apiSource:
+          type: string
+          description: Name of the API proxy this config applies to.
+        operations:
+          type: array
+          description: List of operations.
+          items:
+            type: object
+            properties:
+              resource:
+                type: string
+                description: REST resource path.
+              methods:
+                type: array
+                description: HTTP methods allowed.
+                items:
+                  type: string
+        quota:
+          type: object
+          description: Quota settings for this operation config.
+          properties:
+            limit:
+              type: string
+            interval:
+              type: string
+            timeUnit:
+              type: string
+        attributes:
+          type: array
+          description: Custom attributes for this config.
+          items:
+            $ref: '#/components/schemas/Attribute'
+    NodeConfig:
+      type: object
+      description: Runtime node configuration for an environment.
+      properties:
+        minNodeCount:
+          type: string
+          format: int64
+          description: Minimum number of gateway nodes.
+        maxNodeCount:
+          type: string
+          format: int64
+          description: Maximum number of gateway nodes.
+        currentAggregateNodeCount:
+          type: string
+          format: int64
+          description: Output only. Current total number of gateway nodes.
+          readOnly: true
+    TlsInfo:
+      type: object
+      description: TLS configuration for a target server.
+      properties:
+        enabled:
+          type: boolean
+          description: Whether TLS is enabled.
+        clientAuthEnabled:
+          type: boolean
+          description: Whether client authentication is required.
+        keyStore:
+          type: string
+          description: Name of the keystore.
+        keyAlias:
+          type: string
+          description: Name of the key alias.
+        trustStore:
+          type: string
+          description: Name of the truststore.
+        protocols:
+          type: array
+          description: Supported TLS protocols.
+          items:
+            type: string
+        ciphers:
+          type: array
+          description: Supported cipher suites.
+          items:
+            type: string
+        commonName:
+          type: object
+          description: Common name configuration.
+          properties:
+            value:
+              type: string
+            wildcardMatch:
+              type: boolean
+    PodStatus:
+      type: object
+      description: Status of a runtime pod.
+      properties:
+        podName:
+          type: string
+          description: Name of the pod.
+        podStatus:
+          type: string
+          description: Current status of the pod.
+        podStatusTime:
+          type: string
+          description: Time the status was last reported.
+        deploymentStatus:
+          type: string
+          description: Deployment status within the pod.
+        deploymentStatusTime:
+          type: string
+          description: Time the deployment status was reported.
+        deploymentTime:
+          type: string
+          description: Time the deployment was last updated in the pod.
+        appVersion:
+          type: string
+          description: Version of the app running in the pod.
+        statusCode:
+          type: string
+          description: Status code.
+        statusCodeDetails:
+          type: string
+          description: Human-readable details for the status code.
+    Operation:
+      type: object
+      description: A long-running operation returned by asynchronous API calls.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata associated with the operation.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    ListOrganizationsResponse:
+      type: object
+      description: Response for listing organizations.
+      properties:
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+    ListApiProxiesResponse:
+      type: object
+      description: Response for listing API proxies.
+      properties:
+        proxies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiProxy'
+    ListApiProductsResponse:
+      type: object
+      description: Response for listing API products.
+      properties:
+        apiProduct:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiProduct'
+    ListDevelopersResponse:
+      type: object
+      description: Response for listing developers.
+      properties:
+        developer:
+          type: array
+          items:
+            $ref: '#/components/schemas/Developer'
+    ListDeveloperAppsResponse:
+      type: object
+      description: Response for listing developer apps.
+      properties:
+        app:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeveloperApp'
+    ListDeveloperAppKeysResponse:
+      type: object
+      description: Response for listing developer app keys.
+      properties:
+        developerAppKey:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeveloperAppKey'
+    ListDeploymentsResponse:
+      type: object
+      description: Response for listing deployments.
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+    ListSharedFlowsResponse:
+      type: object
+      description: Response for listing shared flows.
+      properties:
+        sharedFlows:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedFlow'
+    ListAppGroupsResponse:
+      type: object
+      description: Response for listing app groups.
+      properties:
+        appGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppGroup'
+        nextPageToken:
+          type: string
+          description: Token for retrieving the next page.
+        totalSize:
+          type: integer
+          format: int32
+          description: Total number of app groups.
+    ListInstancesResponse:
+      type: object
+      description: Response for listing instances.
+      properties:
+        instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instance'
+        nextPageToken:
+          type: string
+          description: Token for retrieving the next page.
+    ListDatastoresResponse:
+      type: object
+      description: Response for listing data stores.
+      properties:
+        datastores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Datastore'
+  responses:
+    BadRequest:
+      description: >-
+        Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: >-
+        Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: >-
+        Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: >-
+        Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: >-
+        Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

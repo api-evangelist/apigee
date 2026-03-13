@@ -1,0 +1,1934 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub API
+  description: >-
+    API for cataloging, organizing, and governing APIs across an organization.
+    Enables API discovery, metadata management, dependency mapping, deployment
+    tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+servers:
+  - url: https://apihub.googleapis.com/v1
+    description: Apigee API Hub Production Server
+security:
+  - oauth2: []
+tags:
+  - name: APIs
+    description: Manage API definitions in the hub
+  - name: Versions
+    description: Manage API versions
+  - name: Specs
+    description: Manage API specifications
+  - name: Operations
+    description: Manage API operations
+  - name: Deployments
+    description: Manage API deployments
+  - name: Dependencies
+    description: Track API dependencies
+  - name: Attributes
+    description: Manage custom attributes
+  - name: External APIs
+    description: Manage external API references
+  - name: Plugins
+    description: Manage API Hub plugins
+  - name: Runtime Project Attachments
+    description: Manage runtime project attachments
+  - name: Locations
+    description: Manage project locations and search resources
+paths:
+  /projects/{projectId}/locations/{locationId}/apis:
+    get:
+      operationId: listApis
+      summary: List APIs
+      description: >-
+        Lists all APIs in the specified project and location. Returns
+        API metadata including name, display name, and description.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of APIs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApisResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApi
+      summary: Create an API
+      description: >-
+        Creates a new API resource in the API Hub. The API represents a
+        logical grouping of related API versions and specifications.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: apiId
+          in: query
+          description: >-
+            Required. The ID to use for the API resource, which will become
+            the final component of the API's resource name.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api'
+      responses:
+        '200':
+          description: Successful response with the created API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}:
+    get:
+      operationId: getApi
+      summary: Get an API
+      description: >-
+        Retrieves details of a specific API resource, including its
+        display name, description, owner, and associated metadata.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with API details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApi
+      summary: Update an API
+      description: >-
+        Updates an existing API resource in the API Hub. Use the updateMask
+        field to specify which fields to update.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - name: updateMask
+          in: query
+          description: >-
+            Required. The list of fields to update. Use comma-separated field names.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api'
+      responses:
+        '200':
+          description: Successful response with updated API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApi
+      summary: Delete an API
+      description: >-
+        Deletes an API resource and all its child resources (versions,
+        specs, operations) from the API Hub.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions:
+    get:
+      operationId: listApiVersions
+      summary: List API versions
+      description: >-
+        Lists all versions of an API in the API Hub. Versions represent
+        different releases or iterations of an API.
+      tags:
+        - Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of API versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiVersionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiVersion
+      summary: Create an API version
+      description: >-
+        Creates a new version for an API in the API Hub. A version
+        represents a specific release of the API.
+      tags:
+        - Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - name: versionId
+          in: query
+          description: >-
+            Required. The ID to use for the version, which will become the
+            final component of the version's resource name.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiVersion'
+      responses:
+        '200':
+          description: Successful response with the created version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}:
+    get:
+      operationId: getApiVersion
+      summary: Get an API version
+      description: >-
+        Gets details about a specific API version, including its display
+        name, description, lifecycle state, and compliance status.
+      tags:
+        - Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response with version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApiVersion
+      summary: Update an API version
+      description: >-
+        Updates an existing API version. Use updateMask to specify fields.
+      tags:
+        - Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiVersion'
+      responses:
+        '200':
+          description: Successful response with updated version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiVersion
+      summary: Delete an API version
+      description: >-
+        Deletes an API version and all its child resources (specs, operations).
+      tags:
+        - Versions
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs:
+    get:
+      operationId: listApiSpecs
+      summary: List API specifications
+      description: >-
+        Lists all specifications for an API version. Specs are machine-readable
+        API definitions such as OpenAPI or Protocol Buffer files.
+      tags:
+        - Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of specs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiSpecsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiSpec
+      summary: Create an API specification
+      description: >-
+        Creates a new specification for an API version. Specifications
+        are machine-readable definitions of the API.
+      tags:
+        - Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - name: specId
+          in: query
+          description: Required. The ID to use for the spec resource.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with the created spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:
+    get:
+      operationId: getApiSpec
+      summary: Get an API specification
+      description: >-
+        Gets details about a specific API specification, including metadata
+        about the spec type, parsing mode, and lint results.
+      tags:
+        - Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApiSpec
+      summary: Update an API specification
+      description: >-
+        Updates an existing API specification. Use updateMask to specify fields.
+      tags:
+        - Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with updated spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiSpec
+      summary: Delete an API specification
+      description: >-
+        Deletes an API specification from the API Hub.
+      tags:
+        - Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents:
+    get:
+      operationId: getApiSpecContents
+      summary: Get API specification contents
+      description: >-
+        Retrieves the raw contents of an API specification file such as
+        an OpenAPI document or Protocol Buffer definition.
+      tags:
+        - Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec contents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:lint:
+    post:
+      operationId: lintApiSpec
+      summary: Lint an API specification
+      description: >-
+        Validates an API specification against style and correctness rules.
+        Returns linting results with warnings and errors.
+      tags:
+        - Specs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/apiId'
+        - $ref: '#/components/parameters/versionId'
+        - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with lint operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/deployments:
+    get:
+      operationId: listDeployments
+      summary: List deployments
+      description: >-
+        Lists all API deployments in the specified project and location.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDeployment
+      summary: Create a deployment
+      description: >-
+        Creates a new deployment record in the API Hub to track where
+        an API version is deployed.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: deploymentId
+          in: query
+          description: Required. The ID to use for the deployment resource.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deployment'
+      responses:
+        '200':
+          description: Successful response with the created deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}:
+    get:
+      operationId: getDeployment
+      summary: Get a deployment
+      description: >-
+        Retrieves details about a specific API deployment.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/deploymentId'
+      responses:
+        '200':
+          description: Successful response with deployment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateDeployment
+      summary: Update a deployment
+      description: >-
+        Updates an existing deployment record.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/deploymentId'
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deployment'
+      responses:
+        '200':
+          description: Successful response with updated deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeployment
+      summary: Delete a deployment
+      description: >-
+        Deletes a deployment record from the API Hub.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/deploymentId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/dependencies:
+    get:
+      operationId: listDependencies
+      summary: List dependencies
+      description: >-
+        Lists all API dependencies in the specified project and location.
+        Dependencies represent relationships between APIs.
+      tags:
+        - Dependencies
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of dependencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDependenciesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDependency
+      summary: Create a dependency
+      description: >-
+        Creates a new dependency between APIs in the API Hub.
+      tags:
+        - Dependencies
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: dependencyId
+          in: query
+          description: Required. The ID to use for the dependency resource.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dependency'
+      responses:
+        '200':
+          description: Successful response with the created dependency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}:
+    get:
+      operationId: getDependency
+      summary: Get a dependency
+      description: >-
+        Retrieves details about a specific API dependency.
+      tags:
+        - Dependencies
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: dependencyId
+          in: path
+          description: ID of the dependency resource.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with dependency details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateDependency
+      summary: Update a dependency
+      description: >-
+        Updates an existing API dependency.
+      tags:
+        - Dependencies
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: dependencyId
+          in: path
+          description: ID of the dependency resource.
+          required: true
+          schema:
+            type: string
+        - name: updateMask
+          in: query
+          description: Required. Comma-separated list of fields to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dependency'
+      responses:
+        '200':
+          description: Successful response with updated dependency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDependency
+      summary: Delete a dependency
+      description: >-
+        Deletes an API dependency from the API Hub.
+      tags:
+        - Dependencies
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: dependencyId
+          in: path
+          description: ID of the dependency resource.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/attributes:
+    get:
+      operationId: listAttributes
+      summary: List attributes
+      description: >-
+        Lists all custom attributes defined in the specified project and location.
+      tags:
+        - Attributes
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+        - name: filter
+          in: query
+          description: Filter expression to narrow the results.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of attributes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAttributesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createAttribute
+      summary: Create an attribute
+      description: >-
+        Creates a new custom attribute definition in the API Hub.
+      tags:
+        - Attributes
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: attributeId
+          in: query
+          description: Required. The ID to use for the attribute resource.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attribute'
+      responses:
+        '200':
+          description: Successful response with the created attribute
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attribute'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/externalApis:
+    get:
+      operationId: listExternalApis
+      summary: List external APIs
+      description: >-
+        Lists all external API references in the specified project and location.
+      tags:
+        - External APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of external APIs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListExternalApisResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createExternalApi
+      summary: Create an external API
+      description: >-
+        Creates a new external API reference in the API Hub.
+      tags:
+        - External APIs
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: externalApiId
+          in: query
+          description: Required. The ID to use for the external API resource.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalApi'
+      responses:
+        '200':
+          description: Successful response with the created external API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalApi'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}:searchResources:
+    post:
+      operationId: searchResources
+      summary: Search API Hub resources
+      description: >-
+        Searches across all resources in the API Hub including APIs,
+        versions, specs, and deployments. Supports full-text search.
+      tags:
+        - Locations
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: Required. The search query string.
+                filter:
+                  type: string
+                  description: Filter expression to narrow the search.
+                pageSize:
+                  type: integer
+                  format: int32
+                  description: Maximum number of results to return.
+                pageToken:
+                  type: string
+                  description: Page token from a previous search.
+      responses:
+        '200':
+          description: Successful response with search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResourcesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments:
+    get:
+      operationId: listRuntimeProjectAttachments
+      summary: List runtime project attachments
+      description: >-
+        Lists all runtime project attachments for the API Hub instance.
+      tags:
+        - Runtime Project Attachments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of attachments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRuntimeProjectAttachmentsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createRuntimeProjectAttachment
+      summary: Create a runtime project attachment
+      description: >-
+        Creates a new runtime project attachment, linking a Google Cloud
+        project to the API Hub for API discovery.
+      tags:
+        - Runtime Project Attachments
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+        - $ref: '#/components/parameters/locationId'
+        - name: runtimeProjectAttachmentId
+          in: query
+          description: Required. The ID to use for the attachment resource.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuntimeProjectAttachment'
+      responses:
+        '200':
+          description: Successful response with the created attachment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeProjectAttachment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version resource.
+      required: true
+      schema:
+        type: string
+    specId:
+      name: specId
+      in: path
+      description: ID of the API spec resource.
+      required: true
+      schema:
+        type: string
+    deploymentId:
+      name: deploymentId
+      in: path
+      description: ID of the deployment resource.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+  schemas:
+    Api:
+      type: object
+      description: An API resource in the API Hub.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the API.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the API.
+        description:
+          type: string
+          description: Description of the API.
+        owner:
+          $ref: '#/components/schemas/Owner'
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        versions:
+          type: array
+          description: Output only. Versions associated with this API.
+          readOnly: true
+          items:
+            type: string
+        deployments:
+          type: array
+          description: Output only. Deployments associated with this API.
+          readOnly: true
+          items:
+            type: string
+        attributes:
+          type: object
+          description: Custom attributes associated with the API.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the API was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the API was last updated.
+          readOnly: true
+        targetUser:
+          $ref: '#/components/schemas/AttributeValues'
+        team:
+          $ref: '#/components/schemas/AttributeValues'
+        businessUnit:
+          $ref: '#/components/schemas/AttributeValues'
+        maturityLevel:
+          $ref: '#/components/schemas/AttributeValues'
+        apiStyle:
+          $ref: '#/components/schemas/AttributeValues'
+    ApiVersion:
+      type: object
+      description: A version of an API.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the version.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the version.
+        description:
+          type: string
+          description: Description of the API version.
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        specs:
+          type: array
+          description: Output only. Specs associated with this version.
+          readOnly: true
+          items:
+            type: string
+        apiOperations:
+          type: array
+          description: Output only. Operations associated with this version.
+          readOnly: true
+          items:
+            type: string
+        definitions:
+          type: array
+          description: Output only. Definitions associated with this version.
+          readOnly: true
+          items:
+            type: string
+        deployments:
+          type: array
+          description: Output only. Deployments associated with this version.
+          readOnly: true
+          items:
+            type: string
+        lifecycle:
+          $ref: '#/components/schemas/AttributeValues'
+        compliance:
+          $ref: '#/components/schemas/AttributeValues'
+        accreditation:
+          $ref: '#/components/schemas/AttributeValues'
+        attributes:
+          type: object
+          description: Custom attributes associated with this version.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the version was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the version was last updated.
+          readOnly: true
+    ApiSpec:
+      type: object
+      description: A machine-readable API specification.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the spec.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the spec.
+        description:
+          type: string
+          description: Description of the specification.
+        specType:
+          $ref: '#/components/schemas/AttributeValues'
+        contents:
+          type: object
+          description: The spec contents.
+          properties:
+            contents:
+              type: string
+              format: byte
+              description: The spec content as bytes.
+            mimeType:
+              type: string
+              description: MIME type of the content.
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        sourceUri:
+          type: string
+          description: URI of the original spec source.
+        parsingMode:
+          type: string
+          description: Parsing mode for the specification.
+          enum:
+            - PARSING_MODE_UNSPECIFIED
+            - RELAXED
+            - STRICT
+        lintResponse:
+          $ref: '#/components/schemas/LintResponse'
+        attributes:
+          type: object
+          description: Custom attributes associated with this spec.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the spec was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the spec was last updated.
+          readOnly: true
+    Deployment:
+      type: object
+      description: An API deployment record.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the deployment.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the deployment.
+        description:
+          type: string
+          description: Description of the deployment.
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        deploymentType:
+          $ref: '#/components/schemas/AttributeValues'
+        resourceUri:
+          type: string
+          description: URI of the deployed API resource.
+        endpoints:
+          type: array
+          description: Endpoints where the API is accessible.
+          items:
+            type: string
+        apiVersions:
+          type: array
+          description: API versions deployed.
+          items:
+            type: string
+        slo:
+          $ref: '#/components/schemas/AttributeValues'
+        environment:
+          $ref: '#/components/schemas/AttributeValues'
+        attributes:
+          type: object
+          description: Custom attributes associated with this deployment.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the deployment was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the deployment was last updated.
+          readOnly: true
+    Dependency:
+      type: object
+      description: A dependency relationship between APIs.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the dependency.
+          readOnly: true
+        description:
+          type: string
+          description: Description of the dependency.
+        consumer:
+          $ref: '#/components/schemas/DependencyEntityReference'
+        supplier:
+          $ref: '#/components/schemas/DependencyEntityReference'
+        state:
+          type: string
+          description: State of the dependency.
+          enum:
+            - STATE_UNSPECIFIED
+            - PROPOSED
+            - VALIDATED
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the dependency was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the dependency was last updated.
+          readOnly: true
+        attributes:
+          type: object
+          description: Custom attributes associated with this dependency.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+    DependencyEntityReference:
+      type: object
+      description: Reference to an entity in a dependency relationship.
+      properties:
+        displayName:
+          type: string
+          description: Output only. Display name of the referenced entity.
+          readOnly: true
+        operationResourceName:
+          type: string
+          description: Resource name of the operation.
+        externalApiResourceName:
+          type: string
+          description: Resource name of the external API.
+    Attribute:
+      type: object
+      description: A custom attribute definition.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the attribute.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the attribute.
+        description:
+          type: string
+          description: Description of the attribute.
+        definitionType:
+          type: string
+          description: Type of the attribute definition.
+          enum:
+            - DEFINITION_TYPE_UNSPECIFIED
+            - SYSTEM_DEFINED
+            - USER_DEFINED
+        scope:
+          type: string
+          description: Scope of the attribute.
+          enum:
+            - SCOPE_UNSPECIFIED
+            - API
+            - VERSION
+            - SPEC
+            - API_OPERATION
+            - DEPLOYMENT
+            - DEPENDENCY
+        dataType:
+          type: string
+          description: Data type of the attribute values.
+          enum:
+            - DATA_TYPE_UNSPECIFIED
+            - ENUM
+            - JSON
+            - STRING
+        allowedValues:
+          type: array
+          description: Allowed values for ENUM data type.
+          items:
+            $ref: '#/components/schemas/AllowedValue'
+        cardinality:
+          type: integer
+          format: int32
+          description: Maximum number of values for the attribute.
+        mandatory:
+          type: boolean
+          description: Whether the attribute is mandatory.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the attribute was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the attribute was last updated.
+          readOnly: true
+    AllowedValue:
+      type: object
+      description: An allowed value for an ENUM attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the allowed value.
+        displayName:
+          type: string
+          description: Display name of the allowed value.
+        description:
+          type: string
+          description: Description of the allowed value.
+        immutable:
+          type: boolean
+          description: Whether the value is immutable.
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    ExternalApi:
+      type: object
+      description: An external API reference.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the external API.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the external API.
+        description:
+          type: string
+          description: Description of the external API.
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        endpoints:
+          type: array
+          description: Endpoints for the external API.
+          items:
+            type: string
+        paths:
+          type: array
+          description: Resource paths for the external API.
+          items:
+            type: string
+        attributes:
+          type: object
+          description: Custom attributes.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the external API was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the external API was last updated.
+          readOnly: true
+    RuntimeProjectAttachment:
+      type: object
+      description: A runtime project attachment.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the attachment.
+          readOnly: true
+        runtimeProject:
+          type: string
+          description: Required. Google Cloud project to attach.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the attachment was created.
+          readOnly: true
+    Owner:
+      type: object
+      description: Owner of an API resource.
+      properties:
+        displayName:
+          type: string
+          description: Display name of the owner.
+        email:
+          type: string
+          format: email
+          description: Email address of the owner.
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    LintResponse:
+      type: object
+      description: Lint results for an API specification.
+      properties:
+        linter:
+          type: string
+          description: Name of the linter used.
+        state:
+          type: string
+          description: State of the linting process.
+          enum:
+            - STATE_UNSPECIFIED
+            - LINT_PENDING
+            - LINT_COMPLETED
+            - LINT_ERROR
+        issues:
+          type: array
+          description: List of lint issues found.
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              path:
+                type: array
+                items:
+                  type: string
+              message:
+                type: string
+              severity:
+                type: string
+                enum:
+                  - SEVERITY_UNSPECIFIED
+                  - ERROR
+                  - WARNING
+                  - INFO
+                  - HINT
+        summary:
+          type: array
+          description: Summary of lint results by severity.
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              count:
+                type: integer
+                format: int32
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data as bytes.
+        extensions:
+          type: array
+          description: Application-specific metadata.
+          items:
+            type: object
+            additionalProperties: true
+    Operation:
+      type: object
+      description: A long-running operation.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    SearchResourcesResponse:
+      type: object
+      description: Response for searching API Hub resources.
+      properties:
+        searchResults:
+          type: array
+          items:
+            type: object
+            properties:
+              resource:
+                type: object
+                properties:
+                  api:
+                    $ref: '#/components/schemas/Api'
+                  version:
+                    $ref: '#/components/schemas/ApiVersion'
+                  spec:
+                    $ref: '#/components/schemas/ApiSpec'
+                  deployment:
+                    $ref: '#/components/schemas/Deployment'
+        nextPageToken:
+          type: string
+    ListApisResponse:
+      type: object
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    ListApiVersionsResponse:
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    ListApiSpecsResponse:
+      type: object
+      properties:
+        specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSpec'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    ListDeploymentsResponse:
+      type: object
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    ListDependenciesResponse:
+      type: object
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dependency'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    ListAttributesResponse:
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    ListExternalApisResponse:
+      type: object
+      properties:
+        externalApis:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalApi'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    ListRuntimeProjectAttachmentsResponse:
+      type: object
+      properties:
+        runtimeProjectAttachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuntimeProjectAttachment'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
