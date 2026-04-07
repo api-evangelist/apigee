@@ -36,7 +36,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationJobs:
     get:
       operationId: listObservationJobs
-      summary: List observation jobs
+      summary: Apigee List observation jobs
       description: >-
         Lists all API observation jobs in the specified project and location.
         Observation jobs analyze network traffic to discover shadow APIs.
@@ -60,7 +60,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createObservationJob
-      summary: Create an observation job
+      summary: Apigee Create an observation job
       description: >-
         Creates a new API observation job that analyzes network traffic
         to discover and catalog undocumented APIs operating in the
@@ -98,7 +98,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:
     get:
       operationId: getObservationJob
-      summary: Get an observation job
+      summary: Apigee Get an observation job
       description: >-
         Gets details for a specific API observation job, including its
         state, configuration, and observation sources.
@@ -123,7 +123,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteObservationJob
-      summary: Delete an observation job
+      summary: Apigee Delete an observation job
       description: >-
         Deletes an API observation job. The job must be disabled before
         it can be deleted.
@@ -149,7 +149,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:enable:
     post:
       operationId: enableObservationJob
-      summary: Enable an observation job
+      summary: Apigee Enable an observation job
       description: >-
         Enables a disabled observation job, resuming API traffic analysis
         and shadow API discovery.
@@ -175,7 +175,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:disable:
     post:
       operationId: disableObservationJob
-      summary: Disable an observation job
+      summary: Apigee Disable an observation job
       description: >-
         Disables an active observation job, pausing API traffic analysis.
       tags:
@@ -200,7 +200,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:
     get:
       operationId: listApiObservations
-      summary: List API observations
+      summary: Apigee List API observations
       description: >-
         Lists all API observations discovered by the specified observation
         job. Each observation represents a shadow API endpoint detected
@@ -227,7 +227,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}:
     get:
       operationId: getApiObservation
-      summary: Get an API observation
+      summary: Apigee Get an API observation
       description: >-
         Gets details for a specific API observation, including the
         discovered hostname, server IPs, request count, and last seen time.
@@ -254,7 +254,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:batchEditTags:
     post:
       operationId: batchEditApiObservationTags
-      summary: Batch edit API observation tags
+      summary: Apigee Batch edit API observation tags
       description: >-
         Updates tags on multiple API observations in a single batch operation.
         Tags help categorize and organize discovered APIs.
@@ -283,10 +283,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
-  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations:
-    get:
+  ? /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations
+  : get:
       operationId: listApiOperations
-      summary: List API operations
+      summary: Apigee List API operations
       description: >-
         Lists all API operations discovered within a specific API
         observation. Operations represent individual HTTP endpoints
@@ -311,10 +311,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
-  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations/{apiOperationId}:
-    get:
+  ? /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations/{apiOperationId}
+  : get:
       operationId: getApiOperation
-      summary: Get an API operation
+      summary: Apigee Get an API operation
       description: >-
         Gets details for a specific discovered API operation, including
         HTTP method, path, request/response details, and traffic statistics.
@@ -347,7 +347,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationSources:
     get:
       operationId: listObservationSources
-      summary: List observation sources
+      summary: Apigee List observation sources
       description: >-
         Lists all observation sources configured in the specified project
         and location. Sources define the network infrastructure to monitor.
@@ -371,7 +371,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createObservationSource
-      summary: Create an observation source
+      summary: Apigee Create an observation source
       description: >-
         Creates a new observation source that defines which network
         infrastructure to monitor for API traffic.
@@ -408,7 +408,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/observationSources/{observationSourceId}:
     get:
       operationId: getObservationSource
-      summary: Get an observation source
+      summary: Apigee Get an observation source
       description: >-
         Gets details for a specific observation source.
       tags:
@@ -437,7 +437,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteObservationSource
-      summary: Delete an observation source
+      summary: Apigee Delete an observation source
       description: >-
         Deletes an observation source. The source must not be in use by
         any active observation jobs.
@@ -468,7 +468,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/operations:
     get:
       operationId: listOperations
-      summary: List operations
+      summary: Apigee List operations
       description: >-
         Lists long-running operations in the specified project and location.
       tags:
@@ -497,7 +497,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/operations/{operationId}:
     get:
       operationId: getOperation
-      summary: Get an operation
+      summary: Apigee Get an operation
       description: >-
         Gets the status of a long-running operation.
       tags:
@@ -527,7 +527,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/operations/{operationId}:cancel:
     post:
       operationId: cancelOperation
-      summary: Cancel an operation
+      summary: Apigee Cancel an operation
       description: >-
         Cancels a long-running operation.
       tags:

@@ -48,7 +48,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis:
     get:
       operationId: listApis
-      summary: List APIs
+      summary: Apigee List APIs
       description: >-
         Lists all APIs in the specified project and location. Returns
         API metadata including name, display name, and description.
@@ -77,7 +77,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApi
-      summary: Create an API
+      summary: Apigee Create an API
       description: >-
         Creates a new API resource in the API Hub. The API represents a
         logical grouping of related API versions and specifications.
@@ -118,7 +118,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}:
     get:
       operationId: getApi
-      summary: Get an API
+      summary: Apigee Get an API
       description: >-
         Retrieves details of a specific API resource, including its
         display name, description, owner, and associated metadata.
@@ -143,7 +143,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApi
-      summary: Update an API
+      summary: Apigee Update an API
       description: >-
         Updates an existing API resource in the API Hub. Use the updateMask
         field to specify which fields to update.
@@ -183,7 +183,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApi
-      summary: Delete an API
+      summary: Apigee Delete an API
       description: >-
         Deletes an API resource and all its child resources (versions,
         specs, operations) from the API Hub.
@@ -209,7 +209,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions:
     get:
       operationId: listApiVersions
-      summary: List API versions
+      summary: Apigee List API versions
       description: >-
         Lists all versions of an API in the API Hub. Versions represent
         different releases or iterations of an API.
@@ -239,7 +239,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiVersion
-      summary: Create an API version
+      summary: Apigee Create an API version
       description: >-
         Creates a new version for an API in the API Hub. A version
         represents a specific release of the API.
@@ -279,7 +279,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}:
     get:
       operationId: getApiVersion
-      summary: Get an API version
+      summary: Apigee Get an API version
       description: >-
         Gets details about a specific API version, including its display
         name, description, lifecycle state, and compliance status.
@@ -305,7 +305,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiVersion
-      summary: Update an API version
+      summary: Apigee Update an API version
       description: >-
         Updates an existing API version. Use updateMask to specify fields.
       tags:
@@ -344,7 +344,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiVersion
-      summary: Delete an API version
+      summary: Apigee Delete an API version
       description: >-
         Deletes an API version and all its child resources (specs, operations).
       tags:
@@ -370,7 +370,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs:
     get:
       operationId: listApiSpecs
-      summary: List API specifications
+      summary: Apigee List API specifications
       description: >-
         Lists all specifications for an API version. Specs are machine-readable
         API definitions such as OpenAPI or Protocol Buffer files.
@@ -401,7 +401,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiSpec
-      summary: Create an API specification
+      summary: Apigee Create an API specification
       description: >-
         Creates a new specification for an API version. Specifications
         are machine-readable definitions of the API.
@@ -440,7 +440,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:
     get:
       operationId: getApiSpec
-      summary: Get an API specification
+      summary: Apigee Get an API specification
       description: >-
         Gets details about a specific API specification, including metadata
         about the spec type, parsing mode, and lint results.
@@ -467,7 +467,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiSpec
-      summary: Update an API specification
+      summary: Apigee Update an API specification
       description: >-
         Updates an existing API specification. Use updateMask to specify fields.
       tags:
@@ -507,7 +507,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiSpec
-      summary: Delete an API specification
+      summary: Apigee Delete an API specification
       description: >-
         Deletes an API specification from the API Hub.
       tags:
@@ -534,7 +534,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents:
     get:
       operationId: getApiSpecContents
-      summary: Get API specification contents
+      summary: Apigee Get API specification contents
       description: >-
         Retrieves the raw contents of an API specification file such as
         an OpenAPI document or Protocol Buffer definition.
@@ -562,7 +562,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:lint:
     post:
       operationId: lintApiSpec
-      summary: Lint an API specification
+      summary: Apigee Lint an API specification
       description: >-
         Validates an API specification against style and correctness rules.
         Returns linting results with warnings and errors.
@@ -590,7 +590,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/deployments:
     get:
       operationId: listDeployments
-      summary: List deployments
+      summary: Apigee List deployments
       description: >-
         Lists all API deployments in the specified project and location.
       tags:
@@ -618,7 +618,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDeployment
-      summary: Create a deployment
+      summary: Apigee Create a deployment
       description: >-
         Creates a new deployment record in the API Hub to track where
         an API version is deployed.
@@ -655,7 +655,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}:
     get:
       operationId: getDeployment
-      summary: Get a deployment
+      summary: Apigee Get a deployment
       description: >-
         Retrieves details about a specific API deployment.
       tags:
@@ -679,7 +679,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateDeployment
-      summary: Update a deployment
+      summary: Apigee Update a deployment
       description: >-
         Updates an existing deployment record.
       tags:
@@ -717,7 +717,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeployment
-      summary: Delete a deployment
+      summary: Apigee Delete a deployment
       description: >-
         Deletes a deployment record from the API Hub.
       tags:
@@ -742,7 +742,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/dependencies:
     get:
       operationId: listDependencies
-      summary: List dependencies
+      summary: Apigee List dependencies
       description: >-
         Lists all API dependencies in the specified project and location.
         Dependencies represent relationships between APIs.
@@ -771,7 +771,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDependency
-      summary: Create a dependency
+      summary: Apigee Create a dependency
       description: >-
         Creates a new dependency between APIs in the API Hub.
       tags:
@@ -807,7 +807,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}:
     get:
       operationId: getDependency
-      summary: Get a dependency
+      summary: Apigee Get a dependency
       description: >-
         Retrieves details about a specific API dependency.
       tags:
@@ -836,7 +836,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateDependency
-      summary: Update a dependency
+      summary: Apigee Update a dependency
       description: >-
         Updates an existing API dependency.
       tags:
@@ -879,7 +879,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDependency
-      summary: Delete a dependency
+      summary: Apigee Delete a dependency
       description: >-
         Deletes an API dependency from the API Hub.
       tags:
@@ -909,7 +909,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/attributes:
     get:
       operationId: listAttributes
-      summary: List attributes
+      summary: Apigee List attributes
       description: >-
         Lists all custom attributes defined in the specified project and location.
       tags:
@@ -937,7 +937,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createAttribute
-      summary: Create an attribute
+      summary: Apigee Create an attribute
       description: >-
         Creates a new custom attribute definition in the API Hub.
       tags:
@@ -973,7 +973,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/externalApis:
     get:
       operationId: listExternalApis
-      summary: List external APIs
+      summary: Apigee List external APIs
       description: >-
         Lists all external API references in the specified project and location.
       tags:
@@ -996,7 +996,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createExternalApi
-      summary: Create an external API
+      summary: Apigee Create an external API
       description: >-
         Creates a new external API reference in the API Hub.
       tags:
@@ -1032,7 +1032,7 @@ paths:
   /projects/{projectId}/locations/{locationId}:searchResources:
     post:
       operationId: searchResources
-      summary: Search API Hub resources
+      summary: Apigee Search API Hub resources
       description: >-
         Searches across all resources in the API Hub including APIs,
         versions, specs, and deployments. Supports full-text search.
@@ -1077,7 +1077,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments:
     get:
       operationId: listRuntimeProjectAttachments
-      summary: List runtime project attachments
+      summary: Apigee List runtime project attachments
       description: >-
         Lists all runtime project attachments for the API Hub instance.
       tags:
@@ -1100,7 +1100,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createRuntimeProjectAttachment
-      summary: Create a runtime project attachment
+      summary: Apigee Create a runtime project attachment
       description: >-
         Creates a new runtime project attachment, linking a Google Cloud
         project to the API Hub for API discovery.

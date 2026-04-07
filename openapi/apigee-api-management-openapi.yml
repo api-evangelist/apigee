@@ -56,7 +56,7 @@ paths:
   /organizations:
     get:
       operationId: listOrganizations
-      summary: List organizations
+      summary: Apigee List organizations
       description: >-
         Lists the Apigee organizations that are available to the caller.
         Returns a list of organization names and metadata.
@@ -75,7 +75,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createOrganization
-      summary: Create an organization
+      summary: Apigee Create an organization
       description: >-
         Creates an Apigee organization. The organization is the top-level
         container for all Apigee resources including API proxies, products,
@@ -114,7 +114,7 @@ paths:
   /organizations/{organizationId}:
     get:
       operationId: getOrganization
-      summary: Get an organization
+      summary: Apigee Get an organization
       description: >-
         Retrieves the properties for an Apigee organization, including
         configuration settings, subscription type, and metadata.
@@ -137,7 +137,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateOrganization
-      summary: Update an organization
+      summary: Apigee Update an organization
       description: >-
         Updates the properties for an Apigee organization. No other fields
         in the organization profile will be updated.
@@ -168,7 +168,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteOrganization
-      summary: Delete an organization
+      summary: Apigee Delete an organization
       description: >-
         Deletes an Apigee organization. This is a long-running operation
         that deletes all resources associated with the organization.
@@ -192,7 +192,7 @@ paths:
   /organizations/{organizationId}/apis:
     get:
       operationId: listApiProxies
-      summary: List API proxies
+      summary: Apigee List API proxies
       description: >-
         Lists the names of all API proxies in an organization. The list
         includes information about the API proxy revisions available.
@@ -215,7 +215,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiProxy
-      summary: Create an API proxy
+      summary: Apigee Create an API proxy
       description: >-
         Creates an API proxy. The API proxy created will not be accessible
         at runtime until it is deployed to an environment. Provide the proxy
@@ -267,7 +267,7 @@ paths:
   /organizations/{organizationId}/apis/{apiId}:
     get:
       operationId: getApiProxy
-      summary: Get an API proxy
+      summary: Apigee Get an API proxy
       description: >-
         Gets an API proxy including a list of existing revisions, the
         proxy metadata, and the last modified date.
@@ -291,7 +291,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiProxy
-      summary: Delete an API proxy
+      summary: Apigee Delete an API proxy
       description: >-
         Deletes an API proxy and all associated endpoints, policies,
         resources, and revisions. The proxy must be undeployed from all
@@ -316,7 +316,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: patchApiProxy
-      summary: Update an API proxy
+      summary: Apigee Update an API proxy
       description: >-
         Updates an existing API proxy metadata such as labels. Does not
         update the proxy bundle or revision content.
@@ -357,7 +357,7 @@ paths:
   /organizations/{organizationId}/apis/{apiId}/revisions:
     get:
       operationId: listApiProxyRevisions
-      summary: List API proxy revisions
+      summary: Apigee List API proxy revisions
       description: >-
         Lists all revisions for an API proxy. Returns an array of revision
         numbers in string format.
@@ -384,7 +384,7 @@ paths:
   /organizations/{organizationId}/apis/{apiId}/revisions/{revisionId}:
     get:
       operationId: getApiProxyRevision
-      summary: Get an API proxy revision
+      summary: Apigee Get an API proxy revision
       description: >-
         Gets an API proxy revision. Returns the configuration and metadata
         for the specified revision of an API proxy.
@@ -409,7 +409,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiProxyRevision
-      summary: Delete an API proxy revision
+      summary: Apigee Delete an API proxy revision
       description: >-
         Deletes an API proxy revision. The revision must be undeployed
         from all environments before it can be deleted.
@@ -435,7 +435,7 @@ paths:
   /organizations/{organizationId}/apiproducts:
     get:
       operationId: listApiProducts
-      summary: List API products
+      summary: Apigee List API products
       description: >-
         Lists all API product names for an organization. Filter the
         list using an attribute name and value query parameter.
@@ -485,7 +485,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiProduct
-      summary: Create an API product
+      summary: Apigee Create an API product
       description: >-
         Creates an API product in an organization. API products bundle
         API resources for consumption by developers. An API product can
@@ -518,7 +518,7 @@ paths:
   /organizations/{organizationId}/apiproducts/{apiProductId}:
     get:
       operationId: getApiProduct
-      summary: Get an API product
+      summary: Apigee Get an API product
       description: >-
         Gets the configuration for an API product. The API product name
         is required in the request URL.
@@ -542,7 +542,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateApiProduct
-      summary: Update an API product
+      summary: Apigee Update an API product
       description: >-
         Updates an existing API product. The full API product object must
         be included in the request body, even if only a subset of properties
@@ -575,7 +575,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiProduct
-      summary: Delete an API product
+      summary: Apigee Delete an API product
       description: >-
         Deletes an API product from an organization. Deleting an API
         product causes apps that are associated with the product to be
@@ -601,7 +601,7 @@ paths:
   /organizations/{organizationId}/developers:
     get:
       operationId: listDevelopers
-      summary: List developers
+      summary: Apigee List developers
       description: >-
         Lists all developers in an organization by email address. Returns
         a list of developer email addresses or expanded developer objects.
@@ -643,7 +643,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDeveloper
-      summary: Create a developer
+      summary: Apigee Create a developer
       description: >-
         Creates a developer in an organization. A developer is a consumer
         of APIs, typically represented by a person or company who registers
@@ -676,7 +676,7 @@ paths:
   /organizations/{organizationId}/developers/{developerId}:
     get:
       operationId: getDeveloper
-      summary: Get a developer
+      summary: Apigee Get a developer
       description: >-
         Returns the developer profile by email address or developer ID.
         Includes information about the developer apps and custom attributes.
@@ -700,7 +700,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateDeveloper
-      summary: Update a developer
+      summary: Apigee Update a developer
       description: >-
         Updates a developer with the properties specified in the request body.
         The full developer object must be included in the request body.
@@ -732,7 +732,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeveloper
-      summary: Delete a developer
+      summary: Apigee Delete a developer
       description: >-
         Deletes a developer from the organization. All apps and API keys
         associated with the developer are also removed. All pending push
@@ -758,7 +758,7 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps:
     get:
       operationId: listDeveloperApps
-      summary: List developer apps
+      summary: Apigee List developer apps
       description: >-
         Lists all apps created by a developer in an organization.
         Returns an array of app IDs or expanded app objects.
@@ -796,7 +796,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDeveloperApp
-      summary: Create a developer app
+      summary: Apigee Create a developer app
       description: >-
         Creates an app associated with a developer. This API associates the
         developer app with the specified API product and auto-generates an
@@ -828,7 +828,7 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps/{appId}:
     get:
       operationId: getDeveloperApp
-      summary: Get a developer app
+      summary: Apigee Get a developer app
       description: >-
         Returns the details for a developer app, including the API keys
         and API products associated with the app.
@@ -853,7 +853,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateDeveloperApp
-      summary: Update a developer app
+      summary: Apigee Update a developer app
       description: >-
         Updates the attributes of the developer app. This API replaces
         the current attributes with those specified in the request body.
@@ -886,7 +886,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeveloperApp
-      summary: Delete a developer app
+      summary: Apigee Delete a developer app
       description: >-
         Deletes a developer app. This operation also removes all API keys
         and associations to API products for the app.
@@ -912,7 +912,7 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys:
     get:
       operationId: listDeveloperAppKeys
-      summary: List developer app keys
+      summary: Apigee List developer app keys
       description: >-
         Returns a list of all API keys for a developer app, including
         consumer keys and secrets.
@@ -935,7 +935,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDeveloperAppKey
-      summary: Create a developer app key
+      summary: Apigee Create a developer app key
       description: >-
         Creates a custom consumer key and secret for a developer app.
         Useful when migrating existing consumer keys and secrets to Apigee.
@@ -967,7 +967,7 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}:
     get:
       operationId: getDeveloperAppKey
-      summary: Get a developer app key
+      summary: Apigee Get a developer app key
       description: >-
         Returns details for a consumer key for a developer app, including
         the key, its status, and the associated API products.
@@ -993,7 +993,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateDeveloperAppKey
-      summary: Update a developer app key
+      summary: Apigee Update a developer app key
       description: >-
         Adds an API product to a developer app key, enabling the app to
         access the API resources bundled in the API product.
@@ -1027,7 +1027,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeveloperAppKey
-      summary: Delete a developer app key
+      summary: Apigee Delete a developer app key
       description: >-
         Deletes an app's consumer key. After the consumer key is deleted,
         it cannot be used to access any APIs.
@@ -1054,7 +1054,7 @@ paths:
   /organizations/{organizationId}/environments:
     get:
       operationId: listEnvironments
-      summary: List environments
+      summary: Apigee List environments
       description: >-
         Lists all environments in an organization. Returns a list of
         environment names or expanded environment objects.
@@ -1077,7 +1077,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createEnvironment
-      summary: Create an environment
+      summary: Apigee Create an environment
       description: >-
         Creates an environment in an organization. Environments provide
         a runtime execution context for API proxies, with separate
@@ -1108,7 +1108,7 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}:
     get:
       operationId: getEnvironment
-      summary: Get an environment
+      summary: Apigee Get an environment
       description: >-
         Gets the profile for an environment in an organization, including
         properties, state, and deployment type.
@@ -1132,7 +1132,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateEnvironment
-      summary: Update an environment
+      summary: Apigee Update an environment
       description: >-
         Updates an existing environment. The full environment object must be
         included in the request body.
@@ -1164,7 +1164,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteEnvironment
-      summary: Delete an environment
+      summary: Apigee Delete an environment
       description: >-
         Deletes an environment from an organization. Before deleting,
         all API proxies must be undeployed from the environment.
@@ -1189,7 +1189,7 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments:
     post:
       operationId: deployApiProxyRevision
-      summary: Deploy an API proxy revision
+      summary: Apigee Deploy an API proxy revision
       description: >-
         Deploys a revision of an API proxy to an environment. After
         deployment, the API proxy revision can accept requests from clients.
@@ -1231,7 +1231,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: undeployApiProxyRevision
-      summary: Undeploy an API proxy revision
+      summary: Apigee Undeploy an API proxy revision
       description: >-
         Undeploys an API proxy revision from an environment. After undeployment,
         the API proxy revision will no longer accept requests from clients.
@@ -1264,7 +1264,7 @@ paths:
   /organizations/{organizationId}/deployments:
     get:
       operationId: listOrganizationDeployments
-      summary: List organization deployments
+      summary: Apigee List organization deployments
       description: >-
         Lists all deployments across all environments in an organization,
         including the API proxy name, revision, and environment.
@@ -1293,7 +1293,7 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/targetservers:
     get:
       operationId: listTargetServers
-      summary: List target servers
+      summary: Apigee List target servers
       description: >-
         Lists all target servers in the specified environment of an
         organization. Target servers define backend service endpoints.
@@ -1317,7 +1317,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createTargetServer
-      summary: Create a target server
+      summary: Apigee Create a target server
       description: >-
         Creates a target server in the specified environment. Target servers
         decouple TargetEndpoint configurations from concrete backend URLs.
@@ -1348,7 +1348,7 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}:
     get:
       operationId: getTargetServer
-      summary: Get a target server
+      summary: Apigee Get a target server
       description: >-
         Gets the configuration of a target server in the specified environment.
       tags:
@@ -1372,7 +1372,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateTargetServer
-      summary: Update a target server
+      summary: Apigee Update a target server
       description: >-
         Updates an existing target server in the specified environment. The
         full target server object must be included in the request body.
@@ -1405,7 +1405,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteTargetServer
-      summary: Delete a target server
+      summary: Apigee Delete a target server
       description: >-
         Deletes a target server from an environment.
       tags:
@@ -1430,7 +1430,7 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps:
     get:
       operationId: listKeyValueMaps
-      summary: List key value maps
+      summary: Apigee List key value maps
       description: >-
         Lists the key value maps in the specified environment.
       tags:
@@ -1453,7 +1453,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createKeyValueMap
-      summary: Create a key value map
+      summary: Apigee Create a key value map
       description: >-
         Creates a key value map in the specified environment. Key value
         maps store data for retrieval at runtime by policies.
@@ -1484,7 +1484,7 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}:
     delete:
       operationId: deleteKeyValueMap
-      summary: Delete a key value map
+      summary: Apigee Delete a key value map
       description: >-
         Deletes a key value map from the specified environment.
       tags:
@@ -1514,7 +1514,7 @@ paths:
   /organizations/{organizationId}/sharedflows:
     get:
       operationId: listSharedFlows
-      summary: List shared flows
+      summary: Apigee List shared flows
       description: >-
         Lists all shared flows in an organization. Shared flows contain
         reusable logic that can be invoked from API proxy flows.
@@ -1535,7 +1535,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createSharedFlow
-      summary: Create a shared flow
+      summary: Apigee Create a shared flow
       description: >-
         Uploads a ZIP-formatted shared flow configuration bundle. The bundle
         is imported into the organization as a new shared flow.
@@ -1578,7 +1578,7 @@ paths:
   /organizations/{organizationId}/sharedflows/{sharedFlowId}:
     get:
       operationId: getSharedFlow
-      summary: Get a shared flow
+      summary: Apigee Get a shared flow
       description: >-
         Gets a shared flow including a list of existing revisions.
       tags:
@@ -1601,7 +1601,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteSharedFlow
-      summary: Delete a shared flow
+      summary: Apigee Delete a shared flow
       description: >-
         Deletes a shared flow and all associated policies, resources,
         and revisions. The shared flow must be undeployed from all environments.
@@ -1626,7 +1626,7 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}:
     get:
       operationId: getEnvironmentStats
-      summary: Get environment statistics
+      summary: Apigee Get environment statistics
       description: >-
         Retrieves metrics for API proxy performance in an environment.
         Provides traffic, latency, error counts, and other analytics data
@@ -1713,7 +1713,7 @@ paths:
   /organizations/{organizationId}/analytics/datastores:
     get:
       operationId: listDatastores
-      summary: List analytics data stores
+      summary: Apigee List analytics data stores
       description: >-
         Lists the data stores available for exporting analytics data.
       tags:
@@ -1733,7 +1733,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDatastore
-      summary: Create an analytics data store
+      summary: Apigee Create an analytics data store
       description: >-
         Creates a data store for exporting analytics data from an
         organization.
@@ -1763,7 +1763,7 @@ paths:
   /organizations/{organizationId}/appgroups:
     get:
       operationId: listAppGroups
-      summary: List app groups
+      summary: Apigee List app groups
       description: >-
         Lists all app groups in an organization. App groups organize
         developers and their applications.
@@ -1786,7 +1786,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createAppGroup
-      summary: Create an app group
+      summary: Apigee Create an app group
       description: >-
         Creates an app group in an organization. App groups provide a
         way to organize developers and their applications.
@@ -1816,7 +1816,7 @@ paths:
   /organizations/{organizationId}/appgroups/{appGroupId}:
     get:
       operationId: getAppGroup
-      summary: Get an app group
+      summary: Apigee Get an app group
       description: >-
         Returns the app group details for a specified app group.
       tags:
@@ -1844,7 +1844,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateAppGroup
-      summary: Update an app group
+      summary: Apigee Update an app group
       description: >-
         Updates an app group. The full app group object must be included
         in the request body.
@@ -1881,7 +1881,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteAppGroup
-      summary: Delete an app group
+      summary: Apigee Delete an app group
       description: >-
         Deletes an app group from an organization.
       tags:
@@ -1910,7 +1910,7 @@ paths:
   /organizations/{organizationId}/instances:
     get:
       operationId: listInstances
-      summary: List runtime instances
+      summary: Apigee List runtime instances
       description: >-
         Lists all Apigee runtime instances for the organization.
       tags:
@@ -1932,7 +1932,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createInstance
-      summary: Create a runtime instance
+      summary: Apigee Create a runtime instance
       description: >-
         Creates an Apigee runtime instance. This is a long-running
         operation that provisions the infrastructure for API runtime.
@@ -1962,7 +1962,7 @@ paths:
   /organizations/{organizationId}/instances/{instanceId}:
     get:
       operationId: getInstance
-      summary: Get a runtime instance
+      summary: Apigee Get a runtime instance
       description: >-
         Gets the details for an Apigee runtime instance, including
         state, host, port, and location.
@@ -1991,7 +1991,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteInstance
-      summary: Delete a runtime instance
+      summary: Apigee Delete a runtime instance
       description: >-
         Deletes an Apigee runtime instance. This is a long-running
         operation that deprovisions the runtime infrastructure.

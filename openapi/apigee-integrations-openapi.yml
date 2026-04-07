@@ -42,7 +42,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations:
     get:
       operationId: listIntegrations
-      summary: List integrations
+      summary: Apigee List integrations
       description: >-
         Lists all integrations in the specified project, location, and product.
         Returns integration metadata including name and description.
@@ -78,7 +78,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:
     delete:
       operationId: deleteIntegration
-      summary: Delete an integration
+      summary: Apigee Delete an integration
       description: >-
         Deletes an integration and all its versions. The integration must
         not have any active versions before deletion.
@@ -105,7 +105,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:execute:
     post:
       operationId: executeIntegration
-      summary: Execute an integration
+      summary: Apigee Execute an integration
       description: >-
         Executes an integration synchronously. The caller blocks until
         the integration execution completes or times out.
@@ -140,7 +140,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:schedule:
     post:
       operationId: scheduleIntegration
-      summary: Schedule an integration execution
+      summary: Apigee Schedule an integration execution
       description: >-
         Schedules an integration for execution at a specified time. The
         execution happens asynchronously.
@@ -175,7 +175,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:
     get:
       operationId: listIntegrationVersions
-      summary: List integration versions
+      summary: Apigee List integration versions
       description: >-
         Lists all versions of an integration. Returns version metadata
         including status, snapshot number, and creation time.
@@ -216,7 +216,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createIntegrationVersion
-      summary: Create an integration version
+      summary: Apigee Create an integration version
       description: >-
         Creates a new version of an integration. A version contains
         the complete integration configuration including triggers,
@@ -255,7 +255,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:
     get:
       operationId: getIntegrationVersion
-      summary: Get an integration version
+      summary: Apigee Get an integration version
       description: >-
         Gets the details for a specific integration version, including
         the complete configuration of triggers, tasks, and parameters.
@@ -282,7 +282,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateIntegrationVersion
-      summary: Update an integration version
+      summary: Apigee Update an integration version
       description: >-
         Updates an existing integration version. Only draft versions
         can be updated.
@@ -322,7 +322,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteIntegrationVersion
-      summary: Delete an integration version
+      summary: Apigee Delete an integration version
       description: >-
         Deletes an integration version. Active (published) versions
         cannot be deleted directly.
@@ -347,10 +347,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish:
-    post:
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish
+  : post:
       operationId: publishIntegrationVersion
-      summary: Publish an integration version
+      summary: Apigee Publish an integration version
       description: >-
         Publishes a draft integration version, making it the active version
         that receives new execution requests.
@@ -377,10 +377,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish:
-    post:
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish
+  : post:
       operationId: unpublishIntegrationVersion
-      summary: Unpublish an integration version
+      summary: Apigee Unpublish an integration version
       description: >-
         Unpublishes a published integration version, returning it to
         draft status so it no longer receives execution requests.
@@ -405,10 +405,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download:
-    get:
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download
+  : get:
       operationId: downloadIntegrationVersion
-      summary: Download an integration version
+      summary: Apigee Download an integration version
       description: >-
         Downloads the complete configuration of an integration version
         as a JSON bundle.
@@ -445,7 +445,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:upload:
     post:
       operationId: uploadIntegrationVersion
-      summary: Upload an integration version
+      summary: Apigee Upload an integration version
       description: >-
         Uploads an integration version configuration bundle, creating
         a new version.
@@ -478,7 +478,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs:
     get:
       operationId: listAuthConfigs
-      summary: List auth configs
+      summary: Apigee List auth configs
       description: >-
         Lists all authentication configurations for the specified product.
         Auth configs define credentials used by integrations to connect
@@ -509,7 +509,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createAuthConfig
-      summary: Create an auth config
+      summary: Apigee Create an auth config
       description: >-
         Creates a new authentication configuration. Auth configs store
         credentials like OAuth tokens, API keys, or service account keys.
@@ -541,7 +541,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs/{authConfigId}:
     get:
       operationId: getAuthConfig
-      summary: Get an auth config
+      summary: Apigee Get an auth config
       description: >-
         Gets the details for a specific authentication configuration.
       tags:
@@ -566,7 +566,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateAuthConfig
-      summary: Update an auth config
+      summary: Apigee Update an auth config
       description: >-
         Updates an existing authentication configuration.
       tags:
@@ -604,7 +604,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteAuthConfig
-      summary: Delete an auth config
+      summary: Apigee Delete an auth config
       description: >-
         Deletes an authentication configuration. The auth config must not
         be in use by any active integration version.
@@ -631,7 +631,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/certificates:
     get:
       operationId: listCertificates
-      summary: List certificates
+      summary: Apigee List certificates
       description: >-
         Lists all certificates for the specified product. Certificates
         are used for TLS/SSL authentication with external services.
@@ -661,7 +661,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createCertificate
-      summary: Create a certificate
+      summary: Apigee Create a certificate
       description: >-
         Creates a new certificate for use with integrations that require
         TLS/SSL authentication.
@@ -693,7 +693,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/certificates/{certificateId}:
     get:
       operationId: getCertificate
-      summary: Get a certificate
+      summary: Apigee Get a certificate
       description: >-
         Gets details for a specific certificate.
       tags:
@@ -718,7 +718,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateCertificate
-      summary: Update a certificate
+      summary: Apigee Update a certificate
       description: >-
         Updates an existing certificate.
       tags:
@@ -756,7 +756,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteCertificate
-      summary: Delete a certificate
+      summary: Apigee Delete a certificate
       description: >-
         Deletes a certificate. The certificate must not be in use by
         any active integration version.
@@ -783,7 +783,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions:
     get:
       operationId: listExecutions
-      summary: List executions
+      summary: Apigee List executions
       description: >-
         Lists execution results for an integration. Returns execution
         metadata including status, start time, and trigger information.
@@ -820,7 +820,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}:
     get:
       operationId: getExecution
-      summary: Get an execution
+      summary: Apigee Get an execution
       description: >-
         Gets details for a specific integration execution, including
         input/output parameters and execution steps.
@@ -845,10 +845,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions:
-    get:
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions
+  : get:
       operationId: listSuspensions
-      summary: List suspensions
+      summary: Apigee List suspensions
       description: >-
         Lists all suspensions for a specific execution. Suspensions
         pause execution flow pending human review or approval.
@@ -883,10 +883,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
-  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift:
-    post:
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift
+  : post:
       operationId: liftSuspension
-      summary: Lift a suspension
+      summary: Apigee Lift a suspension
       description: >-
         Lifts a suspension, allowing the paused execution to continue
         processing from where it stopped.
@@ -920,10 +920,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve:
-    post:
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve
+  : post:
       operationId: resolveSuspension
-      summary: Resolve a suspension
+      summary: Apigee Resolve a suspension
       description: >-
         Resolves a suspension with a final decision, completing the
         suspended task in the execution.
@@ -960,7 +960,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances:
     get:
       operationId: listSfdcInstances
-      summary: List SFDC instances
+      summary: Apigee List SFDC instances
       description: >-
         Lists all Salesforce instances configured for the product.
       tags:
@@ -984,7 +984,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createSfdcInstance
-      summary: Create an SFDC instance
+      summary: Apigee Create an SFDC instance
       description: >-
         Creates a new Salesforce instance configuration for connecting
         integrations to Salesforce.
@@ -1016,7 +1016,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}:
     get:
       operationId: getSfdcInstance
-      summary: Get an SFDC instance
+      summary: Apigee Get an SFDC instance
       description: >-
         Gets details for a specific Salesforce instance configuration.
       tags:
@@ -1041,7 +1041,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateSfdcInstance
-      summary: Update an SFDC instance
+      summary: Apigee Update an SFDC instance
       description: >-
         Updates an existing Salesforce instance configuration.
       tags:
@@ -1079,7 +1079,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteSfdcInstance
-      summary: Delete an SFDC instance
+      summary: Apigee Delete an SFDC instance
       description: >-
         Deletes a Salesforce instance configuration.
       tags:
@@ -1105,7 +1105,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels:
     get:
       operationId: listSfdcChannels
-      summary: List SFDC channels
+      summary: Apigee List SFDC channels
       description: >-
         Lists all Salesforce channels configured for an SFDC instance.
       tags:
@@ -1130,7 +1130,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createSfdcChannel
-      summary: Create an SFDC channel
+      summary: Apigee Create an SFDC channel
       description: >-
         Creates a new Salesforce channel within an SFDC instance.
       tags:

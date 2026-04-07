@@ -39,7 +39,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis:
     get:
       operationId: listApis
-      summary: List APIs
+      summary: Apigee List APIs
       description: >-
         Lists all APIs in the specified project and location. Returns
         API metadata including name, display name, description, and labels.
@@ -73,7 +73,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApi
-      summary: Create an API
+      summary: Apigee Create an API
       description: >-
         Creates a new API entry in the registry. An API represents a
         logical grouping of related API versions.
@@ -112,7 +112,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}:
     get:
       operationId: getApi
-      summary: Get an API
+      summary: Apigee Get an API
       description: >-
         Gets the details of a specific API entry in the registry.
       tags:
@@ -136,7 +136,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApi
-      summary: Update an API
+      summary: Apigee Update an API
       description: >-
         Updates an existing API entry. Use updateMask to specify fields.
       tags:
@@ -179,7 +179,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApi
-      summary: Delete an API
+      summary: Apigee Delete an API
       description: >-
         Deletes an API and all of its owned resources (versions, specs,
         deployments, artifacts).
@@ -210,7 +210,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions:
     get:
       operationId: listApiVersions
-      summary: List API versions
+      summary: Apigee List API versions
       description: >-
         Lists all versions of an API in the registry.
       tags:
@@ -244,7 +244,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiVersion
-      summary: Create an API version
+      summary: Apigee Create an API version
       description: >-
         Creates a new version for an API in the registry.
       tags:
@@ -281,7 +281,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}:
     get:
       operationId: getApiVersion
-      summary: Get an API version
+      summary: Apigee Get an API version
       description: >-
         Gets the details of a specific API version.
       tags:
@@ -306,7 +306,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiVersion
-      summary: Update an API version
+      summary: Apigee Update an API version
       description: >-
         Updates an existing API version.
       tags:
@@ -350,7 +350,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiVersion
-      summary: Delete an API version
+      summary: Apigee Delete an API version
       description: >-
         Deletes an API version and all its owned resources.
       tags:
@@ -381,7 +381,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs:
     get:
       operationId: listApiSpecs
-      summary: List API specs
+      summary: Apigee List API specs
       description: >-
         Lists all specs for an API version.
       tags:
@@ -416,7 +416,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiSpec
-      summary: Create an API spec
+      summary: Apigee Create an API spec
       description: >-
         Creates a new specification for an API version in the registry.
       tags:
@@ -454,7 +454,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:
     get:
       operationId: getApiSpec
-      summary: Get an API spec
+      summary: Apigee Get an API spec
       description: >-
         Gets details about a specific API specification.
       tags:
@@ -480,7 +480,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiSpec
-      summary: Update an API spec
+      summary: Apigee Update an API spec
       description: >-
         Updates an existing API spec. A new revision is created if
         the spec content changes.
@@ -526,7 +526,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiSpec
-      summary: Delete an API spec
+      summary: Apigee Delete an API spec
       description: >-
         Deletes an API spec and all its revisions and child resources.
       tags:
@@ -558,7 +558,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents:
     get:
       operationId: getApiSpecContents
-      summary: Get API spec contents
+      summary: Apigee Get API spec contents
       description: >-
         Retrieves the raw content of an API specification.
       tags:
@@ -585,7 +585,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:rollback:
     post:
       operationId: rollbackApiSpec
-      summary: Rollback an API spec
+      summary: Apigee Rollback an API spec
       description: >-
         Rolls back an API spec to a previous revision.
       tags:
@@ -626,7 +626,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments:
     get:
       operationId: listApiDeployments
-      summary: List API deployments
+      summary: Apigee List API deployments
       description: >-
         Lists all deployment records for an API.
       tags:
@@ -660,7 +660,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiDeployment
-      summary: Create an API deployment
+      summary: Apigee Create an API deployment
       description: >-
         Creates a new deployment record for an API, tracking where
         a version is deployed.
@@ -698,7 +698,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:
     get:
       operationId: getApiDeployment
-      summary: Get an API deployment
+      summary: Apigee Get an API deployment
       description: >-
         Gets the details of a specific API deployment record.
       tags:
@@ -723,7 +723,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiDeployment
-      summary: Update an API deployment
+      summary: Apigee Update an API deployment
       description: >-
         Updates an existing API deployment record.
       tags:
@@ -767,7 +767,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiDeployment
-      summary: Delete an API deployment
+      summary: Apigee Delete an API deployment
       description: >-
         Deletes an API deployment record.
       tags:
@@ -798,7 +798,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:rollback:
     post:
       operationId: rollbackApiDeployment
-      summary: Rollback an API deployment
+      summary: Apigee Rollback an API deployment
       description: >-
         Rolls back an API deployment to a previous revision.
       tags:
@@ -838,7 +838,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/artifacts:
     get:
       operationId: listArtifacts
-      summary: List artifacts
+      summary: Apigee List artifacts
       description: >-
         Lists all artifacts at the specified project/location level.
       tags:
@@ -871,7 +871,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createArtifact
-      summary: Create an artifact
+      summary: Apigee Create an artifact
       description: >-
         Creates a new artifact at the project/location level.
       tags:
@@ -907,7 +907,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:
     get:
       operationId: getArtifact
-      summary: Get an artifact
+      summary: Apigee Get an artifact
       description: >-
         Gets details about a specific artifact.
       tags:
@@ -931,7 +931,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: replaceArtifact
-      summary: Replace an artifact
+      summary: Apigee Replace an artifact
       description: >-
         Replaces the contents of an existing artifact.
       tags:
@@ -963,7 +963,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteArtifact
-      summary: Delete an artifact
+      summary: Apigee Delete an artifact
       description: >-
         Deletes an artifact from the registry.
       tags:
@@ -988,7 +988,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:getContents:
     get:
       operationId: getArtifactContents
-      summary: Get artifact contents
+      summary: Apigee Get artifact contents
       description: >-
         Retrieves the raw content of an artifact.
       tags:
@@ -1013,7 +1013,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/instances:
     post:
       operationId: createInstance
-      summary: Create a Registry instance
+      summary: Apigee Create a Registry instance
       description: >-
         Provisions a new Apigee Registry instance in the specified
         project and location.
@@ -1050,7 +1050,7 @@ paths:
   /projects/{projectId}/locations/{locationId}/instances/{instanceId}:
     get:
       operationId: getInstance
-      summary: Get a Registry instance
+      summary: Apigee Get a Registry instance
       description: >-
         Gets details about a specific Registry instance.
       tags:
@@ -1079,7 +1079,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteInstance
-      summary: Delete a Registry instance
+      summary: Apigee Delete a Registry instance
       description: >-
         Deletes a Registry instance.
       tags:
