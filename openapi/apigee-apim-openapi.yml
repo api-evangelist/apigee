@@ -22,12 +22,12 @@ servers:
 security:
   - oauth2: []
 tags:
-  - name: Observation Jobs
-    description: Manage API observation jobs for shadow API discovery
   - name: API Observations
     description: View and manage discovered API observations
   - name: API Operations
     description: View discovered API operations
+  - name: Observation Jobs
+    description: Manage API observation jobs for shadow API discovery
   - name: Observation Sources
     description: Manage sources for API observation
   - name: Operations

@@ -22,36 +22,36 @@ servers:
 security:
   - oauth2: []
 tags:
-  - name: Organizations
-    description: Manage Apigee organizations and their configuration
+  - name: Analytics
+    description: Query analytics data and manage data stores
+  - name: API Products
+    description: Bundle APIs into products for consumption
   - name: API Proxies
     description: Create, deploy, and manage API proxy definitions
   - name: API Proxy Revisions
     description: Manage revisions of API proxies
-  - name: API Products
-    description: Bundle APIs into products for consumption
-  - name: Developers
-    description: Manage developer accounts and credentials
-  - name: Developer Apps
-    description: Manage applications registered by developers
-  - name: Developer App Keys
-    description: Manage API keys and credentials for developer apps
-  - name: Environments
-    description: Manage runtime execution environments
-  - name: Deployments
-    description: Deploy and undeploy API proxies to environments
-  - name: Key Value Maps
-    description: Manage key-value storage maps
-  - name: Target Servers
-    description: Configure backend target server endpoints
-  - name: Shared Flows
-    description: Manage reusable shared flow logic
-  - name: Analytics
-    description: Query analytics data and manage data stores
   - name: App Groups
     description: Manage developer groups and their applications
+  - name: Deployments
+    description: Deploy and undeploy API proxies to environments
+  - name: Developer App Keys
+    description: Manage API keys and credentials for developer apps
+  - name: Developer Apps
+    description: Manage applications registered by developers
+  - name: Developers
+    description: Manage developer accounts and credentials
+  - name: Environments
+    description: Manage runtime execution environments
   - name: Instances
     description: Manage Apigee runtime instances
+  - name: Key Value Maps
+    description: Manage key-value storage maps
+  - name: Organizations
+    description: Manage Apigee organizations and their configuration
+  - name: Shared Flows
+    description: Manage reusable shared flow logic
+  - name: Target Servers
+    description: Configure backend target server endpoints
 paths:
   /organizations:
     get:

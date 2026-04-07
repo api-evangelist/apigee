@@ -23,14 +23,12 @@ servers:
 security:
   - oauth2: []
 tags:
-  - name: APIs
-    description: Manage API definitions in the registry
-  - name: API Versions
-    description: Manage API version records
-  - name: API Specs
-    description: Manage API specification documents
   - name: API Deployments
     description: Track API deployment records
+  - name: API Specs
+    description: Manage API specification documents
+  - name: API Versions
+    description: Manage API version records
   - name: Artifacts
     description: Manage metadata artifacts
   - name: Instances
@@ -43,8 +41,7 @@ paths:
       description: >-
         Lists all APIs in the specified project and location. Returns
         API metadata including name, display name, description, and labels.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -77,8 +74,7 @@ paths:
       description: >-
         Creates a new API entry in the registry. An API represents a
         logical grouping of related API versions.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -115,8 +111,7 @@ paths:
       summary: Apigee Get an API
       description: >-
         Gets the details of a specific API entry in the registry.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -139,8 +134,7 @@ paths:
       summary: Apigee Update an API
       description: >-
         Updates an existing API entry. Use updateMask to specify fields.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -183,8 +177,7 @@ paths:
       description: >-
         Deletes an API and all of its owned resources (versions, specs,
         deployments, artifacts).
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'

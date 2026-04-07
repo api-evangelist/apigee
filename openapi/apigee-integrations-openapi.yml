@@ -22,22 +22,22 @@ servers:
 security:
   - oauth2: []
 tags:
-  - name: Integrations
-    description: Manage and execute integrations
-  - name: Integration Versions
-    description: Manage integration versions and publishing
   - name: Auth Configs
     description: Manage authentication configurations
   - name: Certificates
     description: Manage SSL/TLS certificates
   - name: Executions
     description: View integration execution results
-  - name: Suspensions
-    description: Manage integration execution suspensions
-  - name: SFDC Instances
-    description: Manage Salesforce instances
+  - name: Integration Versions
+    description: Manage integration versions and publishing
+  - name: Integrations
+    description: Manage and execute integrations
   - name: SFDC Channels
     description: Manage Salesforce channels
+  - name: SFDC Instances
+    description: Manage Salesforce instances
+  - name: Suspensions
+    description: Manage integration execution suspensions
 paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations:
     get:

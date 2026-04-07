@@ -22,28 +22,22 @@ servers:
 security:
   - oauth2: []
 tags:
-  - name: APIs
-    description: Manage API definitions in the hub
-  - name: Versions
-    description: Manage API versions
-  - name: Specs
-    description: Manage API specifications
-  - name: Operations
-    description: Manage API operations
-  - name: Deployments
-    description: Manage API deployments
-  - name: Dependencies
-    description: Track API dependencies
   - name: Attributes
     description: Manage custom attributes
+  - name: Dependencies
+    description: Track API dependencies
+  - name: Deployments
+    description: Manage API deployments
   - name: External APIs
     description: Manage external API references
-  - name: Plugins
-    description: Manage API Hub plugins
-  - name: Runtime Project Attachments
-    description: Manage runtime project attachments
   - name: Locations
     description: Manage project locations and search resources
+  - name: Runtime Project Attachments
+    description: Manage runtime project attachments
+  - name: Specs
+    description: Manage API specifications
+  - name: Versions
+    description: Manage API versions
 paths:
   /projects/{projectId}/locations/{locationId}/apis:
     get:
@@ -52,8 +46,7 @@ paths:
       description: >-
         Lists all APIs in the specified project and location. Returns
         API metadata including name, display name, and description.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -81,8 +74,7 @@ paths:
       description: >-
         Creates a new API resource in the API Hub. The API represents a
         logical grouping of related API versions and specifications.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -122,8 +114,7 @@ paths:
       description: >-
         Retrieves details of a specific API resource, including its
         display name, description, owner, and associated metadata.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -147,8 +138,7 @@ paths:
       description: >-
         Updates an existing API resource in the API Hub. Use the updateMask
         field to specify which fields to update.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
@@ -187,8 +177,7 @@ paths:
       description: >-
         Deletes an API resource and all its child resources (versions,
         specs, operations) from the API Hub.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/projectId'
         - $ref: '#/components/parameters/locationId'
