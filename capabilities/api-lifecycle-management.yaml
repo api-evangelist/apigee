@@ -1,0 +1,122 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Apigee API Lifecycle Management"
+  description: "Unified workflow for managing the full API lifecycle on Google Apigee - from API proxy creation and deployment to developer portal management, product packaging, and analytics."
+  tags:
+    - Apigee
+    - API Management
+    - API Lifecycle
+    - Google Cloud
+    - Developer Portal
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: api-management
+      location: ./shared/api-management.yaml
+    - import: api-hub
+      location: ./shared/api-hub.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: apigee-lifecycle-api
+      description: "Unified REST API for Apigee API lifecycle management."
+      resources:
+        - path: /v1/proxies
+          name: api-proxies
+          description: "Manage API proxies."
+          operations:
+            - method: GET
+              name: list-proxies
+              description: "List API proxies."
+              call: "api-management.listApiProxies"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/products
+          name: api-products
+          description: "Manage API products."
+          operations:
+            - method: GET
+              name: list-products
+              description: "List API products."
+              call: "api-management.listApiProducts"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/developers
+          name: developers
+          description: "Manage API developers."
+          operations:
+            - method: GET
+              name: list-developers
+              description: "List developers."
+              call: "api-management.listDevelopers"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: apigee-lifecycle-mcp
+      transport: http
+      description: "MCP server for AI-assisted Apigee API lifecycle management."
+      tools:
+        - name: list-api-proxies
+          description: "List all API proxies in an Apigee organization."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listApiProxies"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-api-products
+          description: "List all API products packaged for developer consumption."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listApiProducts"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-developers
+          description: "List all registered API developers in the organization."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listDevelopers"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-environments
+          description: "List all environments (e.g., dev, staging, prod) in the organization."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listEnvironments"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-hub-apis
+          description: "List all APIs catalogued in Apigee API Hub for discovery and governance."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-hub.listApis"
+          outputParameters:
+            - type: object
+              mapping: "$."

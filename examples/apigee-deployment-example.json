@@ -1,0 +1,6 @@
+{
+  "apiProxy": "my-api-proxy",
+  "revision": "1",
+  "environment": "prod",
+  "state": "READY"
+}

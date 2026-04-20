@@ -17,51 +17,51 @@ externalDocs:
   description: Apigee API Reference Documentation
   url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
 servers:
-  - url: https://apigee.googleapis.com/v1
-    description: Apigee API Production Server
+- url: https://apigee.googleapis.com/v1
+  description: Apigee API Production Server
 security:
-  - oauth2: []
+- oauth2: []
 tags:
-  - name: Analytics
-    description: Query analytics data and manage data stores
-  - name: API Products
-    description: Bundle APIs into products for consumption
-  - name: API Proxies
-    description: Create, deploy, and manage API proxy definitions
-  - name: API Proxy Revisions
-    description: Manage revisions of API proxies
-  - name: App Groups
-    description: Manage developer groups and their applications
-  - name: Deployments
-    description: Deploy and undeploy API proxies to environments
-  - name: Developer App Keys
-    description: Manage API keys and credentials for developer apps
-  - name: Developer Apps
-    description: Manage applications registered by developers
-  - name: Developers
-    description: Manage developer accounts and credentials
-  - name: Environments
-    description: Manage runtime execution environments
-  - name: Instances
-    description: Manage Apigee runtime instances
-  - name: Key Value Maps
-    description: Manage key-value storage maps
-  - name: Organizations
-    description: Manage Apigee organizations and their configuration
-  - name: Shared Flows
-    description: Manage reusable shared flow logic
-  - name: Target Servers
-    description: Configure backend target server endpoints
+- name: Analytics
+  description: Query analytics data and manage data stores
+- name: API Products
+  description: Bundle APIs into products for consumption
+- name: API Proxies
+  description: Create, deploy, and manage API proxy definitions
+- name: API Proxy Revisions
+  description: Manage revisions of API proxies
+- name: App Groups
+  description: Manage developer groups and their applications
+- name: Deployments
+  description: Deploy and undeploy API proxies to environments
+- name: Developer App Keys
+  description: Manage API keys and credentials for developer apps
+- name: Developer Apps
+  description: Manage applications registered by developers
+- name: Developers
+  description: Manage developer accounts and credentials
+- name: Environments
+  description: Manage runtime execution environments
+- name: Instances
+  description: Manage Apigee runtime instances
+- name: Key Value Maps
+  description: Manage key-value storage maps
+- name: Organizations
+  description: Manage Apigee organizations and their configuration
+- name: Shared Flows
+  description: Manage reusable shared flow logic
+- name: Target Servers
+  description: Configure backend target server endpoints
 paths:
   /organizations:
     get:
       operationId: listOrganizations
-      summary: Apigee List organizations
+      summary: Apigee List Organizations
       description: >-
         Lists the Apigee organizations that are available to the caller.
         Returns a list of organization names and metadata.
       tags:
-        - Organizations
+      - Organizations
       responses:
         '200':
           description: Successful response with list of organizations
@@ -75,23 +75,23 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createOrganization
-      summary: Apigee Create an organization
+      summary: Apigee Create an Organization
       description: >-
         Creates an Apigee organization. The organization is the top-level
         container for all Apigee resources including API proxies, products,
         developers, and environments.
       tags:
-        - Organizations
+      - Organizations
       parameters:
-        - name: parent
-          in: query
-          description: >-
-            Required. Name of the Google Cloud project in which to associate
-            the Apigee organization. Pass the information as a query parameter
-            using the format: projects/{project}.
-          required: true
-          schema:
-            type: string
+      - name: parent
+        in: query
+        description: >-
+          Required. Name of the Google Cloud project in which to associate
+          the Apigee organization. Pass the information as a query parameter
+          using the format: projects/{project}.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -114,14 +114,14 @@ paths:
   /organizations/{organizationId}:
     get:
       operationId: getOrganization
-      summary: Apigee Get an organization
+      summary: Apigee Get an Organization
       description: >-
         Retrieves the properties for an Apigee organization, including
         configuration settings, subscription type, and metadata.
       tags:
-        - Organizations
+      - Organizations
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       responses:
         '200':
           description: Successful response with organization details
@@ -137,14 +137,14 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateOrganization
-      summary: Apigee Update an organization
+      summary: Apigee Update an Organization
       description: >-
         Updates the properties for an Apigee organization. No other fields
         in the organization profile will be updated.
       tags:
-        - Organizations
+      - Organizations
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       requestBody:
         required: true
         content:
@@ -168,14 +168,14 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteOrganization
-      summary: Apigee Delete an organization
+      summary: Apigee Delete an Organization
       description: >-
         Deletes an Apigee organization. This is a long-running operation
         that deletes all resources associated with the organization.
       tags:
-        - Organizations
+      - Organizations
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       responses:
         '200':
           description: Successful response with long-running operation
@@ -192,16 +192,16 @@ paths:
   /organizations/{organizationId}/apis:
     get:
       operationId: listApiProxies
-      summary: Apigee List API proxies
+      summary: Apigee List API Proxies
       description: >-
         Lists the names of all API proxies in an organization. The list
         includes information about the API proxy revisions available.
       tags:
-        - API Proxies
+      - API Proxies
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
       responses:
         '200':
           description: Successful response with list of API proxies
@@ -215,30 +215,30 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiProxy
-      summary: Apigee Create an API proxy
+      summary: Apigee Create an API Proxy
       description: >-
         Creates an API proxy. The API proxy created will not be accessible
         at runtime until it is deployed to an environment. Provide the proxy
         configuration as an API proxy bundle or as an inline configuration.
       tags:
-        - API Proxies
+      - API Proxies
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: name
-          in: query
-          description: Name of the API proxy. Must be unique within the organization.
-          required: true
-          schema:
-            type: string
-        - name: action
-          in: query
-          description: >-
-            Action to perform when importing an API proxy configuration bundle.
-            Set to "import" when uploading a ZIP bundle.
-          schema:
-            type: string
-            enum:
-              - import
+      - $ref: '#/components/parameters/organizationId'
+      - name: name
+        in: query
+        description: Name of the API proxy. Must be unique within the organization.
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        description: >-
+          Action to perform when importing an API proxy configuration bundle.
+          Set to "import" when uploading a ZIP bundle.
+        schema:
+          type: string
+          enum:
+          - import
       requestBody:
         description: API proxy bundle or configuration
         content:
@@ -267,15 +267,15 @@ paths:
   /organizations/{organizationId}/apis/{apiId}:
     get:
       operationId: getApiProxy
-      summary: Apigee Get an API proxy
+      summary: Apigee Get an API Proxy
       description: >-
         Gets an API proxy including a list of existing revisions, the
         proxy metadata, and the last modified date.
       tags:
-        - API Proxies
+      - API Proxies
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
       responses:
         '200':
           description: Successful response with API proxy details
@@ -291,16 +291,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiProxy
-      summary: Apigee Delete an API proxy
+      summary: Apigee Delete an API Proxy
       description: >-
         Deletes an API proxy and all associated endpoints, policies,
         resources, and revisions. The proxy must be undeployed from all
         environments before it can be deleted.
       tags:
-        - API Proxies
+      - API Proxies
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -316,23 +316,23 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: patchApiProxy
-      summary: Apigee Update an API proxy
+      summary: Apigee Update an API Proxy
       description: >-
         Updates an existing API proxy metadata such as labels. Does not
         update the proxy bundle or revision content.
       tags:
-        - API Proxies
+      - API Proxies
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiId'
-        - name: updateMask
-          in: query
-          description: >-
-            Required. List of fields to update. Use comma-separated field
-            names from the resource. Example: "labels".
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      - name: updateMask
+        in: query
+        description: >-
+          Required. List of fields to update. Use comma-separated field
+          names from the resource. Example: "labels".
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -357,15 +357,15 @@ paths:
   /organizations/{organizationId}/apis/{apiId}/revisions:
     get:
       operationId: listApiProxyRevisions
-      summary: Apigee List API proxy revisions
+      summary: Apigee List API Proxy Revisions
       description: >-
         Lists all revisions for an API proxy. Returns an array of revision
         numbers in string format.
       tags:
-        - API Proxy Revisions
+      - API Proxy Revisions
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
       responses:
         '200':
           description: Successful response with list of revision numbers
@@ -384,16 +384,16 @@ paths:
   /organizations/{organizationId}/apis/{apiId}/revisions/{revisionId}:
     get:
       operationId: getApiProxyRevision
-      summary: Apigee Get an API proxy revision
+      summary: Apigee Get an API Proxy Revision
       description: >-
         Gets an API proxy revision. Returns the configuration and metadata
         for the specified revision of an API proxy.
       tags:
-        - API Proxy Revisions
+      - API Proxy Revisions
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/revisionId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
       responses:
         '200':
           description: Successful response with API proxy revision details
@@ -409,16 +409,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiProxyRevision
-      summary: Apigee Delete an API proxy revision
+      summary: Apigee Delete an API Proxy Revision
       description: >-
         Deletes an API proxy revision. The revision must be undeployed
         from all environments before it can be deleted.
       tags:
-        - API Proxy Revisions
+      - API Proxy Revisions
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/revisionId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -435,43 +435,43 @@ paths:
   /organizations/{organizationId}/apiproducts:
     get:
       operationId: listApiProducts
-      summary: Apigee List API products
+      summary: Apigee List API Products
       description: >-
         Lists all API product names for an organization. Filter the
         list using an attribute name and value query parameter.
       tags:
-        - API Products
+      - API Products
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: attributename
-          in: query
-          description: Name of the attribute used to filter the search.
-          schema:
-            type: string
-        - name: attributevalue
-          in: query
-          description: Value of the attribute used to filter the search.
-          schema:
-            type: string
-        - name: expand
-          in: query
-          description: >-
-            Set to true to get expanded details about each API product.
-          schema:
-            type: boolean
-        - name: count
-          in: query
-          description: Number of API products to return in the API call.
-          schema:
-            type: integer
-            format: int64
-        - name: startKey
-          in: query
-          description: >-
-            Name of the API product from which to start displaying the
-            list of API products.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - name: attributename
+        in: query
+        description: Name of the attribute used to filter the search.
+        schema:
+          type: string
+      - name: attributevalue
+        in: query
+        description: Value of the attribute used to filter the search.
+        schema:
+          type: string
+      - name: expand
+        in: query
+        description: >-
+          Set to true to get expanded details about each API product.
+        schema:
+          type: boolean
+      - name: count
+        in: query
+        description: Number of API products to return in the API call.
+        schema:
+          type: integer
+          format: int64
+      - name: startKey
+        in: query
+        description: >-
+          Name of the API product from which to start displaying the
+          list of API products.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of API products
@@ -485,15 +485,15 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiProduct
-      summary: Apigee Create an API product
+      summary: Apigee Create an API Product
       description: >-
         Creates an API product in an organization. API products bundle
         API resources for consumption by developers. An API product can
         contain API proxies and quota settings.
       tags:
-        - API Products
+      - API Products
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       requestBody:
         required: true
         content:
@@ -518,15 +518,15 @@ paths:
   /organizations/{organizationId}/apiproducts/{apiProductId}:
     get:
       operationId: getApiProduct
-      summary: Apigee Get an API product
+      summary: Apigee Get an API Product
       description: >-
         Gets the configuration for an API product. The API product name
         is required in the request URL.
       tags:
-        - API Products
+      - API Products
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiProductId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiProductId'
       responses:
         '200':
           description: Successful response with API product details
@@ -542,16 +542,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateApiProduct
-      summary: Apigee Update an API product
+      summary: Apigee Update an API Product
       description: >-
         Updates an existing API product. The full API product object must
         be included in the request body, even if only a subset of properties
         are being updated.
       tags:
-        - API Products
+      - API Products
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiProductId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiProductId'
       requestBody:
         required: true
         content:
@@ -575,16 +575,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiProduct
-      summary: Apigee Delete an API product
+      summary: Apigee Delete an API Product
       description: >-
         Deletes an API product from an organization. Deleting an API
         product causes apps that are associated with the product to be
         unable to access the API resources defined in that product.
       tags:
-        - API Products
+      - API Products
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/apiProductId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiProductId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -601,35 +601,35 @@ paths:
   /organizations/{organizationId}/developers:
     get:
       operationId: listDevelopers
-      summary: Apigee List developers
+      summary: Apigee List Developers
       description: >-
         Lists all developers in an organization by email address. Returns
         a list of developer email addresses or expanded developer objects.
       tags:
-        - Developers
+      - Developers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: expand
-          in: query
-          description: Set to true to return expanded developer details.
-          schema:
-            type: boolean
-        - name: count
-          in: query
-          description: Number of developers to return.
-          schema:
-            type: integer
-            format: int64
-        - name: startKey
-          in: query
-          description: Email of the developer from which to start the list.
-          schema:
-            type: string
-        - name: app
-          in: query
-          description: Filter by the name of the app owned by the developer.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - name: expand
+        in: query
+        description: Set to true to return expanded developer details.
+        schema:
+          type: boolean
+      - name: count
+        in: query
+        description: Number of developers to return.
+        schema:
+          type: integer
+          format: int64
+      - name: startKey
+        in: query
+        description: Email of the developer from which to start the list.
+        schema:
+          type: string
+      - name: app
+        in: query
+        description: Filter by the name of the app owned by the developer.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of developers
@@ -643,15 +643,15 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDeveloper
-      summary: Apigee Create a developer
+      summary: Apigee Create a Developer
       description: >-
         Creates a developer in an organization. A developer is a consumer
         of APIs, typically represented by a person or company who registers
         apps and obtains API keys.
       tags:
-        - Developers
+      - Developers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       requestBody:
         required: true
         content:
@@ -676,15 +676,15 @@ paths:
   /organizations/{organizationId}/developers/{developerId}:
     get:
       operationId: getDeveloper
-      summary: Apigee Get a developer
+      summary: Apigee Get a Developer
       description: >-
         Returns the developer profile by email address or developer ID.
         Includes information about the developer apps and custom attributes.
       tags:
-        - Developers
+      - Developers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
       responses:
         '200':
           description: Successful response with developer details
@@ -700,15 +700,15 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateDeveloper
-      summary: Apigee Update a developer
+      summary: Apigee Update a Developer
       description: >-
         Updates a developer with the properties specified in the request body.
         The full developer object must be included in the request body.
       tags:
-        - Developers
+      - Developers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
       requestBody:
         required: true
         content:
@@ -732,16 +732,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeveloper
-      summary: Apigee Delete a developer
+      summary: Apigee Delete a Developer
       description: >-
         Deletes a developer from the organization. All apps and API keys
         associated with the developer are also removed. All pending push
         notifications are also deleted.
       tags:
-        - Developers
+      - Developers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -758,31 +758,31 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps:
     get:
       operationId: listDeveloperApps
-      summary: Apigee List developer apps
+      summary: Apigee List Developer Apps
       description: >-
         Lists all apps created by a developer in an organization.
         Returns an array of app IDs or expanded app objects.
       tags:
-        - Developer Apps
+      - Developer Apps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - name: expand
-          in: query
-          description: Set to true to return full app details.
-          schema:
-            type: boolean
-        - name: count
-          in: query
-          description: Number of developer apps to return.
-          schema:
-            type: integer
-            format: int64
-        - name: startKey
-          in: query
-          description: Name of the developer app from which to start the list.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - name: expand
+        in: query
+        description: Set to true to return full app details.
+        schema:
+          type: boolean
+      - name: count
+        in: query
+        description: Number of developer apps to return.
+        schema:
+          type: integer
+          format: int64
+      - name: startKey
+        in: query
+        description: Name of the developer app from which to start the list.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of developer apps
@@ -796,16 +796,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDeveloperApp
-      summary: Apigee Create a developer app
+      summary: Apigee Create a Developer App
       description: >-
         Creates an app associated with a developer. This API associates the
         developer app with the specified API product and auto-generates an
         API key for the app to use in calls to API proxies inside that product.
       tags:
-        - Developer Apps
+      - Developer Apps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
       requestBody:
         required: true
         content:
@@ -828,16 +828,16 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps/{appId}:
     get:
       operationId: getDeveloperApp
-      summary: Apigee Get a developer app
+      summary: Apigee Get a Developer App
       description: >-
         Returns the details for a developer app, including the API keys
         and API products associated with the app.
       tags:
-        - Developer Apps
+      - Developer Apps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
       responses:
         '200':
           description: Successful response with developer app details
@@ -853,16 +853,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateDeveloperApp
-      summary: Apigee Update a developer app
+      summary: Apigee Update a Developer App
       description: >-
         Updates the attributes of the developer app. This API replaces
         the current attributes with those specified in the request body.
       tags:
-        - Developer Apps
+      - Developer Apps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
       requestBody:
         required: true
         content:
@@ -886,16 +886,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeveloperApp
-      summary: Apigee Delete a developer app
+      summary: Apigee Delete a Developer App
       description: >-
         Deletes a developer app. This operation also removes all API keys
         and associations to API products for the app.
       tags:
-        - Developer Apps
+      - Developer Apps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -912,16 +912,16 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys:
     get:
       operationId: listDeveloperAppKeys
-      summary: Apigee List developer app keys
+      summary: Apigee List Developer App Keys
       description: >-
         Returns a list of all API keys for a developer app, including
         consumer keys and secrets.
       tags:
-        - Developer App Keys
+      - Developer App Keys
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
       responses:
         '200':
           description: Successful response with list of app keys
@@ -935,16 +935,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDeveloperAppKey
-      summary: Apigee Create a developer app key
+      summary: Apigee Create a Developer App Key
       description: >-
         Creates a custom consumer key and secret for a developer app.
         Useful when migrating existing consumer keys and secrets to Apigee.
       tags:
-        - Developer App Keys
+      - Developer App Keys
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
       requestBody:
         required: true
         content:
@@ -967,17 +967,17 @@ paths:
   /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}:
     get:
       operationId: getDeveloperAppKey
-      summary: Apigee Get a developer app key
+      summary: Apigee Get a Developer App Key
       description: >-
         Returns details for a consumer key for a developer app, including
         the key, its status, and the associated API products.
       tags:
-        - Developer App Keys
+      - Developer App Keys
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
-        - $ref: '#/components/parameters/keyId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/keyId'
       responses:
         '200':
           description: Successful response with key details
@@ -993,17 +993,17 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateDeveloperAppKey
-      summary: Apigee Update a developer app key
+      summary: Apigee Update a Developer App Key
       description: >-
         Adds an API product to a developer app key, enabling the app to
         access the API resources bundled in the API product.
       tags:
-        - Developer App Keys
+      - Developer App Keys
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
-        - $ref: '#/components/parameters/keyId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/keyId'
       requestBody:
         required: true
         content:
@@ -1027,17 +1027,17 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeveloperAppKey
-      summary: Apigee Delete a developer app key
+      summary: Apigee Delete a Developer App Key
       description: >-
         Deletes an app's consumer key. After the consumer key is deleted,
         it cannot be used to access any APIs.
       tags:
-        - Developer App Keys
+      - Developer App Keys
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/developerId'
-        - $ref: '#/components/parameters/appId'
-        - $ref: '#/components/parameters/keyId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/keyId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -1054,14 +1054,14 @@ paths:
   /organizations/{organizationId}/environments:
     get:
       operationId: listEnvironments
-      summary: Apigee List environments
+      summary: Apigee List Environments
       description: >-
         Lists all environments in an organization. Returns a list of
         environment names or expanded environment objects.
       tags:
-        - Environments
+      - Environments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       responses:
         '200':
           description: Successful response with list of environments
@@ -1077,15 +1077,15 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createEnvironment
-      summary: Apigee Create an environment
+      summary: Apigee Create an Environment
       description: >-
         Creates an environment in an organization. Environments provide
         a runtime execution context for API proxies, with separate
         settings for caches, target servers, keystores, and more.
       tags:
-        - Environments
+      - Environments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       requestBody:
         required: true
         content:
@@ -1108,15 +1108,15 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}:
     get:
       operationId: getEnvironment
-      summary: Apigee Get an environment
+      summary: Apigee Get an Environment
       description: >-
         Gets the profile for an environment in an organization, including
         properties, state, and deployment type.
       tags:
-        - Environments
+      - Environments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
       responses:
         '200':
           description: Successful response with environment details
@@ -1132,15 +1132,15 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateEnvironment
-      summary: Apigee Update an environment
+      summary: Apigee Update an Environment
       description: >-
         Updates an existing environment. The full environment object must be
         included in the request body.
       tags:
-        - Environments
+      - Environments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
       requestBody:
         required: true
         content:
@@ -1164,15 +1164,15 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteEnvironment
-      summary: Apigee Delete an environment
+      summary: Apigee Delete an Environment
       description: >-
         Deletes an environment from an organization. Before deleting,
         all API proxies must be undeployed from the environment.
       tags:
-        - Environments
+      - Environments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
       responses:
         '200':
           description: Successful response with long-running operation
@@ -1189,31 +1189,31 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments:
     post:
       operationId: deployApiProxyRevision
-      summary: Apigee Deploy an API proxy revision
+      summary: Apigee Deploy an API Proxy Revision
       description: >-
         Deploys a revision of an API proxy to an environment. After
         deployment, the API proxy revision can accept requests from clients.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/revisionId'
-        - name: override
-          in: query
-          description: >-
-            Set to true to force deployment of the new revision over
-            the currently deployed revision by overriding conflict checks.
-          schema:
-            type: boolean
-        - name: sequencedRollout
-          in: query
-          description: >-
-            Set to true to enable sequenced rollout, which deploys to pods
-            in a gradual manner.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
+      - name: override
+        in: query
+        description: >-
+          Set to true to force deployment of the new revision over
+          the currently deployed revision by overriding conflict checks.
+        schema:
+          type: boolean
+      - name: sequencedRollout
+        in: query
+        description: >-
+          Set to true to enable sequenced rollout, which deploys to pods
+          in a gradual manner.
+        schema:
+          type: boolean
       responses:
         '200':
           description: Successful response with deployment details
@@ -1231,23 +1231,23 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: undeployApiProxyRevision
-      summary: Apigee Undeploy an API proxy revision
+      summary: Apigee Undeploy an API Proxy Revision
       description: >-
         Undeploys an API proxy revision from an environment. After undeployment,
         the API proxy revision will no longer accept requests from clients.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/revisionId'
-        - name: sequencedRollout
-          in: query
-          description: >-
-            Set to true to enable sequenced rollout for undeployment.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
+      - name: sequencedRollout
+        in: query
+        description: >-
+          Set to true to enable sequenced rollout for undeployment.
+        schema:
+          type: boolean
       responses:
         '200':
           description: Successful response confirming undeployment
@@ -1264,21 +1264,21 @@ paths:
   /organizations/{organizationId}/deployments:
     get:
       operationId: listOrganizationDeployments
-      summary: Apigee List organization deployments
+      summary: Apigee List Organization Deployments
       description: >-
         Lists all deployments across all environments in an organization,
         including the API proxy name, revision, and environment.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: sharedFlows
-          in: query
-          description: >-
-            Set to true to return shared flow deployments instead of API proxy
-            deployments.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/organizationId'
+      - name: sharedFlows
+        in: query
+        description: >-
+          Set to true to return shared flow deployments instead of API proxy
+          deployments.
+        schema:
+          type: boolean
       responses:
         '200':
           description: Successful response with list of deployments
@@ -1293,15 +1293,15 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/targetservers:
     get:
       operationId: listTargetServers
-      summary: Apigee List target servers
+      summary: Apigee List Target Servers
       description: >-
         Lists all target servers in the specified environment of an
         organization. Target servers define backend service endpoints.
       tags:
-        - Target Servers
+      - Target Servers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
       responses:
         '200':
           description: Successful response with list of target servers
@@ -1317,15 +1317,15 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createTargetServer
-      summary: Apigee Create a target server
+      summary: Apigee Create a Target Server
       description: >-
         Creates a target server in the specified environment. Target servers
         decouple TargetEndpoint configurations from concrete backend URLs.
       tags:
-        - Target Servers
+      - Target Servers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
       requestBody:
         required: true
         content:
@@ -1348,15 +1348,15 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}:
     get:
       operationId: getTargetServer
-      summary: Apigee Get a target server
+      summary: Apigee Get a Target Server
       description: >-
         Gets the configuration of a target server in the specified environment.
       tags:
-        - Target Servers
+      - Target Servers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/components/parameters/targetServerId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/targetServerId'
       responses:
         '200':
           description: Successful response with target server details
@@ -1372,16 +1372,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateTargetServer
-      summary: Apigee Update a target server
+      summary: Apigee Update a Target Server
       description: >-
         Updates an existing target server in the specified environment. The
         full target server object must be included in the request body.
       tags:
-        - Target Servers
+      - Target Servers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/components/parameters/targetServerId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/targetServerId'
       requestBody:
         required: true
         content:
@@ -1405,15 +1405,15 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteTargetServer
-      summary: Apigee Delete a target server
+      summary: Apigee Delete a Target Server
       description: >-
         Deletes a target server from an environment.
       tags:
-        - Target Servers
+      - Target Servers
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
-        - $ref: '#/components/parameters/targetServerId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/targetServerId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -1430,14 +1430,14 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps:
     get:
       operationId: listKeyValueMaps
-      summary: Apigee List key value maps
+      summary: Apigee List Key Value Maps
       description: >-
         Lists the key value maps in the specified environment.
       tags:
-        - Key Value Maps
+      - Key Value Maps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
       responses:
         '200':
           description: Successful response with list of key value map names
@@ -1453,15 +1453,15 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createKeyValueMap
-      summary: Apigee Create a key value map
+      summary: Apigee Create a Key Value Map
       description: >-
         Creates a key value map in the specified environment. Key value
         maps store data for retrieval at runtime by policies.
       tags:
-        - Key Value Maps
+      - Key Value Maps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
       requestBody:
         required: true
         content:
@@ -1484,20 +1484,20 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}:
     delete:
       operationId: deleteKeyValueMap
-      summary: Apigee Delete a key value map
+      summary: Apigee Delete a Key Value Map
       description: >-
         Deletes a key value map from the specified environment.
       tags:
-        - Key Value Maps
+      - Key Value Maps
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
-        - name: keyValueMapId
-          in: path
-          description: Name of the key value map.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - name: keyValueMapId
+        in: path
+        description: Name of the key value map.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response confirming deletion
@@ -1514,14 +1514,14 @@ paths:
   /organizations/{organizationId}/sharedflows:
     get:
       operationId: listSharedFlows
-      summary: Apigee List shared flows
+      summary: Apigee List Shared Flows
       description: >-
         Lists all shared flows in an organization. Shared flows contain
         reusable logic that can be invoked from API proxy flows.
       tags:
-        - Shared Flows
+      - Shared Flows
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       responses:
         '200':
           description: Successful response with list of shared flows
@@ -1535,27 +1535,27 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createSharedFlow
-      summary: Apigee Create a shared flow
+      summary: Apigee Create a Shared Flow
       description: >-
         Uploads a ZIP-formatted shared flow configuration bundle. The bundle
         is imported into the organization as a new shared flow.
       tags:
-        - Shared Flows
+      - Shared Flows
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: name
-          in: query
-          description: Name of the shared flow. Must be unique within the organization.
-          required: true
-          schema:
-            type: string
-        - name: action
-          in: query
-          description: Set to "import" when uploading a ZIP bundle.
-          schema:
-            type: string
-            enum:
-              - import
+      - $ref: '#/components/parameters/organizationId'
+      - name: name
+        in: query
+        description: Name of the shared flow. Must be unique within the organization.
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        description: Set to "import" when uploading a ZIP bundle.
+        schema:
+          type: string
+          enum:
+          - import
       requestBody:
         content:
           application/octet-stream:
@@ -1578,14 +1578,14 @@ paths:
   /organizations/{organizationId}/sharedflows/{sharedFlowId}:
     get:
       operationId: getSharedFlow
-      summary: Apigee Get a shared flow
+      summary: Apigee Get a Shared Flow
       description: >-
         Gets a shared flow including a list of existing revisions.
       tags:
-        - Shared Flows
+      - Shared Flows
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/sharedFlowId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/sharedFlowId'
       responses:
         '200':
           description: Successful response with shared flow details
@@ -1601,15 +1601,15 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteSharedFlow
-      summary: Apigee Delete a shared flow
+      summary: Apigee Delete a Shared Flow
       description: >-
         Deletes a shared flow and all associated policies, resources,
         and revisions. The shared flow must be undeployed from all environments.
       tags:
-        - Shared Flows
+      - Shared Flows
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/sharedFlowId'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/sharedFlowId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -1626,77 +1626,77 @@ paths:
   /organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}:
     get:
       operationId: getEnvironmentStats
-      summary: Apigee Get environment statistics
+      summary: Apigee Get Environment Statistics
       description: >-
         Retrieves metrics for API proxy performance in an environment.
         Provides traffic, latency, error counts, and other analytics data
         across specified time ranges.
       tags:
-        - Analytics
+      - Analytics
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/environmentId'
-        - name: dimensionName
-          in: path
-          description: >-
-            Name of the dimension to query. Common values include apiproxy,
-            developer_email, developer_app, access_token, and others.
-          required: true
-          schema:
-            type: string
-        - name: select
-          in: query
-          description: >-
-            Comma-separated list of metrics. Example: sum(message_count),
-            avg(total_response_time).
-          required: true
-          schema:
-            type: string
-        - name: timeRange
-          in: query
-          description: >-
-            Time range for the query in the format MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM.
-          required: true
-          schema:
-            type: string
-        - name: timeUnit
-          in: query
-          description: Granularity of the time series (second, minute, hour, day, week, month).
-          schema:
-            type: string
-        - name: filter
-          in: query
-          description: Filter expression to narrow the results.
-          schema:
-            type: string
-        - name: sortby
-          in: query
-          description: Comma-separated list of columns to sort the results.
-          schema:
-            type: string
-        - name: sort
-          in: query
-          description: Sort order (ASC or DESC).
-          schema:
-            type: string
-            enum:
-              - ASC
-              - DESC
-        - name: topk
-          in: query
-          description: Return the top k results.
-          schema:
-            type: integer
-        - name: limit
-          in: query
-          description: Maximum number of records to return.
-          schema:
-            type: integer
-        - name: offset
-          in: query
-          description: Offset for pagination.
-          schema:
-            type: integer
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - name: dimensionName
+        in: path
+        description: >-
+          Name of the dimension to query. Common values include apiproxy,
+          developer_email, developer_app, access_token, and others.
+        required: true
+        schema:
+          type: string
+      - name: select
+        in: query
+        description: >-
+          Comma-separated list of metrics. Example: sum(message_count),
+          avg(total_response_time).
+        required: true
+        schema:
+          type: string
+      - name: timeRange
+        in: query
+        description: >-
+          Time range for the query in the format MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM.
+        required: true
+        schema:
+          type: string
+      - name: timeUnit
+        in: query
+        description: Granularity of the time series (second, minute, hour, day, week, month).
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      - name: sortby
+        in: query
+        description: Comma-separated list of columns to sort the results.
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sort order (ASC or DESC).
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      - name: topk
+        in: query
+        description: Return the top k results.
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Maximum number of records to return.
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Offset for pagination.
+        schema:
+          type: integer
       responses:
         '200':
           description: Successful response with analytics data
@@ -1713,13 +1713,13 @@ paths:
   /organizations/{organizationId}/analytics/datastores:
     get:
       operationId: listDatastores
-      summary: Apigee List analytics data stores
+      summary: Apigee List Analytics Data Stores
       description: >-
         Lists the data stores available for exporting analytics data.
       tags:
-        - Analytics
+      - Analytics
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       responses:
         '200':
           description: Successful response with list of data stores
@@ -1733,14 +1733,14 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createDatastore
-      summary: Apigee Create an analytics data store
+      summary: Apigee Create an Analytics Data Store
       description: >-
         Creates a data store for exporting analytics data from an
         organization.
       tags:
-        - Analytics
+      - Analytics
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       requestBody:
         required: true
         content:
@@ -1763,16 +1763,16 @@ paths:
   /organizations/{organizationId}/appgroups:
     get:
       operationId: listAppGroups
-      summary: Apigee List app groups
+      summary: Apigee List App Groups
       description: >-
         Lists all app groups in an organization. App groups organize
         developers and their applications.
       tags:
-        - App Groups
+      - App Groups
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
       responses:
         '200':
           description: Successful response with list of app groups
@@ -1786,14 +1786,14 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createAppGroup
-      summary: Apigee Create an app group
+      summary: Apigee Create an App Group
       description: >-
         Creates an app group in an organization. App groups provide a
         way to organize developers and their applications.
       tags:
-        - App Groups
+      - App Groups
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       requestBody:
         required: true
         content:
@@ -1816,19 +1816,19 @@ paths:
   /organizations/{organizationId}/appgroups/{appGroupId}:
     get:
       operationId: getAppGroup
-      summary: Apigee Get an app group
+      summary: Apigee Get an App Group
       description: >-
         Returns the app group details for a specified app group.
       tags:
-        - App Groups
+      - App Groups
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: appGroupId
-          in: path
-          description: Name of the app group.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - name: appGroupId
+        in: path
+        description: Name of the app group.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with app group details
@@ -1844,20 +1844,20 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateAppGroup
-      summary: Apigee Update an app group
+      summary: Apigee Update an App Group
       description: >-
         Updates an app group. The full app group object must be included
         in the request body.
       tags:
-        - App Groups
+      - App Groups
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: appGroupId
-          in: path
-          description: Name of the app group.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - name: appGroupId
+        in: path
+        description: Name of the app group.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -1881,19 +1881,19 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteAppGroup
-      summary: Apigee Delete an app group
+      summary: Apigee Delete an App Group
       description: >-
         Deletes an app group from an organization.
       tags:
-        - App Groups
+      - App Groups
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: appGroupId
-          in: path
-          description: Name of the app group.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - name: appGroupId
+        in: path
+        description: Name of the app group.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response confirming deletion
@@ -1910,15 +1910,15 @@ paths:
   /organizations/{organizationId}/instances:
     get:
       operationId: listInstances
-      summary: Apigee List runtime instances
+      summary: Apigee List Runtime Instances
       description: >-
         Lists all Apigee runtime instances for the organization.
       tags:
-        - Instances
+      - Instances
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
       responses:
         '200':
           description: Successful response with list of instances
@@ -1932,14 +1932,14 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createInstance
-      summary: Apigee Create a runtime instance
+      summary: Apigee Create a Runtime Instance
       description: >-
         Creates an Apigee runtime instance. This is a long-running
         operation that provisions the infrastructure for API runtime.
       tags:
-        - Instances
+      - Instances
       parameters:
-        - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/organizationId'
       requestBody:
         required: true
         content:
@@ -1962,20 +1962,20 @@ paths:
   /organizations/{organizationId}/instances/{instanceId}:
     get:
       operationId: getInstance
-      summary: Apigee Get a runtime instance
+      summary: Apigee Get a Runtime Instance
       description: >-
         Gets the details for an Apigee runtime instance, including
         state, host, port, and location.
       tags:
-        - Instances
+      - Instances
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: instanceId
-          in: path
-          description: Name of the runtime instance.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - name: instanceId
+        in: path
+        description: Name of the runtime instance.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with instance details
@@ -1991,20 +1991,20 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteInstance
-      summary: Apigee Delete a runtime instance
+      summary: Apigee Delete a Runtime Instance
       description: >-
         Deletes an Apigee runtime instance. This is a long-running
         operation that deprovisions the runtime infrastructure.
       tags:
-        - Instances
+      - Instances
       parameters:
-        - $ref: '#/components/parameters/organizationId'
-        - name: instanceId
-          in: path
-          description: Name of the runtime instance.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/organizationId'
+      - name: instanceId
+        in: path
+        description: Name of the runtime instance.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with long-running operation
@@ -2147,19 +2147,19 @@ components:
           description: Output only. Subscription type of the organization.
           readOnly: true
           enum:
-            - SUBSCRIPTION_TYPE_UNSPECIFIED
-            - PAID
-            - TRIAL
+          - SUBSCRIPTION_TYPE_UNSPECIFIED
+          - PAID
+          - TRIAL
         state:
           type: string
           description: Output only. State of the organization.
           readOnly: true
           enum:
-            - STATE_UNSPECIFIED
-            - CREATING
-            - ACTIVE
-            - DELETING
-            - UPDATING
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ACTIVE
+          - DELETING
+          - UPDATING
         analyticsRegion:
           type: string
           description: Required. Primary Google Cloud region for analytics data storage.
@@ -2167,9 +2167,9 @@ components:
           type: string
           description: Required. Runtime type of the Apigee organization.
           enum:
-            - RUNTIME_TYPE_UNSPECIFIED
-            - CLOUD
-            - HYBRID
+          - RUNTIME_TYPE_UNSPECIFIED
+          - CLOUD
+          - HYBRID
         authorizedNetwork:
           type: string
           description: VPC network used for service networking.
@@ -2185,10 +2185,10 @@ components:
           type: string
           description: Billing type of the organization.
           enum:
-            - BILLING_TYPE_UNSPECIFIED
-            - SUBSCRIPTION
-            - EVALUATION
-            - PAYG
+          - BILLING_TYPE_UNSPECIFIED
+          - SUBSCRIPTION
+          - EVALUATION
+          - PAYG
     ApiProxy:
       type: object
       description: Metadata about an API proxy.
@@ -2222,9 +2222,9 @@ components:
           type: string
           description: Type of the API proxy.
           enum:
-            - API_PROXY_TYPE_UNSPECIFIED
-            - PROGRAMMABLE
-            - CONFIGURABLE
+          - API_PROXY_TYPE_UNSPECIFIED
+          - PROGRAMMABLE
+          - CONFIGURABLE
     ApiProxyRevision:
       type: object
       description: API proxy revision metadata and configuration.
@@ -2303,8 +2303,8 @@ components:
           type: string
           description: How API keys are approved for the product.
           enum:
-            - manual
-            - auto
+          - manual
+          - auto
         attributes:
           type: array
           description: Custom attributes for the API product (max 18).
@@ -2335,10 +2335,10 @@ components:
           type: string
           description: Time unit for the quota interval.
           enum:
-            - minute
-            - hour
-            - day
-            - month
+          - minute
+          - hour
+          - day
+          - month
         operationGroup:
           $ref: '#/components/schemas/OperationGroup'
         createdAt:
@@ -2412,10 +2412,10 @@ components:
           type: string
           description: Access type of the developer.
       required:
-        - email
-        - firstName
-        - lastName
-        - userName
+      - email
+      - firstName
+      - lastName
+      - userName
     DeveloperApp:
       type: object
       description: A developer app that is associated with a developer.
@@ -2530,11 +2530,11 @@ components:
           description: Output only. State of the environment.
           readOnly: true
           enum:
-            - STATE_UNSPECIFIED
-            - CREATING
-            - ACTIVE
-            - DELETING
-            - UPDATING
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ACTIVE
+          - DELETING
+          - UPDATING
         createdAt:
           type: string
           format: int64
@@ -2549,16 +2549,16 @@ components:
           type: string
           description: Deployment type of the environment.
           enum:
-            - DEPLOYMENT_TYPE_UNSPECIFIED
-            - PROXY
-            - ARCHIVE
+          - DEPLOYMENT_TYPE_UNSPECIFIED
+          - PROXY
+          - ARCHIVE
         apiProxyType:
           type: string
           description: Type of API proxies deployed in this environment.
           enum:
-            - API_PROXY_TYPE_UNSPECIFIED
-            - PROGRAMMABLE
-            - CONFIGURABLE
+          - API_PROXY_TYPE_UNSPECIFIED
+          - PROGRAMMABLE
+          - CONFIGURABLE
         properties:
           $ref: '#/components/schemas/Properties'
         nodeConfig:
@@ -2570,10 +2570,10 @@ components:
           type: string
           description: Type of the environment.
           enum:
-            - ENVIRONMENT_TYPE_UNSPECIFIED
-            - BASE
-            - INTERMEDIATE
-            - COMPREHENSIVE
+          - ENVIRONMENT_TYPE_UNSPECIFIED
+          - BASE
+          - INTERMEDIATE
+          - COMPREHENSIVE
     Deployment:
       type: object
       description: Represents a deployment of an API proxy revision to an environment.
@@ -2595,10 +2595,10 @@ components:
           type: string
           description: Current state of the deployment.
           enum:
-            - RUNTIME_STATE_UNSPECIFIED
-            - READY
-            - PROGRESSING
-            - ERROR
+          - RUNTIME_STATE_UNSPECIFIED
+          - READY
+          - PROGRESSING
+          - ERROR
         pods:
           type: array
           description: Status reported by individual runtime pods.
@@ -2635,20 +2635,20 @@ components:
           type: string
           description: Protocol used to communicate with the target.
           enum:
-            - HTTP
-            - HTTP2
-            - GRPC_TARGET
-            - GRPC
-            - EXTERNAL_CALLOUT
+          - HTTP
+          - HTTP2
+          - GRPC_TARGET
+          - GRPC
+          - EXTERNAL_CALLOUT
         sSLInfo:
           $ref: '#/components/schemas/TlsInfo'
         description:
           type: string
           description: Optional description of the target server.
       required:
-        - name
-        - host
-        - port
+      - name
+      - host
+      - port
     KeyValueMap:
       type: object
       description: A key value map used for runtime data storage.
@@ -2780,11 +2780,11 @@ components:
           description: Output only. State of the instance.
           readOnly: true
           enum:
-            - STATE_UNSPECIFIED
-            - CREATING
-            - ACTIVE
-            - DELETING
-            - UPDATING
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ACTIVE
+          - DELETING
+          - UPDATING
         description:
           type: string
           description: Description of the instance.
@@ -2811,11 +2811,11 @@ components:
           type: string
           description: Size of the CIDR block range for peering.
           enum:
-            - SLASH_16
-            - SLASH_20
-            - SLASH_22
-            - SLASH_23
-            - SLASH_24
+          - SLASH_16
+          - SLASH_20
+          - SLASH_22
+          - SLASH_23
+          - SLASH_24
     Datastore:
       type: object
       description: Configuration for an analytics data store.

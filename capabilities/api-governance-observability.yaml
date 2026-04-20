@@ -1,0 +1,93 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Apigee API Governance and Observability"
+  description: "Unified workflow for API governance, discovery, and observability using Apigee API Hub for cataloguing, API Observation (APIM) for shadow API discovery, and Registry for tracking specifications."
+  tags:
+    - Apigee
+    - API Governance
+    - API Catalog
+    - API Discovery
+    - Google Cloud
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: api-hub
+      location: ./shared/api-hub.yaml
+    - import: apim
+      location: ./shared/apim.yaml
+    - import: registry
+      location: ./shared/registry.yaml
+
+  exposes:
+    - type: rest
+      port: 8081
+      namespace: apigee-governance-api
+      description: "Unified REST API for Apigee API governance and observability."
+      resources:
+        - path: /v1/apis
+          name: api-catalog
+          description: "API catalog from API Hub."
+          operations:
+            - method: GET
+              name: list-apis
+              description: "List all catalogued APIs."
+              call: "api-hub.listApis"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/observed-apis
+          name: observed-apis
+          description: "Shadow APIs discovered via APIM."
+          operations:
+            - method: GET
+              name: list-observed-apis
+              description: "List observed shadow APIs."
+              call: "apim.listObservedApis"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9091
+      namespace: apigee-governance-mcp
+      transport: http
+      description: "MCP server for AI-assisted API governance and catalog management."
+      tools:
+        - name: list-catalogued-apis
+          description: "List all APIs in the Apigee API Hub catalog."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-hub.listApis"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: discover-shadow-apis
+          description: "Discover undocumented shadow APIs in Google Cloud infrastructure using APIM."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "apim.listObservedApis"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-api-specs
+          description: "List API specifications tracked in the Apigee Registry."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "registry.listApiSpecs"
+          outputParameters:
+            - type: object
+              mapping: "$."

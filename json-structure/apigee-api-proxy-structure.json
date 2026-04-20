@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://github.com/apigee/apigee-api-proxy-structure.json",
+  "description": "Metadata about an API proxy in Apigee. API proxies act as facades for backend services, providing security, rate limiting, transformations, and other capabilities.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Name of the API proxy.",
+      "readOnly": true
+    },
+    "revision": {
+      "type": "array",
+      "description": "Output only. List of revisions defined for the API proxy.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "latestRevisionId": {
+      "type": "string",
+      "description": "Output only. The ID of the most recently created revision.",
+      "readOnly": true
+    },
+    "metaData": {
+      "$ref": "#/$defs/EntityMetadata"
+    },
+    "labels": {
+      "type": "object",
+      "description": "User-defined labels for organizing API proxies.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "readOnly": {
+      "type": "boolean",
+      "description": "Output only. Whether this proxy is read-only.",
+      "readOnly": true
+    },
+    "apiProxyType": {
+      "type": "string",
+      "description": "Type of the API proxy.",
+      "enum": [
+        "API_PROXY_TYPE_UNSPECIFIED",
+        "PROGRAMMABLE",
+        "CONFIGURABLE"
+      ]
+    }
+  },
+  "$defs": {
+    "EntityMetadata": {
+      "type": "object",
+      "description": "Metadata common to Apigee entities.",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "description": "Time the entity was created in milliseconds since epoch."
+        },
+        "lastModifiedAt": {
+          "type": "string",
+          "description": "Time the entity was last modified in milliseconds since epoch."
+        },
+        "subType": {
+          "type": "string",
+          "description": "Subtype of the entity."
+        }
+      }
+    }
+  },
+  "name": "Apigee API Proxy"
+}

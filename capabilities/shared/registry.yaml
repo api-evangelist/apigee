@@ -1,0 +1,39 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Apigee Registry"
+  description: "Apigee Registry API for managing Google Apigee registry resources."
+  tags:
+    - Apigee
+    - API Management
+    - Google Cloud
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: registry
+      baseUri: https://apigeeregistry.googleapis.com
+      description: "Apigee Registry REST API."
+      authentication:
+        type: bearer
+        token: "{{GOOGLE_ACCESS_TOKEN}}"
+      resources: []
+
+  exposes:
+    - type: rest
+      port: 8104
+      namespace: registry-rest
+      resources: []
+
+    - type: mcp
+      port: 9104
+      namespace: registry-mcp
+      transport: http
+      tools: []

@@ -1,0 +1,11 @@
+{
+  "name": "my-api-product",
+  "displayName": "My API Product",
+  "approvalType": "auto",
+  "environments": [
+    "prod"
+  ],
+  "proxies": [
+    "my-api-proxy"
+  ]
+}

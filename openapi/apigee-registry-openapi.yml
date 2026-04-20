@@ -18,21 +18,21 @@ externalDocs:
   description: Apigee Registry API Reference Documentation
   url: https://cloud.google.com/apigee/docs/reference/apis/apigeeregistry/rest
 servers:
-  - url: https://apigeeregistry.googleapis.com/v1
-    description: Apigee Registry API Production Server
+- url: https://apigeeregistry.googleapis.com/v1
+  description: Apigee Registry API Production Server
 security:
-  - oauth2: []
+- oauth2: []
 tags:
-  - name: API Deployments
-    description: Track API deployment records
-  - name: API Specs
-    description: Manage API specification documents
-  - name: API Versions
-    description: Manage API version records
-  - name: Artifacts
-    description: Manage metadata artifacts
-  - name: Instances
-    description: Manage Registry instances
+- name: API Deployments
+  description: Track API deployment records
+- name: API Specs
+  description: Manage API specification documents
+- name: API Versions
+  description: Manage API version records
+- name: Artifacts
+  description: Manage metadata artifacts
+- name: Instances
+  description: Manage Registry instances
 paths:
   /projects/{projectId}/locations/{locationId}/apis:
     get:
@@ -43,20 +43,20 @@ paths:
         API metadata including name, display name, description, and labels.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression to narrow the results.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of APIs
@@ -76,14 +76,14 @@ paths:
         logical grouping of related API versions.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - name: apiId
-          in: query
-          description: Required. The ID to use for the API.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: apiId
+        in: query
+        description: Required. The ID to use for the API.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -113,9 +113,9 @@ paths:
         Gets the details of a specific API entry in the registry.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
       responses:
         '200':
           description: Successful response with API details
@@ -136,20 +136,20 @@ paths:
         Updates an existing API entry. Use updateMask to specify fields.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - name: updateMask
-          in: query
-          description: Required. Comma-separated list of fields to update.
-          required: true
-          schema:
-            type: string
-        - name: allowMissing
-          in: query
-          description: If true, create the API if it does not exist.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      - name: allowMissing
+        in: query
+        description: If true, create the API if it does not exist.
+        schema:
+          type: boolean
       requestBody:
         required: true
         content:
@@ -179,14 +179,14 @@ paths:
         deployments, artifacts).
       tags: []
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - name: force
-          in: query
-          description: If true, delete child resources as well.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - name: force
+        in: query
+        description: If true, delete child resources as well.
+        schema:
+          type: boolean
       responses:
         '200':
           description: Successful response confirming deletion
@@ -203,27 +203,27 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions:
     get:
       operationId: listApiVersions
-      summary: Apigee List API versions
+      summary: Apigee List API Versions
       description: >-
         Lists all versions of an API in the registry.
       tags:
-        - API Versions
+      - API Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of API versions
@@ -237,21 +237,21 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiVersion
-      summary: Apigee Create an API version
+      summary: Apigee Create an API Version
       description: >-
         Creates a new version for an API in the registry.
       tags:
-        - API Versions
+      - API Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - name: apiVersionId
-          in: query
-          description: Required. The ID to use for the version.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - name: apiVersionId
+        in: query
+        description: Required. The ID to use for the version.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -274,16 +274,16 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}:
     get:
       operationId: getApiVersion
-      summary: Apigee Get an API version
+      summary: Apigee Get an API Version
       description: >-
         Gets the details of a specific API version.
       tags:
-        - API Versions
+      - API Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
       responses:
         '200':
           description: Successful response with version details
@@ -299,27 +299,27 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiVersion
-      summary: Apigee Update an API version
+      summary: Apigee Update an API Version
       description: >-
         Updates an existing API version.
       tags:
-        - API Versions
+      - API Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - name: updateMask
-          in: query
-          description: Required. Comma-separated list of fields to update.
-          required: true
-          schema:
-            type: string
-        - name: allowMissing
-          in: query
-          description: If true, create if it does not exist.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      - name: allowMissing
+        in: query
+        description: If true, create if it does not exist.
+        schema:
+          type: boolean
       requestBody:
         required: true
         content:
@@ -343,21 +343,21 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiVersion
-      summary: Apigee Delete an API version
+      summary: Apigee Delete an API Version
       description: >-
         Deletes an API version and all its owned resources.
       tags:
-        - API Versions
+      - API Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - name: force
-          in: query
-          description: If true, delete child resources as well.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - name: force
+        in: query
+        description: If true, delete child resources as well.
+        schema:
+          type: boolean
       responses:
         '200':
           description: Successful response confirming deletion
@@ -374,28 +374,28 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs:
     get:
       operationId: listApiSpecs
-      summary: Apigee List API specs
+      summary: Apigee List API Specs
       description: >-
         Lists all specs for an API version.
       tags:
-        - API Specs
+      - API Specs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of specs
@@ -409,22 +409,22 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiSpec
-      summary: Apigee Create an API spec
+      summary: Apigee Create an API Spec
       description: >-
         Creates a new specification for an API version in the registry.
       tags:
-        - API Specs
+      - API Specs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - name: apiSpecId
-          in: query
-          description: Required. The ID to use for the spec.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - name: apiSpecId
+        in: query
+        description: Required. The ID to use for the spec.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -447,17 +447,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:
     get:
       operationId: getApiSpec
-      summary: Apigee Get an API spec
+      summary: Apigee Get an API Spec
       description: >-
         Gets details about a specific API specification.
       tags:
-        - API Specs
+      - API Specs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - $ref: '#/components/parameters/specId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
       responses:
         '200':
           description: Successful response with spec details
@@ -473,29 +473,29 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiSpec
-      summary: Apigee Update an API spec
+      summary: Apigee Update an API Spec
       description: >-
         Updates an existing API spec. A new revision is created if
         the spec content changes.
       tags:
-        - API Specs
+      - API Specs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - $ref: '#/components/parameters/specId'
-        - name: updateMask
-          in: query
-          description: Required. Comma-separated list of fields to update.
-          required: true
-          schema:
-            type: string
-        - name: allowMissing
-          in: query
-          description: If true, create if it does not exist.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      - name: allowMissing
+        in: query
+        description: If true, create if it does not exist.
+        schema:
+          type: boolean
       requestBody:
         required: true
         content:
@@ -519,22 +519,22 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiSpec
-      summary: Apigee Delete an API spec
+      summary: Apigee Delete an API Spec
       description: >-
         Deletes an API spec and all its revisions and child resources.
       tags:
-        - API Specs
+      - API Specs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - $ref: '#/components/parameters/specId'
-        - name: force
-          in: query
-          description: If true, delete child resources as well.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      - name: force
+        in: query
+        description: If true, delete child resources as well.
+        schema:
+          type: boolean
       responses:
         '200':
           description: Successful response confirming deletion
@@ -551,17 +551,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents:
     get:
       operationId: getApiSpecContents
-      summary: Apigee Get API spec contents
+      summary: Apigee Get API Spec Contents
       description: >-
         Retrieves the raw content of an API specification.
       tags:
-        - API Specs
+      - API Specs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - $ref: '#/components/parameters/specId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
       responses:
         '200':
           description: Successful response with spec contents
@@ -578,17 +578,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:rollback:
     post:
       operationId: rollbackApiSpec
-      summary: Apigee Rollback an API spec
+      summary: Apigee Rollback an API Spec
       description: >-
         Rolls back an API spec to a previous revision.
       tags:
-        - API Specs
+      - API Specs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/versionId'
-        - $ref: '#/components/parameters/specId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
       requestBody:
         required: true
         content:
@@ -600,7 +600,7 @@ paths:
                   type: string
                   description: Required. Revision ID to roll back to.
               required:
-                - revisionId
+              - revisionId
       responses:
         '200':
           description: Successful response with rolled-back spec
@@ -619,27 +619,27 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments:
     get:
       operationId: listApiDeployments
-      summary: Apigee List API deployments
+      summary: Apigee List API Deployments
       description: >-
         Lists all deployment records for an API.
       tags:
-        - API Deployments
+      - API Deployments
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of deployments
@@ -653,22 +653,22 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createApiDeployment
-      summary: Apigee Create an API deployment
+      summary: Apigee Create an API Deployment
       description: >-
         Creates a new deployment record for an API, tracking where
         a version is deployed.
       tags:
-        - API Deployments
+      - API Deployments
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - name: apiDeploymentId
-          in: query
-          description: Required. The ID to use for the deployment.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - name: apiDeploymentId
+        in: query
+        description: Required. The ID to use for the deployment.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -691,16 +691,16 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:
     get:
       operationId: getApiDeployment
-      summary: Apigee Get an API deployment
+      summary: Apigee Get an API Deployment
       description: >-
         Gets the details of a specific API deployment record.
       tags:
-        - API Deployments
+      - API Deployments
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/deploymentId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/deploymentId'
       responses:
         '200':
           description: Successful response with deployment details
@@ -716,27 +716,27 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateApiDeployment
-      summary: Apigee Update an API deployment
+      summary: Apigee Update an API Deployment
       description: >-
         Updates an existing API deployment record.
       tags:
-        - API Deployments
+      - API Deployments
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/deploymentId'
-        - name: updateMask
-          in: query
-          description: Required. Comma-separated list of fields to update.
-          required: true
-          schema:
-            type: string
-        - name: allowMissing
-          in: query
-          description: If true, create if it does not exist.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/deploymentId'
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      - name: allowMissing
+        in: query
+        description: If true, create if it does not exist.
+        schema:
+          type: boolean
       requestBody:
         required: true
         content:
@@ -760,21 +760,21 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteApiDeployment
-      summary: Apigee Delete an API deployment
+      summary: Apigee Delete an API Deployment
       description: >-
         Deletes an API deployment record.
       tags:
-        - API Deployments
+      - API Deployments
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/deploymentId'
-        - name: force
-          in: query
-          description: If true, force delete.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/deploymentId'
+      - name: force
+        in: query
+        description: If true, force delete.
+        schema:
+          type: boolean
       responses:
         '200':
           description: Successful response confirming deletion
@@ -791,16 +791,16 @@ paths:
   /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:rollback:
     post:
       operationId: rollbackApiDeployment
-      summary: Apigee Rollback an API deployment
+      summary: Apigee Rollback an API Deployment
       description: >-
         Rolls back an API deployment to a previous revision.
       tags:
-        - API Deployments
+      - API Deployments
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/apiId'
-        - $ref: '#/components/parameters/deploymentId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/deploymentId'
       requestBody:
         required: true
         content:
@@ -812,7 +812,7 @@ paths:
                   type: string
                   description: Required. Revision ID to roll back to.
               required:
-                - revisionId
+              - revisionId
       responses:
         '200':
           description: Successful response with rolled-back deployment
@@ -831,26 +831,26 @@ paths:
   /projects/{projectId}/locations/{locationId}/artifacts:
     get:
       operationId: listArtifacts
-      summary: Apigee List artifacts
+      summary: Apigee List Artifacts
       description: >-
         Lists all artifacts at the specified project/location level.
       tags:
-        - Artifacts
+      - Artifacts
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of artifacts
@@ -864,20 +864,20 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createArtifact
-      summary: Apigee Create an artifact
+      summary: Apigee Create an Artifact
       description: >-
         Creates a new artifact at the project/location level.
       tags:
-        - Artifacts
+      - Artifacts
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - name: artifactId
-          in: query
-          description: Required. The ID to use for the artifact.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: artifactId
+        in: query
+        description: Required. The ID to use for the artifact.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -900,15 +900,15 @@ paths:
   /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:
     get:
       operationId: getArtifact
-      summary: Apigee Get an artifact
+      summary: Apigee Get an Artifact
       description: >-
         Gets details about a specific artifact.
       tags:
-        - Artifacts
+      - Artifacts
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/artifactId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
       responses:
         '200':
           description: Successful response with artifact details
@@ -924,15 +924,15 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: replaceArtifact
-      summary: Apigee Replace an artifact
+      summary: Apigee Replace an Artifact
       description: >-
         Replaces the contents of an existing artifact.
       tags:
-        - Artifacts
+      - Artifacts
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/artifactId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
       requestBody:
         required: true
         content:
@@ -956,15 +956,15 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteArtifact
-      summary: Apigee Delete an artifact
+      summary: Apigee Delete an Artifact
       description: >-
         Deletes an artifact from the registry.
       tags:
-        - Artifacts
+      - Artifacts
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/artifactId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -981,15 +981,15 @@ paths:
   /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:getContents:
     get:
       operationId: getArtifactContents
-      summary: Apigee Get artifact contents
+      summary: Apigee Get Artifact Contents
       description: >-
         Retrieves the raw content of an artifact.
       tags:
-        - Artifacts
+      - Artifacts
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/artifactId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
       responses:
         '200':
           description: Successful response with artifact contents
@@ -1006,21 +1006,21 @@ paths:
   /projects/{projectId}/locations/{locationId}/instances:
     post:
       operationId: createInstance
-      summary: Apigee Create a Registry instance
+      summary: Apigee Create a Registry Instance
       description: >-
         Provisions a new Apigee Registry instance in the specified
         project and location.
       tags:
-        - Instances
+      - Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - name: instanceId
-          in: query
-          description: Required. The ID to use for the instance.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: instanceId
+        in: query
+        description: Required. The ID to use for the instance.
+        required: true
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -1043,20 +1043,20 @@ paths:
   /projects/{projectId}/locations/{locationId}/instances/{instanceId}:
     get:
       operationId: getInstance
-      summary: Apigee Get a Registry instance
+      summary: Apigee Get a Registry Instance
       description: >-
         Gets details about a specific Registry instance.
       tags:
-        - Instances
+      - Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - name: instanceId
-          in: path
-          description: ID of the instance.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: instanceId
+        in: path
+        description: ID of the instance.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with instance details
@@ -1072,20 +1072,20 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteInstance
-      summary: Apigee Delete a Registry instance
+      summary: Apigee Delete a Registry Instance
       description: >-
         Deletes a Registry instance.
       tags:
-        - Instances
+      - Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - name: instanceId
-          in: path
-          description: ID of the instance.
-          required: true
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: instanceId
+        in: path
+        description: ID of the instance.
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with long-running operation
@@ -1426,13 +1426,13 @@ components:
           description: Output only. State of the instance.
           readOnly: true
           enum:
-            - STATE_UNSPECIFIED
-            - INACTIVE
-            - CREATING
-            - ACTIVE
-            - UPDATING
-            - DELETING
-            - FAILED
+          - STATE_UNSPECIFIED
+          - INACTIVE
+          - CREATING
+          - ACTIVE
+          - UPDATING
+          - DELETING
+          - FAILED
         stateMessage:
           type: string
           description: Output only. Extra information about the instance state.

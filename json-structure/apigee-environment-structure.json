@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://github.com/apigee/apigee-environment-structure.json",
+  "description": "An environment in an Apigee organization. Environments provide a runtime execution context for API proxies, with separate settings for caches, target servers, keystores, and more.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Required. Name of the environment."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the environment."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the environment."
+    },
+    "state": {
+      "type": "string",
+      "description": "Output only. State of the environment.",
+      "readOnly": true,
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "UPDATING"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Output only. Creation time in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "description": "Output only. Last modification time.",
+      "readOnly": true
+    },
+    "deploymentType": {
+      "type": "string",
+      "description": "Deployment type of the environment.",
+      "enum": [
+        "DEPLOYMENT_TYPE_UNSPECIFIED",
+        "PROXY",
+        "ARCHIVE"
+      ]
+    },
+    "apiProxyType": {
+      "type": "string",
+      "description": "Type of API proxies deployed in this environment.",
+      "enum": [
+        "API_PROXY_TYPE_UNSPECIFIED",
+        "PROGRAMMABLE",
+        "CONFIGURABLE"
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "description": "A collection of key-value property pairs.",
+      "properties": {
+        "property": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "nodeConfig": {
+      "type": "object",
+      "description": "Runtime node configuration for the environment.",
+      "properties": {
+        "minNodeCount": {
+          "type": "string",
+          "description": "Minimum number of gateway nodes."
+        },
+        "maxNodeCount": {
+          "type": "string",
+          "description": "Maximum number of gateway nodes."
+        },
+        "currentAggregateNodeCount": {
+          "type": "string",
+          "description": "Output only. Current total number of gateway nodes.",
+          "readOnly": true
+        }
+      }
+    },
+    "forwardProxyUri": {
+      "type": "string",
+      "description": "Optional forward proxy URI for the environment."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the environment.",
+      "enum": [
+        "ENVIRONMENT_TYPE_UNSPECIFIED",
+        "BASE",
+        "INTERMEDIATE",
+        "COMPREHENSIVE"
+      ]
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "name": "Apigee Environment"
+}

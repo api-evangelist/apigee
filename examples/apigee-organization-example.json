@@ -1,0 +1,6 @@
+{
+  "name": "my-org",
+  "displayName": "My Organization",
+  "type": "TRIAL",
+  "projectId": "my-gcp-project"
+}

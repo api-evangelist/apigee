@@ -1,0 +1,10 @@
+{
+  "name": "my-api-proxy",
+  "metaData": {
+    "createdAt": "2026-04-19T10:00:00Z"
+  },
+  "revision": [
+    "1",
+    "2"
+  ]
+}

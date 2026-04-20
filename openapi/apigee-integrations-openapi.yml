@@ -17,53 +17,53 @@ externalDocs:
   description: Apigee Integrations API Reference Documentation
   url: https://cloud.google.com/apigee/docs/reference/apis/integrations/rest
 servers:
-  - url: https://integrations.googleapis.com/v1
-    description: Apigee Integrations API Production Server
+- url: https://integrations.googleapis.com/v1
+  description: Apigee Integrations API Production Server
 security:
-  - oauth2: []
+- oauth2: []
 tags:
-  - name: Auth Configs
-    description: Manage authentication configurations
-  - name: Certificates
-    description: Manage SSL/TLS certificates
-  - name: Executions
-    description: View integration execution results
-  - name: Integration Versions
-    description: Manage integration versions and publishing
-  - name: Integrations
-    description: Manage and execute integrations
-  - name: SFDC Channels
-    description: Manage Salesforce channels
-  - name: SFDC Instances
-    description: Manage Salesforce instances
-  - name: Suspensions
-    description: Manage integration execution suspensions
+- name: Auth Configs
+  description: Manage authentication configurations
+- name: Certificates
+  description: Manage SSL/TLS certificates
+- name: Executions
+  description: View integration execution results
+- name: Integration Versions
+  description: Manage integration versions and publishing
+- name: Integrations
+  description: Manage and execute integrations
+- name: SFDC Channels
+  description: Manage Salesforce channels
+- name: SFDC Instances
+  description: Manage Salesforce instances
+- name: Suspensions
+  description: Manage integration execution suspensions
 paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations:
     get:
       operationId: listIntegrations
-      summary: Apigee List integrations
+      summary: Apigee List Integrations
       description: >-
         Lists all integrations in the specified project, location, and product.
         Returns integration metadata including name and description.
       tags:
-        - Integrations
+      - Integrations
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression to narrow the results.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of integrations
@@ -78,17 +78,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:
     delete:
       operationId: deleteIntegration
-      summary: Apigee Delete an integration
+      summary: Apigee Delete an Integration
       description: >-
         Deletes an integration and all its versions. The integration must
         not have any active versions before deletion.
       tags:
-        - Integrations
+      - Integrations
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -105,17 +105,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:execute:
     post:
       operationId: executeIntegration
-      summary: Apigee Execute an integration
+      summary: Apigee Execute an Integration
       description: >-
         Executes an integration synchronously. The caller blocks until
         the integration execution completes or times out.
       tags:
-        - Integrations
+      - Integrations
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
       requestBody:
         required: true
         content:
@@ -140,17 +140,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:schedule:
     post:
       operationId: scheduleIntegration
-      summary: Apigee Schedule an integration execution
+      summary: Apigee Schedule an Integration Execution
       description: >-
         Schedules an integration for execution at a specified time. The
         execution happens asynchronously.
       tags:
-        - Integrations
+      - Integrations
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
       requestBody:
         required: true
         content:
@@ -175,34 +175,34 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:
     get:
       operationId: listIntegrationVersions
-      summary: Apigee List integration versions
+      summary: Apigee List Integration Versions
       description: >-
         Lists all versions of an integration. Returns version metadata
         including status, snapshot number, and creation time.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression to narrow the results.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
-        - name: fieldMask
-          in: query
-          description: Fields to include in the response.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+      - name: fieldMask
+        in: query
+        description: Fields to include in the response.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of integration versions
@@ -216,23 +216,23 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createIntegrationVersion
-      summary: Apigee Create an integration version
+      summary: Apigee Create an Integration Version
       description: >-
         Creates a new version of an integration. A version contains
         the complete integration configuration including triggers,
         tasks, and parameters.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - name: newIntegration
-          in: query
-          description: Set to true to create a new integration and initial version.
-          schema:
-            type: boolean
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - name: newIntegration
+        in: query
+        description: Set to true to create a new integration and initial version.
+        schema:
+          type: boolean
       requestBody:
         required: true
         content:
@@ -255,18 +255,18 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:
     get:
       operationId: getIntegrationVersion
-      summary: Apigee Get an integration version
+      summary: Apigee Get an Integration Version
       description: >-
         Gets the details for a specific integration version, including
         the complete configuration of triggers, tasks, and parameters.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
       responses:
         '200':
           description: Successful response with integration version details
@@ -282,23 +282,23 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateIntegrationVersion
-      summary: Apigee Update an integration version
+      summary: Apigee Update an Integration Version
       description: >-
         Updates an existing integration version. Only draft versions
         can be updated.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/versionId'
-        - name: updateMask
-          in: query
-          description: Comma-separated list of fields to update.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      - name: updateMask
+        in: query
+        description: Comma-separated list of fields to update.
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -322,18 +322,18 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteIntegrationVersion
-      summary: Apigee Delete an integration version
+      summary: Apigee Delete an Integration Version
       description: >-
         Deletes an integration version. Active (published) versions
         cannot be deleted directly.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -350,18 +350,18 @@ paths:
   ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish
   : post:
       operationId: publishIntegrationVersion
-      summary: Apigee Publish an integration version
+      summary: Apigee Publish an Integration Version
       description: >-
         Publishes a draft integration version, making it the active version
         that receives new execution requests.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
       responses:
         '200':
           description: Successful response with published version
@@ -380,18 +380,18 @@ paths:
   ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish
   : post:
       operationId: unpublishIntegrationVersion
-      summary: Apigee Unpublish an integration version
+      summary: Apigee Unpublish an Integration Version
       description: >-
         Unpublishes a published integration version, returning it to
         draft status so it no longer receives execution requests.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
       responses:
         '200':
           description: Successful response confirming unpublication
@@ -408,27 +408,27 @@ paths:
   ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download
   : get:
       operationId: downloadIntegrationVersion
-      summary: Apigee Download an integration version
+      summary: Apigee Download an Integration Version
       description: >-
         Downloads the complete configuration of an integration version
         as a JSON bundle.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/versionId'
-        - name: fileFormat
-          in: query
-          description: File format for the download.
-          schema:
-            type: string
-            enum:
-              - FILE_FORMAT_UNSPECIFIED
-              - JSON
-              - YAML
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      - name: fileFormat
+        in: query
+        description: File format for the download.
+        schema:
+          type: string
+          enum:
+          - FILE_FORMAT_UNSPECIFIED
+          - JSON
+          - YAML
       responses:
         '200':
           description: Successful response with integration bundle
@@ -445,17 +445,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:upload:
     post:
       operationId: uploadIntegrationVersion
-      summary: Apigee Upload an integration version
+      summary: Apigee Upload an Integration Version
       description: >-
         Uploads an integration version configuration bundle, creating
         a new version.
       tags:
-        - Integration Versions
+      - Integration Versions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
       requestBody:
         required: true
         content:
@@ -478,24 +478,24 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs:
     get:
       operationId: listAuthConfigs
-      summary: Apigee List auth configs
+      summary: Apigee List Auth Configs
       description: >-
         Lists all authentication configurations for the specified product.
         Auth configs define credentials used by integrations to connect
         to external services.
       tags:
-        - Auth Configs
+      - Auth Configs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression to narrow the results.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of auth configs
@@ -509,16 +509,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createAuthConfig
-      summary: Apigee Create an auth config
+      summary: Apigee Create an Auth Config
       description: >-
         Creates a new authentication configuration. Auth configs store
         credentials like OAuth tokens, API keys, or service account keys.
       tags:
-        - Auth Configs
+      - Auth Configs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
       requestBody:
         required: true
         content:
@@ -541,16 +541,16 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs/{authConfigId}:
     get:
       operationId: getAuthConfig
-      summary: Apigee Get an auth config
+      summary: Apigee Get an Auth Config
       description: >-
         Gets the details for a specific authentication configuration.
       tags:
-        - Auth Configs
+      - Auth Configs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/authConfigId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/authConfigId'
       responses:
         '200':
           description: Successful response with auth config details
@@ -566,21 +566,21 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateAuthConfig
-      summary: Apigee Update an auth config
+      summary: Apigee Update an Auth Config
       description: >-
         Updates an existing authentication configuration.
       tags:
-        - Auth Configs
+      - Auth Configs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/authConfigId'
-        - name: updateMask
-          in: query
-          description: Comma-separated list of fields to update.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/authConfigId'
+      - name: updateMask
+        in: query
+        description: Comma-separated list of fields to update.
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -604,17 +604,17 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteAuthConfig
-      summary: Apigee Delete an auth config
+      summary: Apigee Delete an Auth Config
       description: >-
         Deletes an authentication configuration. The auth config must not
         be in use by any active integration version.
       tags:
-        - Auth Configs
+      - Auth Configs
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/authConfigId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/authConfigId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -631,23 +631,23 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/certificates:
     get:
       operationId: listCertificates
-      summary: Apigee List certificates
+      summary: Apigee List Certificates
       description: >-
         Lists all certificates for the specified product. Certificates
         are used for TLS/SSL authentication with external services.
       tags:
-        - Certificates
+      - Certificates
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression to narrow the results.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of certificates
@@ -661,16 +661,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createCertificate
-      summary: Apigee Create a certificate
+      summary: Apigee Create a Certificate
       description: >-
         Creates a new certificate for use with integrations that require
         TLS/SSL authentication.
       tags:
-        - Certificates
+      - Certificates
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
       requestBody:
         required: true
         content:
@@ -693,16 +693,16 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/certificates/{certificateId}:
     get:
       operationId: getCertificate
-      summary: Apigee Get a certificate
+      summary: Apigee Get a Certificate
       description: >-
         Gets details for a specific certificate.
       tags:
-        - Certificates
+      - Certificates
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/certificateId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/certificateId'
       responses:
         '200':
           description: Successful response with certificate details
@@ -718,21 +718,21 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateCertificate
-      summary: Apigee Update a certificate
+      summary: Apigee Update a Certificate
       description: >-
         Updates an existing certificate.
       tags:
-        - Certificates
+      - Certificates
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/certificateId'
-        - name: updateMask
-          in: query
-          description: Comma-separated list of fields to update.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/certificateId'
+      - name: updateMask
+        in: query
+        description: Comma-separated list of fields to update.
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -756,17 +756,17 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteCertificate
-      summary: Apigee Delete a certificate
+      summary: Apigee Delete a Certificate
       description: >-
         Deletes a certificate. The certificate must not be in use by
         any active integration version.
       tags:
-        - Certificates
+      - Certificates
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/certificateId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/certificateId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -783,29 +783,29 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions:
     get:
       operationId: listExecutions
-      summary: Apigee List executions
+      summary: Apigee List Executions
       description: >-
         Lists execution results for an integration. Returns execution
         metadata including status, start time, and trigger information.
       tags:
-        - Executions
+      - Executions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression (e.g., by status or time range).
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression (e.g., by status or time range).
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of executions
@@ -820,18 +820,18 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}:
     get:
       operationId: getExecution
-      summary: Apigee Get an execution
+      summary: Apigee Get an Execution
       description: >-
         Gets details for a specific integration execution, including
         input/output parameters and execution steps.
       tags:
-        - Executions
+      - Executions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/executionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
       responses:
         '200':
           description: Successful response with execution details
@@ -848,30 +848,30 @@ paths:
   ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions
   : get:
       operationId: listSuspensions
-      summary: Apigee List suspensions
+      summary: Apigee List Suspensions
       description: >-
         Lists all suspensions for a specific execution. Suspensions
         pause execution flow pending human review or approval.
       tags:
-        - Suspensions
+      - Suspensions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/executionId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
-        - name: filter
-          in: query
-          description: Filter expression to narrow results.
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: Field to order results by.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow results.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response with list of suspensions
@@ -886,19 +886,19 @@ paths:
   ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift
   : post:
       operationId: liftSuspension
-      summary: Apigee Lift a suspension
+      summary: Apigee Lift a Suspension
       description: >-
         Lifts a suspension, allowing the paused execution to continue
         processing from where it stopped.
       tags:
-        - Suspensions
+      - Suspensions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/executionId'
-        - $ref: '#/components/parameters/suspensionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
+      - $ref: '#/components/parameters/suspensionId'
       requestBody:
         required: true
         content:
@@ -923,19 +923,19 @@ paths:
   ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve
   : post:
       operationId: resolveSuspension
-      summary: Apigee Resolve a suspension
+      summary: Apigee Resolve a Suspension
       description: >-
         Resolves a suspension with a final decision, completing the
         suspended task in the execution.
       tags:
-        - Suspensions
+      - Suspensions
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/integrationId'
-        - $ref: '#/components/parameters/executionId'
-        - $ref: '#/components/parameters/suspensionId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
+      - $ref: '#/components/parameters/suspensionId'
       requestBody:
         required: true
         content:
@@ -960,17 +960,17 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances:
     get:
       operationId: listSfdcInstances
-      summary: Apigee List SFDC instances
+      summary: Apigee List SFDC Instances
       description: >-
         Lists all Salesforce instances configured for the product.
       tags:
-        - SFDC Instances
+      - SFDC Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
       responses:
         '200':
           description: Successful response with list of SFDC instances
@@ -984,16 +984,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createSfdcInstance
-      summary: Apigee Create an SFDC instance
+      summary: Apigee Create an SFDC Instance
       description: >-
         Creates a new Salesforce instance configuration for connecting
         integrations to Salesforce.
       tags:
-        - SFDC Instances
+      - SFDC Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
       requestBody:
         required: true
         content:
@@ -1016,16 +1016,16 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}:
     get:
       operationId: getSfdcInstance
-      summary: Apigee Get an SFDC instance
+      summary: Apigee Get an SFDC Instance
       description: >-
         Gets details for a specific Salesforce instance configuration.
       tags:
-        - SFDC Instances
+      - SFDC Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/sfdcInstanceId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
       responses:
         '200':
           description: Successful response with SFDC instance details
@@ -1041,21 +1041,21 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateSfdcInstance
-      summary: Apigee Update an SFDC instance
+      summary: Apigee Update an SFDC Instance
       description: >-
         Updates an existing Salesforce instance configuration.
       tags:
-        - SFDC Instances
+      - SFDC Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/sfdcInstanceId'
-        - name: updateMask
-          in: query
-          description: Comma-separated list of fields to update.
-          schema:
-            type: string
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
+      - name: updateMask
+        in: query
+        description: Comma-separated list of fields to update.
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -1079,16 +1079,16 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteSfdcInstance
-      summary: Apigee Delete an SFDC instance
+      summary: Apigee Delete an SFDC Instance
       description: >-
         Deletes a Salesforce instance configuration.
       tags:
-        - SFDC Instances
+      - SFDC Instances
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/sfdcInstanceId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
       responses:
         '200':
           description: Successful response confirming deletion
@@ -1105,18 +1105,18 @@ paths:
   /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels:
     get:
       operationId: listSfdcChannels
-      summary: Apigee List SFDC channels
+      summary: Apigee List SFDC Channels
       description: >-
         Lists all Salesforce channels configured for an SFDC instance.
       tags:
-        - SFDC Channels
+      - SFDC Channels
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/sfdcInstanceId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageToken'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
       responses:
         '200':
           description: Successful response with list of channels
@@ -1130,16 +1130,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createSfdcChannel
-      summary: Apigee Create an SFDC channel
+      summary: Apigee Create an SFDC Channel
       description: >-
         Creates a new Salesforce channel within an SFDC instance.
       tags:
-        - SFDC Channels
+      - SFDC Channels
       parameters:
-        - $ref: '#/components/parameters/projectId'
-        - $ref: '#/components/parameters/locationId'
-        - $ref: '#/components/parameters/productId'
-        - $ref: '#/components/parameters/sfdcInstanceId'
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
       requestBody:
         required: true
         content:
@@ -1285,11 +1285,11 @@ components:
           type: string
           description: State of the integration version.
           enum:
-            - INTEGRATION_STATE_UNSPECIFIED
-            - DRAFT
-            - ACTIVE
-            - ARCHIVED
-            - SNAPSHOT
+          - INTEGRATION_STATE_UNSPECIFIED
+          - DRAFT
+          - ACTIVE
+          - ARCHIVED
+          - SNAPSHOT
         snapshotNumber:
           type: string
           format: int64
@@ -1314,9 +1314,9 @@ components:
           type: string
           description: Database persistence policy for execution logs.
           enum:
-            - DATABASE_PERSISTENCE_POLICY_UNSPECIFIED
-            - DATABASE_PERSISTENCE_DISABLED
-            - DATABASE_PERSISTENCE_ASYNC
+          - DATABASE_PERSISTENCE_POLICY_UNSPECIFIED
+          - DATABASE_PERSISTENCE_DISABLED
+          - DATABASE_PERSISTENCE_ASYNC
     TaskConfig:
       type: object
       description: Configuration for a task in an integration.
@@ -1353,9 +1353,9 @@ components:
           type: string
           description: Execution strategy for the task.
           enum:
-            - WHEN_ALL_SUCCEED
-            - WHEN_ANY_SUCCEED
-            - WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED
+          - WHEN_ALL_SUCCEED
+          - WHEN_ANY_SUCCEED
+          - WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED
         failurePolicy:
           type: object
           description: Policy for handling task failures.
@@ -1363,14 +1363,14 @@ components:
             retryStrategy:
               type: string
               enum:
-                - RETRY_STRATEGY_UNSPECIFIED
-                - IGNORE
-                - NONE
-                - FATAL
-                - FIXED_INTERVAL
-                - LINEAR_BACKOFF
-                - EXPONENTIAL_BACKOFF
-                - RESTART_INTEGRATION_WITH_BACKOFF
+              - RETRY_STRATEGY_UNSPECIFIED
+              - IGNORE
+              - NONE
+              - FATAL
+              - FIXED_INTERVAL
+              - LINEAR_BACKOFF
+              - EXPONENTIAL_BACKOFF
+              - RESTART_INTEGRATION_WITH_BACKOFF
             maxRetries:
               type: integer
               format: int32
@@ -1397,14 +1397,14 @@ components:
           type: string
           description: Trigger type.
           enum:
-            - TRIGGER_TYPE_UNSPECIFIED
-            - CRON
-            - API
-            - SFDC_CHANNEL
-            - CLOUD_PUBSUB_EXTERNAL
-            - SFDC_CDC_CHANNEL
-            - CLOUD_SCHEDULER
-            - INTEGRATION_CONNECTOR_TRIGGER
+          - TRIGGER_TYPE_UNSPECIFIED
+          - CRON
+          - API
+          - SFDC_CHANNEL
+          - CLOUD_PUBSUB_EXTERNAL
+          - SFDC_CDC_CHANNEL
+          - CLOUD_SCHEDULER
+          - INTEGRATION_CONNECTOR_TRIGGER
         triggerNumber:
           type: string
           description: Number for ordering triggers.
@@ -1436,28 +1436,28 @@ components:
           type: string
           description: Data type of the parameter.
           enum:
-            - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
-            - STRING_VALUE
-            - INT_VALUE
-            - DOUBLE_VALUE
-            - BOOLEAN_VALUE
-            - STRING_ARRAY
-            - INT_ARRAY
-            - DOUBLE_ARRAY
-            - BOOLEAN_ARRAY
-            - JSON_VALUE
-            - PROTO_VALUE
-            - PROTO_ARRAY
+          - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
+          - STRING_VALUE
+          - INT_VALUE
+          - DOUBLE_VALUE
+          - BOOLEAN_VALUE
+          - STRING_ARRAY
+          - INT_ARRAY
+          - DOUBLE_ARRAY
+          - BOOLEAN_ARRAY
+          - JSON_VALUE
+          - PROTO_VALUE
+          - PROTO_ARRAY
         defaultValue:
           $ref: '#/components/schemas/ValueType'
         inputOutputType:
           type: string
           description: Whether the parameter is input, output, or both.
           enum:
-            - IN_OUT_TYPE_UNSPECIFIED
-            - IN
-            - OUT
-            - IN_OUT
+          - IN_OUT_TYPE_UNSPECIFIED
+          - IN
+          - OUT
+          - IN_OUT
         isTransient:
           type: boolean
           description: Whether the parameter is transient.
@@ -1507,10 +1507,10 @@ components:
           type: string
           description: Method by which the execution was triggered.
           enum:
-            - EXECUTION_METHOD_UNSPECIFIED
-            - POST
-            - POST_TO_QUEUE
-            - SCHEDULE
+          - EXECUTION_METHOD_UNSPECIFIED
+          - POST
+          - POST_TO_QUEUE
+          - SCHEDULE
         requestParams:
           type: object
           description: Input parameters for the execution.
@@ -1528,14 +1528,14 @@ components:
             state:
               type: string
               enum:
-                - STATE_UNSPECIFIED
-                - PENDING
-                - PROCESSING
-                - SUCCEEDED
-                - FAILED
-                - CANCELLED
-                - RETRY_ON_HOLD
-                - SUSPENDED
+              - STATE_UNSPECIFIED
+              - PENDING
+              - PROCESSING
+              - SUCCEEDED
+              - FAILED
+              - CANCELLED
+              - RETRY_ON_HOLD
+              - SUSPENDED
             executionSnapshots:
               type: array
               items:
@@ -1590,36 +1590,36 @@ components:
           type: string
           description: Type of credential stored.
           enum:
-            - CREDENTIAL_TYPE_UNSPECIFIED
-            - USERNAME_AND_PASSWORD
-            - API_KEY
-            - OAUTH2_AUTHORIZATION_CODE
-            - OAUTH2_IMPLICIT
-            - OAUTH2_CLIENT_CREDENTIALS
-            - OAUTH2_RESOURCE_OWNER_CREDENTIALS
-            - JWT
-            - AUTH_TOKEN
-            - SERVICE_ACCOUNT
-            - CLIENT_CERTIFICATE_ONLY
-            - OIDC_TOKEN
+          - CREDENTIAL_TYPE_UNSPECIFIED
+          - USERNAME_AND_PASSWORD
+          - API_KEY
+          - OAUTH2_AUTHORIZATION_CODE
+          - OAUTH2_IMPLICIT
+          - OAUTH2_CLIENT_CREDENTIALS
+          - OAUTH2_RESOURCE_OWNER_CREDENTIALS
+          - JWT
+          - AUTH_TOKEN
+          - SERVICE_ACCOUNT
+          - CLIENT_CERTIFICATE_ONLY
+          - OIDC_TOKEN
         visibility:
           type: string
           description: Visibility of the auth config.
           enum:
-            - AUTH_CONFIG_VISIBILITY_UNSPECIFIED
-            - PRIVATE
-            - CLIENT_VISIBLE
+          - AUTH_CONFIG_VISIBILITY_UNSPECIFIED
+          - PRIVATE
+          - CLIENT_VISIBLE
         state:
           type: string
           description: State of the auth config.
           enum:
-            - STATE_UNSPECIFIED
-            - VALID
-            - INVALID
-            - SOFT_DELETED
-            - EXPIRED
-            - UNAUTHORIZED
-            - UNSUPPORTED
+          - STATE_UNSPECIFIED
+          - VALID
+          - INVALID
+          - SOFT_DELETED
+          - EXPIRED
+          - UNAUTHORIZED
+          - UNSUPPORTED
         expiryNotificationDuration:
           type: array
           description: Notification durations before expiry.
@@ -1671,9 +1671,9 @@ components:
           description: Output only. Status of the certificate.
           readOnly: true
           enum:
-            - STATE_UNSPECIFIED
-            - ACTIVE
-            - EXPIRED
+          - STATE_UNSPECIFIED
+          - ACTIVE
+          - EXPIRED
         validStartTime:
           type: string
           format: date-time
@@ -1853,9 +1853,9 @@ components:
           type: string
           description: Format of the uploaded content.
           enum:
-            - FILE_FORMAT_UNSPECIFIED
-            - JSON
-            - YAML
+          - FILE_FORMAT_UNSPECIFIED
+          - JSON
+          - YAML
     UploadIntegrationVersionResponse:
       type: object
       description: Response from uploading an integration version.

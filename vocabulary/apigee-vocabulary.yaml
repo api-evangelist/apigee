@@ -1,0 +1,188 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Apigee"
+  description: "Unified taxonomy of Google Apigee API management platform covering API proxies, products, developers, environments, API Hub, and integrations."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - name: Apigee API Management
+      namespace: api-management
+      version: v1
+      baseUrl: https://apigee.googleapis.com
+      status: active
+    - name: Apigee API Hub
+      namespace: api-hub
+      version: v1
+      baseUrl: https://apihub.googleapis.com
+      status: active
+    - name: Apigee Integrations
+      namespace: integrations
+      version: v1
+      baseUrl: https://integrations.googleapis.com
+      status: active
+    - name: Apigee API Observation
+      namespace: apim
+      version: v1
+      baseUrl: https://apim.googleapis.com
+      status: active
+    - name: Apigee Registry
+      namespace: registry
+      version: v1
+      baseUrl: https://apigeeregistry.googleapis.com
+      status: deprecated
+
+  resources:
+    - name: organizations
+      apis: [api-management]
+      actions: [list, get, create, update, delete]
+    - name: api-proxies
+      apis: [api-management]
+      actions: [list, get, create, delete, update]
+    - name: api-products
+      apis: [api-management]
+      actions: [list, get, create, update, delete]
+    - name: developers
+      apis: [api-management]
+      actions: [list, get, create, update, delete]
+    - name: developer-apps
+      apis: [api-management]
+      actions: [list, get, create, update, delete]
+    - name: environments
+      apis: [api-management]
+      actions: [list, get, create, delete]
+    - name: deployments
+      apis: [api-management]
+      actions: [list, get, create, delete]
+    - name: apis
+      apis: [api-hub]
+      actions: [list, get, create, update, delete]
+    - name: integrations
+      apis: [integrations]
+      actions: [list, get, create, execute, delete]
+    - name: observed-apis
+      apis: [apim]
+      actions: [list, get]
+
+  actions:
+    - name: list
+      http_method: GET
+      pattern: read
+    - name: get
+      http_method: GET
+      pattern: read
+    - name: create
+      http_method: POST
+      pattern: write
+    - name: update
+      http_method: PUT
+      pattern: write
+    - name: delete
+      http_method: DELETE
+      pattern: destructive
+    - name: execute
+      http_method: POST
+      pattern: write
+
+  schemas:
+    core:
+      - name: Organization
+        description: An Apigee organization containing API proxies, products, and developers.
+      - name: ApiProxy
+        description: An API proxy that forwards and transforms API requests.
+      - name: ApiProduct
+        description: A bundle of API resources for developer consumption.
+      - name: Developer
+        description: An API consumer registered in the developer portal.
+      - name: DeveloperApp
+        description: An application created by a developer to access API products.
+      - name: Environment
+        description: A deployment environment (dev, staging, prod) for API proxies.
+      - name: Deployment
+        description: An API proxy revision deployed to an environment.
+
+  authentication:
+    schemes:
+      - name: oauth2
+        type: oauth2
+        description: OAuth 2.0 authentication via Google Cloud identity.
+
+capability:
+  workflows:
+    - name: API Lifecycle Management
+      file: capabilities/api-lifecycle-management.yaml
+      apis_combined: [Apigee API Management, Apigee API Hub]
+      tool_count: 5
+      personas: [API Platform Engineer, API Product Manager]
+    - name: API Governance and Observability
+      file: capabilities/api-governance-observability.yaml
+      apis_combined: [Apigee API Hub, Apigee API Observation, Apigee Registry]
+      tool_count: 3
+      personas: [API Governance Lead, Platform Architect]
+
+  personas:
+    - id: api-platform-engineer
+      name: API Platform Engineer
+      description: Engineer managing API proxies, deployments, and policies in Apigee.
+      workflows: [API Lifecycle Management]
+    - id: api-product-manager
+      name: API Product Manager
+      description: Manager packaging API products and managing developer relationships.
+      workflows: [API Lifecycle Management]
+    - id: api-governance-lead
+      name: API Governance Lead
+      description: Leader establishing API standards, cataloguing APIs, and discovering shadow APIs.
+      workflows: [API Governance and Observability]
+    - id: platform-architect
+      name: Platform Architect
+      description: Architect overseeing API platform strategy and governance across the organization.
+      workflows: [API Lifecycle Management, API Governance and Observability]
+
+  domains:
+    - name: API Lifecycle
+      resources: [api-proxies, api-products, developers, environments, deployments]
+      workflows: [API Lifecycle Management]
+    - name: API Governance
+      resources: [apis, observed-apis]
+      workflows: [API Governance and Observability]
+
+  namespaces:
+    - name: api-management
+      type: consumed
+      baseUri: https://apigee.googleapis.com
+    - name: api-hub
+      type: consumed
+      baseUri: https://apihub.googleapis.com
+    - name: apigee-lifecycle-api
+      type: rest-exposed
+      port: 8080
+    - name: apigee-lifecycle-mcp
+      type: mcp-exposed
+      port: 9090
+    - name: apigee-governance-api
+      type: rest-exposed
+      port: 8081
+    - name: apigee-governance-mcp
+      type: mcp-exposed
+      port: 9091
+
+  binds:
+    - name: GOOGLE_ACCESS_TOKEN
+      description: Google Cloud OAuth 2.0 access token.
+      workflows: [API Lifecycle Management, API Governance and Observability]
+
+crossReference:
+  - resource: api-proxies
+    operations: [listApiProxies, getApiProxy, createApiProxy, deleteApiProxy]
+    workflows: [API Lifecycle Management]
+    personas: [API Platform Engineer]
+  - resource: api-products
+    operations: [listApiProducts, getApiProduct, createApiProduct]
+    workflows: [API Lifecycle Management]
+    personas: [API Product Manager]
+  - resource: apis
+    operations: [listApis, getApi]
+    workflows: [API Governance and Observability]
+    personas: [API Governance Lead, Platform Architect]

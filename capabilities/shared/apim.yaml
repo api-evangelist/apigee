@@ -1,0 +1,39 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Apigee API Observation"
+  description: "Apigee API Observation API for managing Google Apigee apim resources."
+  tags:
+    - Apigee
+    - API Management
+    - Google Cloud
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: apim
+      baseUri: https://apim.googleapis.com
+      description: "Apigee API Observation REST API."
+      authentication:
+        type: bearer
+        token: "{{GOOGLE_ACCESS_TOKEN}}"
+      resources: []
+
+  exposes:
+    - type: rest
+      port: 8103
+      namespace: apim-rest
+      resources: []
+
+    - type: mcp
+      port: 9103
+      namespace: apim-mcp
+      transport: http
+      tools: []
