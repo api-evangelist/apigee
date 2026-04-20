@@ -2,13 +2,14 @@ naftiko: "1.0.0-alpha1"
 
 info:
   label: "Apigee Registry"
-  description: "Apigee Registry API for managing Google Apigee registry resources."
+  description: "Shared capability for Apigee Registry — API specification tracking, versioning, and contents retrieval (legacy, superseded by API Hub in new deployments)."
   tags:
     - Apigee
-    - API Management
+    - API Registry
+    - API Specifications
     - Google Cloud
   created: "2026-04-19"
-  modified: "2026-04-19"
+  modified: "2026-04-20"
 
 binds:
   - namespace: env
@@ -19,21 +20,201 @@ capability:
   consumes:
     - type: http
       namespace: registry
-      baseUri: https://apigeeregistry.googleapis.com
+      baseUri: https://apigeeregistry.googleapis.com/v1
       description: "Apigee Registry REST API."
       authentication:
         type: bearer
         token: "{{GOOGLE_ACCESS_TOKEN}}"
-      resources: []
+      resources:
+
+        - name: apis
+          path: /projects/{projectId}/locations/{locationId}/apis
+          operations:
+            - name: listApis
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+                - name: filter
+                  in: query
+              outputParameters:
+                - name: apis
+                  type: array
+                  value: $.apis
+
+        - name: api
+          path: /projects/{projectId}/locations/{locationId}/apis/{apiId}
+          operations:
+            - name: getApi
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: apiId
+                  in: path
+              outputParameters:
+                - name: api
+                  type: object
+                  value: $.
+
+        - name: api-versions
+          path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+          operations:
+            - name: listApiVersions
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: apiId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+              outputParameters:
+                - name: apiVersions
+                  type: array
+                  value: $.apiVersions
+
+        - name: api-specs
+          path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
+          operations:
+            - name: listApiSpecs
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: apiId
+                  in: path
+                - name: versionId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+              outputParameters:
+                - name: apiSpecs
+                  type: array
+                  value: $.apiSpecs
+
+        - name: api-spec-contents
+          path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents
+          operations:
+            - name: getApiSpecContents
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: apiId
+                  in: path
+                - name: versionId
+                  in: path
+                - name: specId
+                  in: path
+              outputParameters:
+                - name: contents
+                  type: object
+                  value: $.
 
   exposes:
     - type: rest
       port: 8104
       namespace: registry-rest
-      resources: []
+      resources:
+        - path: /apis
+          name: apis
+          description: "List APIs in the Registry."
+          inputParameters:
+            - name: projectId
+              in: query
+              type: string
+              description: "Google Cloud project ID"
+            - name: locationId
+              in: query
+              type: string
+              description: "Google Cloud location"
+          operations:
+            - method: GET
+              call: registry.listApis
+              with:
+                projectId: registry-rest.projectId
+                locationId: registry-rest.locationId
+              outputParameters:
+                - type: array
+                  mapping: "$.apis"
 
     - type: mcp
       port: 9104
       namespace: registry-mcp
       transport: http
-      tools: []
+      description: "MCP tools for Apigee Registry spec tracking."
+      tools:
+        - name: list-registry-apis
+          description: "List all APIs tracked in the Apigee Registry."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          inputParameters:
+            - name: projectId
+              type: string
+              description: "Google Cloud project ID"
+              required: true
+            - name: locationId
+              type: string
+              description: "Google Cloud location"
+              required: true
+          call: registry.listApis
+          with:
+            projectId: registry-mcp.projectId
+            locationId: registry-mcp.locationId
+          outputParameters:
+            - type: array
+              mapping: "$.apis"
+
+        - name: list-registry-api-specs
+          description: "List spec artifacts stored in the Registry for a specific API version."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          inputParameters:
+            - name: projectId
+              type: string
+              description: "Google Cloud project ID"
+              required: true
+            - name: locationId
+              type: string
+              description: "Google Cloud location"
+              required: true
+            - name: apiId
+              type: string
+              description: "API identifier"
+              required: true
+            - name: versionId
+              type: string
+              description: "Version identifier"
+              required: true
+          call: registry.listApiSpecs
+          with:
+            projectId: registry-mcp.projectId
+            locationId: registry-mcp.locationId
+            apiId: registry-mcp.apiId
+            versionId: registry-mcp.versionId
+          outputParameters:
+            - type: array
+              mapping: "$.apiSpecs"

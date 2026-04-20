@@ -1,0 +1,137 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Apigee Analytics and Traffic Observability"
+  description: "Unified workflow for API traffic analytics and observability on Apigee — querying runtime analytics by dimension, discovering undocumented shadow APIs via APIM observation jobs, and correlating traffic patterns with known API products. Provides platform architects, SREs, and governance teams with the operational visibility needed to monitor performance, detect anomalies, and govern API usage at scale."
+  tags:
+    - Apigee
+    - Analytics
+    - Observability
+    - Shadow API Discovery
+    - Google Cloud
+  created: "2026-04-20"
+  modified: "2026-04-20"
+
+binds:
+  - namespace: env
+    keys:
+      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: api-management
+      location: ./shared/api-management.yaml
+    - import: apim
+      location: ./shared/apim.yaml
+
+  exposes:
+    - type: rest
+      port: 8084
+      namespace: apigee-analytics-api
+      description: "Unified REST API for Apigee analytics and traffic observability."
+      resources:
+        - path: /v1/analytics/stats
+          name: analytics-stats
+          description: "Traffic analytics stats by dimension."
+          operations:
+            - method: GET
+              name: get-stats
+              description: "Query traffic analytics for an environment."
+              call: "api-management.getEnvironmentStats"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/observation-jobs
+          name: observation-jobs
+          description: "Shadow API observation jobs."
+          operations:
+            - method: GET
+              name: list-observation-jobs
+              description: "List observation jobs."
+              call: "apim.listObservationJobs"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/observed-apis
+          name: observed-apis
+          description: "Shadow APIs discovered by observation jobs."
+          operations:
+            - method: GET
+              name: list-observed-apis
+              description: "List observed shadow APIs."
+              call: "apim.listApiObservations"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9094
+      namespace: apigee-analytics-mcp
+      transport: http
+      description: "MCP server for AI-assisted Apigee analytics and shadow API observability."
+      tools:
+        - name: get-traffic-analytics
+          description: "Query API traffic analytics for an Apigee environment by dimension (e.g. apis, apiproducts, devs, apps). Returns request counts, latency, and error rates."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.getEnvironmentStats"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-environments
+          description: "List all environments (dev, staging, prod) to identify which to query analytics for."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listEnvironments"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-observation-jobs
+          description: "List all shadow API observation jobs configured to detect undocumented APIs in traffic."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "apim.listObservationJobs"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: discover-shadow-apis
+          description: "List shadow APIs discovered by an observation job — APIs found in live traffic that are not yet documented or governed."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "apim.listApiObservations"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-observed-api-operations
+          description: "List individual HTTP operations observed for a specific shadow API — method, path, count, and parameters seen in traffic."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "apim.listApiOperations"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-deployments
+          description: "List all proxy deployments across environments to correlate with traffic anomalies."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listOrganizationDeployments"
+          outputParameters:
+            - type: object
+              mapping: "$."

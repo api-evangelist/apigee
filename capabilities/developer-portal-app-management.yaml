@@ -1,0 +1,135 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Apigee Developer Portal and App Management"
+  description: "Unified workflow for managing the Apigee developer ecosystem — developers, applications, API product subscriptions, and key management. Provides platform operations teams and API monetization owners a governed surface for onboarding developers, approving apps, and managing API access across products and environments."
+  tags:
+    - Apigee
+    - Developer Portal
+    - App Management
+    - API Monetization
+    - Google Cloud
+  created: "2026-04-20"
+  modified: "2026-04-20"
+
+binds:
+  - namespace: env
+    keys:
+      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: api-management
+      location: ./shared/api-management.yaml
+
+  exposes:
+    - type: rest
+      port: 8083
+      namespace: apigee-devportal-api
+      description: "Unified REST API for Apigee developer portal and app management."
+      resources:
+        - path: /v1/developers
+          name: developers
+          description: "Registered API developers."
+          operations:
+            - method: GET
+              name: list-developers
+              description: "List all registered developers."
+              call: "api-management.listDevelopers"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/developer-apps
+          name: developer-apps
+          description: "Apps registered by a developer."
+          operations:
+            - method: GET
+              name: list-developer-apps
+              description: "List apps for a developer."
+              call: "api-management.listDeveloperApps"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/products
+          name: api-products
+          description: "API products available for subscription."
+          operations:
+            - method: GET
+              name: list-products
+              description: "List all API products."
+              call: "api-management.listApiProducts"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9093
+      namespace: apigee-devportal-mcp
+      transport: http
+      description: "MCP server for AI-assisted developer portal and app management."
+      tools:
+        - name: list-developers
+          description: "List all developers registered in the Apigee organization."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listDevelopers"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-developer
+          description: "Get details for a specific developer including their registered apps."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.getDeveloper"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-developer-apps
+          description: "List all apps registered by a developer, including their API product subscriptions."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listDeveloperApps"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-developer-app
+          description: "Get details for a specific developer app including its credentials and product subscriptions."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.getDeveloperApp"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-api-products
+          description: "List all API products available in the developer portal for subscription."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.listApiProducts"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-api-product
+          description: "Get details for a specific API product including its quota limits and proxy bindings."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-management.getApiProduct"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,148 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Apigee API Specification Management"
+  description: "Unified workflow for managing API specifications on Apigee — browsing the API Hub catalog, retrieving spec contents, linting for compliance, and cross-referencing with Registry artifacts. Provides API product managers and governance teams a single surface to inspect, validate, and govern the specifications that define your API contracts."
+  tags:
+    - Apigee
+    - API Specifications
+    - API Governance
+    - OpenAPI
+    - Google Cloud
+  created: "2026-04-20"
+  modified: "2026-04-20"
+
+binds:
+  - namespace: env
+    keys:
+      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: api-hub
+      location: ./shared/api-hub.yaml
+    - import: registry
+      location: ./shared/registry.yaml
+
+  exposes:
+    - type: rest
+      port: 8082
+      namespace: apigee-specs-api
+      description: "Unified REST API for Apigee API specification management."
+      resources:
+        - path: /v1/hub/apis
+          name: hub-apis
+          description: "APIs catalogued in API Hub."
+          operations:
+            - method: GET
+              name: list-hub-apis
+              description: "List all APIs in the API Hub catalog."
+              call: "api-hub.listApis"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/hub/specs
+          name: hub-specs
+          description: "Specs for a given API version in Hub."
+          operations:
+            - method: GET
+              name: list-hub-specs
+              description: "List specs for an API version."
+              call: "api-hub.listApiSpecs"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/registry/apis
+          name: registry-apis
+          description: "APIs tracked in the Apigee Registry."
+          operations:
+            - method: GET
+              name: list-registry-apis
+              description: "List APIs in the Registry."
+              call: "registry.listApis"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9092
+      namespace: apigee-specs-mcp
+      transport: http
+      description: "MCP server for AI-assisted API specification management and governance."
+      tools:
+        - name: list-hub-apis
+          description: "List all APIs catalogued in Apigee API Hub — the primary API inventory for governance."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-hub.listApis"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-api-versions
+          description: "List versions of a specific API in the Hub catalog."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-hub.listApiVersions"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-api-specs
+          description: "List OpenAPI and other specs attached to an API version in the Hub."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-hub.listApiSpecs"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-api-spec-contents
+          description: "Retrieve the raw contents of an API spec — useful for inspection, diffing, or feeding to an AI agent."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "api-hub.getApiSpecContents"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: lint-api-spec
+          description: "Lint an API spec for compliance and quality violations — returns issues with severity and location."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "api-hub.lintApiSpec"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-registry-apis
+          description: "List APIs tracked in the Apigee Registry (legacy spec store, use for orgs not yet migrated to Hub)."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "registry.listApis"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-registry-specs
+          description: "List spec artifacts in the Apigee Registry for a specific API version."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "registry.listApiSpecs"
+          outputParameters:
+            - type: object
+              mapping: "$."

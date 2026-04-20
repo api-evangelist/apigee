@@ -2,13 +2,14 @@ naftiko: "1.0.0-alpha1"
 
 info:
   label: "Apigee Integrations"
-  description: "Apigee Integrations API for managing Google Apigee integrations resources."
+  description: "Shared capability for Apigee Integrations — list, execute, schedule, and monitor integration workflow executions."
   tags:
     - Apigee
-    - API Management
+    - Integrations
+    - Workflow Automation
     - Google Cloud
   created: "2026-04-19"
-  modified: "2026-04-19"
+  modified: "2026-04-20"
 
 binds:
   - namespace: env
@@ -19,21 +20,219 @@ capability:
   consumes:
     - type: http
       namespace: integrations
-      baseUri: https://integrations.googleapis.com
+      baseUri: https://integrations.googleapis.com/v1
       description: "Apigee Integrations REST API."
       authentication:
         type: bearer
         token: "{{GOOGLE_ACCESS_TOKEN}}"
-      resources: []
+      resources:
+
+        - name: integrations
+          path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations
+          operations:
+            - name: listIntegrations
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: productId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+                - name: filter
+                  in: query
+              outputParameters:
+                - name: integrations
+                  type: array
+                  value: $.integrations
+
+        - name: execute-integration
+          path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:execute
+          operations:
+            - name: executeIntegration
+              method: POST
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: productId
+                  in: path
+                - name: integrationId
+                  in: path
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+
+        - name: integration-versions
+          path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions
+          operations:
+            - name: listIntegrationVersions
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: productId
+                  in: path
+                - name: integrationId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+              outputParameters:
+                - name: integrationVersions
+                  type: array
+                  value: $.integrationVersions
+
+        - name: executions
+          path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions
+          operations:
+            - name: listExecutions
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: productId
+                  in: path
+                - name: integrationId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+                - name: filter
+                  in: query
+              outputParameters:
+                - name: executions
+                  type: array
+                  value: $.executions
+
+        - name: execution
+          path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}
+          operations:
+            - name: getExecution
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: productId
+                  in: path
+                - name: integrationId
+                  in: path
+                - name: executionId
+                  in: path
+              outputParameters:
+                - name: execution
+                  type: object
+                  value: $.
 
   exposes:
     - type: rest
       port: 8102
       namespace: integrations-rest
-      resources: []
+      resources:
+        - path: /integrations
+          name: integrations
+          description: "List integration workflows."
+          inputParameters:
+            - name: projectId
+              in: query
+              type: string
+              description: "Google Cloud project ID"
+            - name: locationId
+              in: query
+              type: string
+              description: "Google Cloud location"
+            - name: productId
+              in: query
+              type: string
+              description: "Product identifier"
+          operations:
+            - method: GET
+              call: integrations.listIntegrations
+              with:
+                projectId: integrations-rest.projectId
+                locationId: integrations-rest.locationId
+                productId: integrations-rest.productId
+              outputParameters:
+                - type: array
+                  mapping: "$.integrations"
 
     - type: mcp
       port: 9102
       namespace: integrations-mcp
       transport: http
-      tools: []
+      description: "MCP tools for Apigee integration workflow management."
+      tools:
+        - name: list-integrations
+          description: "List all integration workflows in a Google Cloud project."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          inputParameters:
+            - name: projectId
+              type: string
+              description: "Google Cloud project ID"
+              required: true
+            - name: locationId
+              type: string
+              description: "Google Cloud location"
+              required: true
+            - name: productId
+              type: string
+              description: "Product identifier"
+              required: true
+          call: integrations.listIntegrations
+          with:
+            projectId: integrations-mcp.projectId
+            locationId: integrations-mcp.locationId
+            productId: integrations-mcp.productId
+          outputParameters:
+            - type: array
+              mapping: "$.integrations"
+
+        - name: list-integration-executions
+          description: "List recent execution history for an integration workflow."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          inputParameters:
+            - name: projectId
+              type: string
+              description: "Google Cloud project ID"
+              required: true
+            - name: locationId
+              type: string
+              description: "Google Cloud location"
+              required: true
+            - name: productId
+              type: string
+              description: "Product identifier"
+              required: true
+            - name: integrationId
+              type: string
+              description: "Integration identifier"
+              required: true
+          call: integrations.listExecutions
+          with:
+            projectId: integrations-mcp.projectId
+            locationId: integrations-mcp.locationId
+            productId: integrations-mcp.productId
+            integrationId: integrations-mcp.integrationId
+          outputParameters:
+            - type: array
+              mapping: "$.executions"

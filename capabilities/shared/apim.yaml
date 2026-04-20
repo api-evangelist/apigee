@@ -1,14 +1,15 @@
 naftiko: "1.0.0-alpha1"
 
 info:
-  label: "Apigee API Observation"
-  description: "Apigee API Observation API for managing Google Apigee apim resources."
+  label: "Apigee API Observation (APIM)"
+  description: "Shared capability for Apigee APIM — shadow API discovery via observation jobs, API observations, and API operations."
   tags:
     - Apigee
-    - API Management
+    - API Observation
+    - Shadow API Discovery
     - Google Cloud
   created: "2026-04-19"
-  modified: "2026-04-19"
+  modified: "2026-04-20"
 
 binds:
   - namespace: env
@@ -19,21 +20,300 @@ capability:
   consumes:
     - type: http
       namespace: apim
-      baseUri: https://apim.googleapis.com
+      baseUri: https://apim.googleapis.com/v1alpha
       description: "Apigee API Observation REST API."
       authentication:
         type: bearer
         token: "{{GOOGLE_ACCESS_TOKEN}}"
-      resources: []
+      resources:
+
+        - name: observation-jobs
+          path: /projects/{projectId}/locations/{locationId}/observationJobs
+          operations:
+            - name: listObservationJobs
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+              outputParameters:
+                - name: observationJobs
+                  type: array
+                  value: $.observationJobs
+
+        - name: observation-job
+          path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}
+          operations:
+            - name: getObservationJob
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: observationJobId
+                  in: path
+              outputParameters:
+                - name: observationJob
+                  type: object
+                  value: $.
+
+        - name: enable-observation-job
+          path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:enable
+          operations:
+            - name: enableObservationJob
+              method: POST
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: observationJobId
+                  in: path
+              outputParameters:
+                - name: operation
+                  type: object
+                  value: $.
+
+        - name: disable-observation-job
+          path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:disable
+          operations:
+            - name: disableObservationJob
+              method: POST
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: observationJobId
+                  in: path
+              outputParameters:
+                - name: operation
+                  type: object
+                  value: $.
+
+        - name: api-observations
+          path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations
+          operations:
+            - name: listApiObservations
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: observationJobId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+              outputParameters:
+                - name: apiObservations
+                  type: array
+                  value: $.apiObservations
+
+        - name: api-observation
+          path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}
+          operations:
+            - name: getApiObservation
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: observationJobId
+                  in: path
+                - name: apiObservationId
+                  in: path
+              outputParameters:
+                - name: apiObservation
+                  type: object
+                  value: $.
+
+        - name: batch-edit-observation-tags
+          path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:batchEditTags
+          operations:
+            - name: batchEditApiObservationTags
+              method: POST
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: observationJobId
+                  in: path
+              outputParameters:
+                - name: apiObservations
+                  type: array
+                  value: $.apiObservations
+
+        - name: api-operations
+          path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations
+          operations:
+            - name: listApiOperations
+              method: GET
+              inputParameters:
+                - name: projectId
+                  in: path
+                - name: locationId
+                  in: path
+                - name: observationJobId
+                  in: path
+                - name: apiObservationId
+                  in: path
+                - name: pageSize
+                  in: query
+                - name: pageToken
+                  in: query
+              outputParameters:
+                - name: apiOperations
+                  type: array
+                  value: $.apiOperations
 
   exposes:
     - type: rest
       port: 8103
       namespace: apim-rest
-      resources: []
+      resources:
+        - path: /observation-jobs
+          name: observation-jobs
+          description: "List shadow API observation jobs."
+          inputParameters:
+            - name: projectId
+              in: query
+              type: string
+              description: "Google Cloud project ID"
+            - name: locationId
+              in: query
+              type: string
+              description: "Google Cloud location"
+          operations:
+            - method: GET
+              call: apim.listObservationJobs
+              with:
+                projectId: apim-rest.projectId
+                locationId: apim-rest.locationId
+              outputParameters:
+                - type: array
+                  mapping: "$.observationJobs"
+
+        - path: /api-observations
+          name: api-observations
+          description: "List observed shadow APIs."
+          inputParameters:
+            - name: projectId
+              in: query
+              type: string
+            - name: locationId
+              in: query
+              type: string
+            - name: observationJobId
+              in: query
+              type: string
+          operations:
+            - method: GET
+              call: apim.listApiObservations
+              with:
+                projectId: apim-rest.projectId
+                locationId: apim-rest.locationId
+                observationJobId: apim-rest.observationJobId
+              outputParameters:
+                - type: array
+                  mapping: "$.apiObservations"
 
     - type: mcp
       port: 9103
       namespace: apim-mcp
       transport: http
-      tools: []
+      description: "MCP tools for Apigee shadow API discovery."
+      tools:
+        - name: list-observation-jobs
+          description: "List all shadow API observation jobs configured in Google Cloud."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          inputParameters:
+            - name: projectId
+              type: string
+              description: "Google Cloud project ID"
+              required: true
+            - name: locationId
+              type: string
+              description: "Google Cloud location"
+              required: true
+          call: apim.listObservationJobs
+          with:
+            projectId: apim-mcp.projectId
+            locationId: apim-mcp.locationId
+          outputParameters:
+            - type: array
+              mapping: "$.observationJobs"
+
+        - name: list-observed-apis
+          description: "List shadow APIs discovered by an observation job — undocumented APIs found in traffic."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          inputParameters:
+            - name: projectId
+              type: string
+              description: "Google Cloud project ID"
+              required: true
+            - name: locationId
+              type: string
+              description: "Google Cloud location"
+              required: true
+            - name: observationJobId
+              type: string
+              description: "Observation job ID"
+              required: true
+          call: apim.listApiObservations
+          with:
+            projectId: apim-mcp.projectId
+            locationId: apim-mcp.locationId
+            observationJobId: apim-mcp.observationJobId
+          outputParameters:
+            - type: array
+              mapping: "$.apiObservations"
+
+        - name: list-observed-api-operations
+          description: "List individual operations observed for a discovered shadow API."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          inputParameters:
+            - name: projectId
+              type: string
+              description: "Google Cloud project ID"
+              required: true
+            - name: locationId
+              type: string
+              description: "Google Cloud location"
+              required: true
+            - name: observationJobId
+              type: string
+              description: "Observation job ID"
+              required: true
+            - name: apiObservationId
+              type: string
+              description: "API observation ID"
+              required: true
+          call: apim.listApiOperations
+          with:
+            projectId: apim-mcp.projectId
+            locationId: apim-mcp.locationId
+            observationJobId: apim-mcp.observationJobId
+            apiObservationId: apim-mcp.apiObservationId
+          outputParameters:
+            - type: array
+              mapping: "$.apiOperations"
