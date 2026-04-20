@@ -12,7 +12,7 @@ Apigee is Google Cloud's native API management platform for building, managing, 
 ## Timestamps
 
 - **Created:** 2024-01-01
-- **Modified:** 2026-04-19
+- **Modified:** 2026-04-20
 
 ## APIs
 
@@ -134,10 +134,13 @@ Naftiko capabilities organized as shared per-API definitions composed into custo
 
 ### Workflow Capabilities
 
-| Workflow | APIs Combined | Tools | Persona |
-|----------|--------------|-------|---------|
-| [API Lifecycle Management](capabilities/api-lifecycle-management.yaml) | API Management, API Hub | 5 | API Platform Engineer, API Product Manager |
-| [API Governance and Observability](capabilities/api-governance-observability.yaml) | API Hub, APIM, Registry | 3 | API Governance Lead, Platform Architect |
+| Workflow | APIs Combined | Persona |
+|----------|--------------|---------|
+| [API Lifecycle Management](capabilities/api-lifecycle-management.yaml) | API Management, API Hub | API Platform Engineer, API Product Manager |
+| [API Governance and Observability](capabilities/api-governance-observability.yaml) | API Hub, APIM, Registry | API Governance Lead, Platform Architect |
+| [Analytics and Traffic Observability](capabilities/analytics-traffic-observability.yaml) | API Management, APIM | Platform Architect, SRE, Governance Team |
+| [API Specification Management](capabilities/api-specification-management.yaml) | API Hub, Registry | API Product Manager, Governance Team |
+| [Developer Portal and App Management](capabilities/developer-portal-app-management.yaml) | API Management | Platform Operations, API Monetization Owner |
 
 ## Vocabulary
 
