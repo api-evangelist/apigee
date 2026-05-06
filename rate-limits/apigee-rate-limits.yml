@@ -4,112 +4,117 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Apigee
 providerId: apigee
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Analytics
-  - API Gateway
-  - API Governance
-  - API Hub
-  - API Management
-  - Developer Portal
-  - Enterprise
-  - Hybrid
-  - Integrations
-  - Microservices
-  - Monetization
   - Rate Limiting
+  - API Management
+  - Google Cloud
   - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Apigee API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: Apigee enforces two distinct rate-limit surfaces. (1) Limits on the Apigee management/control-plane
+  APIs (apigee.googleapis.com) used to administer organizations, environments, and proxies — capped at
+  6,000 calls per minute against the management API. (2) Per-runtime data-plane limits set by the proxies
+  themselves through Apigee's Quota and SpikeArrest policies (SpikeArrest max 4,000 requests per second
+  / 240,000 per minute; Quota policy windows from 1 minute to 1 year). Capacity ceilings (deployed proxies,
+  environments, target servers, KVMs) are enforced per-organization and per-environment.
+sources:
+  - https://docs.cloud.google.com/apigee/docs/api-platform/reference/limits
+  - https://cloud.google.com/apigee/docs/api-platform/develop/rate-limiting
 responseCodes:
   throttled: 429
   quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Management API call rate
+    scope: organization
     metric: requests_per_minute
+    limit: 6000
+    timeFrame: minute
+    notes: Applies to user/UI/SDK calls against apigee.googleapis.com (control plane).
+  - name: SpikeArrest policy ceiling (per second)
+    scope: proxy/environment
+    metric: requests_per_second
+    limit: 4000
+    timeFrame: second
+    notes: Maximum SpikeArrest rate configurable in a per-second SpikeArrest policy.
+  - name: SpikeArrest policy ceiling (per minute)
+    scope: proxy/environment
+    metric: requests_per_minute
+    limit: 240000
+    timeFrame: minute
+    notes: Maximum SpikeArrest rate configurable in a per-minute SpikeArrest policy.
+  - name: Quota policy window
+    scope: api-product
+    metric: varies
+    limit: 1 minute to 1 year
+    notes: Quota policies can be configured with a window from 1 minute up to 1 year against any user-defined
+      counter (per app, per developer, per IP, etc.).
+  - name: Deployed API proxies (per organization)
+    scope: organization
+    metric: proxies
+    limit: 6000
+    notes: Apigee X cap; Apigee hybrid is 4,250–6,000 depending on subscription.
+  - name: Deployed API proxies (per environment)
+    scope: environment
+    metric: proxies
+    limit: 6000
+    notes: Apigee X cap.
+  - name: Environments per organization
+    scope: organization
+    metric: environments
+    limit: 85
+  - name: API products per organization
+    scope: organization
+    metric: api-products
+    limit: 5000
+  - name: Apps per organization
+    scope: organization
+    metric: apps
+    limit: 1000000
+  - name: Developers per organization
+    scope: organization
+    metric: developers
+    limit: 1000000
+  - name: Target servers per environment
+    scope: environment
+    metric: target-servers
+    limit: 1000
+  - name: KVMs per environment
+    scope: environment
+    metric: key-value-maps
+    limit: 900
+  - name: Proxy bundle size
+    scope: proxy
+    metric: MB
+    limit: 15
+    notes: Applies to both the bundle and individual resource files.
+  - name: Buffered request/response size
+    scope: proxy
+    metric: MB
+    limit: 30
+  - name: Request URL size
+    scope: proxy
+    metric: KB
     limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Apigee API Management
-      - Apigee API Hub API
-      - Apigee Integrations API
-      - Apigee API Management API
-      - Apigee Registry API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Apigee API Management
-      - Apigee API Hub API
-      - Apigee Integrations API
-      - Apigee API Management API
-      - Apigee Registry API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Apigee API Management
-      - Apigee API Hub API
-      - Apigee Integrations API
-      - Apigee API Management API
-      - Apigee Registry API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Apigee API Management
-      - Apigee API Hub API
-      - Apigee Integrations API
-      - Apigee API Management API
-      - Apigee Registry API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Apigee API Management
-      - Apigee API Hub API
-      - Apigee Integrations API
-      - Apigee API Management API
-      - Apigee Registry API
+  - name: Request/response header size
+    scope: proxy
+    metric: KB
+    limit: 60
 policies:
+  - name: Quota Policy
+    description: Configurable per-API-product or per-app counter. Counter persists across the configured
+      window (1m–1y) and triggers 429 on exceed. Distributed counters synced across runtime instances.
+  - name: SpikeArrest Policy
+    description: Smooths bursts by enforcing a rolling per-second / per-minute ceiling. Used for traffic
+      shaping rather than business quota. Triggers 429 on burst.
+  - name: Concurrent Rate Limit
+    description: Concurrent connections cap configurable per environment to protect downstream targets.
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: Clients should implement exponential backoff with jitter; Apigee surfaces 429s with policy-driven
+      headers when configured.
+  - name: Capacity Planning
+    description: Subscription tier governs ceilings on environments, proxies, and runtime capacity; engage
+      Google Cloud sales to raise tier-bounded limits.
 maintainers:
-  - name: Kin Lane
+  - FN: Kin Lane
     email: kin@apievangelist.com
