@@ -1,135 +1,402 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Apigee Developer Portal and App Management"
-  description: "Unified workflow for managing the Apigee developer ecosystem — developers, applications, API product subscriptions, and key management. Provides platform operations teams and API monetization owners a governed surface for onboarding developers, approving apps, and managing API access across products and environments."
+  label: Apigee Developer Portal and App Management
+  description: Unified workflow for managing the Apigee developer ecosystem — developers, applications, API product subscriptions,
+    and key management. Provides platform operations teams and API monetization owners a governed surface for onboarding developers,
+    approving apps, and managing API access across products and environments.
   tags:
-    - Apigee
-    - Developer Portal
-    - App Management
-    - API Monetization
-    - Google Cloud
-  created: "2026-04-20"
-  modified: "2026-04-20"
-
+  - Apigee
+  - Developer Portal
+  - App Management
+  - API Monetization
+  - Google Cloud
+  created: '2026-04-20'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
-
+- namespace: env
+  keys:
+    GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
 capability:
   consumes:
-    - import: api-management
-      location: ./shared/api-management.yaml
-
+  - type: http
+    namespace: api-management
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management REST API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_ACCESS_TOKEN}}'
+    resources:
+    - name: api-proxies
+      path: /organizations/{organizationId}/apis
+      operations:
+      - name: listApiProxies
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: proxies
+          type: array
+          value: $.proxies
+    - name: api-proxy
+      path: /organizations/{organizationId}/apis/{apiId}
+      operations:
+      - name: getApiProxy
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: apiId
+          in: path
+        outputParameters:
+        - name: proxy
+          type: object
+          value: $.
+    - name: api-products
+      path: /organizations/{organizationId}/apiproducts
+      operations:
+      - name: listApiProducts
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: products
+          type: array
+          value: $.products
+    - name: api-product
+      path: /organizations/{organizationId}/apiproducts/{productId}
+      operations:
+      - name: getApiProduct
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: productId
+          in: path
+        outputParameters:
+        - name: product
+          type: object
+          value: $.
+    - name: developers
+      path: /organizations/{organizationId}/developers
+      operations:
+      - name: listDevelopers
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: developers
+          type: array
+          value: $.developers
+    - name: developer
+      path: /organizations/{organizationId}/developers/{developerId}
+      operations:
+      - name: getDeveloper
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: developerId
+          in: path
+        outputParameters:
+        - name: developer
+          type: object
+          value: $.
+    - name: developer-apps
+      path: /organizations/{organizationId}/developers/{developerId}/apps
+      operations:
+      - name: listDeveloperApps
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: developerId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: apps
+          type: array
+          value: $.apps
+    - name: developer-app
+      path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
+      operations:
+      - name: getDeveloperApp
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: developerId
+          in: path
+        - name: appId
+          in: path
+        outputParameters:
+        - name: app
+          type: object
+          value: $.
+    - name: environments
+      path: /organizations/{organizationId}/environments
+      operations:
+      - name: listEnvironments
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: environments
+          type: array
+          value: $.environments
+    - name: environment
+      path: /organizations/{organizationId}/environments/{environmentId}
+      operations:
+      - name: getEnvironment
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        outputParameters:
+        - name: environment
+          type: object
+          value: $.
+    - name: deployments
+      path: /organizations/{organizationId}/deployments
+      operations:
+      - name: listOrganizationDeployments
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: deployments
+          type: array
+          value: $.deployments
+    - name: proxy-deployment
+      path: /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments
+      operations:
+      - name: deployApiProxyRevision
+        method: POST
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: apiId
+          in: path
+        - name: revisionId
+          in: path
+        - name: override
+          in: query
+        outputParameters:
+        - name: deployment
+          type: object
+          value: $.
+      - name: undeployApiProxyRevision
+        method: DELETE
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: apiId
+          in: path
+        - name: revisionId
+          in: path
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: shared-flows
+      path: /organizations/{organizationId}/sharedflows
+      operations:
+      - name: listSharedFlows
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: sharedFlows
+          type: array
+          value: $.sharedFlows
+    - name: target-servers
+      path: /organizations/{organizationId}/environments/{environmentId}/targetservers
+      operations:
+      - name: listTargetServers
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: targetServers
+          type: array
+          value: $.targetServers
+    - name: analytics-stats
+      path: /organizations/{organizationId}/environments/{environmentId}/stats/{statsType}
+      operations:
+      - name: getEnvironmentStats
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: statsType
+          in: path
+        - name: timeRange
+          in: query
+        - name: timeUnit
+          in: query
+        - name: filter
+          in: query
+        - name: limit
+          in: query
+        outputParameters:
+        - name: stats
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8083
-      namespace: apigee-devportal-api
-      description: "Unified REST API for Apigee developer portal and app management."
-      resources:
-        - path: /v1/developers
-          name: developers
-          description: "Registered API developers."
-          operations:
-            - method: GET
-              name: list-developers
-              description: "List all registered developers."
-              call: "api-management.listDevelopers"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/developer-apps
-          name: developer-apps
-          description: "Apps registered by a developer."
-          operations:
-            - method: GET
-              name: list-developer-apps
-              description: "List apps for a developer."
-              call: "api-management.listDeveloperApps"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/products
-          name: api-products
-          description: "API products available for subscription."
-          operations:
-            - method: GET
-              name: list-products
-              description: "List all API products."
-              call: "api-management.listApiProducts"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9093
-      namespace: apigee-devportal-mcp
-      transport: http
-      description: "MCP server for AI-assisted developer portal and app management."
-      tools:
-        - name: list-developers
-          description: "List all developers registered in the Apigee organization."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.listDevelopers"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-developer
-          description: "Get details for a specific developer including their registered apps."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.getDeveloper"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-developer-apps
-          description: "List all apps registered by a developer, including their API product subscriptions."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.listDeveloperApps"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-developer-app
-          description: "Get details for a specific developer app including its credentials and product subscriptions."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.getDeveloperApp"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-api-products
-          description: "List all API products available in the developer portal for subscription."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.listApiProducts"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-api-product
-          description: "Get details for a specific API product including its quota limits and proxy bindings."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.getApiProduct"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8083
+    namespace: apigee-devportal-api
+    description: Unified REST API for Apigee developer portal and app management.
+    resources:
+    - path: /v1/developers
+      name: developers
+      description: Registered API developers.
+      operations:
+      - method: GET
+        name: list-developers
+        description: List all registered developers.
+        call: api-management.listDevelopers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/developer-apps
+      name: developer-apps
+      description: Apps registered by a developer.
+      operations:
+      - method: GET
+        name: list-developer-apps
+        description: List apps for a developer.
+        call: api-management.listDeveloperApps
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/products
+      name: api-products
+      description: API products available for subscription.
+      operations:
+      - method: GET
+        name: list-products
+        description: List all API products.
+        call: api-management.listApiProducts
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9093
+    namespace: apigee-devportal-mcp
+    transport: http
+    description: MCP server for AI-assisted developer portal and app management.
+    tools:
+    - name: list-developers
+      description: List all developers registered in the Apigee organization.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.listDevelopers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-developer
+      description: Get details for a specific developer including their registered apps.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.getDeveloper
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-developer-apps
+      description: List all apps registered by a developer, including their API product subscriptions.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.listDeveloperApps
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-developer-app
+      description: Get details for a specific developer app including its credentials and product subscriptions.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.getDeveloperApp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-api-products
+      description: List all API products available in the developer portal for subscription.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.listApiProducts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-product
+      description: Get details for a specific API product including its quota limits and proxy bindings.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.getApiProduct
+      outputParameters:
+      - type: object
+        mapping: $.

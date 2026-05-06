@@ -1,122 +1,571 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Apigee API Lifecycle Management"
-  description: "Unified workflow for managing the full API lifecycle on Google Apigee - from API proxy creation and deployment to developer portal management, product packaging, and analytics."
+  label: Apigee API Lifecycle Management
+  description: Unified workflow for managing the full API lifecycle on Google Apigee - from API proxy creation and deployment
+    to developer portal management, product packaging, and analytics.
   tags:
-    - Apigee
-    - API Management
-    - API Lifecycle
-    - Google Cloud
-    - Developer Portal
-  created: "2026-04-19"
-  modified: "2026-04-19"
-
+  - Apigee
+  - API Management
+  - API Lifecycle
+  - Google Cloud
+  - Developer Portal
+  created: '2026-04-19'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
-
+- namespace: env
+  keys:
+    GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
 capability:
   consumes:
-    - import: api-management
-      location: ./shared/api-management.yaml
-    - import: api-hub
-      location: ./shared/api-hub.yaml
-
+  - type: http
+    namespace: api-management
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management REST API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_ACCESS_TOKEN}}'
+    resources:
+    - name: api-proxies
+      path: /organizations/{organizationId}/apis
+      operations:
+      - name: listApiProxies
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: proxies
+          type: array
+          value: $.proxies
+    - name: api-proxy
+      path: /organizations/{organizationId}/apis/{apiId}
+      operations:
+      - name: getApiProxy
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: apiId
+          in: path
+        outputParameters:
+        - name: proxy
+          type: object
+          value: $.
+    - name: api-products
+      path: /organizations/{organizationId}/apiproducts
+      operations:
+      - name: listApiProducts
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: products
+          type: array
+          value: $.products
+    - name: api-product
+      path: /organizations/{organizationId}/apiproducts/{productId}
+      operations:
+      - name: getApiProduct
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: productId
+          in: path
+        outputParameters:
+        - name: product
+          type: object
+          value: $.
+    - name: developers
+      path: /organizations/{organizationId}/developers
+      operations:
+      - name: listDevelopers
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: developers
+          type: array
+          value: $.developers
+    - name: developer
+      path: /organizations/{organizationId}/developers/{developerId}
+      operations:
+      - name: getDeveloper
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: developerId
+          in: path
+        outputParameters:
+        - name: developer
+          type: object
+          value: $.
+    - name: developer-apps
+      path: /organizations/{organizationId}/developers/{developerId}/apps
+      operations:
+      - name: listDeveloperApps
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: developerId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: apps
+          type: array
+          value: $.apps
+    - name: developer-app
+      path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
+      operations:
+      - name: getDeveloperApp
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: developerId
+          in: path
+        - name: appId
+          in: path
+        outputParameters:
+        - name: app
+          type: object
+          value: $.
+    - name: environments
+      path: /organizations/{organizationId}/environments
+      operations:
+      - name: listEnvironments
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: environments
+          type: array
+          value: $.environments
+    - name: environment
+      path: /organizations/{organizationId}/environments/{environmentId}
+      operations:
+      - name: getEnvironment
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        outputParameters:
+        - name: environment
+          type: object
+          value: $.
+    - name: deployments
+      path: /organizations/{organizationId}/deployments
+      operations:
+      - name: listOrganizationDeployments
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: deployments
+          type: array
+          value: $.deployments
+    - name: proxy-deployment
+      path: /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments
+      operations:
+      - name: deployApiProxyRevision
+        method: POST
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: apiId
+          in: path
+        - name: revisionId
+          in: path
+        - name: override
+          in: query
+        outputParameters:
+        - name: deployment
+          type: object
+          value: $.
+      - name: undeployApiProxyRevision
+        method: DELETE
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: apiId
+          in: path
+        - name: revisionId
+          in: path
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: shared-flows
+      path: /organizations/{organizationId}/sharedflows
+      operations:
+      - name: listSharedFlows
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: sharedFlows
+          type: array
+          value: $.sharedFlows
+    - name: target-servers
+      path: /organizations/{organizationId}/environments/{environmentId}/targetservers
+      operations:
+      - name: listTargetServers
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: targetServers
+          type: array
+          value: $.targetServers
+    - name: analytics-stats
+      path: /organizations/{organizationId}/environments/{environmentId}/stats/{statsType}
+      operations:
+      - name: getEnvironmentStats
+        method: GET
+        inputParameters:
+        - name: organizationId
+          in: path
+        - name: environmentId
+          in: path
+        - name: statsType
+          in: path
+        - name: timeRange
+          in: query
+        - name: timeUnit
+          in: query
+        - name: filter
+          in: query
+        - name: limit
+          in: query
+        outputParameters:
+        - name: stats
+          type: object
+          value: $.
+  - type: http
+    namespace: api-hub
+    baseUri: https://apihub.googleapis.com/v1
+    description: Apigee API Hub REST API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_ACCESS_TOKEN}}'
+    resources:
+    - name: apis
+      path: /projects/{projectId}/locations/{locationId}/apis
+      operations:
+      - name: listApis
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: apis
+          type: array
+          value: $.apis
+    - name: api
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}
+      operations:
+      - name: getApi
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        outputParameters:
+        - name: api
+          type: object
+          value: $.
+    - name: api-versions
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+      operations:
+      - name: listApiVersions
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: versions
+          type: array
+          value: $.versions
+    - name: api-specs
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
+      operations:
+      - name: listApiSpecs
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: specs
+          type: array
+          value: $.specs
+    - name: api-spec-contents
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents
+      operations:
+      - name: getApiSpecContents
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: specId
+          in: path
+        outputParameters:
+        - name: contents
+          type: object
+          value: $.
+    - name: api-spec-lint
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:lint
+      operations:
+      - name: lintApiSpec
+        method: POST
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: specId
+          in: path
+        outputParameters:
+        - name: operation
+          type: object
+          value: $.
+    - name: deployments
+      path: /projects/{projectId}/locations/{locationId}/deployments
+      operations:
+      - name: listDeployments
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: deployments
+          type: array
+          value: $.deployments
+    - name: dependencies
+      path: /projects/{projectId}/locations/{locationId}/dependencies
+      operations:
+      - name: listDependencies
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: dependencies
+          type: array
+          value: $.dependencies
+    - name: search
+      path: /projects/{projectId}/locations/{locationId}:searchResources
+      operations:
+      - name: searchResources
+        method: POST
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        outputParameters:
+        - name: searchResults
+          type: array
+          value: $.searchResults
   exposes:
-    - type: rest
-      port: 8080
-      namespace: apigee-lifecycle-api
-      description: "Unified REST API for Apigee API lifecycle management."
-      resources:
-        - path: /v1/proxies
-          name: api-proxies
-          description: "Manage API proxies."
-          operations:
-            - method: GET
-              name: list-proxies
-              description: "List API proxies."
-              call: "api-management.listApiProxies"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/products
-          name: api-products
-          description: "Manage API products."
-          operations:
-            - method: GET
-              name: list-products
-              description: "List API products."
-              call: "api-management.listApiProducts"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/developers
-          name: developers
-          description: "Manage API developers."
-          operations:
-            - method: GET
-              name: list-developers
-              description: "List developers."
-              call: "api-management.listDevelopers"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: apigee-lifecycle-mcp
-      transport: http
-      description: "MCP server for AI-assisted Apigee API lifecycle management."
-      tools:
-        - name: list-api-proxies
-          description: "List all API proxies in an Apigee organization."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.listApiProxies"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-api-products
-          description: "List all API products packaged for developer consumption."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.listApiProducts"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-developers
-          description: "List all registered API developers in the organization."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.listDevelopers"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-environments
-          description: "List all environments (e.g., dev, staging, prod) in the organization."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-management.listEnvironments"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-hub-apis
-          description: "List all APIs catalogued in Apigee API Hub for discovery and governance."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-hub.listApis"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: apigee-lifecycle-api
+    description: Unified REST API for Apigee API lifecycle management.
+    resources:
+    - path: /v1/proxies
+      name: api-proxies
+      description: Manage API proxies.
+      operations:
+      - method: GET
+        name: list-proxies
+        description: List API proxies.
+        call: api-management.listApiProxies
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/products
+      name: api-products
+      description: Manage API products.
+      operations:
+      - method: GET
+        name: list-products
+        description: List API products.
+        call: api-management.listApiProducts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/developers
+      name: developers
+      description: Manage API developers.
+      operations:
+      - method: GET
+        name: list-developers
+        description: List developers.
+        call: api-management.listDevelopers
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: apigee-lifecycle-mcp
+    transport: http
+    description: MCP server for AI-assisted Apigee API lifecycle management.
+    tools:
+    - name: list-api-proxies
+      description: List all API proxies in an Apigee organization.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.listApiProxies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-api-products
+      description: List all API products packaged for developer consumption.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.listApiProducts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-developers
+      description: List all registered API developers in the organization.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.listDevelopers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-environments
+      description: List all environments (e.g., dev, staging, prod) in the organization.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management.listEnvironments
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-hub-apis
+      description: List all APIs catalogued in Apigee API Hub for discovery and governance.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub.listApis
+      outputParameters:
+      - type: object
+        mapping: $.

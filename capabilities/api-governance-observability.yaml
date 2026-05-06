@@ -1,93 +1,519 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Apigee API Governance and Observability"
-  description: "Unified workflow for API governance, discovery, and observability using Apigee API Hub for cataloguing, API Observation (APIM) for shadow API discovery, and Registry for tracking specifications."
+  label: Apigee API Governance and Observability
+  description: Unified workflow for API governance, discovery, and observability using Apigee API Hub for cataloguing, API
+    Observation (APIM) for shadow API discovery, and Registry for tracking specifications.
   tags:
-    - Apigee
-    - API Governance
-    - API Catalog
-    - API Discovery
-    - Google Cloud
-  created: "2026-04-19"
-  modified: "2026-04-19"
-
+  - Apigee
+  - API Governance
+  - API Catalog
+  - API Discovery
+  - Google Cloud
+  created: '2026-04-19'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
-
+- namespace: env
+  keys:
+    GOOGLE_ACCESS_TOKEN: GOOGLE_ACCESS_TOKEN
 capability:
   consumes:
-    - import: api-hub
-      location: ./shared/api-hub.yaml
-    - import: apim
-      location: ./shared/apim.yaml
-    - import: registry
-      location: ./shared/registry.yaml
-
+  - type: http
+    namespace: api-hub
+    baseUri: https://apihub.googleapis.com/v1
+    description: Apigee API Hub REST API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_ACCESS_TOKEN}}'
+    resources:
+    - name: apis
+      path: /projects/{projectId}/locations/{locationId}/apis
+      operations:
+      - name: listApis
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: apis
+          type: array
+          value: $.apis
+    - name: api
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}
+      operations:
+      - name: getApi
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        outputParameters:
+        - name: api
+          type: object
+          value: $.
+    - name: api-versions
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+      operations:
+      - name: listApiVersions
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: versions
+          type: array
+          value: $.versions
+    - name: api-specs
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
+      operations:
+      - name: listApiSpecs
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: specs
+          type: array
+          value: $.specs
+    - name: api-spec-contents
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents
+      operations:
+      - name: getApiSpecContents
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: specId
+          in: path
+        outputParameters:
+        - name: contents
+          type: object
+          value: $.
+    - name: api-spec-lint
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:lint
+      operations:
+      - name: lintApiSpec
+        method: POST
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: specId
+          in: path
+        outputParameters:
+        - name: operation
+          type: object
+          value: $.
+    - name: deployments
+      path: /projects/{projectId}/locations/{locationId}/deployments
+      operations:
+      - name: listDeployments
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: deployments
+          type: array
+          value: $.deployments
+    - name: dependencies
+      path: /projects/{projectId}/locations/{locationId}/dependencies
+      operations:
+      - name: listDependencies
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: dependencies
+          type: array
+          value: $.dependencies
+    - name: search
+      path: /projects/{projectId}/locations/{locationId}:searchResources
+      operations:
+      - name: searchResources
+        method: POST
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        outputParameters:
+        - name: searchResults
+          type: array
+          value: $.searchResults
+  - type: http
+    namespace: apim
+    baseUri: https://apim.googleapis.com/v1alpha
+    description: Apigee API Observation REST API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_ACCESS_TOKEN}}'
+    resources:
+    - name: observation-jobs
+      path: /projects/{projectId}/locations/{locationId}/observationJobs
+      operations:
+      - name: listObservationJobs
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: observationJobs
+          type: array
+          value: $.observationJobs
+    - name: observation-job
+      path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}
+      operations:
+      - name: getObservationJob
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: observationJobId
+          in: path
+        outputParameters:
+        - name: observationJob
+          type: object
+          value: $.
+    - name: enable-observation-job
+      path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:enable
+      operations:
+      - name: enableObservationJob
+        method: POST
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: observationJobId
+          in: path
+        outputParameters:
+        - name: operation
+          type: object
+          value: $.
+    - name: disable-observation-job
+      path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:disable
+      operations:
+      - name: disableObservationJob
+        method: POST
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: observationJobId
+          in: path
+        outputParameters:
+        - name: operation
+          type: object
+          value: $.
+    - name: api-observations
+      path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations
+      operations:
+      - name: listApiObservations
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: observationJobId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: apiObservations
+          type: array
+          value: $.apiObservations
+    - name: api-observation
+      path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}
+      operations:
+      - name: getApiObservation
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: observationJobId
+          in: path
+        - name: apiObservationId
+          in: path
+        outputParameters:
+        - name: apiObservation
+          type: object
+          value: $.
+    - name: batch-edit-observation-tags
+      path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:batchEditTags
+      operations:
+      - name: batchEditApiObservationTags
+        method: POST
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: observationJobId
+          in: path
+        outputParameters:
+        - name: apiObservations
+          type: array
+          value: $.apiObservations
+    - name: api-operations
+      path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations
+      operations:
+      - name: listApiOperations
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: observationJobId
+          in: path
+        - name: apiObservationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: apiOperations
+          type: array
+          value: $.apiOperations
+  - type: http
+    namespace: registry
+    baseUri: https://apigeeregistry.googleapis.com/v1
+    description: Apigee Registry REST API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_ACCESS_TOKEN}}'
+    resources:
+    - name: apis
+      path: /projects/{projectId}/locations/{locationId}/apis
+      operations:
+      - name: listApis
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        - name: filter
+          in: query
+        outputParameters:
+        - name: apis
+          type: array
+          value: $.apis
+    - name: api
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}
+      operations:
+      - name: getApi
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        outputParameters:
+        - name: api
+          type: object
+          value: $.
+    - name: api-versions
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+      operations:
+      - name: listApiVersions
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: apiVersions
+          type: array
+          value: $.apiVersions
+    - name: api-specs
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
+      operations:
+      - name: listApiSpecs
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: pageSize
+          in: query
+        - name: pageToken
+          in: query
+        outputParameters:
+        - name: apiSpecs
+          type: array
+          value: $.apiSpecs
+    - name: api-spec-contents
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents
+      operations:
+      - name: getApiSpecContents
+        method: GET
+        inputParameters:
+        - name: projectId
+          in: path
+        - name: locationId
+          in: path
+        - name: apiId
+          in: path
+        - name: versionId
+          in: path
+        - name: specId
+          in: path
+        outputParameters:
+        - name: contents
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8081
-      namespace: apigee-governance-api
-      description: "Unified REST API for Apigee API governance and observability."
-      resources:
-        - path: /v1/apis
-          name: api-catalog
-          description: "API catalog from API Hub."
-          operations:
-            - method: GET
-              name: list-apis
-              description: "List all catalogued APIs."
-              call: "api-hub.listApis"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/observed-apis
-          name: observed-apis
-          description: "Shadow APIs discovered via APIM."
-          operations:
-            - method: GET
-              name: list-observed-apis
-              description: "List observed shadow APIs."
-              call: "apim.listObservedApis"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9091
-      namespace: apigee-governance-mcp
-      transport: http
-      description: "MCP server for AI-assisted API governance and catalog management."
-      tools:
-        - name: list-catalogued-apis
-          description: "List all APIs in the Apigee API Hub catalog."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "api-hub.listApis"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: discover-shadow-apis
-          description: "Discover undocumented shadow APIs in Google Cloud infrastructure using APIM."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "apim.listObservedApis"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-api-specs
-          description: "List API specifications tracked in the Apigee Registry."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "registry.listApiSpecs"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8081
+    namespace: apigee-governance-api
+    description: Unified REST API for Apigee API governance and observability.
+    resources:
+    - path: /v1/apis
+      name: api-catalog
+      description: API catalog from API Hub.
+      operations:
+      - method: GET
+        name: list-apis
+        description: List all catalogued APIs.
+        call: api-hub.listApis
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/observed-apis
+      name: observed-apis
+      description: Shadow APIs discovered via APIM.
+      operations:
+      - method: GET
+        name: list-observed-apis
+        description: List observed shadow APIs.
+        call: apim.listObservedApis
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9091
+    namespace: apigee-governance-mcp
+    transport: http
+    description: MCP server for AI-assisted API governance and catalog management.
+    tools:
+    - name: list-catalogued-apis
+      description: List all APIs in the Apigee API Hub catalog.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub.listApis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: discover-shadow-apis
+      description: Discover undocumented shadow APIs in Google Cloud infrastructure using APIM.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apim.listObservedApis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-api-specs
+      description: List API specifications tracked in the Apigee Registry.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: registry.listApiSpecs
+      outputParameters:
+      - type: object
+        mapping: $.
