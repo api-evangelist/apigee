@@ -205,6 +205,8 @@ apis:
         url: https://cloud.google.com/terms
       - type: Privacy Policy
         url: https://cloud.google.com/terms/cloud-privacy-notice
+integrations:
+  - name: Become a Partner
 maintainers:
   - name: Kin Lane
     email: kin@apievangelist.com
@@ -279,3 +281,5 @@ common:
     url: https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v2.0.x/operation
   - type: Advanced API Security
     url: https://cloud.google.com/apigee/docs/api-security
+  - type: Integrations
+    url: https://cloud.google.com/marketplace
