@@ -50,27 +50,27 @@ apis:
         url: https://cloud.google.com/apigee/docs/api-platform/system-administration/auth-tools
       - type: Pricing
         url: https://cloud.google.com/apigee/pricing
-      - type: Status
+      - type: StatusPage
         url: https://status.cloud.google.com/
       - type: Support
         url: https://cloud.google.com/apigee/support
-      - type: Getting Started
+      - type: GettingStarted
         url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
       - type: SDKs
         url: https://cloud.google.com/apigee/docs/api-platform/reference/apis
-      - type: Terms of Service
+      - type: TermsOfService
         url: https://cloud.google.com/terms
-      - type: Privacy Policy
+      - type: PrivacyPolicy
         url: https://cloud.google.com/terms/cloud-privacy-notice
-      - type: API Reference
+      - type: APIReference
         url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
       - type: Tutorials
         url: https://cloud.google.com/apigee/docs/api-platform/get-started/tutorials
-      - type: Release Notes
+      - type: ReleaseNotes
         url: https://cloud.google.com/apigee/docs/release-notes
       - type: Quickstart
         url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
-      - type: Change Log
+      - type: ChangeLog
         url: https://cloud.google.com/apigee/docs/release/release-notes
   - name: Apigee API Hub API
     description: >-
@@ -91,19 +91,19 @@ apis:
         url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
       - type: OpenAPI
         url: openapi/apigee-api-hub-openapi.yml
-      - type: API Reference
+      - type: APIReference
         url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
       - type: Quickstart
         url: https://cloud.google.com/apigee/docs/apihub/quickstart-intro
-      - type: Release Notes
+      - type: ReleaseNotes
         url: https://cloud.google.com/apigee/docs/apihub/release-notes
       - type: Pricing
         url: https://cloud.google.com/apigee/pricing
       - type: Support
         url: https://cloud.google.com/apigee/support
-      - type: Terms of Service
+      - type: TermsOfService
         url: https://cloud.google.com/terms
-      - type: Privacy Policy
+      - type: PrivacyPolicy
         url: https://cloud.google.com/terms/cloud-privacy-notice
       - type: SDKs
         url: https://cloud.google.com/apigee/docs/apihub/libraries
@@ -128,7 +128,7 @@ apis:
         url: openapi/apigee-integrations-openapi.yml
       - type: JSONSchema
         url: json-schema/apigee-integration-schema.json
-      - type: API Reference
+      - type: APIReference
         url: https://cloud.google.com/apigee/docs/reference/apis/integrations/rest
       - type: Tutorials
         url: https://cloud.google.com/apigee/docs/api-platform/integration/tutorials
@@ -136,11 +136,11 @@ apis:
         url: https://cloud.google.com/apigee/pricing
       - type: Support
         url: https://cloud.google.com/apigee/support
-      - type: Terms of Service
+      - type: TermsOfService
         url: https://cloud.google.com/terms
-      - type: Privacy Policy
+      - type: PrivacyPolicy
         url: https://cloud.google.com/terms/cloud-privacy-notice
-      - type: Getting Started
+      - type: GettingStarted
         url: https://cloud.google.com/apigee/docs/api-platform/connectors/get-started-connectors
   - name: Apigee API Management API
     description: >-
@@ -161,15 +161,15 @@ apis:
         url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
       - type: OpenAPI
         url: openapi/apigee-apim-openapi.yml
-      - type: API Reference
+      - type: APIReference
         url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
       - type: Pricing
         url: https://cloud.google.com/apigee/pricing
       - type: Support
         url: https://cloud.google.com/apigee/support
-      - type: Terms of Service
+      - type: TermsOfService
         url: https://cloud.google.com/terms
-      - type: Privacy Policy
+      - type: PrivacyPolicy
         url: https://cloud.google.com/terms/cloud-privacy-notice
   - name: Apigee Registry API
     description: >-
@@ -191,19 +191,19 @@ apis:
         url: https://cloud.google.com/apigee/docs/reference/apis/apigeeregistry/rest
       - type: OpenAPI
         url: openapi/apigee-registry-openapi.yml
-      - type: API Reference
+      - type: APIReference
         url: https://cloud.google.com/apigee/docs/reference/apis/apigeeregistry/rest
       - type: GitHub
         url: https://github.com/apigee/registry
-      - type: Release Notes
+      - type: ReleaseNotes
         url: https://cloud.google.com/apigee/docs/registry/release-notes
       - type: Pricing
         url: https://cloud.google.com/apigee/pricing
       - type: Support
         url: https://cloud.google.com/apigee/support
-      - type: Terms of Service
+      - type: TermsOfService
         url: https://cloud.google.com/terms
-      - type: Privacy Policy
+      - type: PrivacyPolicy
         url: https://cloud.google.com/terms/cloud-privacy-notice
 integrations:
   - name: Become a Partner
@@ -227,21 +227,21 @@ common:
     url: https://cloud.google.com/apigee
   - type: Documentation
     url: https://cloud.google.com/apigee/docs
-  - type: Getting Started
+  - type: GettingStarted
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
   - type: Authentication
     url: https://cloud.google.com/apigee/docs/api-platform/security/oauth/oauth-home
   - type: Blog
     url: https://cloud.google.com/blog/products/api-management
-  - type: Status
+  - type: StatusPage
     url: https://status.cloud.google.com/
   - type: Support
     url: https://cloud.google.com/apigee/support
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://cloud.google.com/terms
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://cloud.google.com/terms/cloud-privacy-notice
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/apigee
   - type: Community
     url: https://www.googlecloudcommunity.com/gc/Apigee/bd-p/cloud-apigee
@@ -249,13 +249,13 @@ common:
     url: https://cloud.google.com/apigee
   - type: Login
     url: https://console.cloud.google.com/
-  - type: Sign Up
+  - type: SignUp
     url: https://cloud.google.com/apigee
   - type: Pricing
     url: https://cloud.google.com/apigee/pricing
-  - type: Release Notes
+  - type: ReleaseNotes
     url: https://cloud.google.com/apigee/docs/release-notes
-  - type: Change Log
+  - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
   - type: SDKs
     url: https://cloud.google.com/apigee/docs/apihub/libraries
