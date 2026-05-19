@@ -1,0 +1,283 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee Registry API — API Deployments
+  description: 'Apigee Registry API — API Deployments. 6 operations. Lead operation: Apigee List API Deployments. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - API Deployments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: registry-api-deployments
+    baseUri: https://apigeeregistry.googleapis.com/v1
+    description: Apigee Registry API — API Deployments business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-apis-apiId-deployments
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments
+      operations:
+      - name: listapideployments
+        method: GET
+        description: Apigee List API Deployments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression.
+        - name: orderBy
+          in: query
+          type: string
+          description: Field to order results by.
+      - name: createapideployment
+        method: POST
+        description: Apigee Create an API Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiDeploymentId
+          in: query
+          type: string
+          description: Required. The ID to use for the deployment.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-locations-locationId-apis-apiId-deployments-deploymentId
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}
+      operations:
+      - name: getapideployment
+        method: GET
+        description: Apigee Get an API Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateapideployment
+        method: PATCH
+        description: Apigee Update an API Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: updateMask
+          in: query
+          type: string
+          description: Required. Comma-separated list of fields to update.
+          required: true
+        - name: allowMissing
+          in: query
+          type: boolean
+          description: If true, create if it does not exist.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteapideployment
+        method: DELETE
+        description: Apigee Delete an API Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: force
+          in: query
+          type: boolean
+          description: If true, force delete.
+    - name: projects-projectId-locations-locationId-apis-apiId-deployments-deploymentId}:rol
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:rollback
+      operations:
+      - name: rollbackapideployment
+        method: POST
+        description: Apigee Rollback an API Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: registry-api-deployments-rest
+    port: 8080
+    description: REST adapter for Apigee Registry API — API Deployments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/apis/{apiid}/deployments
+      name: projects-projectid-locations-locationid-apis-apiid-deployments
+      description: REST surface for projects-projectId-locations-locationId-apis-apiId-deployments.
+      operations:
+      - method: GET
+        name: listapideployments
+        description: Apigee List API Deployments
+        call: registry-api-deployments.listapideployments
+        with:
+          filter: rest.filter
+          orderBy: rest.orderBy
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapideployment
+        description: Apigee Create an API Deployment
+        call: registry-api-deployments.createapideployment
+        with:
+          apiDeploymentId: rest.apiDeploymentId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/apis/{apiid}/deployments/{deploymentid}
+      name: projects-projectid-locations-locationid-apis-apiid-deployments-deploymentid
+      description: REST surface for projects-projectId-locations-locationId-apis-apiId-deployments-deploymentId.
+      operations:
+      - method: GET
+        name: getapideployment
+        description: Apigee Get an API Deployment
+        call: registry-api-deployments.getapideployment
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateapideployment
+        description: Apigee Update an API Deployment
+        call: registry-api-deployments.updateapideployment
+        with:
+          updateMask: rest.updateMask
+          allowMissing: rest.allowMissing
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteapideployment
+        description: Apigee Delete an API Deployment
+        call: registry-api-deployments.deleteapideployment
+        with:
+          force: rest.force
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/apis/{apiid}/deployments/deploymentid-rollback
+      name: projects-projectid-locations-locationid-apis-apiid-deployments-deploymentid-rol
+      description: REST surface for projects-projectId-locations-locationId-apis-apiId-deployments-deploymentId}:rol.
+      operations:
+      - method: POST
+        name: rollbackapideployment
+        description: Apigee Rollback an API Deployment
+        call: registry-api-deployments.rollbackapideployment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: registry-api-deployments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee Registry API — API Deployments. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-api-deployments
+      description: Apigee List API Deployments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: registry-api-deployments.listapideployments
+      with:
+        filter: tools.filter
+        orderBy: tools.orderBy
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-api-deployment
+      description: Apigee Create an API Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: registry-api-deployments.createapideployment
+      with:
+        apiDeploymentId: tools.apiDeploymentId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-api-deployment
+      description: Apigee Get an API Deployment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: registry-api-deployments.getapideployment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-api-deployment
+      description: Apigee Update an API Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: registry-api-deployments.updateapideployment
+      with:
+        updateMask: tools.updateMask
+        allowMissing: tools.allowMissing
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-api-deployment
+      description: Apigee Delete an API Deployment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: registry-api-deployments.deleteapideployment
+      with:
+        force: tools.force
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-rollback-api-deployment
+      description: Apigee Rollback an API Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: registry-api-deployments.rollbackapideployment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

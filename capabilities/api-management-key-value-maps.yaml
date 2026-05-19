@@ -1,0 +1,147 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — Key Value Maps
+  description: 'Apigee API Management — Key Value Maps. 3 operations. Lead operation: Apigee List Key Value Maps. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Key Value Maps
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-key-value-maps
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — Key Value Maps business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-environments-environmentId-keyvaluemaps
+      path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps
+      operations:
+      - name: listkeyvaluemaps
+        method: GET
+        description: Apigee List Key Value Maps
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createkeyvaluemap
+        method: POST
+        description: Apigee Create a Key Value Map
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId-environments-environmentId-keyvaluemaps-keyValueMap
+      path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}
+      operations:
+      - name: deletekeyvaluemap
+        method: DELETE
+        description: Apigee Delete a Key Value Map
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: keyValueMapId
+          in: path
+          type: string
+          description: Name of the key value map.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-key-value-maps-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — Key Value Maps. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/environments/{environmentid}/keyvaluemaps
+      name: organizations-organizationid-environments-environmentid-keyvaluemaps
+      description: REST surface for organizations-organizationId-environments-environmentId-keyvaluemaps.
+      operations:
+      - method: GET
+        name: listkeyvaluemaps
+        description: Apigee List Key Value Maps
+        call: api-management-key-value-maps.listkeyvaluemaps
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createkeyvaluemap
+        description: Apigee Create a Key Value Map
+        call: api-management-key-value-maps.createkeyvaluemap
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/environments/{environmentid}/keyvaluemaps/{keyvaluemapid}
+      name: organizations-organizationid-environments-environmentid-keyvaluemaps-keyvaluemap
+      description: REST surface for organizations-organizationId-environments-environmentId-keyvaluemaps-keyValueMap.
+      operations:
+      - method: DELETE
+        name: deletekeyvaluemap
+        description: Apigee Delete a Key Value Map
+        call: api-management-key-value-maps.deletekeyvaluemap
+        with:
+          keyValueMapId: rest.keyValueMapId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-key-value-maps-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — Key Value Maps. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-key-value-maps
+      description: Apigee List Key Value Maps
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-key-value-maps.listkeyvaluemaps
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-key-value-map
+      description: Apigee Create a Key Value Map
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-key-value-maps.createkeyvaluemap
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-key-value-map
+      description: Apigee Delete a Key Value Map
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-key-value-maps.deletekeyvaluemap
+      with:
+        keyValueMapId: tools.keyValueMapId
+      outputParameters:
+      - type: object
+        mapping: $.

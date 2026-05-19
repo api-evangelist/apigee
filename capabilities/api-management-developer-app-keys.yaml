@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — Developer App Keys
+  description: 'Apigee API Management — Developer App Keys. 5 operations. Lead operation: Apigee List Developer App Keys.
+    Self-contained Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Developer App Keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-developer-app-keys
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — Developer App Keys business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-developers-developerId-apps-appId-keys
+      path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys
+      operations:
+      - name: listdeveloperappkeys
+        method: GET
+        description: Apigee List Developer App Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createdeveloperappkey
+        method: POST
+        description: Apigee Create a Developer App Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId-developers-developerId-apps-appId-keys-keyId
+      path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}
+      operations:
+      - name: getdeveloperappkey
+        method: GET
+        description: Apigee Get a Developer App Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatedeveloperappkey
+        method: PUT
+        description: Apigee Update a Developer App Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedeveloperappkey
+        method: DELETE
+        description: Apigee Delete a Developer App Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-developer-app-keys-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — Developer App Keys. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/developers/{developerid}/apps/{appid}/keys
+      name: organizations-organizationid-developers-developerid-apps-appid-keys
+      description: REST surface for organizations-organizationId-developers-developerId-apps-appId-keys.
+      operations:
+      - method: GET
+        name: listdeveloperappkeys
+        description: Apigee List Developer App Keys
+        call: api-management-developer-app-keys.listdeveloperappkeys
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdeveloperappkey
+        description: Apigee Create a Developer App Key
+        call: api-management-developer-app-keys.createdeveloperappkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/developers/{developerid}/apps/{appid}/keys/{keyid}
+      name: organizations-organizationid-developers-developerid-apps-appid-keys-keyid
+      description: REST surface for organizations-organizationId-developers-developerId-apps-appId-keys-keyId.
+      operations:
+      - method: GET
+        name: getdeveloperappkey
+        description: Apigee Get a Developer App Key
+        call: api-management-developer-app-keys.getdeveloperappkey
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedeveloperappkey
+        description: Apigee Update a Developer App Key
+        call: api-management-developer-app-keys.updatedeveloperappkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedeveloperappkey
+        description: Apigee Delete a Developer App Key
+        call: api-management-developer-app-keys.deletedeveloperappkey
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-developer-app-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — Developer App Keys. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: apigee-list-developer-app-keys
+      description: Apigee List Developer App Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-developer-app-keys.listdeveloperappkeys
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-developer-app-key
+      description: Apigee Create a Developer App Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-developer-app-keys.createdeveloperappkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-developer-app-key
+      description: Apigee Get a Developer App Key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-developer-app-keys.getdeveloperappkey
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-developer-app-key
+      description: Apigee Update a Developer App Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: api-management-developer-app-keys.updatedeveloperappkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-developer-app-key
+      description: Apigee Delete a Developer App Key
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-developer-app-keys.deletedeveloperappkey
+      outputParameters:
+      - type: object
+        mapping: $.

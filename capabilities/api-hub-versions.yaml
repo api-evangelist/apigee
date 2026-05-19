@@ -1,0 +1,221 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Hub API — Versions
+  description: 'Apigee API Hub API — Versions. 5 operations. Lead operation: Apigee List API Versions. Self-contained Naftiko
+    capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Versions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-hub-versions
+    baseUri: https://apihub.googleapis.com/v1
+    description: Apigee API Hub API — Versions business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-apis-apiId-versions
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+      operations:
+      - name: listapiversions
+        method: GET
+        description: Apigee List API Versions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow the results.
+      - name: createapiversion
+        method: POST
+        description: Apigee Create an API Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: versionId
+          in: query
+          type: string
+          description: Required. The ID to use for the version, which will become the final component of the version's resource
+            name.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-locations-locationId-apis-apiId-versions-versionId
+      path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
+      operations:
+      - name: getapiversion
+        method: GET
+        description: Apigee Get an API Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateapiversion
+        method: PATCH
+        description: Apigee Update an API Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: updateMask
+          in: query
+          type: string
+          description: Required. Comma-separated list of fields to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteapiversion
+        method: DELETE
+        description: Apigee Delete an API Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-hub-versions-rest
+    port: 8080
+    description: REST adapter for Apigee API Hub API — Versions. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/apis/{apiid}/versions
+      name: projects-projectid-locations-locationid-apis-apiid-versions
+      description: REST surface for projects-projectId-locations-locationId-apis-apiId-versions.
+      operations:
+      - method: GET
+        name: listapiversions
+        description: Apigee List API Versions
+        call: api-hub-versions.listapiversions
+        with:
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapiversion
+        description: Apigee Create an API Version
+        call: api-hub-versions.createapiversion
+        with:
+          versionId: rest.versionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/apis/{apiid}/versions/{versionid}
+      name: projects-projectid-locations-locationid-apis-apiid-versions-versionid
+      description: REST surface for projects-projectId-locations-locationId-apis-apiId-versions-versionId.
+      operations:
+      - method: GET
+        name: getapiversion
+        description: Apigee Get an API Version
+        call: api-hub-versions.getapiversion
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateapiversion
+        description: Apigee Update an API Version
+        call: api-hub-versions.updateapiversion
+        with:
+          updateMask: rest.updateMask
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteapiversion
+        description: Apigee Delete an API Version
+        call: api-hub-versions.deleteapiversion
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-hub-versions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Hub API — Versions. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: apigee-list-api-versions
+      description: Apigee List API Versions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub-versions.listapiversions
+      with:
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-api-version
+      description: Apigee Create an API Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-hub-versions.createapiversion
+      with:
+        versionId: tools.versionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-api-version
+      description: Apigee Get an API Version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub-versions.getapiversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-api-version
+      description: Apigee Update an API Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: api-hub-versions.updateapiversion
+      with:
+        updateMask: tools.updateMask
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-api-version
+      description: Apigee Delete an API Version
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-hub-versions.deleteapiversion
+      outputParameters:
+      - type: object
+        mapping: $.

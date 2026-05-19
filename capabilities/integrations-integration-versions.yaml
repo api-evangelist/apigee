@@ -1,0 +1,377 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee Integrations API — Integration Versions
+  description: 'Apigee Integrations API — Integration Versions. 9 operations. Lead operation: Apigee List Integration Versions.
+    Self-contained Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Integration Versions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: integrations-integration-versions
+    baseUri: https://integrations.googleapis.com/v1
+    description: Apigee Integrations API — Integration Versions business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions
+      operations:
+      - name: listintegrationversions
+        method: GET
+        description: Apigee List Integration Versions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow the results.
+        - name: orderBy
+          in: query
+          type: string
+          description: Field to order results by.
+        - name: fieldMask
+          in: query
+          type: string
+          description: Fields to include in the response.
+      - name: createintegrationversion
+        method: POST
+        description: Apigee Create an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: newIntegration
+          in: query
+          type: boolean
+          description: Set to true to create a new integration and initial version.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}
+      operations:
+      - name: getintegrationversion
+        method: GET
+        description: Apigee Get an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateintegrationversion
+        method: PATCH
+        description: Apigee Update an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: updateMask
+          in: query
+          type: string
+          description: Comma-separated list of fields to update.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteintegrationversion
+        method: DELETE
+        description: Apigee Delete an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download
+      operations:
+      - name: downloadintegrationversion
+        method: GET
+        description: Apigee Download an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fileFormat
+          in: query
+          type: string
+          description: File format for the download.
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish
+      operations:
+      - name: publishintegrationversion
+        method: POST
+        description: Apigee Publish an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish
+      operations:
+      - name: unpublishintegrationversion
+        method: POST
+        description: Apigee Unpublish an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:upload
+      operations:
+      - name: uploadintegrationversion
+        method: POST
+        description: Apigee Upload an Integration Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: integrations-integration-versions-rest
+    port: 8080
+    description: REST adapter for Apigee Integrations API — Integration Versions. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/versions
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: GET
+        name: listintegrationversions
+        description: Apigee List Integration Versions
+        call: integrations-integration-versions.listintegrationversions
+        with:
+          filter: rest.filter
+          orderBy: rest.orderBy
+          fieldMask: rest.fieldMask
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createintegrationversion
+        description: Apigee Create an Integration Version
+        call: integrations-integration-versions.createintegrationversion
+        with:
+          newIntegration: rest.newIntegration
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/versions/{versionid}
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: GET
+        name: getintegrationversion
+        description: Apigee Get an Integration Version
+        call: integrations-integration-versions.getintegrationversion
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateintegrationversion
+        description: Apigee Update an Integration Version
+        call: integrations-integration-versions.updateintegrationversion
+        with:
+          updateMask: rest.updateMask
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteintegrationversion
+        description: Apigee Delete an Integration Version
+        call: integrations-integration-versions.deleteintegrationversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/versions/versionid-download
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: GET
+        name: downloadintegrationversion
+        description: Apigee Download an Integration Version
+        call: integrations-integration-versions.downloadintegrationversion
+        with:
+          fileFormat: rest.fileFormat
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/versions/versionid-publish
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: POST
+        name: publishintegrationversion
+        description: Apigee Publish an Integration Version
+        call: integrations-integration-versions.publishintegrationversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/versions/versionid-unpublish
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: POST
+        name: unpublishintegrationversion
+        description: Apigee Unpublish an Integration Version
+        call: integrations-integration-versions.unpublishintegrationversion
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/versions-upload
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: POST
+        name: uploadintegrationversion
+        description: Apigee Upload an Integration Version
+        call: integrations-integration-versions.uploadintegrationversion
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: integrations-integration-versions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee Integrations API — Integration Versions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: apigee-list-integration-versions
+      description: Apigee List Integration Versions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-integration-versions.listintegrationversions
+      with:
+        filter: tools.filter
+        orderBy: tools.orderBy
+        fieldMask: tools.fieldMask
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-integration-version
+      description: Apigee Create an Integration Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-integration-versions.createintegrationversion
+      with:
+        newIntegration: tools.newIntegration
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-integration-version
+      description: Apigee Get an Integration Version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-integration-versions.getintegrationversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-integration-version
+      description: Apigee Update an Integration Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: integrations-integration-versions.updateintegrationversion
+      with:
+        updateMask: tools.updateMask
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-integration-version
+      description: Apigee Delete an Integration Version
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: integrations-integration-versions.deleteintegrationversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-download-integration-version
+      description: Apigee Download an Integration Version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-integration-versions.downloadintegrationversion
+      with:
+        fileFormat: tools.fileFormat
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-publish-integration-version
+      description: Apigee Publish an Integration Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-integration-versions.publishintegrationversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-unpublish-integration-version
+      description: Apigee Unpublish an Integration Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-integration-versions.unpublishintegrationversion
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-upload-integration-version
+      description: Apigee Upload an Integration Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-integration-versions.uploadintegrationversion
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

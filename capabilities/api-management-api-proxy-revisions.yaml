@@ -1,0 +1,127 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — API Proxy Revisions
+  description: 'Apigee API Management — API Proxy Revisions. 3 operations. Lead operation: Apigee List API Proxy Revisions.
+    Self-contained Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - API Proxy Revisions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-api-proxy-revisions
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — API Proxy Revisions business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-apis-apiId-revisions
+      path: /organizations/{organizationId}/apis/{apiId}/revisions
+      operations:
+      - name: listapiproxyrevisions
+        method: GET
+        description: Apigee List API Proxy Revisions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: organizations-organizationId-apis-apiId-revisions-revisionId
+      path: /organizations/{organizationId}/apis/{apiId}/revisions/{revisionId}
+      operations:
+      - name: getapiproxyrevision
+        method: GET
+        description: Apigee Get an API Proxy Revision
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteapiproxyrevision
+        method: DELETE
+        description: Apigee Delete an API Proxy Revision
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-api-proxy-revisions-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — API Proxy Revisions. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/apis/{apiid}/revisions
+      name: organizations-organizationid-apis-apiid-revisions
+      description: REST surface for organizations-organizationId-apis-apiId-revisions.
+      operations:
+      - method: GET
+        name: listapiproxyrevisions
+        description: Apigee List API Proxy Revisions
+        call: api-management-api-proxy-revisions.listapiproxyrevisions
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/apis/{apiid}/revisions/{revisionid}
+      name: organizations-organizationid-apis-apiid-revisions-revisionid
+      description: REST surface for organizations-organizationId-apis-apiId-revisions-revisionId.
+      operations:
+      - method: GET
+        name: getapiproxyrevision
+        description: Apigee Get an API Proxy Revision
+        call: api-management-api-proxy-revisions.getapiproxyrevision
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteapiproxyrevision
+        description: Apigee Delete an API Proxy Revision
+        call: api-management-api-proxy-revisions.deleteapiproxyrevision
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-api-proxy-revisions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — API Proxy Revisions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: apigee-list-api-proxy-revisions
+      description: Apigee List API Proxy Revisions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-api-proxy-revisions.listapiproxyrevisions
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-api-proxy-revision
+      description: Apigee Get an API Proxy Revision
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-api-proxy-revisions.getapiproxyrevision
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-api-proxy-revision
+      description: Apigee Delete an API Proxy Revision
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-api-proxy-revisions.deleteapiproxyrevision
+      outputParameters:
+      - type: object
+        mapping: $.

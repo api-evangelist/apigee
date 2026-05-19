@@ -1,0 +1,212 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee Integrations API — Auth Configs
+  description: 'Apigee Integrations API — Auth Configs. 5 operations. Lead operation: Apigee List Auth Configs. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Auth Configs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: integrations-auth-configs
+    baseUri: https://integrations.googleapis.com/v1
+    description: Apigee Integrations API — Auth Configs business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-products-productId-authConfigs
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs
+      operations:
+      - name: listauthconfigs
+        method: GET
+        description: Apigee List Auth Configs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow the results.
+      - name: createauthconfig
+        method: POST
+        description: Apigee Create an Auth Config
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-locations-locationId-products-productId-authConfigs-authConfi
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs/{authConfigId}
+      operations:
+      - name: getauthconfig
+        method: GET
+        description: Apigee Get an Auth Config
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateauthconfig
+        method: PATCH
+        description: Apigee Update an Auth Config
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: updateMask
+          in: query
+          type: string
+          description: Comma-separated list of fields to update.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteauthconfig
+        method: DELETE
+        description: Apigee Delete an Auth Config
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: integrations-auth-configs-rest
+    port: 8080
+    description: REST adapter for Apigee Integrations API — Auth Configs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/authconfigs
+      name: projects-projectid-locations-locationid-products-productid-authconfigs
+      description: REST surface for projects-projectId-locations-locationId-products-productId-authConfigs.
+      operations:
+      - method: GET
+        name: listauthconfigs
+        description: Apigee List Auth Configs
+        call: integrations-auth-configs.listauthconfigs
+        with:
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createauthconfig
+        description: Apigee Create an Auth Config
+        call: integrations-auth-configs.createauthconfig
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/authconfigs/{authconfigid}
+      name: projects-projectid-locations-locationid-products-productid-authconfigs-authconfi
+      description: REST surface for projects-projectId-locations-locationId-products-productId-authConfigs-authConfi.
+      operations:
+      - method: GET
+        name: getauthconfig
+        description: Apigee Get an Auth Config
+        call: integrations-auth-configs.getauthconfig
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateauthconfig
+        description: Apigee Update an Auth Config
+        call: integrations-auth-configs.updateauthconfig
+        with:
+          updateMask: rest.updateMask
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteauthconfig
+        description: Apigee Delete an Auth Config
+        call: integrations-auth-configs.deleteauthconfig
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: integrations-auth-configs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee Integrations API — Auth Configs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-auth-configs
+      description: Apigee List Auth Configs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-auth-configs.listauthconfigs
+      with:
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-auth-config
+      description: Apigee Create an Auth Config
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-auth-configs.createauthconfig
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-auth-config
+      description: Apigee Get an Auth Config
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-auth-configs.getauthconfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-auth-config
+      description: Apigee Update an Auth Config
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: integrations-auth-configs.updateauthconfig
+      with:
+        updateMask: tools.updateMask
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-auth-config
+      description: Apigee Delete an Auth Config
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: integrations-auth-configs.deleteauthconfig
+      outputParameters:
+      - type: object
+        mapping: $.

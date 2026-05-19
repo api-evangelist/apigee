@@ -1,0 +1,224 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — App Groups
+  description: 'Apigee API Management — App Groups. 5 operations. Lead operation: Apigee List App Groups. Self-contained Naftiko
+    capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - App Groups
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-app-groups
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — App Groups business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-appgroups
+      path: /organizations/{organizationId}/appgroups
+      operations:
+      - name: listappgroups
+        method: GET
+        description: Apigee List App Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createappgroup
+        method: POST
+        description: Apigee Create an App Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId-appgroups-appGroupId
+      path: /organizations/{organizationId}/appgroups/{appGroupId}
+      operations:
+      - name: getappgroup
+        method: GET
+        description: Apigee Get an App Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appGroupId
+          in: path
+          type: string
+          description: Name of the app group.
+          required: true
+      - name: updateappgroup
+        method: PUT
+        description: Apigee Update an App Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appGroupId
+          in: path
+          type: string
+          description: Name of the app group.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteappgroup
+        method: DELETE
+        description: Apigee Delete an App Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appGroupId
+          in: path
+          type: string
+          description: Name of the app group.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-app-groups-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — App Groups. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/appgroups
+      name: organizations-organizationid-appgroups
+      description: REST surface for organizations-organizationId-appgroups.
+      operations:
+      - method: GET
+        name: listappgroups
+        description: Apigee List App Groups
+        call: api-management-app-groups.listappgroups
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createappgroup
+        description: Apigee Create an App Group
+        call: api-management-app-groups.createappgroup
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/appgroups/{appgroupid}
+      name: organizations-organizationid-appgroups-appgroupid
+      description: REST surface for organizations-organizationId-appgroups-appGroupId.
+      operations:
+      - method: GET
+        name: getappgroup
+        description: Apigee Get an App Group
+        call: api-management-app-groups.getappgroup
+        with:
+          appGroupId: rest.appGroupId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateappgroup
+        description: Apigee Update an App Group
+        call: api-management-app-groups.updateappgroup
+        with:
+          appGroupId: rest.appGroupId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteappgroup
+        description: Apigee Delete an App Group
+        call: api-management-app-groups.deleteappgroup
+        with:
+          appGroupId: rest.appGroupId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-app-groups-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — App Groups. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-app-groups
+      description: Apigee List App Groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-app-groups.listappgroups
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-app-group
+      description: Apigee Create an App Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-app-groups.createappgroup
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-app-group
+      description: Apigee Get an App Group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-app-groups.getappgroup
+      with:
+        appGroupId: tools.appGroupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-app-group
+      description: Apigee Update an App Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: api-management-app-groups.updateappgroup
+      with:
+        appGroupId: tools.appGroupId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-app-group
+      description: Apigee Delete an App Group
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-app-groups.deleteappgroup
+      with:
+        appGroupId: tools.appGroupId
+      outputParameters:
+      - type: object
+        mapping: $.

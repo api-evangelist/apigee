@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Hub API — External APIs
+  description: 'Apigee API Hub API — External APIs. 2 operations. Lead operation: Apigee List External APIs. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - External APIs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-hub-external-apis
+    baseUri: https://apihub.googleapis.com/v1
+    description: Apigee API Hub API — External APIs business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-externalApis
+      path: /projects/{projectId}/locations/{locationId}/externalApis
+      operations:
+      - name: listexternalapis
+        method: GET
+        description: Apigee List External APIs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createexternalapi
+        method: POST
+        description: Apigee Create an External API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: externalApiId
+          in: query
+          type: string
+          description: Required. The ID to use for the external API resource.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-hub-external-apis-rest
+    port: 8080
+    description: REST adapter for Apigee API Hub API — External APIs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/externalapis
+      name: projects-projectid-locations-locationid-externalapis
+      description: REST surface for projects-projectId-locations-locationId-externalApis.
+      operations:
+      - method: GET
+        name: listexternalapis
+        description: Apigee List External APIs
+        call: api-hub-external-apis.listexternalapis
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createexternalapi
+        description: Apigee Create an External API
+        call: api-hub-external-apis.createexternalapi
+        with:
+          externalApiId: rest.externalApiId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-hub-external-apis-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Hub API — External APIs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-external-apis
+      description: Apigee List External APIs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub-external-apis.listexternalapis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-external-api
+      description: Apigee Create an External API
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-hub-external-apis.createexternalapi
+      with:
+        externalApiId: tools.externalApiId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

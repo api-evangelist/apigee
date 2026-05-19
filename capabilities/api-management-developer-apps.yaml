@@ -1,0 +1,218 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — Developer Apps
+  description: 'Apigee API Management — Developer Apps. 5 operations. Lead operation: Apigee List Developer Apps. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Developer Apps
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-developer-apps
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — Developer Apps business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-developers-developerId-apps
+      path: /organizations/{organizationId}/developers/{developerId}/apps
+      operations:
+      - name: listdeveloperapps
+        method: GET
+        description: Apigee List Developer Apps
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: expand
+          in: query
+          type: boolean
+          description: Set to true to return full app details.
+        - name: count
+          in: query
+          type: integer
+          description: Number of developer apps to return.
+        - name: startKey
+          in: query
+          type: string
+          description: Name of the developer app from which to start the list.
+      - name: createdeveloperapp
+        method: POST
+        description: Apigee Create a Developer App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId-developers-developerId-apps-appId
+      path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
+      operations:
+      - name: getdeveloperapp
+        method: GET
+        description: Apigee Get a Developer App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatedeveloperapp
+        method: PUT
+        description: Apigee Update a Developer App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedeveloperapp
+        method: DELETE
+        description: Apigee Delete a Developer App
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-developer-apps-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — Developer Apps. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/developers/{developerid}/apps
+      name: organizations-organizationid-developers-developerid-apps
+      description: REST surface for organizations-organizationId-developers-developerId-apps.
+      operations:
+      - method: GET
+        name: listdeveloperapps
+        description: Apigee List Developer Apps
+        call: api-management-developer-apps.listdeveloperapps
+        with:
+          expand: rest.expand
+          count: rest.count
+          startKey: rest.startKey
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdeveloperapp
+        description: Apigee Create a Developer App
+        call: api-management-developer-apps.createdeveloperapp
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/developers/{developerid}/apps/{appid}
+      name: organizations-organizationid-developers-developerid-apps-appid
+      description: REST surface for organizations-organizationId-developers-developerId-apps-appId.
+      operations:
+      - method: GET
+        name: getdeveloperapp
+        description: Apigee Get a Developer App
+        call: api-management-developer-apps.getdeveloperapp
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedeveloperapp
+        description: Apigee Update a Developer App
+        call: api-management-developer-apps.updatedeveloperapp
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedeveloperapp
+        description: Apigee Delete a Developer App
+        call: api-management-developer-apps.deletedeveloperapp
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-developer-apps-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — Developer Apps. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-developer-apps
+      description: Apigee List Developer Apps
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-developer-apps.listdeveloperapps
+      with:
+        expand: tools.expand
+        count: tools.count
+        startKey: tools.startKey
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-developer-app
+      description: Apigee Create a Developer App
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-developer-apps.createdeveloperapp
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-developer-app
+      description: Apigee Get a Developer App
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-developer-apps.getdeveloperapp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-developer-app
+      description: Apigee Update a Developer App
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: api-management-developer-apps.updatedeveloperapp
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-developer-app
+      description: Apigee Delete a Developer App
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-developer-apps.deletedeveloperapp
+      outputParameters:
+      - type: object
+        mapping: $.

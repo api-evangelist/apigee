@@ -1,0 +1,220 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Hub API — Deployments
+  description: 'Apigee API Hub API — Deployments. 5 operations. Lead operation: Apigee List Deployments. Self-contained Naftiko
+    capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Deployments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-hub-deployments
+    baseUri: https://apihub.googleapis.com/v1
+    description: Apigee API Hub API — Deployments business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-deployments
+      path: /projects/{projectId}/locations/{locationId}/deployments
+      operations:
+      - name: listdeployments
+        method: GET
+        description: Apigee List Deployments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow the results.
+      - name: createdeployment
+        method: POST
+        description: Apigee Create a Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: deploymentId
+          in: query
+          type: string
+          description: Required. The ID to use for the deployment resource.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-locations-locationId-deployments-deploymentId
+      path: /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}
+      operations:
+      - name: getdeployment
+        method: GET
+        description: Apigee Get a Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatedeployment
+        method: PATCH
+        description: Apigee Update a Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: updateMask
+          in: query
+          type: string
+          description: Required. Comma-separated list of fields to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedeployment
+        method: DELETE
+        description: Apigee Delete a Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-hub-deployments-rest
+    port: 8080
+    description: REST adapter for Apigee API Hub API — Deployments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/deployments
+      name: projects-projectid-locations-locationid-deployments
+      description: REST surface for projects-projectId-locations-locationId-deployments.
+      operations:
+      - method: GET
+        name: listdeployments
+        description: Apigee List Deployments
+        call: api-hub-deployments.listdeployments
+        with:
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdeployment
+        description: Apigee Create a Deployment
+        call: api-hub-deployments.createdeployment
+        with:
+          deploymentId: rest.deploymentId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/deployments/{deploymentid}
+      name: projects-projectid-locations-locationid-deployments-deploymentid
+      description: REST surface for projects-projectId-locations-locationId-deployments-deploymentId.
+      operations:
+      - method: GET
+        name: getdeployment
+        description: Apigee Get a Deployment
+        call: api-hub-deployments.getdeployment
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatedeployment
+        description: Apigee Update a Deployment
+        call: api-hub-deployments.updatedeployment
+        with:
+          updateMask: rest.updateMask
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedeployment
+        description: Apigee Delete a Deployment
+        call: api-hub-deployments.deletedeployment
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-hub-deployments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Hub API — Deployments. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-deployments
+      description: Apigee List Deployments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub-deployments.listdeployments
+      with:
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-deployment
+      description: Apigee Create a Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-hub-deployments.createdeployment
+      with:
+        deploymentId: tools.deploymentId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-deployment
+      description: Apigee Get a Deployment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub-deployments.getdeployment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-deployment
+      description: Apigee Update a Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: api-hub-deployments.updatedeployment
+      with:
+        updateMask: tools.updateMask
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-deployment
+      description: Apigee Delete a Deployment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-hub-deployments.deletedeployment
+      outputParameters:
+      - type: object
+        mapping: $.

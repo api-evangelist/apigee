@@ -1,0 +1,182 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — Instances
+  description: 'Apigee API Management — Instances. 4 operations. Lead operation: Apigee List Runtime Instances. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Instances
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-instances
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — Instances business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-instances
+      path: /organizations/{organizationId}/instances
+      operations:
+      - name: listinstances
+        method: GET
+        description: Apigee List Runtime Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createinstance
+        method: POST
+        description: Apigee Create a Runtime Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId-instances-instanceId
+      path: /organizations/{organizationId}/instances/{instanceId}
+      operations:
+      - name: getinstance
+        method: GET
+        description: Apigee Get a Runtime Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: instanceId
+          in: path
+          type: string
+          description: Name of the runtime instance.
+          required: true
+      - name: deleteinstance
+        method: DELETE
+        description: Apigee Delete a Runtime Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: instanceId
+          in: path
+          type: string
+          description: Name of the runtime instance.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-instances-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — Instances. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/instances
+      name: organizations-organizationid-instances
+      description: REST surface for organizations-organizationId-instances.
+      operations:
+      - method: GET
+        name: listinstances
+        description: Apigee List Runtime Instances
+        call: api-management-instances.listinstances
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createinstance
+        description: Apigee Create a Runtime Instance
+        call: api-management-instances.createinstance
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/instances/{instanceid}
+      name: organizations-organizationid-instances-instanceid
+      description: REST surface for organizations-organizationId-instances-instanceId.
+      operations:
+      - method: GET
+        name: getinstance
+        description: Apigee Get a Runtime Instance
+        call: api-management-instances.getinstance
+        with:
+          instanceId: rest.instanceId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteinstance
+        description: Apigee Delete a Runtime Instance
+        call: api-management-instances.deleteinstance
+        with:
+          instanceId: rest.instanceId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-instances-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — Instances. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-runtime-instances
+      description: Apigee List Runtime Instances
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-instances.listinstances
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-runtime-instance
+      description: Apigee Create a Runtime Instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-instances.createinstance
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-runtime-instance
+      description: Apigee Get a Runtime Instance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-instances.getinstance
+      with:
+        instanceId: tools.instanceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-runtime-instance
+      description: Apigee Delete a Runtime Instance
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-instances.deleteinstance
+      with:
+        instanceId: tools.instanceId
+      outputParameters:
+      - type: object
+        mapping: $.

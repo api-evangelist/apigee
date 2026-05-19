@@ -1,0 +1,212 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee Integrations API — Certificates
+  description: 'Apigee Integrations API — Certificates. 5 operations. Lead operation: Apigee List Certificates. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Certificates
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: integrations-certificates
+    baseUri: https://integrations.googleapis.com/v1
+    description: Apigee Integrations API — Certificates business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-products-productId-certificates
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/certificates
+      operations:
+      - name: listcertificates
+        method: GET
+        description: Apigee List Certificates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow the results.
+      - name: createcertificate
+        method: POST
+        description: Apigee Create a Certificate
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-locations-locationId-products-productId-certificates-certific
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/certificates/{certificateId}
+      operations:
+      - name: getcertificate
+        method: GET
+        description: Apigee Get a Certificate
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecertificate
+        method: PATCH
+        description: Apigee Update a Certificate
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: updateMask
+          in: query
+          type: string
+          description: Comma-separated list of fields to update.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecertificate
+        method: DELETE
+        description: Apigee Delete a Certificate
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: integrations-certificates-rest
+    port: 8080
+    description: REST adapter for Apigee Integrations API — Certificates. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/certificates
+      name: projects-projectid-locations-locationid-products-productid-certificates
+      description: REST surface for projects-projectId-locations-locationId-products-productId-certificates.
+      operations:
+      - method: GET
+        name: listcertificates
+        description: Apigee List Certificates
+        call: integrations-certificates.listcertificates
+        with:
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcertificate
+        description: Apigee Create a Certificate
+        call: integrations-certificates.createcertificate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/certificates/{certificateid}
+      name: projects-projectid-locations-locationid-products-productid-certificates-certific
+      description: REST surface for projects-projectId-locations-locationId-products-productId-certificates-certific.
+      operations:
+      - method: GET
+        name: getcertificate
+        description: Apigee Get a Certificate
+        call: integrations-certificates.getcertificate
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecertificate
+        description: Apigee Update a Certificate
+        call: integrations-certificates.updatecertificate
+        with:
+          updateMask: rest.updateMask
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecertificate
+        description: Apigee Delete a Certificate
+        call: integrations-certificates.deletecertificate
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: integrations-certificates-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee Integrations API — Certificates. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-certificates
+      description: Apigee List Certificates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-certificates.listcertificates
+      with:
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-certificate
+      description: Apigee Create a Certificate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-certificates.createcertificate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-certificate
+      description: Apigee Get a Certificate
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-certificates.getcertificate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-certificate
+      description: Apigee Update a Certificate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: integrations-certificates.updatecertificate
+      with:
+        updateMask: tools.updateMask
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-certificate
+      description: Apigee Delete a Certificate
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: integrations-certificates.deletecertificate
+      outputParameters:
+      - type: object
+        mapping: $.

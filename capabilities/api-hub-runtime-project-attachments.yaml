@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Hub API — Runtime Project Attachments
+  description: 'Apigee API Hub API — Runtime Project Attachments. 2 operations. Lead operation: Apigee List Runtime Project
+    Attachments. Self-contained Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Runtime Project Attachments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-hub-runtime-project-attachments
+    baseUri: https://apihub.googleapis.com/v1
+    description: Apigee API Hub API — Runtime Project Attachments business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-runtimeProjectAttachments
+      path: /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments
+      operations:
+      - name: listruntimeprojectattachments
+        method: GET
+        description: Apigee List Runtime Project Attachments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createruntimeprojectattachment
+        method: POST
+        description: Apigee Create a Runtime Project Attachment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: runtimeProjectAttachmentId
+          in: query
+          type: string
+          description: Required. The ID to use for the attachment resource.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-hub-runtime-project-attachments-rest
+    port: 8080
+    description: REST adapter for Apigee API Hub API — Runtime Project Attachments. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/runtimeprojectattachments
+      name: projects-projectid-locations-locationid-runtimeprojectattachments
+      description: REST surface for projects-projectId-locations-locationId-runtimeProjectAttachments.
+      operations:
+      - method: GET
+        name: listruntimeprojectattachments
+        description: Apigee List Runtime Project Attachments
+        call: api-hub-runtime-project-attachments.listruntimeprojectattachments
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createruntimeprojectattachment
+        description: Apigee Create a Runtime Project Attachment
+        call: api-hub-runtime-project-attachments.createruntimeprojectattachment
+        with:
+          runtimeProjectAttachmentId: rest.runtimeProjectAttachmentId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-hub-runtime-project-attachments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Hub API — Runtime Project Attachments. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: apigee-list-runtime-project-attachments
+      description: Apigee List Runtime Project Attachments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub-runtime-project-attachments.listruntimeprojectattachments
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-runtime-project-attachment
+      description: Apigee Create a Runtime Project Attachment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-hub-runtime-project-attachments.createruntimeprojectattachment
+      with:
+        runtimeProjectAttachmentId: tools.runtimeProjectAttachmentId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

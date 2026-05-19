@@ -1,0 +1,121 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Hub API — Attributes
+  description: 'Apigee API Hub API — Attributes. 2 operations. Lead operation: Apigee List Attributes. Self-contained Naftiko
+    capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Attributes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-hub-attributes
+    baseUri: https://apihub.googleapis.com/v1
+    description: Apigee API Hub API — Attributes business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-attributes
+      path: /projects/{projectId}/locations/{locationId}/attributes
+      operations:
+      - name: listattributes
+        method: GET
+        description: Apigee List Attributes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow the results.
+      - name: createattribute
+        method: POST
+        description: Apigee Create an Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attributeId
+          in: query
+          type: string
+          description: Required. The ID to use for the attribute resource.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-hub-attributes-rest
+    port: 8080
+    description: REST adapter for Apigee API Hub API — Attributes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/attributes
+      name: projects-projectid-locations-locationid-attributes
+      description: REST surface for projects-projectId-locations-locationId-attributes.
+      operations:
+      - method: GET
+        name: listattributes
+        description: Apigee List Attributes
+        call: api-hub-attributes.listattributes
+        with:
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createattribute
+        description: Apigee Create an Attribute
+        call: api-hub-attributes.createattribute
+        with:
+          attributeId: rest.attributeId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-hub-attributes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Hub API — Attributes. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: apigee-list-attributes
+      description: Apigee List Attributes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-hub-attributes.listattributes
+      with:
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-attribute
+      description: Apigee Create an Attribute
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-hub-attributes.createattribute
+      with:
+        attributeId: tools.attributeId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,230 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — API Products
+  description: 'Apigee API Management — API Products. 5 operations. Lead operation: Apigee List API Products. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - API Products
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-api-products
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — API Products business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-apiproducts
+      path: /organizations/{organizationId}/apiproducts
+      operations:
+      - name: listapiproducts
+        method: GET
+        description: Apigee List API Products
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attributename
+          in: query
+          type: string
+          description: Name of the attribute used to filter the search.
+        - name: attributevalue
+          in: query
+          type: string
+          description: Value of the attribute used to filter the search.
+        - name: expand
+          in: query
+          type: boolean
+          description: Set to true to get expanded details about each API product.
+        - name: count
+          in: query
+          type: integer
+          description: Number of API products to return in the API call.
+        - name: startKey
+          in: query
+          type: string
+          description: Name of the API product from which to start displaying the list of API products.
+      - name: createapiproduct
+        method: POST
+        description: Apigee Create an API Product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId-apiproducts-apiProductId
+      path: /organizations/{organizationId}/apiproducts/{apiProductId}
+      operations:
+      - name: getapiproduct
+        method: GET
+        description: Apigee Get an API Product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateapiproduct
+        method: PUT
+        description: Apigee Update an API Product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteapiproduct
+        method: DELETE
+        description: Apigee Delete an API Product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-api-products-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — API Products. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/apiproducts
+      name: organizations-organizationid-apiproducts
+      description: REST surface for organizations-organizationId-apiproducts.
+      operations:
+      - method: GET
+        name: listapiproducts
+        description: Apigee List API Products
+        call: api-management-api-products.listapiproducts
+        with:
+          attributename: rest.attributename
+          attributevalue: rest.attributevalue
+          expand: rest.expand
+          count: rest.count
+          startKey: rest.startKey
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapiproduct
+        description: Apigee Create an API Product
+        call: api-management-api-products.createapiproduct
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/apiproducts/{apiproductid}
+      name: organizations-organizationid-apiproducts-apiproductid
+      description: REST surface for organizations-organizationId-apiproducts-apiProductId.
+      operations:
+      - method: GET
+        name: getapiproduct
+        description: Apigee Get an API Product
+        call: api-management-api-products.getapiproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateapiproduct
+        description: Apigee Update an API Product
+        call: api-management-api-products.updateapiproduct
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteapiproduct
+        description: Apigee Delete an API Product
+        call: api-management-api-products.deleteapiproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-api-products-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — API Products. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-api-products
+      description: Apigee List API Products
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-api-products.listapiproducts
+      with:
+        attributename: tools.attributename
+        attributevalue: tools.attributevalue
+        expand: tools.expand
+        count: tools.count
+        startKey: tools.startKey
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-api-product
+      description: Apigee Create an API Product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-api-products.createapiproduct
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-api-product
+      description: Apigee Get an API Product
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-api-products.getapiproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-api-product
+      description: Apigee Update an API Product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: api-management-api-products.updateapiproduct
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-api-product
+      description: Apigee Delete an API Product
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-api-products.deleteapiproduct
+      outputParameters:
+      - type: object
+        mapping: $.

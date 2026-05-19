@@ -1,0 +1,169 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee Integrations API — Suspensions
+  description: 'Apigee Integrations API — Suspensions. 3 operations. Lead operation: Apigee List Suspensions. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Suspensions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: integrations-suspensions
+    baseUri: https://integrations.googleapis.com/v1
+    description: Apigee Integrations API — Suspensions business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions
+      operations:
+      - name: listsuspensions
+        method: GET
+        description: Apigee List Suspensions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow results.
+        - name: orderBy
+          in: query
+          type: string
+          description: Field to order results by.
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift
+      operations:
+      - name: liftsuspension
+        method: POST
+        description: Apigee Lift a Suspension
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-locations-locationId-products-productId-integrations-integrat
+      path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve
+      operations:
+      - name: resolvesuspension
+        method: POST
+        description: Apigee Resolve a Suspension
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: integrations-suspensions-rest
+    port: 8080
+    description: REST adapter for Apigee Integrations API — Suspensions. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/executions/{executionid}/suspensions
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: GET
+        name: listsuspensions
+        description: Apigee List Suspensions
+        call: integrations-suspensions.listsuspensions
+        with:
+          filter: rest.filter
+          orderBy: rest.orderBy
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/executions/{executionid}/suspensions/suspensionid-lift
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: POST
+        name: liftsuspension
+        description: Apigee Lift a Suspension
+        call: integrations-suspensions.liftsuspension
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/locations/{locationid}/products/{productid}/integrations/{integrationid}/executions/{executionid}/suspensions/suspensionid-resolve
+      name: projects-projectid-locations-locationid-products-productid-integrations-integrat
+      description: REST surface for projects-projectId-locations-locationId-products-productId-integrations-integrat.
+      operations:
+      - method: POST
+        name: resolvesuspension
+        description: Apigee Resolve a Suspension
+        call: integrations-suspensions.resolvesuspension
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: integrations-suspensions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee Integrations API — Suspensions. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-suspensions
+      description: Apigee List Suspensions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: integrations-suspensions.listsuspensions
+      with:
+        filter: tools.filter
+        orderBy: tools.orderBy
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-lift-suspension
+      description: Apigee Lift a Suspension
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-suspensions.liftsuspension
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-resolve-suspension
+      description: Apigee Resolve a Suspension
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: integrations-suspensions.resolvesuspension
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

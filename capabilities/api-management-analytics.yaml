@@ -1,0 +1,204 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — Analytics
+  description: 'Apigee API Management — Analytics. 3 operations. Lead operation: Apigee List Analytics Data Stores. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Analytics
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-analytics
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — Analytics business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-organizationId-analytics-datastores
+      path: /organizations/{organizationId}/analytics/datastores
+      operations:
+      - name: listdatastores
+        method: GET
+        description: Apigee List Analytics Data Stores
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createdatastore
+        method: POST
+        description: Apigee Create an Analytics Data Store
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId-environments-environmentId-stats-dimensionName
+      path: /organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}
+      operations:
+      - name: getenvironmentstats
+        method: GET
+        description: Apigee Get Environment Statistics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dimensionName
+          in: path
+          type: string
+          description: Name of the dimension to query. Common values include apiproxy, developer_email, developer_app, access_token,
+            and others.
+          required: true
+        - name: select
+          in: query
+          type: string
+          description: 'Comma-separated list of metrics. Example: sum(message_count), avg(total_response_time).'
+          required: true
+        - name: timeRange
+          in: query
+          type: string
+          description: Time range for the query in the format MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM.
+          required: true
+        - name: timeUnit
+          in: query
+          type: string
+          description: Granularity of the time series (second, minute, hour, day, week, month).
+        - name: filter
+          in: query
+          type: string
+          description: Filter expression to narrow the results.
+        - name: sortby
+          in: query
+          type: string
+          description: Comma-separated list of columns to sort the results.
+        - name: sort
+          in: query
+          type: string
+          description: Sort order (ASC or DESC).
+        - name: topk
+          in: query
+          type: integer
+          description: Return the top k results.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of records to return.
+        - name: offset
+          in: query
+          type: integer
+          description: Offset for pagination.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-analytics-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — Analytics. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{organizationid}/analytics/datastores
+      name: organizations-organizationid-analytics-datastores
+      description: REST surface for organizations-organizationId-analytics-datastores.
+      operations:
+      - method: GET
+        name: listdatastores
+        description: Apigee List Analytics Data Stores
+        call: api-management-analytics.listdatastores
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdatastore
+        description: Apigee Create an Analytics Data Store
+        call: api-management-analytics.createdatastore
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}/environments/{environmentid}/stats/{dimensionname}
+      name: organizations-organizationid-environments-environmentid-stats-dimensionname
+      description: REST surface for organizations-organizationId-environments-environmentId-stats-dimensionName.
+      operations:
+      - method: GET
+        name: getenvironmentstats
+        description: Apigee Get Environment Statistics
+        call: api-management-analytics.getenvironmentstats
+        with:
+          dimensionName: rest.dimensionName
+          select: rest.select
+          timeRange: rest.timeRange
+          timeUnit: rest.timeUnit
+          filter: rest.filter
+          sortby: rest.sortby
+          sort: rest.sort
+          topk: rest.topk
+          limit: rest.limit
+          offset: rest.offset
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-analytics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — Analytics. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-analytics-data-stores
+      description: Apigee List Analytics Data Stores
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-analytics.listdatastores
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-analytics-data-store
+      description: Apigee Create an Analytics Data Store
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-analytics.createdatastore
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-environment-statistics
+      description: Apigee Get Environment Statistics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-analytics.getenvironmentstats
+      with:
+        dimensionName: tools.dimensionName
+        select: tools.select
+        timeRange: tools.timeRange
+        timeUnit: tools.timeUnit
+        filter: tools.filter
+        sortby: tools.sortby
+        sort: tools.sort
+        topk: tools.topk
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.

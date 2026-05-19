@@ -1,0 +1,205 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee API Management — Organizations
+  description: 'Apigee API Management — Organizations. 5 operations. Lead operation: Apigee List Organizations. Self-contained
+    Naftiko capability covering one Apigee business surface.'
+  tags:
+  - Apigee
+  - Organizations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEE_API_KEY: APIGEE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: api-management-organizations
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee API Management — Organizations business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations
+      path: /organizations
+      operations:
+      - name: listorganizations
+        method: GET
+        description: Apigee List Organizations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createorganization
+        method: POST
+        description: Apigee Create an Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: parent
+          in: query
+          type: string
+          description: 'Required. Name of the Google Cloud project in which to associate the Apigee organization. Pass the
+            information as a query parameter using the format: projects/{'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organizationId
+      path: /organizations/{organizationId}
+      operations:
+      - name: getorganization
+        method: GET
+        description: Apigee Get an Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateorganization
+        method: PUT
+        description: Apigee Update an Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteorganization
+        method: DELETE
+        description: Apigee Delete an Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: api-management-organizations-rest
+    port: 8080
+    description: REST adapter for Apigee API Management — Organizations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations
+      name: organizations
+      description: REST surface for organizations.
+      operations:
+      - method: GET
+        name: listorganizations
+        description: Apigee List Organizations
+        call: api-management-organizations.listorganizations
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorganization
+        description: Apigee Create an Organization
+        call: api-management-organizations.createorganization
+        with:
+          parent: rest.parent
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{organizationid}
+      name: organizations-organizationid
+      description: REST surface for organizations-organizationId.
+      operations:
+      - method: GET
+        name: getorganization
+        description: Apigee Get an Organization
+        call: api-management-organizations.getorganization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateorganization
+        description: Apigee Update an Organization
+        call: api-management-organizations.updateorganization
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteorganization
+        description: Apigee Delete an Organization
+        call: api-management-organizations.deleteorganization
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: api-management-organizations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Apigee API Management — Organizations. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: apigee-list-organizations
+      description: Apigee List Organizations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-organizations.listorganizations
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-create-organization
+      description: Apigee Create an Organization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: api-management-organizations.createorganization
+      with:
+        parent: tools.parent
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-get-organization
+      description: Apigee Get an Organization
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: api-management-organizations.getorganization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-update-organization
+      description: Apigee Update an Organization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: api-management-organizations.updateorganization
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigee-delete-organization
+      description: Apigee Delete an Organization
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: api-management-organizations.deleteorganization
+      outputParameters:
+      - type: object
+        mapping: $.
