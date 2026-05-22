@@ -5,7 +5,7 @@ description: Apigee is Google Cloud's native API management platform for buildin
 image: https://www.apigee.com/about/sites/default/files/apigee-logo.png
 url: https://cloud.google.com/apigee
 created: '2024-01-01'
-modified: '2026-05-19'
+modified: '2026-05-22'
 jsonLdUrl: json-ld/apigee-context.jsonld
 specificationVersion: '0.18'
 segments:
@@ -54,6 +54,10 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
   - type: SDKs
     url: https://cloud.google.com/apigee/docs/api-platform/reference/apis
+  - type: CLI
+    url: https://github.com/apigee/apigeecli
+  - type: ModelContextProtocol
+    url: https://cloud.google.com/apigee/docs/api-platform/mcp/overview
   - type: TermsOfService
     url: https://cloud.google.com/terms
   - type: PrivacyPolicy
@@ -131,6 +135,12 @@ apis:
     url: https://cloud.google.com/terms/cloud-privacy-notice
   - type: SDKs
     url: https://cloud.google.com/apigee/docs/apihub/libraries
+  - type: ModelContextProtocol
+    url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
+  - type: AgenticAI
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+  - type: SpecificationBoost
+    url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: NaftikoCapability
     url: capabilities/api-hub-general.yaml
   - type: NaftikoCapability
@@ -284,6 +294,8 @@ maintainers:
 - name: Kin Lane
   email: kin@apievangelist.com
 tags:
+- Advanced API Security
+- Agentic AI
 - Analytics
 - API Gateway
 - API Governance
@@ -291,9 +303,12 @@ tags:
 - API Management
 - Developer Portal
 - Enterprise
+- Generative AI
 - Hybrid
 - Integrations
 - Microservices
+- MCP
+- Model Context Protocol
 - Monetization
 common:
 - type: LinkedIn
@@ -358,3 +373,21 @@ common:
   url: https://cloud.google.com/apigee/docs/api-security
 - type: Integrations
   url: https://cloud.google.com/marketplace
+- type: ModelContextProtocol
+  url: https://cloud.google.com/apigee/docs/api-platform/mcp/overview
+- type: AgenticAI
+  url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+- type: SpecificationBoost
+  url: https://cloud.google.com/apigee/docs/apihub/spec-boost
+- type: CLI
+  url: https://github.com/apigee/apigeecli
+- type: AnalystReport
+  url: https://cloud.google.com/blog/products/api-management/apigee-named-leader-in-gartner-magic-quadrant-for-api-management
+- type: GitHubRepository
+  url: https://github.com/apigee/api-platform-samples
+- type: GitHubRepository
+  url: https://github.com/apigee/apigeecli
+- type: GitHubRepository
+  url: https://github.com/apigee/apigeelint
+- type: GitHubRepository
+  url: https://github.com/apigee/devrel

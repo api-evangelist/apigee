@@ -4,7 +4,7 @@ info:
   provider: "Apigee"
   description: "Unified taxonomy of Google Apigee API management platform covering API proxies, products, developers, environments, API Hub, and integrations."
   created: "2026-04-19"
-  modified: "2026-04-19"
+  modified: "2026-05-22"
 
 operational:
   apis:
