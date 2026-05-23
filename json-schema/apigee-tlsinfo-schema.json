@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TlsInfo",
+  "title": "TlsInfo",
+  "type": "object",
+  "description": "TLS configuration for a target server.",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether TLS is enabled."
+    },
+    "clientAuthEnabled": {
+      "type": "boolean",
+      "description": "Whether client authentication is required."
+    },
+    "keyStore": {
+      "type": "string",
+      "description": "Name of the keystore."
+    },
+    "keyAlias": {
+      "type": "string",
+      "description": "Name of the key alias."
+    },
+    "trustStore": {
+      "type": "string",
+      "description": "Name of the truststore."
+    },
+    "protocols": {
+      "type": "array",
+      "description": "Supported TLS protocols.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ciphers": {
+      "type": "array",
+      "description": "Supported cipher suites.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commonName": {
+      "type": "object",
+      "description": "Common name configuration.",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "wildcardMatch": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

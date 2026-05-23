@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Instance",
+  "title": "Instance",
+  "type": "object",
+  "description": "An Apigee runtime instance.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Required. Resource name of the instance."
+    },
+    "location": {
+      "type": "string",
+      "description": "Required. Google Cloud region where the instance resides."
+    },
+    "host": {
+      "type": "string",
+      "description": "Output only. Internal hostname of the instance.",
+      "readOnly": true
+    },
+    "port": {
+      "type": "string",
+      "description": "Output only. Port number of the instance.",
+      "readOnly": true
+    },
+    "state": {
+      "type": "string",
+      "description": "Output only. State of the instance.",
+      "readOnly": true,
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "UPDATING"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the instance."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the instance."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Time the instance was created.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Time the instance was last modified.",
+      "readOnly": true
+    },
+    "diskEncryptionKeyName": {
+      "type": "string",
+      "description": "Customer-managed encryption key (CMEK) for the instance disk."
+    },
+    "ipRange": {
+      "type": "string",
+      "description": "IP range for peering with the customer VPC."
+    },
+    "peeringCidrRange": {
+      "type": "string",
+      "description": "Size of the CIDR block range for peering.",
+      "enum": [
+        "SLASH_16",
+        "SLASH_20",
+        "SLASH_22",
+        "SLASH_23",
+        "SLASH_24"
+      ]
+    }
+  }
+}

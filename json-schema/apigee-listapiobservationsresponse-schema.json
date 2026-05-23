@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListApiObservationsResponse",
+  "title": "ListApiObservationsResponse",
+  "type": "object",
+  "properties": {
+    "apiObservations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApiObservation"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    }
+  }
+}

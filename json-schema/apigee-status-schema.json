@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Status",
+  "title": "Status",
+  "type": "object",
+  "description": "The Status type defines a logical error model.",
+  "properties": {
+    "code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The status code."
+    },
+    "message": {
+      "type": "string",
+      "description": "A developer-facing error message."
+    },
+    "details": {
+      "type": "array",
+      "description": "A list of messages that carry the error details.",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    }
+  }
+}

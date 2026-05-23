@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TargetServer",
+  "title": "TargetServer",
+  "type": "object",
+  "description": "Configuration for a backend target server.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Required. Name of the target server."
+    },
+    "host": {
+      "type": "string",
+      "description": "Required. Hostname or IP address of the backend service."
+    },
+    "port": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Required. Port number of the backend service."
+    },
+    "isEnabled": {
+      "type": "boolean",
+      "description": "Whether the target server is enabled."
+    },
+    "protocol": {
+      "type": "string",
+      "description": "Protocol used to communicate with the target.",
+      "enum": [
+        "HTTP",
+        "HTTP2",
+        "GRPC_TARGET",
+        "GRPC",
+        "EXTERNAL_CALLOUT"
+      ]
+    },
+    "sSLInfo": {
+      "$ref": "#/components/schemas/TlsInfo"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description of the target server."
+    }
+  },
+  "required": [
+    "name",
+    "host",
+    "port"
+  ]
+}

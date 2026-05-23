@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiProduct",
+  "title": "ApiProduct",
+  "type": "object",
+  "description": "An API product bundles API resources for consumption.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Internal name of the API product. Must be unique."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Name displayed in the developer portal."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the API product."
+    },
+    "approvalType": {
+      "type": "string",
+      "description": "How API keys are approved for the product.",
+      "enum": [
+        "manual",
+        "auto"
+      ]
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for the API product (max 18).",
+      "items": {
+        "$ref": "#/components/schemas/Attribute"
+      }
+    },
+    "environments": {
+      "type": "array",
+      "description": "Environments where this product is available.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proxies": {
+      "type": "array",
+      "description": "API proxies included in this product.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "description": "OAuth scopes associated with the product.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quota": {
+      "type": "string",
+      "description": "Number of requests permitted per quota interval."
+    },
+    "quotaInterval": {
+      "type": "string",
+      "description": "Time interval over which the quota is applied."
+    },
+    "quotaTimeUnit": {
+      "type": "string",
+      "description": "Time unit for the quota interval.",
+      "enum": [
+        "minute",
+        "hour",
+        "day",
+        "month"
+      ]
+    },
+    "operationGroup": {
+      "$ref": "#/components/schemas/OperationGroup"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Unix time when the product was created.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Unix time when the product was last modified.",
+      "readOnly": true
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListApiVersionsResponse",
+  "title": "ListApiVersionsResponse",
+  "type": "object",
+  "properties": {
+    "versions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApiVersion"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    },
+    "totalSize": {
+      "type": "integer",
+      "format": "int32"
+    }
+  }
+}

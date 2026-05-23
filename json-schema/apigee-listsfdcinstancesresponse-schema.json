@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListSfdcInstancesResponse",
+  "title": "ListSfdcInstancesResponse",
+  "type": "object",
+  "properties": {
+    "sfdcInstances": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SfdcInstance"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    }
+  }
+}

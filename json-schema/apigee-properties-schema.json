@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Properties",
+  "title": "Properties",
+  "type": "object",
+  "description": "A collection of key-value property pairs.",
+  "properties": {
+    "property": {
+      "type": "array",
+      "description": "List of properties.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

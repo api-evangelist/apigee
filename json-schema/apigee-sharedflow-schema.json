@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SharedFlow",
+  "title": "SharedFlow",
+  "type": "object",
+  "description": "A reusable shared flow containing common logic.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Name of the shared flow.",
+      "readOnly": true
+    },
+    "revision": {
+      "type": "array",
+      "description": "Output only. List of revisions for the shared flow.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "latestRevisionId": {
+      "type": "string",
+      "description": "Output only. ID of the latest revision.",
+      "readOnly": true
+    },
+    "metaData": {
+      "$ref": "#/components/schemas/EntityMetadata"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Documentation",
+  "title": "Documentation",
+  "type": "object",
+  "description": "Documentation associated with a resource.",
+  "properties": {
+    "externalUri": {
+      "type": "string",
+      "description": "URI of external documentation."
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Datastore",
+  "title": "Datastore",
+  "type": "object",
+  "description": "Configuration for an analytics data store.",
+  "properties": {
+    "displayName": {
+      "type": "string",
+      "description": "Required. Display name for the data store."
+    },
+    "self": {
+      "type": "string",
+      "description": "Output only. Resource URI of the data store.",
+      "readOnly": true
+    },
+    "org": {
+      "type": "string",
+      "description": "Output only. Organization associated with the data store.",
+      "readOnly": true
+    },
+    "targetType": {
+      "type": "string",
+      "description": "Required. Type of target for data export."
+    },
+    "datastoreConfig": {
+      "type": "object",
+      "description": "Configuration for the data store target.",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "description": "Google Cloud project ID."
+        },
+        "bucketName": {
+          "type": "string",
+          "description": "Cloud Storage bucket name."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path within the bucket."
+        },
+        "datasetName": {
+          "type": "string",
+          "description": "BigQuery dataset name."
+        },
+        "tablePrefix": {
+          "type": "string",
+          "description": "Prefix for BigQuery table names."
+        }
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the data store was created.",
+      "readOnly": true
+    },
+    "lastUpdateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the data store was last updated.",
+      "readOnly": true
+    }
+  }
+}

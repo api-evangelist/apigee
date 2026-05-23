@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EntityMetadata",
+  "title": "EntityMetadata",
+  "type": "object",
+  "description": "Metadata common to Apigee entities.",
+  "properties": {
+    "createdAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Time the entity was created in milliseconds since epoch."
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Time the entity was last modified in milliseconds since epoch."
+    },
+    "subType": {
+      "type": "string",
+      "description": "Subtype of the entity."
+    }
+  }
+}

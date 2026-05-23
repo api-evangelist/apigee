@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DownloadIntegrationVersionResponse",
+  "title": "DownloadIntegrationVersionResponse",
+  "type": "object",
+  "description": "Response for downloading an integration version.",
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Integration version content."
+    }
+  }
+}

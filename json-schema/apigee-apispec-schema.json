@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiSpec",
+  "title": "ApiSpec",
+  "type": "object",
+  "description": "A machine-readable API specification.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the spec.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Required. Display name for the spec."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the specification."
+    },
+    "specType": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "contents": {
+      "type": "object",
+      "description": "The spec contents.",
+      "properties": {
+        "contents": {
+          "type": "string",
+          "format": "byte",
+          "description": "The spec content as bytes."
+        },
+        "mimeType": {
+          "type": "string",
+          "description": "MIME type of the content."
+        }
+      }
+    },
+    "documentation": {
+      "$ref": "#/components/schemas/Documentation"
+    },
+    "sourceUri": {
+      "type": "string",
+      "description": "URI of the original spec source."
+    },
+    "parsingMode": {
+      "type": "string",
+      "description": "Parsing mode for the specification.",
+      "enum": [
+        "PARSING_MODE_UNSPECIFIED",
+        "RELAXED",
+        "STRICT"
+      ]
+    },
+    "lintResponse": {
+      "$ref": "#/components/schemas/LintResponse"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Custom attributes associated with this spec.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/AttributeValues"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the spec was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the spec was last updated.",
+      "readOnly": true
+    }
+  }
+}

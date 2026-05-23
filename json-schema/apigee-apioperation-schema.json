@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiOperation",
+  "title": "ApiOperation",
+  "type": "object",
+  "description": "A discovered API operation from traffic observation.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the operation.",
+      "readOnly": true
+    },
+    "httpOperation": {
+      "type": "object",
+      "description": "HTTP operation details.",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "HTTP method (GET, POST, PUT, DELETE, etc.).",
+          "enum": [
+            "METHOD_UNSPECIFIED",
+            "GET",
+            "HEAD",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+            "TRACE",
+            "OPTIONS",
+            "CONNECT"
+          ]
+        },
+        "path": {
+          "type": "object",
+          "description": "Path details.",
+          "properties": {
+            "segments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "SEGMENT_TYPE_UNSPECIFIED",
+                      "LITERAL",
+                      "WILDCARD"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "pathItem": {
+          "type": "string",
+          "description": "Full path string."
+        },
+        "queryParams": {
+          "type": "object",
+          "description": "Query parameters observed.",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "responseCodes": {
+          "type": "object",
+          "description": "Response codes and their counts.",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "requestCount": {
+      "type": "string",
+      "format": "int64",
+      "description": "Number of requests for this operation."
+    },
+    "firstSeenTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the operation was first observed."
+    },
+    "lastSeenTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the operation was last observed."
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListApiProxiesResponse",
+  "title": "ListApiProxiesResponse",
+  "type": "object",
+  "description": "Response for listing API proxies.",
+  "properties": {
+    "proxies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApiProxy"
+      }
+    }
+  }
+}

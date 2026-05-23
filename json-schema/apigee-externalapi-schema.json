@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExternalApi",
+  "title": "ExternalApi",
+  "type": "object",
+  "description": "An external API reference.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the external API.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Required. Display name for the external API."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the external API."
+    },
+    "documentation": {
+      "$ref": "#/components/schemas/Documentation"
+    },
+    "endpoints": {
+      "type": "array",
+      "description": "Endpoints for the external API.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "paths": {
+      "type": "array",
+      "description": "Resource paths for the external API.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Custom attributes.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/AttributeValues"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the external API was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the external API was last updated.",
+      "readOnly": true
+    }
+  }
+}

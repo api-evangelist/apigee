@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SfdcChannel",
+  "title": "SfdcChannel",
+  "type": "object",
+  "description": "A Salesforce channel configuration.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the SFDC channel.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the channel."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the channel."
+    },
+    "channelTopic": {
+      "type": "string",
+      "description": "Salesforce PushTopic or CDC channel name."
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the channel is active."
+    },
+    "lastReplayId": {
+      "type": "string",
+      "description": "Last replay ID used for event replay."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the channel was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the channel was last updated.",
+      "readOnly": true
+    },
+    "deleteTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the channel was deleted.",
+      "readOnly": true
+    }
+  }
+}

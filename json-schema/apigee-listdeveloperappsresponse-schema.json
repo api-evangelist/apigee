@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListDeveloperAppsResponse",
+  "title": "ListDeveloperAppsResponse",
+  "type": "object",
+  "description": "Response for listing developer apps.",
+  "properties": {
+    "app": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DeveloperApp"
+      }
+    }
+  }
+}

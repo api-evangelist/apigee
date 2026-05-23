@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OperationConfig",
+  "title": "OperationConfig",
+  "type": "object",
+  "description": "Configuration for a set of operations on an API proxy.",
+  "properties": {
+    "apiSource": {
+      "type": "string",
+      "description": "Name of the API proxy this config applies to."
+    },
+    "operations": {
+      "type": "array",
+      "description": "List of operations.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string",
+            "description": "REST resource path."
+          },
+          "methods": {
+            "type": "array",
+            "description": "HTTP methods allowed.",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "quota": {
+      "type": "object",
+      "description": "Quota settings for this operation config.",
+      "properties": {
+        "limit": {
+          "type": "string"
+        },
+        "interval": {
+          "type": "string"
+        },
+        "timeUnit": {
+          "type": "string"
+        }
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for this config.",
+      "items": {
+        "$ref": "#/components/schemas/Attribute"
+      }
+    }
+  }
+}

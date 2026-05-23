@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SfdcInstance",
+  "title": "SfdcInstance",
+  "type": "object",
+  "description": "A Salesforce instance configuration.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the SFDC instance.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the instance."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the SFDC instance."
+    },
+    "sfdcOrgId": {
+      "type": "string",
+      "description": "Salesforce organization ID."
+    },
+    "authConfigId": {
+      "type": "array",
+      "description": "Auth configs associated with this instance.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "serviceAuthority": {
+      "type": "string",
+      "description": "Service authority URL for the Salesforce instance."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the instance was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the instance was last updated.",
+      "readOnly": true
+    },
+    "deleteTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the instance was deleted.",
+      "readOnly": true
+    }
+  }
+}

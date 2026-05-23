@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExecuteIntegrationRequest",
+  "title": "ExecuteIntegrationRequest",
+  "type": "object",
+  "description": "Request to execute an integration synchronously.",
+  "properties": {
+    "triggerId": {
+      "type": "string",
+      "description": "Trigger to use for the execution."
+    },
+    "inputParameters": {
+      "type": "object",
+      "description": "Input parameters for the execution.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/ValueType"
+      }
+    },
+    "parameterEntries": {
+      "type": "array",
+      "description": "Alternative way to pass parameters.",
+      "items": {
+        "$ref": "#/components/schemas/EventParameter"
+      }
+    },
+    "doNotPropagateError": {
+      "type": "boolean",
+      "description": "Whether to propagate errors to the caller."
+    },
+    "requestId": {
+      "type": "string",
+      "description": "Unique request ID for idempotency."
+    }
+  }
+}

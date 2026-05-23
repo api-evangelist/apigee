@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListObservationSourcesResponse",
+  "title": "ListObservationSourcesResponse",
+  "type": "object",
+  "properties": {
+    "observationSources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ObservationSource"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    },
+    "unreachable": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

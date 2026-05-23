@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Dependency",
+  "title": "Dependency",
+  "type": "object",
+  "description": "A dependency relationship between APIs.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the dependency.",
+      "readOnly": true
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the dependency."
+    },
+    "consumer": {
+      "$ref": "#/components/schemas/DependencyEntityReference"
+    },
+    "supplier": {
+      "$ref": "#/components/schemas/DependencyEntityReference"
+    },
+    "state": {
+      "type": "string",
+      "description": "State of the dependency.",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "PROPOSED",
+        "VALIDATED"
+      ]
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the dependency was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the dependency was last updated.",
+      "readOnly": true
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Custom attributes associated with this dependency.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/AttributeValues"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ResolveSuspensionRequest",
+  "title": "ResolveSuspensionRequest",
+  "type": "object",
+  "description": "Request to resolve a suspension.",
+  "properties": {
+    "suspension": {
+      "type": "object",
+      "description": "The suspension resolution details."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListDependenciesResponse",
+  "title": "ListDependenciesResponse",
+  "type": "object",
+  "properties": {
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Dependency"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    },
+    "totalSize": {
+      "type": "integer",
+      "format": "int32"
+    }
+  }
+}

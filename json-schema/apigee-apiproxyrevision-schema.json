@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiProxyRevision",
+  "title": "ApiProxyRevision",
+  "type": "object",
+  "description": "API proxy revision metadata and configuration.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the API proxy revision.",
+      "readOnly": true
+    },
+    "revision": {
+      "type": "string",
+      "description": "Output only. Revision number of the proxy.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable name of the API proxy."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the API proxy revision."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the revision was created.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the revision was last modified.",
+      "readOnly": true
+    },
+    "basepaths": {
+      "type": "array",
+      "description": "Base path(s) for the API proxy.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "policies": {
+      "type": "array",
+      "description": "List of policy names included in this revision.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resources": {
+      "type": "array",
+      "description": "List of resource files included in this revision.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proxies": {
+      "type": "array",
+      "description": "List of proxy endpoint names in this revision.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "targets": {
+      "type": "array",
+      "description": "List of target endpoint names in this revision.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sharedFlows": {
+      "type": "array",
+      "description": "List of shared flows referenced by this revision.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the revision (e.g., Application)."
+    }
+  }
+}

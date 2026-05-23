@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Owner",
+  "title": "Owner",
+  "type": "object",
+  "description": "Owner of an API resource.",
+  "properties": {
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the owner."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the owner."
+    }
+  }
+}

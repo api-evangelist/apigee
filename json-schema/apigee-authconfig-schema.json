@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AuthConfig",
+  "title": "AuthConfig",
+  "type": "object",
+  "description": "Authentication configuration for connecting to external services.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the auth config.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the auth config."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the auth config."
+    },
+    "certificateId": {
+      "type": "string",
+      "description": "Certificate to use for authentication."
+    },
+    "credentialType": {
+      "type": "string",
+      "description": "Type of credential stored.",
+      "enum": [
+        "CREDENTIAL_TYPE_UNSPECIFIED",
+        "USERNAME_AND_PASSWORD",
+        "API_KEY",
+        "OAUTH2_AUTHORIZATION_CODE",
+        "OAUTH2_IMPLICIT",
+        "OAUTH2_CLIENT_CREDENTIALS",
+        "OAUTH2_RESOURCE_OWNER_CREDENTIALS",
+        "JWT",
+        "AUTH_TOKEN",
+        "SERVICE_ACCOUNT",
+        "CLIENT_CERTIFICATE_ONLY",
+        "OIDC_TOKEN"
+      ]
+    },
+    "visibility": {
+      "type": "string",
+      "description": "Visibility of the auth config.",
+      "enum": [
+        "AUTH_CONFIG_VISIBILITY_UNSPECIFIED",
+        "PRIVATE",
+        "CLIENT_VISIBLE"
+      ]
+    },
+    "state": {
+      "type": "string",
+      "description": "State of the auth config.",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "VALID",
+        "INVALID",
+        "SOFT_DELETED",
+        "EXPIRED",
+        "UNAUTHORIZED",
+        "UNSUPPORTED"
+      ]
+    },
+    "expiryNotificationDuration": {
+      "type": "array",
+      "description": "Notification durations before expiry.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the config was created.",
+      "readOnly": true
+    },
+    "lastModifierEmail": {
+      "type": "string",
+      "description": "Output only. Email of the last modifier.",
+      "readOnly": true
+    },
+    "validTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time until which the config is valid.",
+      "readOnly": true
+    }
+  }
+}

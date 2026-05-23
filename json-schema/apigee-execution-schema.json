@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Execution",
+  "title": "Execution",
+  "type": "object",
+  "description": "An integration execution record.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the execution.",
+      "readOnly": true
+    },
+    "executionMethod": {
+      "type": "string",
+      "description": "Method by which the execution was triggered.",
+      "enum": [
+        "EXECUTION_METHOD_UNSPECIFIED",
+        "POST",
+        "POST_TO_QUEUE",
+        "SCHEDULE"
+      ]
+    },
+    "requestParams": {
+      "type": "object",
+      "description": "Input parameters for the execution.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/EventParameter"
+      }
+    },
+    "responseParams": {
+      "type": "object",
+      "description": "Output parameters from the execution.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/EventParameter"
+      }
+    },
+    "executionDetails": {
+      "type": "object",
+      "description": "Detailed execution information.",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "PROCESSING",
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED",
+            "RETRY_ON_HOLD",
+            "SUSPENDED"
+          ]
+        },
+        "executionSnapshots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "checkpointTaskNumber": {
+                "type": "string"
+              },
+              "executionSnapshotMetadata": {
+                "type": "object",
+                "properties": {
+                  "executionAttempt": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "task": {
+                    "type": "string"
+                  },
+                  "taskLabel": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the execution was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the execution was last updated.",
+      "readOnly": true
+    },
+    "triggerId": {
+      "type": "string",
+      "description": "ID of the trigger that started the execution."
+    },
+    "integrationVersionId": {
+      "type": "string",
+      "description": "ID of the integration version executed."
+    }
+  }
+}

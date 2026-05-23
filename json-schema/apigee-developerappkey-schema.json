@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DeveloperAppKey",
+  "title": "DeveloperAppKey",
+  "type": "object",
+  "description": "Consumer key and secret for a developer app.",
+  "properties": {
+    "consumerKey": {
+      "type": "string",
+      "description": "Consumer key (API key) for the developer app."
+    },
+    "consumerSecret": {
+      "type": "string",
+      "description": "Consumer secret for the developer app."
+    },
+    "apiProducts": {
+      "type": "array",
+      "description": "API products associated with this key.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "apiproduct": {
+            "type": "string",
+            "description": "Name of the API product."
+          },
+          "status": {
+            "type": "string",
+            "description": "Approval status (approved, pending, revoked)."
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the credential (approved or revoked)."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Time the key expires in milliseconds since epoch. -1 means never."
+    },
+    "issuedAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Time the key was issued in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "scopes": {
+      "type": "array",
+      "description": "OAuth scopes granted to the key.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for the key.",
+      "items": {
+        "$ref": "#/components/schemas/Attribute"
+      }
+    }
+  }
+}

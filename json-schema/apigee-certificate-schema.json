@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Certificate",
+  "title": "Certificate",
+  "type": "object",
+  "description": "An SSL/TLS certificate.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the certificate.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the certificate."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the certificate."
+    },
+    "rawCertificate": {
+      "type": "object",
+      "description": "Raw certificate data.",
+      "properties": {
+        "sslCertificate": {
+          "type": "string",
+          "description": "PEM-encoded SSL certificate."
+        },
+        "encryptedPrivateKey": {
+          "type": "string",
+          "description": "Encrypted private key."
+        },
+        "passphrase": {
+          "type": "string",
+          "description": "Passphrase for the private key."
+        }
+      }
+    },
+    "certificateStatus": {
+      "type": "string",
+      "description": "Output only. Status of the certificate.",
+      "readOnly": true,
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "ACTIVE",
+        "EXPIRED"
+      ]
+    },
+    "validStartTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Start of validity period.",
+      "readOnly": true
+    },
+    "validEndTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. End of validity period.",
+      "readOnly": true
+    }
+  }
+}

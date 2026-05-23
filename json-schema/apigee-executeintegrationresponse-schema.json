@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExecuteIntegrationResponse",
+  "title": "ExecuteIntegrationResponse",
+  "type": "object",
+  "description": "Response from a synchronous integration execution.",
+  "properties": {
+    "executionId": {
+      "type": "string",
+      "description": "ID of the execution."
+    },
+    "outputParameters": {
+      "type": "object",
+      "description": "Output parameters from the execution.",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "parameterEntries": {
+      "type": "array",
+      "description": "Output parameter entries.",
+      "items": {
+        "$ref": "#/components/schemas/EventParameter"
+      }
+    }
+  }
+}

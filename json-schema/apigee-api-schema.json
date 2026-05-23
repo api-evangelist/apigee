@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Api",
+  "title": "Api",
+  "type": "object",
+  "description": "An API resource in the API Hub.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the API.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Required. Display name for the API."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the API."
+    },
+    "owner": {
+      "$ref": "#/components/schemas/Owner"
+    },
+    "documentation": {
+      "$ref": "#/components/schemas/Documentation"
+    },
+    "versions": {
+      "type": "array",
+      "description": "Output only. Versions associated with this API.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "deployments": {
+      "type": "array",
+      "description": "Output only. Deployments associated with this API.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Custom attributes associated with the API.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/AttributeValues"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the API was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the API was last updated.",
+      "readOnly": true
+    },
+    "targetUser": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "team": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "businessUnit": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "maturityLevel": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "apiStyle": {
+      "$ref": "#/components/schemas/AttributeValues"
+    }
+  }
+}

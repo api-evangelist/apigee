@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListSuspensionsResponse",
+  "title": "ListSuspensionsResponse",
+  "type": "object",
+  "properties": {
+    "suspensions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "eventExecutionInfoId": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "createTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    }
+  }
+}

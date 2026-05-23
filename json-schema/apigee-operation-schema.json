@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Operation",
+  "title": "Operation",
+  "type": "object",
+  "description": "A long-running operation.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the operation resource."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Service-specific metadata.",
+      "additionalProperties": true
+    },
+    "done": {
+      "type": "boolean",
+      "description": "Whether the operation is complete."
+    },
+    "error": {
+      "$ref": "#/components/schemas/Status"
+    },
+    "response": {
+      "type": "object",
+      "description": "The normal response of the operation.",
+      "additionalProperties": true
+    }
+  }
+}

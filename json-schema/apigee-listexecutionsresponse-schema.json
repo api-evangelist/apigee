@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListExecutionsResponse",
+  "title": "ListExecutionsResponse",
+  "type": "object",
+  "properties": {
+    "executionInfos": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Execution"
+      }
+    },
+    "executions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Execution"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    }
+  }
+}

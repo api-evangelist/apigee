@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TaskConfig",
+  "title": "TaskConfig",
+  "type": "object",
+  "description": "Configuration for a task in an integration.",
+  "properties": {
+    "task": {
+      "type": "string",
+      "description": "Type of the task (e.g., GenericRestV2Task, FieldMappingTask)."
+    },
+    "taskId": {
+      "type": "string",
+      "description": "Unique ID of the task within the integration."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name for the task."
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Task parameters.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/EventParameter"
+      }
+    },
+    "nextTasks": {
+      "type": "array",
+      "description": "Tasks to execute next.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "taskExecutionStrategy": {
+      "type": "string",
+      "description": "Execution strategy for the task.",
+      "enum": [
+        "WHEN_ALL_SUCCEED",
+        "WHEN_ANY_SUCCEED",
+        "WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED"
+      ]
+    },
+    "failurePolicy": {
+      "type": "object",
+      "description": "Policy for handling task failures.",
+      "properties": {
+        "retryStrategy": {
+          "type": "string",
+          "enum": [
+            "RETRY_STRATEGY_UNSPECIFIED",
+            "IGNORE",
+            "NONE",
+            "FATAL",
+            "FIXED_INTERVAL",
+            "LINEAR_BACKOFF",
+            "EXPONENTIAL_BACKOFF",
+            "RESTART_INTEGRATION_WITH_BACKOFF"
+          ]
+        },
+        "maxRetries": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "intervalTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

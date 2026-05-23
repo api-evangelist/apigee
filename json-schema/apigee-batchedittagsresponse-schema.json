@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BatchEditTagsResponse",
+  "title": "BatchEditTagsResponse",
+  "type": "object",
+  "description": "Response from batch editing tags.",
+  "properties": {
+    "apiObservations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApiObservation"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EventParameter",
+  "title": "EventParameter",
+  "type": "object",
+  "description": "A parameter with a key and value.",
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "value": {
+      "$ref": "#/components/schemas/ValueType"
+    }
+  }
+}

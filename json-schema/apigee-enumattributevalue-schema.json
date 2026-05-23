@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EnumAttributeValue",
+  "title": "EnumAttributeValue",
+  "type": "object",
+  "description": "An enum value assigned to an attribute.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ID of the enum value."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Output only. Display name of the enum value.",
+      "readOnly": true
+    }
+  }
+}

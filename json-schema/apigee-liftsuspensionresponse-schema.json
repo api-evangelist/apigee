@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LiftSuspensionResponse",
+  "title": "LiftSuspensionResponse",
+  "type": "object",
+  "description": "Response from lifting a suspension.",
+  "properties": {
+    "eventExecutionInfoId": {
+      "type": "string",
+      "description": "ID of the event execution info."
+    }
+  }
+}

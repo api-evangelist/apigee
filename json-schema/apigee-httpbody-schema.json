@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/HttpBody",
+  "title": "HttpBody",
+  "type": "object",
+  "description": "Raw HTTP body content.",
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "description": "The HTTP Content-Type header value."
+    },
+    "data": {
+      "type": "string",
+      "format": "byte",
+      "description": "The raw HTTP body data as bytes."
+    },
+    "extensions": {
+      "type": "array",
+      "description": "Application-specific metadata.",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    }
+  }
+}

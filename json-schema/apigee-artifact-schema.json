@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Artifact",
+  "title": "Artifact",
+  "type": "object",
+  "description": "A metadata artifact associated with a registry resource.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Resource name of the artifact."
+    },
+    "mimeType": {
+      "type": "string",
+      "description": "MIME type of the artifact content."
+    },
+    "sizeBytes": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Output only. Size of the artifact in bytes.",
+      "readOnly": true
+    },
+    "hash": {
+      "type": "string",
+      "description": "Output only. Hash of the artifact content.",
+      "readOnly": true
+    },
+    "contents": {
+      "type": "string",
+      "format": "byte",
+      "description": "Raw artifact content."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Creation time.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Last update time.",
+      "readOnly": true
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiVersion",
+  "title": "ApiVersion",
+  "type": "object",
+  "description": "A version of an API.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the version.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Required. Display name for the version."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the API version."
+    },
+    "documentation": {
+      "$ref": "#/components/schemas/Documentation"
+    },
+    "specs": {
+      "type": "array",
+      "description": "Output only. Specs associated with this version.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "apiOperations": {
+      "type": "array",
+      "description": "Output only. Operations associated with this version.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "definitions": {
+      "type": "array",
+      "description": "Output only. Definitions associated with this version.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "deployments": {
+      "type": "array",
+      "description": "Output only. Deployments associated with this version.",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "lifecycle": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "compliance": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "accreditation": {
+      "$ref": "#/components/schemas/AttributeValues"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Custom attributes associated with this version.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/AttributeValues"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the version was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the version was last updated.",
+      "readOnly": true
+    }
+  }
+}

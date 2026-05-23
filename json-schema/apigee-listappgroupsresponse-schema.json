@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListAppGroupsResponse",
+  "title": "ListAppGroupsResponse",
+  "type": "object",
+  "description": "Response for listing app groups.",
+  "properties": {
+    "appGroups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AppGroup"
+      }
+    },
+    "nextPageToken": {
+      "type": "string",
+      "description": "Token for retrieving the next page."
+    },
+    "totalSize": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Total number of app groups."
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AppGroup",
+  "title": "AppGroup",
+  "type": "object",
+  "description": "A group of developers and their applications.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the app group.",
+      "readOnly": true
+    },
+    "appGroupId": {
+      "type": "string",
+      "description": "Output only. Internal ID of the app group.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the app group."
+    },
+    "channelUri": {
+      "type": "string",
+      "description": "URI of the communication channel for the group."
+    },
+    "channelId": {
+      "type": "string",
+      "description": "Channel ID for the group."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the app group."
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for the app group.",
+      "items": {
+        "$ref": "#/components/schemas/Attribute"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Time the app group was created.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Time the app group was last modified.",
+      "readOnly": true
+    }
+  }
+}

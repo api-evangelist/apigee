@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DependencyEntityReference",
+  "title": "DependencyEntityReference",
+  "type": "object",
+  "description": "Reference to an entity in a dependency relationship.",
+  "properties": {
+    "displayName": {
+      "type": "string",
+      "description": "Output only. Display name of the referenced entity.",
+      "readOnly": true
+    },
+    "operationResourceName": {
+      "type": "string",
+      "description": "Resource name of the operation."
+    },
+    "externalApiResourceName": {
+      "type": "string",
+      "description": "Resource name of the external API."
+    }
+  }
+}

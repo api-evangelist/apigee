@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UploadIntegrationVersionRequest",
+  "title": "UploadIntegrationVersionRequest",
+  "type": "object",
+  "description": "Request to upload an integration version.",
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Integration version content to upload."
+    },
+    "fileFormat": {
+      "type": "string",
+      "description": "Format of the uploaded content.",
+      "enum": [
+        "FILE_FORMAT_UNSPECIFIED",
+        "JSON",
+        "YAML"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OperationGroup",
+  "title": "OperationGroup",
+  "type": "object",
+  "description": "Groups operations for access control on an API product.",
+  "properties": {
+    "operationConfigs": {
+      "type": "array",
+      "description": "List of operation configurations.",
+      "items": {
+        "$ref": "#/components/schemas/OperationConfig"
+      }
+    },
+    "operationConfigType": {
+      "type": "string",
+      "description": "Type of operation configuration."
+    }
+  }
+}

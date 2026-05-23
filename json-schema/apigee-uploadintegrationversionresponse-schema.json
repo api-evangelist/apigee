@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UploadIntegrationVersionResponse",
+  "title": "UploadIntegrationVersionResponse",
+  "type": "object",
+  "description": "Response from uploading an integration version.",
+  "properties": {
+    "integrationVersion": {
+      "$ref": "#/components/schemas/IntegrationVersion"
+    }
+  }
+}

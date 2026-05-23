@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListSfdcChannelsResponse",
+  "title": "ListSfdcChannelsResponse",
+  "type": "object",
+  "properties": {
+    "sfdcChannels": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SfdcChannel"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    }
+  }
+}

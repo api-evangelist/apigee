@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NodeConfig",
+  "title": "NodeConfig",
+  "type": "object",
+  "description": "Runtime node configuration for an environment.",
+  "properties": {
+    "minNodeCount": {
+      "type": "string",
+      "format": "int64",
+      "description": "Minimum number of gateway nodes."
+    },
+    "maxNodeCount": {
+      "type": "string",
+      "format": "int64",
+      "description": "Maximum number of gateway nodes."
+    },
+    "currentAggregateNodeCount": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Current total number of gateway nodes.",
+      "readOnly": true
+    }
+  }
+}

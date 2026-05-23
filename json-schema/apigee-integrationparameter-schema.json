@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/IntegrationParameter",
+  "title": "IntegrationParameter",
+  "type": "object",
+  "description": "A parameter used in an integration.",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Name of the parameter."
+    },
+    "dataType": {
+      "type": "string",
+      "description": "Data type of the parameter.",
+      "enum": [
+        "INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED",
+        "STRING_VALUE",
+        "INT_VALUE",
+        "DOUBLE_VALUE",
+        "BOOLEAN_VALUE",
+        "STRING_ARRAY",
+        "INT_ARRAY",
+        "DOUBLE_ARRAY",
+        "BOOLEAN_ARRAY",
+        "JSON_VALUE",
+        "PROTO_VALUE",
+        "PROTO_ARRAY"
+      ]
+    },
+    "defaultValue": {
+      "$ref": "#/components/schemas/ValueType"
+    },
+    "inputOutputType": {
+      "type": "string",
+      "description": "Whether the parameter is input, output, or both.",
+      "enum": [
+        "IN_OUT_TYPE_UNSPECIFIED",
+        "IN",
+        "OUT",
+        "IN_OUT"
+      ]
+    },
+    "isTransient": {
+      "type": "boolean",
+      "description": "Whether the parameter is transient."
+    },
+    "producer": {
+      "type": "string",
+      "description": "Task that produces this parameter."
+    }
+  }
+}

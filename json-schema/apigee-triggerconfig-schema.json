@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TriggerConfig",
+  "title": "TriggerConfig",
+  "type": "object",
+  "description": "Configuration for a trigger that starts an integration.",
+  "properties": {
+    "trigger": {
+      "type": "string",
+      "description": "Type of the trigger."
+    },
+    "triggerId": {
+      "type": "string",
+      "description": "Unique ID of the trigger."
+    },
+    "label": {
+      "type": "string",
+      "description": "Label for the trigger."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the trigger."
+    },
+    "triggerType": {
+      "type": "string",
+      "description": "Trigger type.",
+      "enum": [
+        "TRIGGER_TYPE_UNSPECIFIED",
+        "CRON",
+        "API",
+        "SFDC_CHANNEL",
+        "CLOUD_PUBSUB_EXTERNAL",
+        "SFDC_CDC_CHANNEL",
+        "CLOUD_SCHEDULER",
+        "INTEGRATION_CONNECTOR_TRIGGER"
+      ]
+    },
+    "triggerNumber": {
+      "type": "string",
+      "description": "Number for ordering triggers."
+    },
+    "startTasks": {
+      "type": "array",
+      "description": "Tasks to start when trigger fires.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "properties": {
+      "type": "object",
+      "description": "Trigger-specific properties.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

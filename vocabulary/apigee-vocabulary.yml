@@ -1,0 +1,35 @@
+name: Apigee Domain Vocabulary
+provider: Apigee
+providerId: apigee
+description: Tag-derived vocabulary for the Apigee API surface; sourced from openapi/ tags.
+terms:
+- term: Analytics
+  description: Query analytics data and manage data stores
+- term: API Products
+  description: Bundle APIs into products for consumption
+- term: API Proxies
+  description: Create, deploy, and manage API proxy definitions
+- term: API Proxy Revisions
+  description: Manage revisions of API proxies
+- term: App Groups
+  description: Manage developer groups and their applications
+- term: Deployments
+  description: Deploy and undeploy API proxies to environments
+- term: Developer App Keys
+  description: Manage API keys and credentials for developer apps
+- term: Developer Apps
+  description: Manage applications registered by developers
+- term: Developers
+  description: Manage developer accounts and credentials
+- term: Environments
+  description: Manage runtime execution environments
+- term: Instances
+  description: Manage Apigee runtime instances
+- term: Key Value Maps
+  description: Manage key-value storage maps
+- term: Organizations
+  description: Manage Apigee organizations and their configuration
+- term: Shared Flows
+  description: Manage reusable shared flow logic
+- term: Target Servers
+  description: Configure backend target server endpoints

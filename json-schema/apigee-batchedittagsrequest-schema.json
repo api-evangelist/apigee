@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BatchEditTagsRequest",
+  "title": "BatchEditTagsRequest",
+  "type": "object",
+  "description": "Request for batch editing tags on API observations.",
+  "properties": {
+    "requests": {
+      "type": "array",
+      "description": "List of tag edit requests.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "apiObservationId": {
+            "type": "string"
+          },
+          "tagActions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tag": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "string",
+                  "enum": [
+                    "ACTION_UNSPECIFIED",
+                    "ADD",
+                    "REMOVE"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListApiDeploymentsResponse",
+  "title": "ListApiDeploymentsResponse",
+  "type": "object",
+  "properties": {
+    "apiDeployments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ApiDeployment"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    }
+  }
+}

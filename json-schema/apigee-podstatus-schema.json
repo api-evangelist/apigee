@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PodStatus",
+  "title": "PodStatus",
+  "type": "object",
+  "description": "Status of a runtime pod.",
+  "properties": {
+    "podName": {
+      "type": "string",
+      "description": "Name of the pod."
+    },
+    "podStatus": {
+      "type": "string",
+      "description": "Current status of the pod."
+    },
+    "podStatusTime": {
+      "type": "string",
+      "description": "Time the status was last reported."
+    },
+    "deploymentStatus": {
+      "type": "string",
+      "description": "Deployment status within the pod."
+    },
+    "deploymentStatusTime": {
+      "type": "string",
+      "description": "Time the deployment status was reported."
+    },
+    "deploymentTime": {
+      "type": "string",
+      "description": "Time the deployment was last updated in the pod."
+    },
+    "appVersion": {
+      "type": "string",
+      "description": "Version of the app running in the pod."
+    },
+    "statusCode": {
+      "type": "string",
+      "description": "Status code."
+    },
+    "statusCodeDetails": {
+      "type": "string",
+      "description": "Human-readable details for the status code."
+    }
+  }
+}

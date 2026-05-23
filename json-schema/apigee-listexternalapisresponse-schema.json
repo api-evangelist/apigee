@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListExternalApisResponse",
+  "title": "ListExternalApisResponse",
+  "type": "object",
+  "properties": {
+    "externalApis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ExternalApi"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    },
+    "totalSize": {
+      "type": "integer",
+      "format": "int32"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DeveloperApp",
+  "title": "DeveloperApp",
+  "type": "object",
+  "description": "A developer app that is associated with a developer.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the developer app."
+    },
+    "appId": {
+      "type": "string",
+      "description": "Output only. ID of the developer app.",
+      "readOnly": true
+    },
+    "developerId": {
+      "type": "string",
+      "description": "Output only. Developer ID of the owning developer.",
+      "readOnly": true
+    },
+    "apiProducts": {
+      "type": "array",
+      "description": "List of API products associated with the app.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Custom attributes for the developer app.",
+      "items": {
+        "$ref": "#/components/schemas/Attribute"
+      }
+    },
+    "callbackUrl": {
+      "type": "string",
+      "description": "Callback URL used by OAuth 2.0 authorization servers."
+    },
+    "credentials": {
+      "type": "array",
+      "description": "Output only. Credentials (API keys) for the app.",
+      "readOnly": true,
+      "items": {
+        "$ref": "#/components/schemas/DeveloperAppKey"
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the developer app (approved or revoked)."
+    },
+    "scopes": {
+      "type": "array",
+      "description": "OAuth scopes associated with the app.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Time the app was created in milliseconds since epoch.",
+      "readOnly": true
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Time the app was last modified.",
+      "readOnly": true
+    }
+  }
+}

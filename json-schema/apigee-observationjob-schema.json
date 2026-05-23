@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ObservationJob",
+  "title": "ObservationJob",
+  "type": "object",
+  "description": "An API observation job that analyzes traffic to discover shadow APIs.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the observation job.",
+      "readOnly": true
+    },
+    "state": {
+      "type": "string",
+      "description": "State of the observation job.",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "CREATING",
+        "ENABLING",
+        "ENABLED",
+        "DISABLING",
+        "DISABLED",
+        "DELETING"
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "description": "Observation sources for this job.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the job was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the job was last updated.",
+      "readOnly": true
+    }
+  }
+}

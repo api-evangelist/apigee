@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListAttributesResponse",
+  "title": "ListAttributesResponse",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Attribute"
+      }
+    },
+    "nextPageToken": {
+      "type": "string"
+    },
+    "totalSize": {
+      "type": "integer",
+      "format": "int32"
+    }
+  }
+}

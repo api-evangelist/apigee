@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListDeveloperAppKeysResponse",
+  "title": "ListDeveloperAppKeysResponse",
+  "type": "object",
+  "description": "Response for listing developer app keys.",
+  "properties": {
+    "developerAppKey": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DeveloperAppKey"
+      }
+    }
+  }
+}

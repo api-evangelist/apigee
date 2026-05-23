@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ScheduleIntegrationResponse",
+  "title": "ScheduleIntegrationResponse",
+  "type": "object",
+  "description": "Response from scheduling an integration execution.",
+  "properties": {
+    "executionInfoIds": {
+      "type": "array",
+      "description": "Execution info IDs for the scheduled run.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

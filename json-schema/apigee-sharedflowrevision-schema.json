@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SharedFlowRevision",
+  "title": "SharedFlowRevision",
+  "type": "object",
+  "description": "Metadata and details for a specific shared flow revision.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Resource name of the shared flow revision."
+    },
+    "revision": {
+      "type": "string",
+      "description": "Revision number."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the revision."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the revision was created."
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the revision was last modified."
+    },
+    "policies": {
+      "type": "array",
+      "description": "List of policies in the shared flow.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resources": {
+      "type": "array",
+      "description": "List of resource files.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sharedFlows": {
+      "type": "array",
+      "description": "List of referenced shared flows.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

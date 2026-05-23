@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LintResponse",
+  "title": "LintResponse",
+  "type": "object",
+  "description": "Lint results for an API specification.",
+  "properties": {
+    "linter": {
+      "type": "string",
+      "description": "Name of the linter used."
+    },
+    "state": {
+      "type": "string",
+      "description": "State of the linting process.",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "LINT_PENDING",
+        "LINT_COMPLETED",
+        "LINT_ERROR"
+      ]
+    },
+    "issues": {
+      "type": "array",
+      "description": "List of lint issues found.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "SEVERITY_UNSPECIFIED",
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "HINT"
+            ]
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "array",
+      "description": "Summary of lint results by severity.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}

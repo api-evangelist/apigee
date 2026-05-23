@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/IntegrationVersion",
+  "title": "IntegrationVersion",
+  "type": "object",
+  "description": "A version of an integration containing the complete configuration.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the version.",
+      "readOnly": true
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the integration version."
+    },
+    "taskConfigs": {
+      "type": "array",
+      "description": "List of task configurations in the integration.",
+      "items": {
+        "$ref": "#/components/schemas/TaskConfig"
+      }
+    },
+    "triggerConfigs": {
+      "type": "array",
+      "description": "List of trigger configurations.",
+      "items": {
+        "$ref": "#/components/schemas/TriggerConfig"
+      }
+    },
+    "integrationParameters": {
+      "type": "array",
+      "description": "Parameters used by the integration.",
+      "items": {
+        "$ref": "#/components/schemas/IntegrationParameter"
+      }
+    },
+    "state": {
+      "type": "string",
+      "description": "State of the integration version.",
+      "enum": [
+        "INTEGRATION_STATE_UNSPECIFIED",
+        "DRAFT",
+        "ACTIVE",
+        "ARCHIVED",
+        "SNAPSHOT"
+      ]
+    },
+    "snapshotNumber": {
+      "type": "string",
+      "format": "int64",
+      "description": "Output only. Auto-incrementing snapshot number.",
+      "readOnly": true
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the version was created.",
+      "readOnly": true
+    },
+    "lastModifierEmail": {
+      "type": "string",
+      "description": "Output only. Email of the last person who modified.",
+      "readOnly": true
+    },
+    "parentTemplateId": {
+      "type": "string",
+      "description": "ID of the template this version was created from."
+    },
+    "userLabel": {
+      "type": "string",
+      "description": "User-defined label for the version."
+    },
+    "databasePersistencePolicy": {
+      "type": "string",
+      "description": "Database persistence policy for execution logs.",
+      "enum": [
+        "DATABASE_PERSISTENCE_POLICY_UNSPECIFIED",
+        "DATABASE_PERSISTENCE_DISABLED",
+        "DATABASE_PERSISTENCE_ASYNC"
+      ]
+    }
+  }
+}

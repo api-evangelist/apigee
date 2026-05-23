@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AttributeValues",
+  "title": "AttributeValues",
+  "type": "object",
+  "description": "Values assigned to an attribute.",
+  "properties": {
+    "enumValues": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/EnumAttributeValue"
+          }
+        }
+      }
+    },
+    "stringValues": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "jsonValues": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "attribute": {
+      "type": "string",
+      "description": "Resource name of the attribute definition."
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiObservation",
+  "title": "ApiObservation",
+  "type": "object",
+  "description": "A discovered shadow API from traffic observation.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the observation.",
+      "readOnly": true
+    },
+    "hostname": {
+      "type": "string",
+      "description": "Hostname of the discovered API."
+    },
+    "serverIps": {
+      "type": "array",
+      "description": "Server IP addresses serving the API.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceLocations": {
+      "type": "array",
+      "description": "Locations where the API was observed.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "apiOperationCount": {
+      "type": "string",
+      "format": "int64",
+      "description": "Number of operations discovered in this API."
+    },
+    "requestCount": {
+      "type": "string",
+      "format": "int64",
+      "description": "Total number of requests observed."
+    },
+    "lastEventDetectedTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time of the last observed event."
+    },
+    "firstEventDetectedTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time of the first observed event."
+    },
+    "style": {
+      "type": "string",
+      "description": "Inferred API style.",
+      "enum": [
+        "STYLE_UNSPECIFIED",
+        "REST",
+        "GRPC",
+        "GRAPHQL"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "description": "User-defined tags for the observation.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the observation was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the observation was last updated.",
+      "readOnly": true
+    }
+  }
+}

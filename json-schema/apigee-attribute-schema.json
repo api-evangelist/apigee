@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Attribute",
+  "title": "Attribute",
+  "type": "object",
+  "description": "A custom attribute definition.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the attribute.",
+      "readOnly": true
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Required. Display name for the attribute."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the attribute."
+    },
+    "definitionType": {
+      "type": "string",
+      "description": "Type of the attribute definition.",
+      "enum": [
+        "DEFINITION_TYPE_UNSPECIFIED",
+        "SYSTEM_DEFINED",
+        "USER_DEFINED"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "description": "Scope of the attribute.",
+      "enum": [
+        "SCOPE_UNSPECIFIED",
+        "API",
+        "VERSION",
+        "SPEC",
+        "API_OPERATION",
+        "DEPLOYMENT",
+        "DEPENDENCY"
+      ]
+    },
+    "dataType": {
+      "type": "string",
+      "description": "Data type of the attribute values.",
+      "enum": [
+        "DATA_TYPE_UNSPECIFIED",
+        "ENUM",
+        "JSON",
+        "STRING"
+      ]
+    },
+    "allowedValues": {
+      "type": "array",
+      "description": "Allowed values for ENUM data type.",
+      "items": {
+        "$ref": "#/components/schemas/AllowedValue"
+      }
+    },
+    "cardinality": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Maximum number of values for the attribute."
+    },
+    "mandatory": {
+      "type": "boolean",
+      "description": "Whether the attribute is mandatory."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the attribute was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the attribute was last updated.",
+      "readOnly": true
+    }
+  }
+}

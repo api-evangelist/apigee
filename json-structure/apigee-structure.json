@@ -1,0 +1,840 @@
+{
+  "provider": "Apigee",
+  "providerId": "apigee",
+  "kind": "json-structure",
+  "description": "Structural overview of the Apigee API surface; extracted from openapi/.",
+  "schemaCount": 39,
+  "operationCount": 65,
+  "schemas": [
+    {
+      "name": "Organization",
+      "type": "object",
+      "propertyCount": 14,
+      "required": []
+    },
+    {
+      "name": "ApiProxy",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "ApiProxyRevision",
+      "type": "object",
+      "propertyCount": 13,
+      "required": []
+    },
+    {
+      "name": "ApiProduct",
+      "type": "object",
+      "propertyCount": 14,
+      "required": []
+    },
+    {
+      "name": "Developer",
+      "type": "object",
+      "propertyCount": 13,
+      "required": [
+        "email",
+        "firstName",
+        "lastName",
+        "userName"
+      ]
+    },
+    {
+      "name": "DeveloperApp",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "DeveloperAppKey",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    },
+    {
+      "name": "Environment",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "Deployment",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "TargetServer",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "name",
+        "host",
+        "port"
+      ]
+    },
+    {
+      "name": "KeyValueMap",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "SharedFlow",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "SharedFlowRevision",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "AppGroup",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "Instance",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "Datastore",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "Stats",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "Attribute",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "EntityMetadata",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Properties",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OperationGroup",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "OperationConfig",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "NodeConfig",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "TlsInfo",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    },
+    {
+      "name": "PodStatus",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "Operation",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "Status",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Error",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListOrganizationsResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListApiProxiesResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListApiProductsResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListDevelopersResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListDeveloperAppsResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListDeveloperAppKeysResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListDeploymentsResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListSharedFlowsResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ListAppGroupsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "ListInstancesResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ListDatastoresResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/organizations",
+      "operationId": "listOrganizations",
+      "summary": "Apigee List Organizations",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations",
+      "operationId": "createOrganization",
+      "summary": "Apigee Create an Organization",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}",
+      "operationId": "getOrganization",
+      "summary": "Apigee Get an Organization",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}",
+      "operationId": "updateOrganization",
+      "summary": "Apigee Update an Organization",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}",
+      "operationId": "deleteOrganization",
+      "summary": "Apigee Delete an Organization",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/apis",
+      "operationId": "listApiProxies",
+      "summary": "Apigee List API Proxies",
+      "tags": [
+        "API Proxies"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/apis",
+      "operationId": "createApiProxy",
+      "summary": "Apigee Create an API Proxy",
+      "tags": [
+        "API Proxies"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/apis/{apiId}",
+      "operationId": "getApiProxy",
+      "summary": "Apigee Get an API Proxy",
+      "tags": [
+        "API Proxies"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/apis/{apiId}",
+      "operationId": "deleteApiProxy",
+      "summary": "Apigee Delete an API Proxy",
+      "tags": [
+        "API Proxies"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/organizations/{organizationId}/apis/{apiId}",
+      "operationId": "patchApiProxy",
+      "summary": "Apigee Update an API Proxy",
+      "tags": [
+        "API Proxies"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/apis/{apiId}/revisions",
+      "operationId": "listApiProxyRevisions",
+      "summary": "Apigee List API Proxy Revisions",
+      "tags": [
+        "API Proxy Revisions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/apis/{apiId}/revisions/{revisionId}",
+      "operationId": "getApiProxyRevision",
+      "summary": "Apigee Get an API Proxy Revision",
+      "tags": [
+        "API Proxy Revisions"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/apis/{apiId}/revisions/{revisionId}",
+      "operationId": "deleteApiProxyRevision",
+      "summary": "Apigee Delete an API Proxy Revision",
+      "tags": [
+        "API Proxy Revisions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/apiproducts",
+      "operationId": "listApiProducts",
+      "summary": "Apigee List API Products",
+      "tags": [
+        "API Products"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/apiproducts",
+      "operationId": "createApiProduct",
+      "summary": "Apigee Create an API Product",
+      "tags": [
+        "API Products"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/apiproducts/{apiProductId}",
+      "operationId": "getApiProduct",
+      "summary": "Apigee Get an API Product",
+      "tags": [
+        "API Products"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}/apiproducts/{apiProductId}",
+      "operationId": "updateApiProduct",
+      "summary": "Apigee Update an API Product",
+      "tags": [
+        "API Products"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/apiproducts/{apiProductId}",
+      "operationId": "deleteApiProduct",
+      "summary": "Apigee Delete an API Product",
+      "tags": [
+        "API Products"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/developers",
+      "operationId": "listDevelopers",
+      "summary": "Apigee List Developers",
+      "tags": [
+        "Developers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/developers",
+      "operationId": "createDeveloper",
+      "summary": "Apigee Create a Developer",
+      "tags": [
+        "Developers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/developers/{developerId}",
+      "operationId": "getDeveloper",
+      "summary": "Apigee Get a Developer",
+      "tags": [
+        "Developers"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}/developers/{developerId}",
+      "operationId": "updateDeveloper",
+      "summary": "Apigee Update a Developer",
+      "tags": [
+        "Developers"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/developers/{developerId}",
+      "operationId": "deleteDeveloper",
+      "summary": "Apigee Delete a Developer",
+      "tags": [
+        "Developers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps",
+      "operationId": "listDeveloperApps",
+      "summary": "Apigee List Developer Apps",
+      "tags": [
+        "Developer Apps"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps",
+      "operationId": "createDeveloperApp",
+      "summary": "Apigee Create a Developer App",
+      "tags": [
+        "Developer Apps"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}",
+      "operationId": "getDeveloperApp",
+      "summary": "Apigee Get a Developer App",
+      "tags": [
+        "Developer Apps"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}",
+      "operationId": "updateDeveloperApp",
+      "summary": "Apigee Update a Developer App",
+      "tags": [
+        "Developer Apps"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}",
+      "operationId": "deleteDeveloperApp",
+      "summary": "Apigee Delete a Developer App",
+      "tags": [
+        "Developer Apps"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys",
+      "operationId": "listDeveloperAppKeys",
+      "summary": "Apigee List Developer App Keys",
+      "tags": [
+        "Developer App Keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys",
+      "operationId": "createDeveloperAppKey",
+      "summary": "Apigee Create a Developer App Key",
+      "tags": [
+        "Developer App Keys"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}",
+      "operationId": "getDeveloperAppKey",
+      "summary": "Apigee Get a Developer App Key",
+      "tags": [
+        "Developer App Keys"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}",
+      "operationId": "updateDeveloperAppKey",
+      "summary": "Apigee Update a Developer App Key",
+      "tags": [
+        "Developer App Keys"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}",
+      "operationId": "deleteDeveloperAppKey",
+      "summary": "Apigee Delete a Developer App Key",
+      "tags": [
+        "Developer App Keys"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/environments",
+      "operationId": "listEnvironments",
+      "summary": "Apigee List Environments",
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/environments",
+      "operationId": "createEnvironment",
+      "summary": "Apigee Create an Environment",
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/environments/{environmentId}",
+      "operationId": "getEnvironment",
+      "summary": "Apigee Get an Environment",
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}/environments/{environmentId}",
+      "operationId": "updateEnvironment",
+      "summary": "Apigee Update an Environment",
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/environments/{environmentId}",
+      "operationId": "deleteEnvironment",
+      "summary": "Apigee Delete an Environment",
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments",
+      "operationId": "deployApiProxyRevision",
+      "summary": "Apigee Deploy an API Proxy Revision",
+      "tags": [
+        "Deployments"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments",
+      "operationId": "undeployApiProxyRevision",
+      "summary": "Apigee Undeploy an API Proxy Revision",
+      "tags": [
+        "Deployments"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/deployments",
+      "operationId": "listOrganizationDeployments",
+      "summary": "Apigee List Organization Deployments",
+      "tags": [
+        "Deployments"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/targetservers",
+      "operationId": "listTargetServers",
+      "summary": "Apigee List Target Servers",
+      "tags": [
+        "Target Servers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/targetservers",
+      "operationId": "createTargetServer",
+      "summary": "Apigee Create a Target Server",
+      "tags": [
+        "Target Servers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}",
+      "operationId": "getTargetServer",
+      "summary": "Apigee Get a Target Server",
+      "tags": [
+        "Target Servers"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}",
+      "operationId": "updateTargetServer",
+      "summary": "Apigee Update a Target Server",
+      "tags": [
+        "Target Servers"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}",
+      "operationId": "deleteTargetServer",
+      "summary": "Apigee Delete a Target Server",
+      "tags": [
+        "Target Servers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/keyvaluemaps",
+      "operationId": "listKeyValueMaps",
+      "summary": "Apigee List Key Value Maps",
+      "tags": [
+        "Key Value Maps"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/keyvaluemaps",
+      "operationId": "createKeyValueMap",
+      "summary": "Apigee Create a Key Value Map",
+      "tags": [
+        "Key Value Maps"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}",
+      "operationId": "deleteKeyValueMap",
+      "summary": "Apigee Delete a Key Value Map",
+      "tags": [
+        "Key Value Maps"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/sharedflows",
+      "operationId": "listSharedFlows",
+      "summary": "Apigee List Shared Flows",
+      "tags": [
+        "Shared Flows"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/sharedflows",
+      "operationId": "createSharedFlow",
+      "summary": "Apigee Create a Shared Flow",
+      "tags": [
+        "Shared Flows"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/sharedflows/{sharedFlowId}",
+      "operationId": "getSharedFlow",
+      "summary": "Apigee Get a Shared Flow",
+      "tags": [
+        "Shared Flows"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/sharedflows/{sharedFlowId}",
+      "operationId": "deleteSharedFlow",
+      "summary": "Apigee Delete a Shared Flow",
+      "tags": [
+        "Shared Flows"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}",
+      "operationId": "getEnvironmentStats",
+      "summary": "Apigee Get Environment Statistics",
+      "tags": [
+        "Analytics"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/analytics/datastores",
+      "operationId": "listDatastores",
+      "summary": "Apigee List Analytics Data Stores",
+      "tags": [
+        "Analytics"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/analytics/datastores",
+      "operationId": "createDatastore",
+      "summary": "Apigee Create an Analytics Data Store",
+      "tags": [
+        "Analytics"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/appgroups",
+      "operationId": "listAppGroups",
+      "summary": "Apigee List App Groups",
+      "tags": [
+        "App Groups"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/appgroups",
+      "operationId": "createAppGroup",
+      "summary": "Apigee Create an App Group",
+      "tags": [
+        "App Groups"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/appgroups/{appGroupId}",
+      "operationId": "getAppGroup",
+      "summary": "Apigee Get an App Group",
+      "tags": [
+        "App Groups"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/{organizationId}/appgroups/{appGroupId}",
+      "operationId": "updateAppGroup",
+      "summary": "Apigee Update an App Group",
+      "tags": [
+        "App Groups"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/appgroups/{appGroupId}",
+      "operationId": "deleteAppGroup",
+      "summary": "Apigee Delete an App Group",
+      "tags": [
+        "App Groups"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/instances",
+      "operationId": "listInstances",
+      "summary": "Apigee List Runtime Instances",
+      "tags": [
+        "Instances"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/{organizationId}/instances",
+      "operationId": "createInstance",
+      "summary": "Apigee Create a Runtime Instance",
+      "tags": [
+        "Instances"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}/instances/{instanceId}",
+      "operationId": "getInstance",
+      "summary": "Apigee Get a Runtime Instance",
+      "tags": [
+        "Instances"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/{organizationId}/instances/{instanceId}",
+      "operationId": "deleteInstance",
+      "summary": "Apigee Delete a Runtime Instance",
+      "tags": [
+        "Instances"
+      ]
+    }
+  ]
+}

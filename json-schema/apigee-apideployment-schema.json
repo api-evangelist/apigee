@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiDeployment",
+  "title": "ApiDeployment",
+  "type": "object",
+  "description": "A deployment record for an API.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Resource name of the deployment."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable display name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the deployment."
+    },
+    "apiSpecRevision": {
+      "type": "string",
+      "description": "Resource name of the associated spec revision."
+    },
+    "endpointUri": {
+      "type": "string",
+      "description": "URI of the deployment endpoint."
+    },
+    "externalChannelUri": {
+      "type": "string",
+      "description": "URI of an external channel."
+    },
+    "intendedAudience": {
+      "type": "string",
+      "description": "Intended audience for the deployment."
+    },
+    "accessGuidance": {
+      "type": "string",
+      "description": "Guidance for accessing the deployment."
+    },
+    "revisionId": {
+      "type": "string",
+      "description": "Output only. Immutable revision identifier.",
+      "readOnly": true
+    },
+    "revisionCreateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the revision was created.",
+      "readOnly": true
+    },
+    "revisionUpdateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the revision was last updated.",
+      "readOnly": true
+    },
+    "labels": {
+      "type": "object",
+      "description": "User-defined labels.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "description": "User-defined annotations.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Creation time.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Last update time.",
+      "readOnly": true
+    }
+  }
+}

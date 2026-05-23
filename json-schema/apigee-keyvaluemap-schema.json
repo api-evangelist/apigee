@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/KeyValueMap",
+  "title": "KeyValueMap",
+  "type": "object",
+  "description": "A key value map used for runtime data storage.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Required. Name of the key value map."
+    },
+    "encrypted": {
+      "type": "boolean",
+      "description": "Whether the values in the map are encrypted."
+    }
+  }
+}

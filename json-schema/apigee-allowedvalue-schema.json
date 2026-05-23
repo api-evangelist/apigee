@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AllowedValue",
+  "title": "AllowedValue",
+  "type": "object",
+  "description": "An allowed value for an ENUM attribute.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ID of the allowed value."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the allowed value."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the allowed value."
+    },
+    "immutable": {
+      "type": "boolean",
+      "description": "Whether the value is immutable."
+    }
+  }
+}

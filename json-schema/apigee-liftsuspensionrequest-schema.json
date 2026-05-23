@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LiftSuspensionRequest",
+  "title": "LiftSuspensionRequest",
+  "type": "object",
+  "description": "Request to lift a suspension.",
+  "properties": {
+    "suspensionResult": {
+      "type": "string",
+      "description": "Result of the suspension lift."
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ObservationSource",
+  "title": "ObservationSource",
+  "type": "object",
+  "description": "A source of network traffic for API observation.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Output only. Resource name of the source.",
+      "readOnly": true
+    },
+    "gclbObservationSource": {
+      "type": "object",
+      "description": "Google Cloud Load Balancer as observation source.",
+      "properties": {
+        "pscNetworkConfigs": {
+          "type": "array",
+          "description": "Private Service Connect network configurations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "VPC network resource name."
+              },
+              "subnetwork": {
+                "type": "string",
+                "description": "Subnetwork resource name."
+              }
+            }
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "string",
+      "description": "State of the observation source.",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "CREATING",
+        "CREATED",
+        "DELETING",
+        "ERROR"
+      ]
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the source was created.",
+      "readOnly": true
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Output only. Time the source was last updated.",
+      "readOnly": true
+    }
+  }
+}

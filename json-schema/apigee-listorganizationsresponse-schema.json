@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ListOrganizationsResponse",
+  "title": "ListOrganizationsResponse",
+  "type": "object",
+  "description": "Response for listing organizations.",
+  "properties": {
+    "organizations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Organization"
+      }
+    }
+  }
+}
