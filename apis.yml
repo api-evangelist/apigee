@@ -391,3 +391,5 @@ common:
   url: https://github.com/apigee/apigeelint
 - type: GitHubRepository
   url: https://github.com/apigee/devrel
+- type: LLMsTxt
+  url: https://apigee.com/llms.txt
