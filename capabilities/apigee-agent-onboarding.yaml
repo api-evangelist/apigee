@@ -5,7 +5,7 @@ info:
     Management. Verifies Web Bot Auth signatures (RFC 9421), composes developer + developer-app +
     app-key operations into a single scoped credential issuance, and emits an audit event to
     Google Cloud Audit Logs (the canonical Tier 2 multi-origin case). Companion to the API
-    Evangelist agent-onboarding pattern.'
+    Evangelist agent-onboarding pattern. Runtime policy enforcement (signature verify, consent check, scope classify, audit emit) lives in the orchestration.steps below — each step that gates issuance carries on_failure: deny. Lint-time validation of this capability shape lives in the companion Polychro ruleset at https://github.com/api-evangelist/posts/blob/main/polychro/agent-onboarding-rules.yaml — Polychro is Naftiko''s governance layer, separate from the capability spec, and is the correct home for cross-object consistency rules that apply across every agent-onboarding capability.'
   tags:
   - Apigee
   - Google Cloud
@@ -273,9 +273,3 @@ capability:
     skill:
       name: onboard-agent
       file: skills/onboard-agent.md
-  governance:
-  - { id: require-web-bot-auth, severity: blocking, description: 'All onboard calls must carry a valid RFC 9421 signature.', enforce_at: [runtime] }
-  - { id: require-consent-hash-match, severity: blocking, description: 'Submitted consent_hash must match AGENT_CONSENT_HASH.', enforce_at: [runtime] }
-  - { id: forbidden-scopes-deny, severity: blocking, description: 'Forbidden scopes return 403.', enforce_at: [runtime] }
-  - { id: approval-required-defer, severity: advisory, description: 'Approval-required scopes return 202 + status URL.', enforce_at: [runtime] }
-  - { id: cloud-audit-logs-side-channel, severity: advisory, description: 'Apigee Admin API operations land in Cloud Audit Logs automatically; orchestration audit event written here is the join key for the worker.', enforce_at: [runtime] }
