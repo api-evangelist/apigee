@@ -1,0 +1,281 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Apigee Agent Onboarding
+  description: 'Apigee Agent Onboarding — automated agent self-registration on Google Apigee API
+    Management. Verifies Web Bot Auth signatures (RFC 9421), composes developer + developer-app +
+    app-key operations into a single scoped credential issuance, and emits an audit event to
+    Google Cloud Audit Logs (the canonical Tier 2 multi-origin case). Companion to the API
+    Evangelist agent-onboarding pattern.'
+  tags:
+  - Apigee
+  - Google Cloud
+  - Agent Onboarding
+  - Web Bot Auth
+  - RFC 9421
+  - API Products
+  - Cloud Audit Logs
+  - Naftiko Capability
+  created: '2026-05-28'
+  modified: '2026-05-28'
+  related:
+  - https://apievangelist.com/2026/05/27/automated-agent-onboarding-is-a-naftiko-capability-not-a-gateway-feature/
+  - https://github.com/api-evangelist/apigee
+binds:
+- namespace: env
+  keys:
+    APIGEE_ORG: APIGEE_ORG
+    APIGEE_ACCESS_TOKEN: APIGEE_ACCESS_TOKEN
+    GCP_PROJECT_ID: GCP_PROJECT_ID
+    CLOUD_AUDIT_LOG_NAME: CLOUD_AUDIT_LOG_NAME
+    AGENT_TRUSTED_ISSUERS: AGENT_TRUSTED_ISSUERS
+    AGENT_CONSENT_HASH: AGENT_CONSENT_HASH
+capability:
+  consumes:
+  - type: http
+    namespace: apigee-management
+    baseUri: https://apigee.googleapis.com/v1
+    description: Apigee Management API operations for developer + app + key + product composition.
+    resources:
+    - name: org-developers
+      path: /organizations/{organizationId}/developers
+      operations:
+      - name: createdeveloper
+        method: POST
+        description: Create a developer record representing the agent's operator identity.
+        outputRawFormat: json
+        outputParameters:
+        - { name: result, type: object, value: $. }
+        inputParameters:
+        - { name: organizationId, in: path, type: string, required: true }
+        - { name: body, in: body, type: object, required: true }
+    - name: org-developer-apps
+      path: /organizations/{organizationId}/developers/{developerEmail}/apps
+      operations:
+      - name: createapp
+        method: POST
+        description: Create the agent's developer-app. Returns consumerKey + consumerSecret
+          (the credential) as part of the response.
+        outputRawFormat: json
+        outputParameters:
+        - { name: result, type: object, value: $. }
+        inputParameters:
+        - { name: organizationId, in: path, type: string, required: true }
+        - { name: developerEmail, in: path, type: string, required: true }
+        - { name: body, in: body, type: object, required: true }
+    - name: org-developer-app-keys
+      path: /organizations/{organizationId}/developers/{developerEmail}/apps/{appName}/keys/{consumerKey}
+      operations:
+      - name: deleteappkey
+        method: DELETE
+        description: Revoke a previously-issued app key (the credential).
+        outputRawFormat: json
+        outputParameters:
+        - { name: result, type: object, value: $. }
+    - name: org-apiproducts
+      path: /organizations/{organizationId}/apiproducts
+      operations:
+      - name: listapiproducts
+        method: GET
+        description: List existing API Products (used to resolve scope names to Product IDs).
+        outputRawFormat: json
+        outputParameters:
+        - { name: result, type: object, value: $. }
+      - name: createapiproduct
+        method: POST
+        description: Create an API Product if the scope-tier Product doesn't already exist.
+          The Product carries the quota, the rate limit, and which API operations are accessible.
+        outputRawFormat: json
+        outputParameters:
+        - { name: result, type: object, value: $. }
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_ACCESS_TOKEN}}'
+  - type: http
+    namespace: gcp-cloud-audit-logs
+    baseUri: https://logging.googleapis.com/v2
+    description: Cloud Audit Logs — Apigee push audit out-of-band here. The worker queries
+      this surface for the apigee.googleapis.com createDeveloper + createDeveloperApp events
+      and joins with the structured custom audit event written here by the orchestration.
+    resources:
+    - name: entries-write
+      path: /entries:write
+      operations:
+      - name: writelogentries
+        method: POST
+        description: Write a structured agent-onboarding audit event.
+        outputRawFormat: json
+        outputParameters:
+        - { name: result, type: object, value: $. }
+        inputParameters:
+        - { name: body, in: body, type: object, required: true }
+    authentication:
+      type: bearer
+      token: '{{env.APIGEE_ACCESS_TOKEN}}'
+  orchestration:
+  - name: onboard-agent
+    description: End-to-end onboarding — verify identity, classify scopes, ensure scope-tier
+      API Product, create developer + app, capture consumerKey, emit Cloud Audit Logs event.
+    inputs:
+    - { name: signature, type: object, required: true }
+    - { name: signature_agent, type: string, required: true }
+    - { name: skill_id, type: string, required: true }
+    - { name: requested_scopes, type: array, required: true }
+    - { name: consent_hash, type: string, required: true }
+    - { name: contact, type: object, required: true }
+    steps:
+    - id: verify_signature
+      type: builtin.web-bot-auth.verify
+      with:
+        signature: '${input.signature}'
+        agent: '${input.signature_agent}'
+        trusted_issuers: '{{env.AGENT_TRUSTED_ISSUERS}}'
+      on_failure: deny
+    - id: verify_consent
+      type: builtin.policy.assert
+      with:
+        assert: '${input.consent_hash} == {{env.AGENT_CONSENT_HASH}}'
+      on_failure: deny
+    - id: classify_scopes
+      type: builtin.policy.scope-classify
+      with:
+        requested: '${input.requested_scopes}'
+    - id: ensure_api_product
+      type: builtin.upsert
+      description: Resolve scope name to an API Product; create if missing.
+      with:
+        list_call: apigee-management.listapiproducts
+        filter: 'name == "${steps.classify_scopes.target}"'
+        create_call: apigee-management.createapiproduct
+        create_with:
+          organizationId: '{{env.APIGEE_ORG}}'
+          body:
+            name: '${steps.classify_scopes.target}'
+            displayName: 'Agent-onboarded scope tier'
+            approvalType: auto
+    - id: create_developer
+      call: apigee-management.createdeveloper
+      with:
+        organizationId: '{{env.APIGEE_ORG}}'
+        body:
+          email: 'agent-${steps.verify_signature.agent_id}@${input.contact.operator}'
+          firstName: Agent
+          lastName: '${steps.verify_signature.agent_id}'
+          userName: 'agent-${steps.verify_signature.agent_id}'
+          attributes:
+          - { name: operator, value: '${input.contact.operator}' }
+          - { name: skill_id, value: '${input.skill_id}' }
+    - id: create_app
+      call: apigee-management.createapp
+      description: Create the developer-app with the scope-tier Product attached. The
+        response contains the credentials envelope including consumerKey + consumerSecret.
+      with:
+        organizationId: '{{env.APIGEE_ORG}}'
+        developerEmail: '${steps.create_developer.email}'
+        body:
+          name: 'agent-app-${steps.verify_signature.agent_id}'
+          apiProducts:
+          - '${steps.ensure_api_product.name}'
+          attributes:
+          - { name: operator, value: '${input.contact.operator}' }
+    - id: emit_audit
+      call: gcp-cloud-audit-logs.writelogentries
+      with:
+        body:
+          entries:
+          - logName: '{{env.CLOUD_AUDIT_LOG_NAME}}'
+            resource:
+              type: apigee_api
+              labels:
+                project_id: '{{env.GCP_PROJECT_ID}}'
+                org: '{{env.APIGEE_ORG}}'
+            jsonPayload:
+              event_type: agent.onboarded
+              agent_id: '${steps.verify_signature.agent_id}'
+              operator: '${input.contact.operator}'
+              support_url: '${input.contact.support_url}'
+              skill_id: '${input.skill_id}'
+              scope_tier: '${steps.classify_scopes.target}'
+              consent_hash: '${input.consent_hash}'
+              app_name: '${steps.create_app.name}'
+              consumer_key_prefix: '${steps.create_app.credentials[0].consumerKey.slice(0,8)}'
+    output:
+      agent_id: '${steps.verify_signature.agent_id}'
+      developer_email: '${steps.create_developer.email}'
+      app_name: '${steps.create_app.name}'
+      credential:
+        type: OAuth2-ClientCredentials
+        consumer_key: '${steps.create_app.credentials[0].consumerKey}'
+        consumer_secret: '${steps.create_app.credentials[0].consumerSecret}'
+        revocation_url: '/v1/agents/${steps.verify_signature.agent_id}/revoke'
+      scope_tier: '${steps.classify_scopes.target}'
+  - name: revoke-agent
+    description: Revoke the consumerKey by deleting the app key entry.
+    inputs:
+    - { name: agent_id, type: string, required: true }
+    - { name: developer_email, type: string, required: true }
+    - { name: app_name, type: string, required: true }
+    - { name: consumer_key, type: string, required: true }
+    steps:
+    - id: delete_key
+      call: apigee-management.deleteappkey
+      with:
+        organizationId: '{{env.APIGEE_ORG}}'
+        developerEmail: '${input.developer_email}'
+        appName: '${input.app_name}'
+        consumerKey: '${input.consumer_key}'
+    output:
+      revoked: true
+  exposes:
+  - type: rest
+    namespace: apigee-agent-onboarding-rest
+    port: 8080
+    description: REST surface — /v1/agents/onboard for Apigee-backed providers.
+    resources:
+    - path: /v1/agents/onboard
+      name: agents-onboard
+      operations:
+      - method: POST
+        name: onboardagent
+        call: orchestration.onboard-agent
+        with:
+          signature: rest.headers.signature
+          signature_agent: rest.headers.signature-agent
+          skill_id: rest.body.skill_id
+          requested_scopes: rest.body.scopes
+          consent_hash: rest.body.consent_hash
+          contact: rest.body.contact
+    - path: /v1/agents/{agent_id}/revoke
+      name: agents-revoke
+      operations:
+      - method: POST
+        name: revokeagent
+        call: orchestration.revoke-agent
+  - type: mcp
+    namespace: apigee-agent-onboarding-mcp
+    port: 9090
+    transport: http
+    description: MCP surface — agent-register and agent-revoke tools.
+    tools:
+    - name: agent-register
+      description: Register an agent with the Apigee-backed surface and obtain
+        consumerKey + consumerSecret scoped to one API Product.
+      hints: { readOnly: false, destructive: false, idempotent: false }
+      call: orchestration.onboard-agent
+    - name: agent-revoke
+      description: Revoke an issued agent credential.
+      hints: { readOnly: false, destructive: true, idempotent: true }
+      call: orchestration.revoke-agent
+  - type: agent-skill
+    namespace: apigee-agent-onboarding-skill
+    description: 'Agent skill at /skills/onboard-agent.md. Apigee credentials are
+      two-part (consumerKey + consumerSecret), typically used as OAuth2 client credentials;
+      the skill documents the client_credentials grant flow against the provider OAuth endpoint.'
+    skill:
+      name: onboard-agent
+      file: skills/onboard-agent.md
+  governance:
+  - { id: require-web-bot-auth, severity: blocking, description: 'All onboard calls must carry a valid RFC 9421 signature.', enforce_at: [runtime] }
+  - { id: require-consent-hash-match, severity: blocking, description: 'Submitted consent_hash must match AGENT_CONSENT_HASH.', enforce_at: [runtime] }
+  - { id: forbidden-scopes-deny, severity: blocking, description: 'Forbidden scopes return 403.', enforce_at: [runtime] }
+  - { id: approval-required-defer, severity: advisory, description: 'Approval-required scopes return 202 + status URL.', enforce_at: [runtime] }
+  - { id: cloud-audit-logs-side-channel, severity: advisory, description: 'Apigee Admin API operations land in Cloud Audit Logs automatically; orchestration audit event written here is the join key for the worker.', enforce_at: [runtime] }
