@@ -2,13 +2,13 @@
   "repo": "apigee",
   "feeds": [
     {
-      "source": "https://cloud.google.com/blog/products/api-management",
-      "feed_url": "",
+      "source": "https://cloud.google.com/apigee/docs/api-platform/security/oauth/oauth-home",
+      "feed_url": "https://cloud.google.com/apigee/docs/api-platform/security/oauth/oauth-home",
       "title": "",
       "saved": 0,
-      "error": "no_feed"
+      "method": "none"
     }
   ],
-  "fetched": "2026-05-17T20:48:52Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 0
 }
