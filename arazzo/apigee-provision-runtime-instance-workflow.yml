@@ -1,0 +1,109 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Provision a Runtime Instance
+  summary: Create an Apigee runtime instance, poll until it is active, then create an environment on it.
+  description: >-
+    The runtime provisioning flow for hybrid and paid organizations. The
+    workflow creates an Apigee runtime instance (a long-running operation), polls
+    the instance until its state reports ACTIVE, and then creates an environment
+    that can later be attached to the instance. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-runtime-instance
+  summary: Create a runtime instance, wait until active, and create an environment.
+  description: >-
+    Creates a runtime instance, polls getInstance until the state is ACTIVE, and
+    creates an environment in the organization.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - instanceName
+    - location
+    - environmentId
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization to provision into.
+      instanceName:
+        type: string
+        description: Resource name for the new runtime instance.
+      location:
+        type: string
+        description: Google Cloud region where the instance resides.
+      environmentId:
+        type: string
+        description: Name for the environment to create after the instance is active.
+  steps:
+  - stepId: createInstance
+    description: >-
+      Create the Apigee runtime instance, which returns a long-running operation
+      while infrastructure is provisioned.
+    operationId: createInstance
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.instanceName
+        location: $inputs.location
+        displayName: $inputs.instanceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      operationName: $response.body#/name
+  - stepId: pollInstance
+    description: >-
+      Poll the instance until its state reports ACTIVE before creating the
+      environment.
+    operationId: getInstance
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: instanceId
+      in: path
+      value: $inputs.instanceName
+    successCriteria:
+    - condition: $statusCode == 200
+    - context: $response.body
+      condition: $.state == "ACTIVE"
+      type: jsonpath
+    outputs:
+      instanceState: $response.body#/state
+    onFailure:
+    - name: retryInstance
+      type: retry
+      stepId: pollInstance
+      retryAfter: 30
+      retryLimit: 20
+  - stepId: createEnvironment
+    description: >-
+      Create an environment in the organization now that the runtime instance is
+      active.
+    operationId: createEnvironment
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.environmentId
+        displayName: $inputs.environmentId
+        deploymentType: PROXY
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      environmentOperation: $response.body#/name
+  outputs:
+    instanceState: $steps.pollInstance.outputs.instanceState
+    environmentOperation: $steps.createEnvironment.outputs.environmentOperation

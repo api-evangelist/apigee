@@ -1,0 +1,101 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Decommission an API Proxy
+  summary: Undeploy a proxy revision from an environment, delete that revision, then delete the proxy.
+  description: >-
+    The full teardown flow for an API proxy. The workflow undeploys the
+    specified revision from an environment, deletes the now-undeployed revision,
+    and finally deletes the proxy itself along with all remaining metadata.
+    Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: decommission-proxy
+  summary: Undeploy a revision, delete the revision, and delete the proxy.
+  description: >-
+    Undeploys the proxy revision from the environment, deletes the revision, and
+    deletes the proxy to fully decommission it.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - apiId
+    - revisionId
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization owning the proxy.
+      environmentId:
+        type: string
+        description: The environment the revision is deployed in.
+      apiId:
+        type: string
+        description: The API proxy to decommission.
+      revisionId:
+        type: string
+        description: The revision to undeploy and delete.
+  steps:
+  - stepId: undeployRevision
+    description: >-
+      Undeploy the proxy revision from the environment so it stops serving
+      requests.
+    operationId: undeployApiProxyRevision
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: revisionId
+      in: path
+      value: $inputs.revisionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      undeployedRevision: $response.body#/revision
+  - stepId: deleteRevision
+    description: >-
+      Delete the undeployed revision, removing its configuration from the
+      organization.
+    operationId: deleteApiProxyRevision
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: revisionId
+      in: path
+      value: $inputs.revisionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deletedRevision: $response.body#/revision
+  - stepId: deleteProxy
+    description: >-
+      Delete the API proxy and all remaining endpoints, policies, and metadata.
+    operationId: deleteApiProxy
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deletedProxy: $response.body#/name
+  outputs:
+    undeployedRevision: $steps.undeployRevision.outputs.undeployedRevision
+    deletedProxy: $steps.deleteProxy.outputs.deletedProxy

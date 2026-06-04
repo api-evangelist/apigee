@@ -1,0 +1,191 @@
+arazzo: 1.0.1
+info:
+  title: Apigee API Hub Catalog and Lint
+  summary: Register an API in API Hub, add a version and spec, trigger a lint, then read the lint outcome.
+  description: >-
+    The API Hub cataloging flow. The workflow creates an API resource, adds a
+    version to it, attaches a machine-readable specification, kicks off a lint of
+    that spec, and reads the spec back to inspect the lint response. Because API
+    Hub linting is a long-running operation and the API Hub description exposes no
+    operation-polling endpoint, the lint step records the returned operation name
+    and the flow then reads the spec to surface lint results. Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiHub
+  url: ../openapi/apigee-api-hub-openapi.yml
+  type: openapi
+workflows:
+- workflowId: catalog-and-lint-api
+  summary: Create an API, version, and spec in API Hub, then lint and inspect the spec.
+  description: >-
+    Creates an API, adds a version and a spec, triggers a lint of the spec, and
+    reads the spec back to surface the lint response.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - apiId
+    - apiDisplayName
+    - versionId
+    - versionDisplayName
+    - specId
+    - specDisplayName
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the API Hub.
+      locationId:
+        type: string
+        description: Google Cloud location of the API Hub resources.
+      apiId:
+        type: string
+        description: Id to assign to the new API resource.
+      apiDisplayName:
+        type: string
+        description: Display name for the API.
+      versionId:
+        type: string
+        description: Id to assign to the new API version.
+      versionDisplayName:
+        type: string
+        description: Display name for the version.
+      specId:
+        type: string
+        description: Id to assign to the new spec.
+      specDisplayName:
+        type: string
+        description: Display name for the spec.
+  steps:
+  - stepId: createApi
+    description: >-
+      Create the API resource that will hold versions and specs in API Hub.
+    operationId: createApi
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: query
+      value: $inputs.apiId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.apiDisplayName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      apiName: $response.body#/name
+  - stepId: createVersion
+    description: >-
+      Add a version to the API representing a specific release.
+    operationId: createApiVersion
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: query
+      value: $inputs.versionId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.versionDisplayName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      versionName: $response.body#/name
+  - stepId: createSpec
+    description: >-
+      Attach a machine-readable specification to the version with strict parsing.
+    operationId: createApiSpec
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: path
+      value: $inputs.versionId
+    - name: specId
+      in: query
+      value: $inputs.specId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.specDisplayName
+        parsingMode: STRICT
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      specName: $response.body#/name
+  - stepId: lintSpec
+    description: >-
+      Trigger a lint of the spec, which returns a long-running operation while
+      validation runs.
+    operationId: lintApiSpec
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: path
+      value: $inputs.versionId
+    - name: specId
+      in: path
+      value: $inputs.specId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      lintOperation: $response.body#/name
+  - stepId: readLintResult
+    description: >-
+      Read the spec back to surface the lint response recorded against it.
+    operationId: getApiSpec
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: path
+      value: $inputs.versionId
+    - name: specId
+      in: path
+      value: $inputs.specId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      lintResponse: $response.body#/lintResponse
+  outputs:
+    apiName: $steps.createApi.outputs.apiName
+    specName: $steps.createSpec.outputs.specName
+    lintOperation: $steps.lintSpec.outputs.lintOperation
+    lintResponse: $steps.readLintResult.outputs.lintResponse

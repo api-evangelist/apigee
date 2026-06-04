@@ -1,0 +1,180 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Shadow API Discovery
+  summary: Create an observation source, wait for it, start an observation job, wait again, then enable it.
+  description: >-
+    The shadow-API discovery flow from the Apigee APIM alpha API. The workflow
+    creates an observation source describing the Google Cloud Load Balancer to
+    monitor, polls the returned long-running operation until it is done, creates
+    an observation job bound to that source, polls again, and finally enables the
+    job so it begins analyzing traffic to surface undocumented APIs. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApim
+  url: ../openapi/apigee-apim-openapi.yml
+  type: openapi
+workflows:
+- workflowId: discover-shadow-apis
+  summary: Provision an observation source and job, then enable shadow API discovery.
+  description: >-
+    Creates an observation source, waits for its long-running operation to
+    complete, creates an observation job referencing the source, waits again,
+    and enables the job.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - observationSourceId
+    - network
+    - subnetwork
+    - observationJobId
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id for the APIM resources.
+      locationId:
+        type: string
+        description: Google Cloud location for the APIM resources.
+      observationSourceId:
+        type: string
+        description: Id to assign to the new observation source.
+      network:
+        type: string
+        description: VPC network resource name to observe.
+      subnetwork:
+        type: string
+        description: Subnetwork resource name to observe.
+      observationJobId:
+        type: string
+        description: Id to assign to the new observation job.
+  steps:
+  - stepId: createSource
+    description: >-
+      Create an observation source describing the load balancer network to
+      monitor; returns a long-running operation.
+    operationId: createObservationSource
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: observationSourceId
+      in: query
+      value: $inputs.observationSourceId
+    requestBody:
+      contentType: application/json
+      payload:
+        gclbObservationSource:
+          pscNetworkConfigs:
+          - network: $inputs.network
+            subnetwork: $inputs.subnetwork
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sourceOperationId: $response.body#/name
+  - stepId: waitForSource
+    description: >-
+      Poll the source provisioning operation until it reports done.
+    operationId: getOperation
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: operationId
+      in: path
+      value: $steps.createSource.outputs.sourceOperationId
+    successCriteria:
+    - condition: $statusCode == 200
+    - context: $response.body
+      condition: $.done == true
+      type: jsonpath
+    outputs:
+      sourceDone: $response.body#/done
+    onFailure:
+    - name: retrySource
+      type: retry
+      stepId: waitForSource
+      retryAfter: 10
+      retryLimit: 18
+  - stepId: createJob
+    description: >-
+      Create an observation job bound to the new source; returns a long-running
+      operation.
+    operationId: createObservationJob
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: observationJobId
+      in: query
+      value: $inputs.observationJobId
+    requestBody:
+      contentType: application/json
+      payload:
+        sources:
+        - $inputs.observationSourceId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      jobOperationId: $response.body#/name
+  - stepId: waitForJob
+    description: >-
+      Poll the job creation operation until it reports done.
+    operationId: getOperation
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: operationId
+      in: path
+      value: $steps.createJob.outputs.jobOperationId
+    successCriteria:
+    - condition: $statusCode == 200
+    - context: $response.body
+      condition: $.done == true
+      type: jsonpath
+    outputs:
+      jobDone: $response.body#/done
+    onFailure:
+    - name: retryJob
+      type: retry
+      stepId: waitForJob
+      retryAfter: 10
+      retryLimit: 18
+  - stepId: enableJob
+    description: >-
+      Enable the observation job so it begins analyzing traffic to discover
+      shadow APIs.
+    operationId: enableObservationJob
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: observationJobId
+      in: path
+      value: $inputs.observationJobId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      enableOperation: $response.body#/name
+  outputs:
+    sourceDone: $steps.waitForSource.outputs.sourceDone
+    jobDone: $steps.waitForJob.outputs.jobDone
+    enableOperation: $steps.enableJob.outputs.enableOperation

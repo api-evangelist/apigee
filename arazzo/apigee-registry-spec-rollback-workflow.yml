@@ -1,0 +1,138 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Registry Spec Revision Rollback
+  summary: Read a spec's current revision, push a new revision via update, then roll back to the original.
+  description: >-
+    The Apigee Registry spec versioning flow. The workflow reads a spec to
+    capture its current revision id, updates the spec contents to create a new
+    revision, and rolls the spec back to the originally captured revision —
+    demonstrating safe spec change and recovery. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeRegistry
+  url: ../openapi/apigee-registry-openapi.yml
+  type: openapi
+workflows:
+- workflowId: rollback-spec-revision
+  summary: Capture a spec revision, create a new one, then roll back to the captured revision.
+  description: >-
+    Reads the current spec revision id, updates the spec to create a new
+    revision, and rolls the spec back to the original revision id.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - apiId
+    - versionId
+    - specId
+    - newDescription
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the Registry.
+      locationId:
+        type: string
+        description: Google Cloud location of the Registry resources.
+      apiId:
+        type: string
+        description: The API that owns the spec.
+      versionId:
+        type: string
+        description: The version that owns the spec.
+      specId:
+        type: string
+        description: The spec to revise and roll back.
+      newDescription:
+        type: string
+        description: New description applied to create a fresh revision.
+  steps:
+  - stepId: getSpec
+    description: >-
+      Read the spec to capture the current revision id to roll back to later.
+    operationId: getApiSpec
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: path
+      value: $inputs.versionId
+    - name: specId
+      in: path
+      value: $inputs.specId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      originalRevisionId: $response.body#/revisionId
+  - stepId: updateSpec
+    description: >-
+      Update the spec description, which creates a new revision of the spec.
+    operationId: updateApiSpec
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: path
+      value: $inputs.versionId
+    - name: specId
+      in: path
+      value: $inputs.specId
+    - name: updateMask
+      in: query
+      value: description
+    requestBody:
+      contentType: application/json
+      payload:
+        description: $inputs.newDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      newRevisionId: $response.body#/revisionId
+  - stepId: rollbackSpec
+    description: >-
+      Roll the spec back to the originally captured revision id.
+    operationId: rollbackApiSpec
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: path
+      value: $inputs.versionId
+    - name: specId
+      in: path
+      value: $inputs.specId
+    requestBody:
+      contentType: application/json
+      payload:
+        revisionId: $steps.getSpec.outputs.originalRevisionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      rolledBackRevisionId: $response.body#/revisionId
+  outputs:
+    originalRevisionId: $steps.getSpec.outputs.originalRevisionId
+    newRevisionId: $steps.updateSpec.outputs.newRevisionId
+    rolledBackRevisionId: $steps.rollbackSpec.outputs.rolledBackRevisionId

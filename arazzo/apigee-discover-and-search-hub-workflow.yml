@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Apigee API Hub Discover and Search
+  summary: Run a full-text search across API Hub, then read a matching API and list its versions.
+  description: >-
+    The API Hub discovery flow. The workflow runs a full-text search across all
+    API Hub resources, then reads a specific API by id and lists its versions to
+    drill into a discovered result. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiHub
+  url: ../openapi/apigee-api-hub-openapi.yml
+  type: openapi
+workflows:
+- workflowId: discover-and-search-hub
+  summary: Search API Hub, then read an API and enumerate its versions.
+  description: >-
+    Searches API Hub resources for a query, reads a chosen API by id, and lists
+    that API's versions.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - query
+    - apiId
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the API Hub.
+      locationId:
+        type: string
+        description: Google Cloud location of the API Hub resources.
+      query:
+        type: string
+        description: Full-text search query string.
+      apiId:
+        type: string
+        description: Id of the API to drill into after searching.
+  steps:
+  - stepId: searchHub
+    description: >-
+      Run a full-text search across API Hub resources to discover matching APIs,
+      versions, and specs.
+    operationId: searchResources
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    requestBody:
+      contentType: application/json
+      payload:
+        query: $inputs.query
+        pageSize: 25
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      searchResults: $response.body#/searchResults
+  - stepId: getApi
+    description: >-
+      Read the chosen API by id to inspect its metadata.
+    operationId: getApi
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      apiDisplayName: $response.body#/displayName
+  - stepId: listVersions
+    description: >-
+      List the versions registered under the chosen API.
+    operationId: listApiVersions
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      versions: $response.body#/versions
+  outputs:
+    searchResults: $steps.searchHub.outputs.searchResults
+    apiDisplayName: $steps.getApi.outputs.apiDisplayName
+    versions: $steps.listVersions.outputs.versions

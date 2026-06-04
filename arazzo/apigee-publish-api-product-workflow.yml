@@ -1,0 +1,138 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Publish an API Proxy as a Product
+  summary: Import a proxy, deploy its revision, then bundle it into an API product ready for consumption.
+  description: >-
+    The publishing flow that turns a raw proxy into a consumable product. The
+    workflow imports an API proxy bundle, deploys its first revision to an
+    environment, creates an API product that bundles the proxy, and reads the
+    product back to confirm its configuration. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: publish-api-product
+  summary: Import and deploy a proxy, then expose it through an API product.
+  description: >-
+    Imports a proxy bundle, deploys revision 1 to an environment, creates an API
+    product bundling the proxy, and reads the product to confirm it is ready for
+    developer consumption.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - proxyName
+    - bundle
+    - productName
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization that will own the proxy and product.
+      environmentId:
+        type: string
+        description: The environment to deploy the proxy revision into.
+      proxyName:
+        type: string
+        description: Unique name for the new API proxy.
+      bundle:
+        type: string
+        description: The API proxy bundle payload (ZIP content) to import.
+      productName:
+        type: string
+        description: Internal name for the API product to publish.
+  steps:
+  - stepId: importProxy
+    description: >-
+      Import the proxy bundle, creating the first revision of a new API proxy.
+    operationId: createApiProxy
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: name
+      in: query
+      value: $inputs.proxyName
+    - name: action
+      in: query
+      value: import
+    requestBody:
+      contentType: application/json
+      payload: $inputs.bundle
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      revision: $response.body#/revision
+  - stepId: deployRevision
+    description: >-
+      Deploy the imported revision to the environment so it is reachable before
+      the product is published.
+    operationId: deployApiProxyRevision
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: apiId
+      in: path
+      value: $inputs.proxyName
+    - name: revisionId
+      in: path
+      value: $steps.importProxy.outputs.revision
+    - name: override
+      in: query
+      value: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deploymentState: $response.body#/state
+  - stepId: createProduct
+    description: >-
+      Create an API product bundling the deployed proxy and making it available
+      in the target environment.
+    operationId: createApiProduct
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.productName
+        displayName: $inputs.productName
+        approvalType: auto
+        proxies:
+        - $inputs.proxyName
+        environments:
+        - $inputs.environmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      productName: $response.body#/name
+  - stepId: confirmProduct
+    description: >-
+      Read the product back to confirm its proxies and environments are bound
+      correctly.
+    operationId: getApiProduct
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: apiProductId
+      in: path
+      value: $inputs.productName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      productProxies: $response.body#/proxies
+      productEnvironments: $response.body#/environments
+  outputs:
+    deploymentState: $steps.deployRevision.outputs.deploymentState
+    productName: $steps.createProduct.outputs.productName
+    productProxies: $steps.confirmProduct.outputs.productProxies

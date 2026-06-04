@@ -1,0 +1,106 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Set Up Analytics Export and Read Stats
+  summary: Create an analytics datastore for export, then query environment statistics for a dimension.
+  description: >-
+    The analytics enablement flow. The workflow creates a datastore that defines
+    where Apigee exports analytics data, then queries environment statistics for
+    a chosen dimension so the operator can confirm analytics data is flowing.
+    Every step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: setup-analytics-datastore
+  summary: Create an analytics datastore and query environment statistics.
+  description: >-
+    Creates a datastore for analytics export and then reads environment
+    statistics for a dimension to confirm analytics availability.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - datastoreDisplayName
+    - targetType
+    - bucketName
+    - dimensionName
+    - select
+    - timeRange
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization to configure analytics for.
+      environmentId:
+        type: string
+        description: The environment to query statistics from.
+      datastoreDisplayName:
+        type: string
+        description: Display name for the analytics datastore.
+      targetType:
+        type: string
+        description: Type of target for the data export (e.g. gcs or bigquery).
+      bucketName:
+        type: string
+        description: Cloud Storage bucket name for the export target.
+      dimensionName:
+        type: string
+        description: The analytics dimension to query statistics for (e.g. apiproxy).
+      select:
+        type: string
+        description: Comma-separated metrics to select (e.g. sum(message_count)).
+      timeRange:
+        type: string
+        description: Time range for the query (MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM).
+  steps:
+  - stepId: createDatastore
+    description: >-
+      Create a datastore describing the Cloud Storage target Apigee will export
+      analytics data to.
+    operationId: createDatastore
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.datastoreDisplayName
+        targetType: $inputs.targetType
+        datastoreConfig:
+          bucketName: $inputs.bucketName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      datastoreSelf: $response.body#/self
+  - stepId: getStats
+    description: >-
+      Query environment statistics for the chosen dimension to confirm analytics
+      data is available.
+    operationId: getEnvironmentStats
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: dimensionName
+      in: path
+      value: $inputs.dimensionName
+    - name: select
+      in: query
+      value: $inputs.select
+    - name: timeRange
+      in: query
+      value: $inputs.timeRange
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      environments: $response.body#/environments
+  outputs:
+    datastoreSelf: $steps.createDatastore.outputs.datastoreSelf
+    environments: $steps.getStats.outputs.environments

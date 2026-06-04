@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Catalog a Shared Flow
+  summary: Import a shared flow bundle, read it back for its revisions, and list shared flow deployments.
+  description: >-
+    The shared flow onboarding flow. The workflow imports a ZIP-formatted shared
+    flow configuration bundle into an organization, reads the shared flow back
+    to discover its created revisions, and lists organization deployments
+    filtered to shared flows to inspect the deployment surface. Note that the
+    underlying spec exposes shared flow import and retrieval but not a shared
+    flow deployment operation, so this flow catalogs and inspects rather than
+    deploys. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: catalog-shared-flow
+  summary: Import a shared flow bundle, resolve its revisions, and inspect shared flow deployments.
+  description: >-
+    Imports a shared flow bundle, reads the shared flow to obtain its latest
+    revision, and lists shared flow deployments across the organization.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - sharedFlowName
+    - bundle
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization to import the shared flow into.
+      sharedFlowName:
+        type: string
+        description: Unique name for the new shared flow.
+      bundle:
+        type: string
+        description: The shared flow bundle payload (ZIP content) to import.
+  steps:
+  - stepId: importSharedFlow
+    description: >-
+      Import the shared flow bundle, creating a new shared flow with its first
+      revision.
+    operationId: createSharedFlow
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: name
+      in: query
+      value: $inputs.sharedFlowName
+    - name: action
+      in: query
+      value: import
+    requestBody:
+      contentType: application/octet-stream
+      payload: $inputs.bundle
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      importedRevision: $response.body#/revision
+  - stepId: getSharedFlow
+    description: >-
+      Read the shared flow to confirm the import and discover its latest
+      revision id.
+    operationId: getSharedFlow
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: sharedFlowId
+      in: path
+      value: $inputs.sharedFlowName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestRevisionId: $response.body#/latestRevisionId
+  - stepId: listSharedFlowDeployments
+    description: >-
+      List organization deployments filtered to shared flows to inspect where
+      shared flows are deployed.
+    operationId: listOrganizationDeployments
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: sharedFlows
+      in: query
+      value: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deployments: $response.body#/deployments
+  outputs:
+    importedRevision: $steps.importSharedFlow.outputs.importedRevision
+    latestRevisionId: $steps.getSharedFlow.outputs.latestRevisionId
+    deployments: $steps.listSharedFlowDeployments.outputs.deployments

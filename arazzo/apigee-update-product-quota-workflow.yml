@@ -1,0 +1,97 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Update an API Product Quota
+  summary: Read an API product, then update its quota limits while preserving its existing bindings.
+  description: >-
+    The quota adjustment flow. Because the Apigee product update replaces the
+    full object, the workflow first reads the existing API product to capture its
+    proxies and environments, then issues an update that carries those bindings
+    forward while applying new quota settings. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: update-product-quota
+  summary: Read a product and reapply it with new quota limits.
+  description: >-
+    Reads the API product to capture its current proxies and environments, then
+    updates the product with new quota, quotaInterval, and quotaTimeUnit while
+    preserving the captured bindings.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - apiProductId
+    - quota
+    - quotaInterval
+    - quotaTimeUnit
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization owning the product.
+      apiProductId:
+        type: string
+        description: The API product to adjust the quota on.
+      quota:
+        type: string
+        description: Number of requests permitted per quota interval.
+      quotaInterval:
+        type: string
+        description: Time interval over which the quota is applied.
+      quotaTimeUnit:
+        type: string
+        description: Time unit for the quota interval (minute, hour, day, month).
+  steps:
+  - stepId: getProduct
+    description: >-
+      Read the API product to capture its current proxies and environments so
+      they can be preserved through the full-object update.
+    operationId: getApiProduct
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: apiProductId
+      in: path
+      value: $inputs.apiProductId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      displayName: $response.body#/displayName
+      proxies: $response.body#/proxies
+      environments: $response.body#/environments
+      approvalType: $response.body#/approvalType
+  - stepId: applyQuota
+    description: >-
+      Update the product with new quota settings, carrying the captured proxies
+      and environments forward.
+    operationId: updateApiProduct
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: apiProductId
+      in: path
+      value: $inputs.apiProductId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.apiProductId
+        displayName: $steps.getProduct.outputs.displayName
+        approvalType: $steps.getProduct.outputs.approvalType
+        proxies: $steps.getProduct.outputs.proxies
+        environments: $steps.getProduct.outputs.environments
+        quota: $inputs.quota
+        quotaInterval: $inputs.quotaInterval
+        quotaTimeUnit: $inputs.quotaTimeUnit
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedQuota: $response.body#/quota
+  outputs:
+    proxies: $steps.getProduct.outputs.proxies
+    updatedQuota: $steps.applyQuota.outputs.updatedQuota

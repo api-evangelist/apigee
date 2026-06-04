@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Tear Down an Environment
+  summary: List deployments, undeploy a proxy revision from the environment, then delete the environment.
+  description: >-
+    The environment decommission flow. The workflow lists organization
+    deployments to inspect what is currently running, undeploys a specified
+    proxy revision from the environment to clear it, and then deletes the
+    environment. Environments must be free of deployed proxies before they can
+    be deleted, so the undeploy step is a prerequisite. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: teardown-environment
+  summary: Clear an environment of a deployed revision and delete it.
+  description: >-
+    Lists deployments, undeploys the supplied proxy revision from the
+    environment, and deletes the environment.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - apiId
+    - revisionId
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization owning the environment.
+      environmentId:
+        type: string
+        description: The environment to tear down.
+      apiId:
+        type: string
+        description: The proxy whose revision must be undeployed first.
+      revisionId:
+        type: string
+        description: The deployed revision to undeploy.
+  steps:
+  - stepId: listDeployments
+    description: >-
+      List organization deployments to inspect what is currently running before
+      tearing the environment down.
+    operationId: listOrganizationDeployments
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deployments: $response.body#/deployments
+  - stepId: undeployRevision
+    description: >-
+      Undeploy the proxy revision from the environment so the environment is
+      free of deployments.
+    operationId: undeployApiProxyRevision
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: revisionId
+      in: path
+      value: $inputs.revisionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      undeployedRevision: $response.body#/revision
+  - stepId: deleteEnvironment
+    description: >-
+      Delete the now-empty environment, which returns a long-running operation
+      while teardown completes.
+    operationId: deleteEnvironment
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      operationName: $response.body#/name
+  outputs:
+    deployments: $steps.listDeployments.outputs.deployments
+    undeployedRevision: $steps.undeployRevision.outputs.undeployedRevision
+    operationName: $steps.deleteEnvironment.outputs.operationName

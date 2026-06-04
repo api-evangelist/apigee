@@ -1,0 +1,130 @@
+arazzo: 1.0.1
+info:
+  title: Apigee API Hub Deployment and Dependency
+  summary: Record a deployment in API Hub, declare a dependency between two APIs, then read it back.
+  description: >-
+    The API Hub governance flow for tracking where an API runs and how APIs
+    relate. The workflow creates a deployment record describing where an API
+    version is exposed, declares a dependency linking a consumer external API to
+    a supplier external API, and reads the dependency back to confirm it. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiHub
+  url: ../openapi/apigee-api-hub-openapi.yml
+  type: openapi
+workflows:
+- workflowId: register-deployment-and-dependency
+  summary: Create a deployment record and a dependency, then read the dependency.
+  description: >-
+    Creates an API Hub deployment record, declares a dependency between a
+    consumer and supplier external API, and reads the dependency back.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - deploymentId
+    - deploymentDisplayName
+    - resourceUri
+    - dependencyId
+    - consumerExternalApi
+    - supplierExternalApi
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the API Hub.
+      locationId:
+        type: string
+        description: Google Cloud location of the API Hub resources.
+      deploymentId:
+        type: string
+        description: Id to assign to the new deployment record.
+      deploymentDisplayName:
+        type: string
+        description: Display name for the deployment.
+      resourceUri:
+        type: string
+        description: URI of the deployed API resource.
+      dependencyId:
+        type: string
+        description: Id to assign to the new dependency.
+      consumerExternalApi:
+        type: string
+        description: Resource name of the consumer external API.
+      supplierExternalApi:
+        type: string
+        description: Resource name of the supplier external API.
+  steps:
+  - stepId: createDeployment
+    description: >-
+      Create a deployment record describing where the API resource is exposed.
+    operationId: createDeployment
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: deploymentId
+      in: query
+      value: $inputs.deploymentId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.deploymentDisplayName
+        resourceUri: $inputs.resourceUri
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deploymentName: $response.body#/name
+  - stepId: createDependency
+    description: >-
+      Declare a dependency linking a consumer external API to a supplier
+      external API.
+    operationId: createDependency
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: dependencyId
+      in: query
+      value: $inputs.dependencyId
+    requestBody:
+      contentType: application/json
+      payload:
+        consumer:
+          externalApiResourceName: $inputs.consumerExternalApi
+        supplier:
+          externalApiResourceName: $inputs.supplierExternalApi
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dependencyName: $response.body#/name
+  - stepId: getDependency
+    description: >-
+      Read the dependency back to confirm its consumer, supplier, and state.
+    operationId: getDependency
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: dependencyId
+      in: path
+      value: $inputs.dependencyId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dependencyState: $response.body#/state
+  outputs:
+    deploymentName: $steps.createDeployment.outputs.deploymentName
+    dependencyName: $steps.createDependency.outputs.dependencyName
+    dependencyState: $steps.getDependency.outputs.dependencyState

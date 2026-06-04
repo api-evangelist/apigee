@@ -1,0 +1,178 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Registry Catalog an API Version
+  summary: Register an API in the Registry, add a version and a spec, then record a deployment.
+  description: >-
+    The Apigee Registry cataloging flow (the legacy companion to API Hub). The
+    workflow creates an API entry, adds a version, attaches a specification with
+    a filename and MIME type, and records a deployment that ties the version to a
+    runtime endpoint. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeRegistry
+  url: ../openapi/apigee-registry-openapi.yml
+  type: openapi
+workflows:
+- workflowId: catalog-registry-version
+  summary: Create an API, version, spec, and deployment in the Registry.
+  description: >-
+    Creates an API, adds a version, attaches a spec, and records an API
+    deployment with an endpoint URI.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - apiId
+    - apiDisplayName
+    - versionId
+    - versionDisplayName
+    - specId
+    - specFilename
+    - mimeType
+    - deploymentId
+    - endpointUri
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the Registry.
+      locationId:
+        type: string
+        description: Google Cloud location of the Registry resources.
+      apiId:
+        type: string
+        description: Id to assign to the new API.
+      apiDisplayName:
+        type: string
+        description: Display name for the API.
+      versionId:
+        type: string
+        description: Id to assign to the new version.
+      versionDisplayName:
+        type: string
+        description: Display name for the version.
+      specId:
+        type: string
+        description: Id to assign to the new spec.
+      specFilename:
+        type: string
+        description: Filename for the spec document.
+      mimeType:
+        type: string
+        description: MIME type of the spec content.
+      deploymentId:
+        type: string
+        description: Id to assign to the new deployment record.
+      endpointUri:
+        type: string
+        description: Runtime endpoint URI for the deployment.
+  steps:
+  - stepId: createApi
+    description: >-
+      Create the API entry that groups the version, spec, and deployment.
+    operationId: createApi
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: query
+      value: $inputs.apiId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.apiDisplayName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      apiName: $response.body#/name
+  - stepId: createVersion
+    description: >-
+      Add a version to the API in the Registry.
+    operationId: createApiVersion
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: apiVersionId
+      in: query
+      value: $inputs.versionId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.versionDisplayName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      versionName: $response.body#/name
+  - stepId: createSpec
+    description: >-
+      Attach a specification document to the version with a filename and MIME
+      type.
+    operationId: createApiSpec
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: versionId
+      in: path
+      value: $inputs.versionId
+    - name: apiSpecId
+      in: query
+      value: $inputs.specId
+    requestBody:
+      contentType: application/json
+      payload:
+        filename: $inputs.specFilename
+        mimeType: $inputs.mimeType
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      specName: $response.body#/name
+  - stepId: createDeployment
+    description: >-
+      Record an API deployment that ties the cataloged API to a runtime endpoint.
+    operationId: createApiDeployment
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: apiDeploymentId
+      in: query
+      value: $inputs.deploymentId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.deploymentId
+        endpointUri: $inputs.endpointUri
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deploymentName: $response.body#/name
+  outputs:
+    apiName: $steps.createApi.outputs.apiName
+    versionName: $steps.createVersion.outputs.versionName
+    specName: $steps.createSpec.outputs.specName
+    deploymentName: $steps.createDeployment.outputs.deploymentName

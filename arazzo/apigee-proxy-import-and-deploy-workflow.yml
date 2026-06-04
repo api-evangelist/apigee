@@ -1,0 +1,125 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Import and Deploy an API Proxy
+  summary: Import an API proxy bundle, find its newest revision, deploy it, and confirm the deployment.
+  description: >-
+    The foundational Apigee proxy lifecycle. The workflow imports a new API
+    proxy into an organization, reads back the proxy to discover the latest
+    revision that was created, deploys that revision to a runtime environment,
+    and then lists organization deployments to confirm the proxy is live. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: import-and-deploy-proxy
+  summary: Import an API proxy bundle and deploy its latest revision to an environment.
+  description: >-
+    Imports an API proxy configuration bundle, resolves the latest revision id,
+    deploys that revision to the target environment, and verifies the deployment
+    appears in the organization deployment list.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - proxyName
+    - bundle
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization that will own the API proxy.
+      environmentId:
+        type: string
+        description: The environment to deploy the imported proxy revision into.
+      proxyName:
+        type: string
+        description: Unique name for the new API proxy within the organization.
+      bundle:
+        type: string
+        description: The API proxy bundle payload (ZIP content) to import.
+  steps:
+  - stepId: importProxy
+    description: >-
+      Import the API proxy bundle into the organization, creating the first
+      revision of a new proxy.
+    operationId: createApiProxy
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: name
+      in: query
+      value: $inputs.proxyName
+    - name: action
+      in: query
+      value: import
+    requestBody:
+      contentType: application/json
+      payload: $inputs.bundle
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      importedRevision: $response.body#/revision
+  - stepId: getProxy
+    description: >-
+      Read the proxy back to confirm the import and discover the latest
+      revision id available for deployment.
+    operationId: getApiProxy
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: apiId
+      in: path
+      value: $inputs.proxyName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestRevisionId: $response.body#/latestRevisionId
+  - stepId: deployRevision
+    description: >-
+      Deploy the latest revision of the proxy to the target environment so it
+      can accept client requests.
+    operationId: deployApiProxyRevision
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: apiId
+      in: path
+      value: $inputs.proxyName
+    - name: revisionId
+      in: path
+      value: $steps.getProxy.outputs.latestRevisionId
+    - name: override
+      in: query
+      value: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deploymentState: $response.body#/state
+      deployedRevision: $response.body#/revision
+  - stepId: confirmDeployment
+    description: >-
+      List the organization deployments to confirm the freshly deployed proxy
+      revision is present.
+    operationId: listOrganizationDeployments
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deployments: $response.body#/deployments
+  outputs:
+    latestRevisionId: $steps.getProxy.outputs.latestRevisionId
+    deploymentState: $steps.deployRevision.outputs.deploymentState
+    deployments: $steps.confirmDeployment.outputs.deployments

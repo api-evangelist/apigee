@@ -1,0 +1,152 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Onboard a Developer App
+  summary: Create an API product, register a developer, create their app, and read the issued API keys.
+  description: >-
+    The classic Apigee consumer-onboarding flow. The workflow creates an API
+    product that bundles one or more proxies, registers a developer account,
+    creates a developer app bound to that product (which auto-generates a
+    consumer key and secret), and then reads back the app keys so they can be
+    handed to the developer. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: onboard-developer-app
+  summary: Provision an API product, developer, and app, then retrieve the API keys.
+  description: >-
+    Creates an API product, a developer, and a developer app bound to the
+    product, then lists the app keys to obtain the auto-generated consumer key
+    and secret.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - productName
+    - proxies
+    - environments
+    - developerEmail
+    - firstName
+    - lastName
+    - appName
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization to onboard into.
+      productName:
+        type: string
+        description: Internal name for the new API product.
+      proxies:
+        type: array
+        description: API proxy names to bundle into the product.
+        items:
+          type: string
+      environments:
+        type: array
+        description: Environments where the product is available.
+        items:
+          type: string
+      developerEmail:
+        type: string
+        description: Email address used as the developer's unique identifier.
+      firstName:
+        type: string
+        description: Developer first name.
+      lastName:
+        type: string
+        description: Developer last name.
+      appName:
+        type: string
+        description: Name of the developer app to create.
+  steps:
+  - stepId: createProduct
+    description: >-
+      Create an API product bundling the supplied proxies for consumption with
+      automatic key approval.
+    operationId: createApiProduct
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.productName
+        displayName: $inputs.productName
+        approvalType: auto
+        proxies: $inputs.proxies
+        environments: $inputs.environments
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      createdProduct: $response.body#/name
+  - stepId: createDeveloper
+    description: >-
+      Register the developer account that will own the consuming app.
+    operationId: createDeveloper
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.developerEmail
+        firstName: $inputs.firstName
+        lastName: $inputs.lastName
+        userName: $inputs.developerEmail
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      developerId: $response.body#/developerId
+  - stepId: createApp
+    description: >-
+      Create a developer app bound to the new API product, which auto-generates
+      a consumer key and secret.
+    operationId: createDeveloperApp
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerEmail
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.appName
+        apiProducts:
+        - $inputs.productName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appId: $response.body#/appId
+  - stepId: getAppKeys
+    description: >-
+      List the developer app keys to retrieve the issued consumer key and
+      secret for the new app.
+    operationId: listDeveloperAppKeys
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerEmail
+    - name: appId
+      in: path
+      value: $inputs.appName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      consumerKey: $response.body#/0/consumerKey
+      consumerSecret: $response.body#/0/consumerSecret
+  outputs:
+    developerId: $steps.createDeveloper.outputs.developerId
+    appId: $steps.createApp.outputs.appId
+    consumerKey: $steps.getAppKeys.outputs.consumerKey
+    consumerSecret: $steps.getAppKeys.outputs.consumerSecret

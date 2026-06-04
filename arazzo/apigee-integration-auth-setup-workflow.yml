@@ -1,0 +1,130 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Integration Auth Setup
+  summary: Create an auth config, list auth configs to confirm it, then author an integration version.
+  description: >-
+    The Application Integration credential-bootstrapping flow. The workflow
+    creates an authentication configuration that integrations use to reach
+    external services, lists auth configs to confirm the new one is present, and
+    then authors a draft integration version that will use those credentials.
+    Every step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeIntegrations
+  url: ../openapi/apigee-integrations-openapi.yml
+  type: openapi
+workflows:
+- workflowId: setup-integration-auth
+  summary: Create an auth config, verify it, and author an integration version.
+  description: >-
+    Creates an auth config, lists auth configs to confirm registration, and
+    creates a draft integration version.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - productId
+    - authConfigDisplayName
+    - credentialType
+    - integrationId
+    - versionDescription
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the integration.
+      locationId:
+        type: string
+        description: Google Cloud location of the integration.
+      productId:
+        type: string
+        description: Product identifier (typically the Apigee product name).
+      authConfigDisplayName:
+        type: string
+        description: Display name for the new auth config.
+      credentialType:
+        type: string
+        description: Credential type stored in the auth config (e.g. API_KEY).
+      integrationId:
+        type: string
+        description: Name of the integration to author.
+      versionDescription:
+        type: string
+        description: Description for the new integration version.
+  steps:
+  - stepId: createAuthConfig
+    description: >-
+      Create an auth config that integrations will use to authenticate to
+      external services.
+    operationId: createAuthConfig
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.authConfigDisplayName
+        credentialType: $inputs.credentialType
+        visibility: PRIVATE
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authConfigName: $response.body#/name
+  - stepId: listAuthConfigs
+    description: >-
+      List auth configs to confirm the new credential configuration is present.
+    operationId: listAuthConfigs
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authConfigs: $response.body#/authConfigs
+  - stepId: createVersion
+    description: >-
+      Author a draft integration version that will use the new auth config.
+    operationId: createIntegrationVersion
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    - name: integrationId
+      in: path
+      value: $inputs.integrationId
+    - name: newIntegration
+      in: query
+      value: true
+    requestBody:
+      contentType: application/json
+      payload:
+        description: $inputs.versionDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      versionName: $response.body#/name
+  outputs:
+    authConfigName: $steps.createAuthConfig.outputs.authConfigName
+    authConfigs: $steps.listAuthConfigs.outputs.authConfigs
+    versionName: $steps.createVersion.outputs.versionName

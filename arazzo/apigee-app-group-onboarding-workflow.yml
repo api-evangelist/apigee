@@ -1,0 +1,128 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Onboard an App Group
+  summary: Create an app group, add a developer, register an app, and read the app back.
+  description: >-
+    The app group onboarding flow for organizing developers and their
+    applications. The workflow creates an app group, registers a developer,
+    creates a developer app, and reads the app back to confirm its details.
+    Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: onboard-app-group
+  summary: Create an app group and a developer, then register and read a developer app.
+  description: >-
+    Creates an app group, registers a developer, creates a developer app, and
+    reads the app to confirm its configuration.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - appGroupName
+    - developerEmail
+    - firstName
+    - lastName
+    - appName
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization to onboard into.
+      appGroupName:
+        type: string
+        description: Display name for the new app group.
+      developerEmail:
+        type: string
+        description: Email address used as the developer's unique identifier.
+      firstName:
+        type: string
+        description: Developer first name.
+      lastName:
+        type: string
+        description: Developer last name.
+      appName:
+        type: string
+        description: Name of the developer app to create.
+  steps:
+  - stepId: createAppGroup
+    description: >-
+      Create an app group to organize the developer and their applications.
+    operationId: createAppGroup
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.appGroupName
+        status: active
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appGroupId: $response.body#/appGroupId
+  - stepId: createDeveloper
+    description: >-
+      Register the developer that will be associated with the group.
+    operationId: createDeveloper
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.developerEmail
+        firstName: $inputs.firstName
+        lastName: $inputs.lastName
+        userName: $inputs.developerEmail
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      developerId: $response.body#/developerId
+  - stepId: createApp
+    description: >-
+      Create a developer app for the registered developer.
+    operationId: createDeveloperApp
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerEmail
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.appName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appId: $response.body#/appId
+  - stepId: getApp
+    description: >-
+      Read the developer app to confirm its configuration and capture its
+      generated id.
+    operationId: getDeveloperApp
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerEmail
+    - name: appId
+      in: path
+      value: $inputs.appName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appName: $response.body#/name
+  outputs:
+    appGroupId: $steps.createAppGroup.outputs.appGroupId
+    developerId: $steps.createDeveloper.outputs.developerId
+    appId: $steps.createApp.outputs.appId

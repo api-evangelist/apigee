@@ -1,0 +1,145 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Provision an Environment
+  summary: Create an environment, poll until it is active, then add a target server and a key value map.
+  description: >-
+    The environment provisioning flow. The workflow creates a new runtime
+    environment in an organization, polls the environment until its state
+    reports ACTIVE, and then configures it with a backend target server and a
+    key value map for runtime data storage. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-environment
+  summary: Create an environment, wait until active, and seed it with a target server and KVM.
+  description: >-
+    Creates a runtime environment, polls getEnvironment until the state is
+    ACTIVE, then creates a backend target server and an encrypted key value map
+    in the new environment.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - targetServerName
+    - targetHost
+    - targetPort
+    - kvmName
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization to create the environment in.
+      environmentId:
+        type: string
+        description: Name for the new environment.
+      targetServerName:
+        type: string
+        description: Name for the target server to add to the environment.
+      targetHost:
+        type: string
+        description: Backend hostname for the target server.
+      targetPort:
+        type: integer
+        description: Backend port for the target server.
+      kvmName:
+        type: string
+        description: Name for the key value map to create.
+  steps:
+  - stepId: createEnvironment
+    description: >-
+      Create the runtime environment, which returns a long-running operation
+      while the environment is provisioned.
+    operationId: createEnvironment
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.environmentId
+        displayName: $inputs.environmentId
+        deploymentType: PROXY
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      operationName: $response.body#/name
+  - stepId: pollEnvironment
+    description: >-
+      Poll the environment until its state reports ACTIVE so configuration can
+      be applied safely.
+    operationId: getEnvironment
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    - context: $response.body
+      condition: $.state == "ACTIVE"
+      type: jsonpath
+    outputs:
+      environmentState: $response.body#/state
+    onFailure:
+    - name: retryEnvironment
+      type: retry
+      stepId: pollEnvironment
+      retryAfter: 10
+      retryLimit: 12
+  - stepId: createTargetServer
+    description: >-
+      Create a backend target server so proxies in this environment can route
+      to the backend by reference instead of a hard-coded URL.
+    operationId: createTargetServer
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.targetServerName
+        host: $inputs.targetHost
+        port: $inputs.targetPort
+        isEnabled: true
+        protocol: HTTP
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      targetServerName: $response.body#/name
+  - stepId: createKvm
+    description: >-
+      Create an encrypted key value map in the environment for storing runtime
+      data accessed by policies.
+    operationId: createKeyValueMap
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.kvmName
+        encrypted: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      kvmName: $response.body#/name
+  outputs:
+    environmentState: $steps.pollEnvironment.outputs.environmentState
+    targetServerName: $steps.createTargetServer.outputs.targetServerName
+    kvmName: $steps.createKvm.outputs.kvmName

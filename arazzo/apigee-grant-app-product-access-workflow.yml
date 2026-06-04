@@ -1,0 +1,128 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Grant an App Access to a New Product
+  summary: Create a new API product, confirm the target app and its key, then bind the product to the key.
+  description: >-
+    Extends an existing developer app with access to a newly created API
+    product. The workflow creates the API product, reads the developer app to
+    confirm it and capture its consumer key, and updates that key to include the
+    new product so the app can immediately call the product's resources. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: grant-app-product-access
+  summary: Create a product and bind it to an existing developer app key.
+  description: >-
+    Creates an API product, reads the developer app to obtain its consumer key,
+    and associates the new product with that key.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - productName
+    - proxies
+    - environments
+    - developerId
+    - appId
+    - keyId
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization owning the app and product.
+      productName:
+        type: string
+        description: Internal name for the new API product.
+      proxies:
+        type: array
+        description: Proxies to bundle into the product.
+        items:
+          type: string
+      environments:
+        type: array
+        description: Environments where the product is available.
+        items:
+          type: string
+      developerId:
+        type: string
+        description: Email or developer id that owns the app.
+      appId:
+        type: string
+        description: Name of the developer app to extend.
+      keyId:
+        type: string
+        description: The consumer key of the app to bind the product to.
+  steps:
+  - stepId: createProduct
+    description: >-
+      Create the new API product that the app will be granted access to.
+    operationId: createApiProduct
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.productName
+        displayName: $inputs.productName
+        approvalType: auto
+        proxies: $inputs.proxies
+        environments: $inputs.environments
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      productName: $response.body#/name
+  - stepId: getApp
+    description: >-
+      Read the developer app to confirm it exists and capture its app id before
+      modifying the key.
+    operationId: getDeveloperApp
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerId
+    - name: appId
+      in: path
+      value: $inputs.appId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appName: $response.body#/name
+  - stepId: bindProduct
+    description: >-
+      Associate the new product with the app's consumer key, enabling access to
+      the product's API resources.
+    operationId: updateDeveloperAppKey
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerId
+    - name: appId
+      in: path
+      value: $inputs.appId
+    - name: keyId
+      in: path
+      value: $inputs.keyId
+    requestBody:
+      contentType: application/json
+      payload:
+        apiProducts:
+        - $inputs.productName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      keyStatus: $response.body#/status
+  outputs:
+    productName: $steps.createProduct.outputs.productName
+    keyStatus: $steps.bindProduct.outputs.keyStatus

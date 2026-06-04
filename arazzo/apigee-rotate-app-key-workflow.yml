@@ -1,0 +1,150 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Rotate a Developer App Key
+  summary: Issue a fresh consumer key for an app, grant it product access, then revoke the old key.
+  description: >-
+    The credential rotation flow. The workflow reads a developer app, creates a
+    new consumer key and secret for it, associates the new key with an API
+    product so it can be used immediately, and finally deletes the old key once
+    the replacement is in place. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: rotate-app-key
+  summary: Create a replacement app key bound to a product, then revoke the prior key.
+  description: >-
+    Reads a developer app, creates a new consumer key, associates an API product
+    with the new key, and deletes the previous key to complete the rotation.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - developerId
+    - appId
+    - newConsumerKey
+    - newConsumerSecret
+    - apiProduct
+    - oldKeyId
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization owning the app.
+      developerId:
+        type: string
+        description: Email or developer id that owns the app.
+      appId:
+        type: string
+        description: Name of the developer app whose key is being rotated.
+      newConsumerKey:
+        type: string
+        description: The replacement consumer key value to provision.
+      newConsumerSecret:
+        type: string
+        description: The replacement consumer secret value to provision.
+      apiProduct:
+        type: string
+        description: API product to associate with the new key.
+      oldKeyId:
+        type: string
+        description: The existing consumer key id to revoke after rotation.
+  steps:
+  - stepId: getApp
+    description: >-
+      Read the developer app to confirm it exists and capture its product
+      associations before rotating credentials.
+    operationId: getDeveloperApp
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerId
+    - name: appId
+      in: path
+      value: $inputs.appId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appName: $response.body#/name
+  - stepId: createKey
+    description: >-
+      Create the replacement consumer key and secret for the app.
+    operationId: createDeveloperAppKey
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerId
+    - name: appId
+      in: path
+      value: $inputs.appId
+    requestBody:
+      contentType: application/json
+      payload:
+        consumerKey: $inputs.newConsumerKey
+        consumerSecret: $inputs.newConsumerSecret
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      createdKey: $response.body#/consumerKey
+  - stepId: grantProduct
+    description: >-
+      Associate the API product with the newly created key so it can access the
+      product's resources immediately.
+    operationId: updateDeveloperAppKey
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerId
+    - name: appId
+      in: path
+      value: $inputs.appId
+    - name: keyId
+      in: path
+      value: $inputs.newConsumerKey
+    requestBody:
+      contentType: application/json
+      payload:
+        apiProducts:
+        - $inputs.apiProduct
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      keyStatus: $response.body#/status
+  - stepId: revokeOldKey
+    description: >-
+      Delete the previous consumer key now that the replacement is active and
+      bound to the product.
+    operationId: deleteDeveloperAppKey
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: developerId
+      in: path
+      value: $inputs.developerId
+    - name: appId
+      in: path
+      value: $inputs.appId
+    - name: keyId
+      in: path
+      value: $inputs.oldKeyId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      revokedKey: $response.body#/consumerKey
+  outputs:
+    createdKey: $steps.createKey.outputs.createdKey
+    keyStatus: $steps.grantProduct.outputs.keyStatus
+    revokedKey: $steps.revokeOldKey.outputs.revokedKey

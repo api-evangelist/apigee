@@ -1,0 +1,128 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Roll Out a Target Server Change
+  summary: Create a backend target server, read it back, then update its host and port.
+  description: >-
+    The target server configuration flow. The workflow creates a target server
+    in an environment, reads it back to confirm its initial configuration, and
+    then updates it to point at a new backend host and port — the typical
+    pattern for migrating a backend without touching proxy code. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: rollout-target-server
+  summary: Create a target server, verify it, and repoint it to a new backend.
+  description: >-
+    Creates a target server in an environment, reads it back to confirm the
+    initial host and port, then updates it to a new backend host and port.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - targetServerName
+    - initialHost
+    - initialPort
+    - newHost
+    - newPort
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization owning the environment.
+      environmentId:
+        type: string
+        description: The environment the target server belongs to.
+      targetServerName:
+        type: string
+        description: Name of the target server to manage.
+      initialHost:
+        type: string
+        description: Initial backend hostname.
+      initialPort:
+        type: integer
+        description: Initial backend port.
+      newHost:
+        type: string
+        description: New backend hostname to roll out.
+      newPort:
+        type: integer
+        description: New backend port to roll out.
+  steps:
+  - stepId: createTargetServer
+    description: >-
+      Create the target server pointing at the initial backend host and port.
+    operationId: createTargetServer
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.targetServerName
+        host: $inputs.initialHost
+        port: $inputs.initialPort
+        isEnabled: true
+        protocol: HTTP
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      createdName: $response.body#/name
+  - stepId: getTargetServer
+    description: >-
+      Read the target server back to confirm its initial configuration before
+      changing it.
+    operationId: getTargetServer
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: targetServerId
+      in: path
+      value: $inputs.targetServerName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentHost: $response.body#/host
+  - stepId: updateTargetServer
+    description: >-
+      Update the target server to point at the new backend host and port,
+      completing the rollout.
+    operationId: updateTargetServer
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: targetServerId
+      in: path
+      value: $inputs.targetServerName
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.targetServerName
+        host: $inputs.newHost
+        port: $inputs.newPort
+        isEnabled: true
+        protocol: HTTP
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedHost: $response.body#/host
+  outputs:
+    createdName: $steps.createTargetServer.outputs.createdName
+    currentHost: $steps.getTargetServer.outputs.currentHost
+    updatedHost: $steps.updateTargetServer.outputs.updatedHost

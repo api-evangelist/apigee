@@ -1,0 +1,110 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Promote a New Proxy Revision
+  summary: List a proxy's revisions, deploy the newest one with override, then undeploy the prior revision.
+  description: >-
+    A zero-downtime promotion flow for proxy revisions. The workflow reads the
+    target proxy to find its latest revision, deploys that revision to the
+    environment with override so it takes over the route, and then undeploys the
+    previously running revision. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiManagement
+  url: ../openapi/apigee-api-management-openapi.yml
+  type: openapi
+workflows:
+- workflowId: promote-proxy-revision
+  summary: Deploy the latest proxy revision and retire the previously deployed one.
+  description: >-
+    Reads the proxy to discover the latest revision, deploys it to the
+    environment with override enabled, and undeploys the prior revision to
+    complete the promotion.
+  inputs:
+    type: object
+    required:
+    - organizationId
+    - environmentId
+    - apiId
+    - previousRevisionId
+    properties:
+      organizationId:
+        type: string
+        description: The Apigee organization owning the proxy.
+      environmentId:
+        type: string
+        description: The environment where the revision is promoted.
+      apiId:
+        type: string
+        description: The API proxy whose revision is being promoted.
+      previousRevisionId:
+        type: string
+        description: The currently deployed revision to undeploy after promotion.
+  steps:
+  - stepId: getProxy
+    description: >-
+      Read the proxy to discover the latest revision id to promote.
+    operationId: getApiProxy
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestRevisionId: $response.body#/latestRevisionId
+  - stepId: deployLatest
+    description: >-
+      Deploy the latest revision with override so it takes over the base path
+      from the prior revision.
+    operationId: deployApiProxyRevision
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: revisionId
+      in: path
+      value: $steps.getProxy.outputs.latestRevisionId
+    - name: override
+      in: query
+      value: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      deploymentState: $response.body#/state
+  - stepId: undeployPrevious
+    description: >-
+      Undeploy the previously running revision now that the new revision is
+      serving traffic.
+    operationId: undeployApiProxyRevision
+    parameters:
+    - name: organizationId
+      in: path
+      value: $inputs.organizationId
+    - name: environmentId
+      in: path
+      value: $inputs.environmentId
+    - name: apiId
+      in: path
+      value: $inputs.apiId
+    - name: revisionId
+      in: path
+      value: $inputs.previousRevisionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      undeployedRevision: $response.body#/revision
+  outputs:
+    latestRevisionId: $steps.getProxy.outputs.latestRevisionId
+    deploymentState: $steps.deployLatest.outputs.deploymentState
+    undeployedRevision: $steps.undeployPrevious.outputs.undeployedRevision

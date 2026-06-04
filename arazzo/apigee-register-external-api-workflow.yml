@@ -1,0 +1,124 @@
+arazzo: 1.0.1
+info:
+  title: Apigee API Hub Register External API
+  summary: Register an external API reference, define a custom attribute, then list external APIs.
+  description: >-
+    The API Hub flow for tracking third-party APIs alongside internal ones. The
+    workflow registers an external API reference, defines a user-defined custom
+    attribute scoped to APIs for richer cataloging, and lists external APIs to
+    confirm the new reference is present. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeApiHub
+  url: ../openapi/apigee-api-hub-openapi.yml
+  type: openapi
+workflows:
+- workflowId: register-external-api
+  summary: Register an external API, create a custom attribute, and list external APIs.
+  description: >-
+    Registers an external API reference, defines a user-defined attribute scoped
+    to APIs, and lists external APIs to confirm registration.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - externalApiId
+    - externalApiDisplayName
+    - endpoint
+    - attributeId
+    - attributeDisplayName
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the API Hub.
+      locationId:
+        type: string
+        description: Google Cloud location of the API Hub resources.
+      externalApiId:
+        type: string
+        description: Id to assign to the new external API reference.
+      externalApiDisplayName:
+        type: string
+        description: Display name for the external API.
+      endpoint:
+        type: string
+        description: Endpoint URL for the external API.
+      attributeId:
+        type: string
+        description: Id to assign to the new custom attribute.
+      attributeDisplayName:
+        type: string
+        description: Display name for the custom attribute.
+  steps:
+  - stepId: createExternalApi
+    description: >-
+      Register the external API reference with its display name and endpoint.
+    operationId: createExternalApi
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: externalApiId
+      in: query
+      value: $inputs.externalApiId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.externalApiDisplayName
+        endpoints:
+        - $inputs.endpoint
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      externalApiName: $response.body#/name
+  - stepId: createAttribute
+    description: >-
+      Define a user-defined custom attribute scoped to APIs to enrich the
+      catalog with governance metadata.
+    operationId: createAttribute
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: attributeId
+      in: query
+      value: $inputs.attributeId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.attributeDisplayName
+        definitionType: USER_DEFINED
+        scope: API
+        dataType: STRING
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      attributeName: $response.body#/name
+  - stepId: listExternalApis
+    description: >-
+      List external APIs to confirm the new reference appears in the catalog.
+    operationId: listExternalApis
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      externalApis: $response.body#/externalApis
+  outputs:
+    externalApiName: $steps.createExternalApi.outputs.externalApiName
+    attributeName: $steps.createAttribute.outputs.attributeName
+    externalApis: $steps.listExternalApis.outputs.externalApis

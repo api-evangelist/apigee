@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Integration Execution Monitor
+  summary: Execute an integration, list its recent executions, then read the execution detail.
+  description: >-
+    The Application Integration runtime observability flow. The workflow runs an
+    integration synchronously, lists the integration's recent executions to
+    locate execution records, and reads the detail of the execution that was
+    just triggered. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeIntegrations
+  url: ../openapi/apigee-integrations-openapi.yml
+  type: openapi
+workflows:
+- workflowId: monitor-integration-execution
+  summary: Run an integration, list executions, and read the triggered execution's detail.
+  description: >-
+    Executes an integration synchronously, lists executions, and reads the
+    execution detail for the execution id returned by the run.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - productId
+    - integrationId
+    - triggerId
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the integration.
+      locationId:
+        type: string
+        description: Google Cloud location of the integration.
+      productId:
+        type: string
+        description: Product identifier (typically the Apigee product name).
+      integrationId:
+        type: string
+        description: Name of the integration to execute and monitor.
+      triggerId:
+        type: string
+        description: Trigger id used to start the synchronous execution.
+  steps:
+  - stepId: executeIntegration
+    description: >-
+      Execute the integration synchronously and capture the resulting execution
+      id.
+    operationId: executeIntegration
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    - name: integrationId
+      in: path
+      value: $inputs.integrationId
+    requestBody:
+      contentType: application/json
+      payload:
+        triggerId: $inputs.triggerId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      executionId: $response.body#/executionId
+  - stepId: listExecutions
+    description: >-
+      List the integration's recent executions to surface execution records.
+    operationId: listExecutions
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    - name: integrationId
+      in: path
+      value: $inputs.integrationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      executionInfos: $response.body#/executionInfos
+  - stepId: getExecution
+    description: >-
+      Read the detail of the execution triggered earlier, including its input
+      and output parameters.
+    operationId: getExecution
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    - name: integrationId
+      in: path
+      value: $inputs.integrationId
+    - name: executionId
+      in: path
+      value: $steps.executeIntegration.outputs.executionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      executionName: $response.body#/name
+  outputs:
+    executionId: $steps.executeIntegration.outputs.executionId
+    executionInfos: $steps.listExecutions.outputs.executionInfos
+    executionName: $steps.getExecution.outputs.executionName

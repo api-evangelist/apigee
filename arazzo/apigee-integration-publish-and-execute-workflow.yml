@@ -1,0 +1,136 @@
+arazzo: 1.0.1
+info:
+  title: Apigee Publish and Execute an Integration
+  summary: Create an integration version, publish it, then execute it synchronously and read the result.
+  description: >-
+    The Application Integration authoring-to-runtime flow. The workflow creates a
+    new integration version as a draft, publishes that draft so it becomes the
+    active version, and then executes the integration synchronously by trigger id
+    to confirm it runs end to end. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: apigeeIntegrations
+  url: ../openapi/apigee-integrations-openapi.yml
+  type: openapi
+workflows:
+- workflowId: publish-and-execute-integration
+  summary: Author a draft integration version, publish it, and run it synchronously.
+  description: >-
+    Creates an integration version, publishes it to make it active, and executes
+    the integration synchronously using a trigger id.
+  inputs:
+    type: object
+    required:
+    - projectId
+    - locationId
+    - productId
+    - integrationId
+    - versionDescription
+    - triggerId
+    properties:
+      projectId:
+        type: string
+        description: Google Cloud project id hosting the integration.
+      locationId:
+        type: string
+        description: Google Cloud location of the integration.
+      productId:
+        type: string
+        description: Product identifier (typically the Apigee product name).
+      integrationId:
+        type: string
+        description: Name of the integration to author and run.
+      versionDescription:
+        type: string
+        description: Description for the new integration version.
+      triggerId:
+        type: string
+        description: Trigger id used to start the synchronous execution.
+  steps:
+  - stepId: createVersion
+    description: >-
+      Create a new draft integration version, also creating the integration if
+      it does not yet exist.
+    operationId: createIntegrationVersion
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    - name: integrationId
+      in: path
+      value: $inputs.integrationId
+    - name: newIntegration
+      in: query
+      value: true
+    requestBody:
+      contentType: application/json
+      payload:
+        description: $inputs.versionDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      versionName: $response.body#/name
+  - stepId: publishVersion
+    description: >-
+      Publish the draft version so it becomes the active version that receives
+      execution requests.
+    operationId: publishIntegrationVersion
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    - name: integrationId
+      in: path
+      value: $inputs.integrationId
+    - name: versionId
+      in: path
+      value: $steps.createVersion.outputs.versionName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      publishedState: $response.body#/state
+  - stepId: executeIntegration
+    description: >-
+      Execute the now-active integration synchronously and capture the execution
+      id and output parameters.
+    operationId: executeIntegration
+    parameters:
+    - name: projectId
+      in: path
+      value: $inputs.projectId
+    - name: locationId
+      in: path
+      value: $inputs.locationId
+    - name: productId
+      in: path
+      value: $inputs.productId
+    - name: integrationId
+      in: path
+      value: $inputs.integrationId
+    requestBody:
+      contentType: application/json
+      payload:
+        triggerId: $inputs.triggerId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      executionId: $response.body#/executionId
+      outputParameters: $response.body#/outputParameters
+  outputs:
+    versionName: $steps.createVersion.outputs.versionName
+    publishedState: $steps.publishVersion.outputs.publishedState
+    executionId: $steps.executeIntegration.outputs.executionId
