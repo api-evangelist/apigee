@@ -1,0 +1,1810 @@
+"""
+Apigee GraphQL Schema
+Conceptual schema derived from the Apigee REST API covering API proxy design and deployment,
+developer portals, API products, app management, API analytics, quota management, and API security policies.
+"""
+
+scalar DateTime
+scalar JSON
+scalar Long
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Root Operations
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Query {
+  # Organization
+  organization(name: String!): Organization
+  organizations: [Organization!]!
+
+  # API Proxies
+  apiProxy(organization: String!, name: String!): ApiProxy
+  apiProxies(organization: String!): [ApiProxy!]!
+  apiProxyRevision(organization: String!, name: String!, revision: String!): ApiProxyRevision
+
+  # API Products
+  apiProduct(organization: String!, name: String!): ApiProduct
+  apiProducts(organization: String!, startKey: String, count: Int): ApiProductList!
+
+  # Developers
+  developer(organization: String!, email: String!): Developer
+  developers(organization: String!, startKey: String, count: Int): DeveloperList!
+
+  # Developer Apps
+  developerApp(organization: String!, developerId: String!, appId: String!): DeveloperApp
+  developerApps(organization: String!, developerId: String!): [DeveloperApp!]!
+
+  # App Groups
+  appGroup(organization: String!, name: String!): AppGroup
+  appGroups(organization: String!): [AppGroup!]!
+  appGroupApp(organization: String!, groupName: String!, appId: String!): AppGroupApp
+
+  # Environments
+  environment(organization: String!, name: String!): Environment
+  environments(organization: String!): [Environment!]!
+
+  # Deployments
+  deployments(organization: String!, environment: String!): [Deployment!]!
+  apiProxyDeployments(organization: String!, proxy: String!): [Deployment!]!
+
+  # Shared Flows
+  sharedFlow(organization: String!, name: String!): SharedFlow
+  sharedFlows(organization: String!): [SharedFlow!]!
+
+  # Key Value Maps
+  keyValueMap(organization: String!, environment: String!, name: String!): KeyValueMap
+  keyValueMaps(organization: String!, environment: String!): [KeyValueMap!]!
+
+  # Target Servers
+  targetServer(organization: String!, environment: String!, name: String!): TargetServer
+  targetServers(organization: String!, environment: String!): [TargetServer!]!
+
+  # Analytics
+  analyticsStats(organization: String!, environment: String!, input: AnalyticsQueryInput!): AnalyticsStatsResponse!
+  analyticsReport(organization: String!, reportName: String!): AnalyticsReport
+
+  # Instances
+  instance(organization: String!, name: String!): Instance
+  instances(organization: String!): [Instance!]!
+
+  # Certificates / Keystores
+  keystore(organization: String!, environment: String!, name: String!): Keystore
+  keystores(organization: String!, environment: String!): [Keystore!]!
+  certificate(organization: String!, environment: String!, keystore: String!, alias: String!): Certificate
+
+  # Security
+  securityProfile(organization: String!, name: String!): SecurityProfile
+  securityProfiles(organization: String!): [SecurityProfile!]!
+
+  # API Hub
+  apiHubApi(project: String!, location: String!, apiId: String!): ApiHubApi
+  apiHubApis(project: String!, location: String!): [ApiHubApi!]!
+  apiHubVersion(project: String!, location: String!, apiId: String!, versionId: String!): ApiHubVersion
+  apiHubSpec(project: String!, location: String!, apiId: String!, versionId: String!, specId: String!): ApiHubSpec
+  apiHubDeployment(project: String!, location: String!, deploymentId: String!): ApiHubDeployment
+  apiHubDependency(project: String!, location: String!, dependencyId: String!): ApiHubDependency
+  apiHubSearchResults(project: String!, location: String!, query: String!): [ApiHubSearchResult!]!
+
+  # Integrations
+  integration(project: String!, location: String!, name: String!): Integration
+  integrations(project: String!, location: String!): [Integration!]!
+  integrationExecution(project: String!, location: String!, integrationName: String!, executionId: String!): IntegrationExecution
+  integrationExecutions(project: String!, location: String!, integrationName: String!): [IntegrationExecution!]!
+  authConfig(project: String!, location: String!, name: String!): AuthConfig
+  authConfigs(project: String!, location: String!): [AuthConfig!]!
+
+  # Monetization
+  ratePlan(organization: String!, apiProduct: String!, id: String!): RatePlan
+  ratePlans(organization: String!, apiProduct: String!): [RatePlan!]!
+  developerBalance(organization: String!, developerId: String!): DeveloperBalance
+  developerMonetizationConfig(organization: String!, developerId: String!): DeveloperMonetizationConfig
+}
+
+type Mutation {
+  # Organizations
+  updateOrganization(name: String!, input: OrganizationInput!): Organization!
+
+  # API Proxies
+  createApiProxy(organization: String!, input: ApiProxyInput!): ApiProxy!
+  deleteApiProxy(organization: String!, name: String!): DeleteResult!
+  deployApiProxyRevision(organization: String!, name: String!, revision: String!, environment: String!): Deployment!
+  undeployApiProxyRevision(organization: String!, name: String!, revision: String!, environment: String!): UndeployResult!
+
+  # API Products
+  createApiProduct(organization: String!, input: ApiProductInput!): ApiProduct!
+  updateApiProduct(organization: String!, name: String!, input: ApiProductInput!): ApiProduct!
+  deleteApiProduct(organization: String!, name: String!): DeleteResult!
+
+  # Developers
+  createDeveloper(organization: String!, input: DeveloperInput!): Developer!
+  updateDeveloper(organization: String!, email: String!, input: DeveloperInput!): Developer!
+  deleteDeveloper(organization: String!, email: String!): DeleteResult!
+
+  # Developer Apps
+  createDeveloperApp(organization: String!, developerId: String!, input: DeveloperAppInput!): DeveloperApp!
+  updateDeveloperApp(organization: String!, developerId: String!, appId: String!, input: DeveloperAppInput!): DeveloperApp!
+  deleteDeveloperApp(organization: String!, developerId: String!, appId: String!): DeleteResult!
+  generateDeveloperAppKey(organization: String!, developerId: String!, appId: String!): AppCredential!
+  revokeDeveloperAppKey(organization: String!, developerId: String!, appId: String!, consumerKey: String!): AppCredential!
+
+  # App Groups
+  createAppGroup(organization: String!, input: AppGroupInput!): AppGroup!
+  updateAppGroup(organization: String!, name: String!, input: AppGroupInput!): AppGroup!
+  deleteAppGroup(organization: String!, name: String!): DeleteResult!
+
+  # Environments
+  createEnvironment(organization: String!, input: EnvironmentInput!): Environment!
+  updateEnvironment(organization: String!, name: String!, input: EnvironmentInput!): Environment!
+  deleteEnvironment(organization: String!, name: String!): DeleteResult!
+
+  # Shared Flows
+  createSharedFlow(organization: String!, input: SharedFlowInput!): SharedFlow!
+  deleteSharedFlow(organization: String!, name: String!): DeleteResult!
+
+  # Key Value Maps
+  createKeyValueMap(organization: String!, environment: String!, input: KeyValueMapInput!): KeyValueMap!
+  deleteKeyValueMap(organization: String!, environment: String!, name: String!): DeleteResult!
+  createKeyValueMapEntry(organization: String!, environment: String!, mapName: String!, input: KeyValueEntryInput!): KeyValueEntry!
+  deleteKeyValueMapEntry(organization: String!, environment: String!, mapName: String!, entryName: String!): DeleteResult!
+
+  # Target Servers
+  createTargetServer(organization: String!, environment: String!, input: TargetServerInput!): TargetServer!
+  updateTargetServer(organization: String!, environment: String!, name: String!, input: TargetServerInput!): TargetServer!
+  deleteTargetServer(organization: String!, environment: String!, name: String!): DeleteResult!
+
+  # Keystores
+  createKeystore(organization: String!, environment: String!, input: KeystoreInput!): Keystore!
+  deleteKeystore(organization: String!, environment: String!, name: String!): DeleteResult!
+  createCertificate(organization: String!, environment: String!, keystore: String!, input: CertificateInput!): Certificate!
+  deleteCertificate(organization: String!, environment: String!, keystore: String!, alias: String!): DeleteResult!
+
+  # Security Profiles
+  createSecurityProfile(organization: String!, input: SecurityProfileInput!): SecurityProfile!
+  updateSecurityProfile(organization: String!, name: String!, input: SecurityProfileInput!): SecurityProfile!
+  deleteSecurityProfile(organization: String!, name: String!): DeleteResult!
+  attachSecurityProfile(organization: String!, name: String!, environment: String!): SecurityProfileEnvironment!
+  detachSecurityProfile(organization: String!, name: String!, environment: String!): DeleteResult!
+
+  # API Hub
+  createApiHubApi(project: String!, location: String!, input: ApiHubApiInput!): ApiHubApi!
+  updateApiHubApi(project: String!, location: String!, apiId: String!, input: ApiHubApiInput!): ApiHubApi!
+  deleteApiHubApi(project: String!, location: String!, apiId: String!): DeleteResult!
+  createApiHubVersion(project: String!, location: String!, apiId: String!, input: ApiHubVersionInput!): ApiHubVersion!
+  createApiHubSpec(project: String!, location: String!, apiId: String!, versionId: String!, input: ApiHubSpecInput!): ApiHubSpec!
+  createApiHubDeployment(project: String!, location: String!, input: ApiHubDeploymentInput!): ApiHubDeployment!
+  createApiHubDependency(project: String!, location: String!, input: ApiHubDependencyInput!): ApiHubDependency!
+
+  # Integrations
+  createIntegration(project: String!, location: String!, input: IntegrationInput!): Integration!
+  publishIntegration(project: String!, location: String!, name: String!, version: String!): Integration!
+  executeIntegration(project: String!, location: String!, name: String!, input: IntegrationExecuteInput!): IntegrationExecuteResponse!
+  createAuthConfig(project: String!, location: String!, input: AuthConfigInput!): AuthConfig!
+  deleteAuthConfig(project: String!, location: String!, name: String!): DeleteResult!
+
+  # Monetization
+  createRatePlan(organization: String!, apiProduct: String!, input: RatePlanInput!): RatePlan!
+  updateRatePlan(organization: String!, apiProduct: String!, id: String!, input: RatePlanInput!): RatePlan!
+  deleteRatePlan(organization: String!, apiProduct: String!, id: String!): DeleteResult!
+  updateDeveloperMonetizationConfig(organization: String!, developerId: String!, input: DeveloperMonetizationConfigInput!): DeveloperMonetizationConfig!
+  topUpDeveloperBalance(organization: String!, developerId: String!, input: TopUpInput!): DeveloperBalance!
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Organization Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Organization {
+  name: String!
+  displayName: String
+  description: String
+  type: OrganizationType
+  projectId: String
+  runtimeType: RuntimeType
+  subscriptionType: String
+  analyticsRegion: String
+  authorizedNetwork: String
+  runtimeDatabaseEncryptionKeyName: String
+  environments: [Environment!]
+  properties: OrganizationProperties
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+  caCertificate: String
+  state: ResourceState
+}
+
+type OrganizationProperties {
+  property: [NameValuePair!]
+}
+
+input OrganizationInput {
+  displayName: String
+  description: String
+  analyticsRegion: String
+  authorizedNetwork: String
+  runtimeDatabaseEncryptionKeyName: String
+  properties: [NameValuePairInput!]
+}
+
+enum OrganizationType {
+  TRIAL
+  PAID
+  INTERNAL
+}
+
+enum RuntimeType {
+  CLOUD
+  HYBRID
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# API Proxy Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type ApiProxy {
+  name: String!
+  displayName: String
+  description: String
+  revisions: [String!]
+  latestRevisionId: String
+  metaData: EntityMetaData
+  labels: JSON
+  apiProxyType: ApiProxyType
+  readOnly: Boolean
+}
+
+type ApiProxyRevision {
+  name: String!
+  revision: String!
+  displayName: String
+  description: String
+  basepaths: [String!]
+  policies: [String!]
+  proxies: [String!]
+  resourceFiles: ResourceFileCollection
+  targetServers: [String!]
+  type: String
+  configurationVersion: ConfigurationVersion
+  contextInfo: String
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+  spec: String
+  entityMetaDataAsProperties: JSON
+  proxyEndpoints: [ProxyEndpoint!]
+  targetEndpoints: [TargetEndpoint!]
+}
+
+type ProxyEndpoint {
+  name: String!
+  basePath: String
+  preFlow: Flow
+  postFlow: Flow
+  flows: [Flow!]
+  faultRules: [FaultRule!]
+  httpProxyConnection: HttpProxyConnection
+}
+
+type TargetEndpoint {
+  name: String!
+  preFlow: Flow
+  postFlow: Flow
+  flows: [Flow!]
+  faultRules: [FaultRule!]
+  httpTargetConnection: HttpTargetConnection
+}
+
+type Flow {
+  name: String
+  condition: String
+  request: FlowStep
+  response: FlowStep
+}
+
+type FlowStep {
+  steps: [Step!]
+}
+
+type Step {
+  name: String!
+  condition: String
+}
+
+type FaultRule {
+  name: String!
+  condition: String
+  steps: [Step!]
+}
+
+type HttpProxyConnection {
+  basePath: String!
+  virtualHost: [String!]
+}
+
+type HttpTargetConnection {
+  url: String
+  loadBalancer: LoadBalancer
+  sSLInfo: SSLInfo
+}
+
+type LoadBalancer {
+  server: [TargetServerRef!]
+  algorithm: LoadBalancerAlgorithm
+  maxFailures: Int
+  retryEnabled: Boolean
+}
+
+type TargetServerRef {
+  name: String!
+  weight: Int
+  isEnabled: Boolean
+}
+
+type SSLInfo {
+  enabled: Boolean
+  clientAuthEnabled: Boolean
+  keyStore: String
+  keyAlias: String
+  trustStore: String
+  ignoreValidationErrors: Boolean
+  protocols: [String!]
+  ciphers: [String!]
+}
+
+type ConfigurationVersion {
+  majorVersion: Int
+  minorVersion: Int
+}
+
+type ResourceFileCollection {
+  resourceFile: [ResourceFile!]
+}
+
+type ResourceFile {
+  name: String!
+  type: String!
+}
+
+input ApiProxyInput {
+  name: String!
+  displayName: String
+  description: String
+  apiProxyType: ApiProxyType
+  labels: JSON
+}
+
+enum ApiProxyType {
+  PROGRAMMABLE
+  EXTENSIBLE
+  GRAPHQL
+}
+
+enum LoadBalancerAlgorithm {
+  ROUND_ROBIN
+  LEAST_CONNECTION
+  WEIGHTED
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# API Product Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type ApiProduct {
+  name: String!
+  displayName: String
+  description: String
+  approvalType: ApprovalType
+  attributes: [Attribute!]
+  environments: [String!]
+  proxies: [String!]
+  apiResources: [String!]
+  operationGroup: OperationGroup
+  quota: String
+  quotaInterval: String
+  quotaTimeUnit: QuotaTimeUnit
+  quotaCounterScope: QuotaCounterScope
+  scopes: [String!]
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+  state: ResourceState
+}
+
+type ApiProductList {
+  apiProduct: [ApiProduct!]!
+  nextPageToken: String
+}
+
+type OperationGroup {
+  operationConfigs: [OperationConfig!]!
+  operationConfigType: String
+}
+
+type OperationConfig {
+  apiSource: String!
+  operations: [ApiOperation!]!
+  quota: Quota
+  attributes: [Attribute!]
+}
+
+type ApiOperation {
+  resource: String!
+  methods: [String!]
+}
+
+type Quota {
+  limit: String
+  interval: String
+  timeUnit: QuotaTimeUnit
+}
+
+input ApiProductInput {
+  name: String!
+  displayName: String
+  description: String
+  approvalType: ApprovalType
+  attributes: [AttributeInput!]
+  environments: [String!]
+  proxies: [String!]
+  apiResources: [String!]
+  quota: String
+  quotaInterval: String
+  quotaTimeUnit: QuotaTimeUnit
+  scopes: [String!]
+}
+
+enum ApprovalType {
+  AUTO
+  MANUAL
+}
+
+enum QuotaTimeUnit {
+  MINUTE
+  HOUR
+  DAY
+  MONTH
+}
+
+enum QuotaCounterScope {
+  PROXY
+  OPERATION
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Developer Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Developer {
+  developerId: String!
+  email: String!
+  firstName: String
+  lastName: String
+  userName: String
+  organizationName: String
+  status: DeveloperStatus
+  attributes: [Attribute!]
+  apps: [String!]
+  companies: [String!]
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+  accessType: String
+}
+
+type DeveloperList {
+  developer: [Developer!]!
+  nextPageToken: String
+}
+
+input DeveloperInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  userName: String!
+  attributes: [AttributeInput!]
+}
+
+enum DeveloperStatus {
+  ACTIVE
+  INACTIVE
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Developer App Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type DeveloperApp {
+  appId: String!
+  name: String!
+  displayName: String
+  status: AppStatus
+  developerId: String
+  organizationName: String
+  attributes: [Attribute!]
+  credentials: [AppCredential!]
+  callbackUrl: String
+  scopes: [String!]
+  apiProducts: [ApiProductRef!]
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+  keyExpiresIn: Long
+  appFamily: String
+}
+
+type AppCredential {
+  consumerKey: String!
+  consumerSecret: String!
+  expiresAt: Long
+  issuedAt: DateTime
+  scopes: [String!]
+  status: CredentialStatus
+  apiProducts: [ApiProductRef!]
+  attributes: [Attribute!]
+}
+
+type ApiProductRef {
+  apiproduct: String!
+  status: CredentialStatus
+}
+
+input DeveloperAppInput {
+  name: String!
+  displayName: String
+  callbackUrl: String
+  apiProducts: [String!]
+  attributes: [AttributeInput!]
+  scopes: [String!]
+  keyExpiresIn: Long
+}
+
+enum AppStatus {
+  APPROVED
+  REVOKED
+}
+
+enum CredentialStatus {
+  APPROVED
+  REVOKED
+  PENDING
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# App Group Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type AppGroup {
+  name: String!
+  displayName: String
+  channelId: String
+  channelUri: String
+  status: AppGroupStatus
+  attributes: [Attribute!]
+  apps: [String!]
+  organizationName: String
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+}
+
+type AppGroupApp {
+  appId: String!
+  name: String!
+  status: AppStatus
+  credentials: [AppCredential!]
+  attributes: [Attribute!]
+  apiProducts: [ApiProductRef!]
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+}
+
+input AppGroupInput {
+  name: String!
+  displayName: String
+  channelId: String
+  channelUri: String
+  status: AppGroupStatus
+  attributes: [AttributeInput!]
+}
+
+enum AppGroupStatus {
+  ACTIVE
+  INACTIVE
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Environment Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Environment {
+  name: String!
+  displayName: String
+  description: String
+  deploymentType: DeploymentType
+  forwardProxyUri: String
+  type: EnvironmentType
+  state: ResourceState
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+  properties: EnvironmentProperties
+  nodeConfig: NodeConfig
+}
+
+type EnvironmentProperties {
+  property: [NameValuePair!]
+}
+
+type NodeConfig {
+  minNodeCount: Long
+  maxNodeCount: Long
+  currentAggregateNodeCount: Long
+}
+
+input EnvironmentInput {
+  name: String!
+  displayName: String
+  description: String
+  deploymentType: DeploymentType
+  forwardProxyUri: String
+  type: EnvironmentType
+}
+
+enum DeploymentType {
+  PROXY
+  ARCHIVE
+}
+
+enum EnvironmentType {
+  BASE
+  INTERMEDIATE
+  COMPREHENSIVE
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Deployment Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Deployment {
+  apiProxy: String!
+  revision: String!
+  environment: String!
+  state: DeploymentState
+  pods: [PodStatus!]
+  deployStartTime: DateTime
+  errors: [DeploymentError!]
+  routeConflicts: [RouteConflict!]
+}
+
+type PodStatus {
+  podName: String
+  podStatus: String
+  podStatusTime: DateTime
+  deploymentStatus: String
+  deploymentStatusTime: DateTime
+  statusCode: String
+  statusCodeDetails: String
+  appVersion: String
+  deployApiProxyVersion: String
+}
+
+type DeploymentError {
+  code: String
+  message: String
+  status: String
+}
+
+type RouteConflict {
+  basepath: String
+  conflictingDeployment: ConflictingDeployment
+}
+
+type ConflictingDeployment {
+  apiProxy: String
+  revision: String
+  basePath: String
+  environment: String
+}
+
+type UndeployResult {
+  success: Boolean!
+  message: String
+}
+
+enum DeploymentState {
+  READY
+  PROGRESSING
+  ERROR
+  UNSPECIFIED
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Shared Flow Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type SharedFlow {
+  name: String!
+  revisions: [String!]
+  latestRevisionId: String
+  metaData: EntityMetaData
+}
+
+type SharedFlowRevision {
+  name: String!
+  revision: String!
+  policies: [String!]
+  resourceFiles: ResourceFileCollection
+  configurationVersion: ConfigurationVersion
+  type: String
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+}
+
+input SharedFlowInput {
+  name: String!
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Key Value Map Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type KeyValueMap {
+  name: String!
+  encrypted: Boolean
+  entry: [KeyValueEntry!]
+}
+
+type KeyValueEntry {
+  name: String!
+  value: String
+}
+
+input KeyValueMapInput {
+  name: String!
+  encrypted: Boolean
+}
+
+input KeyValueEntryInput {
+  name: String!
+  value: String!
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Target Server Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type TargetServer {
+  name: String!
+  host: String!
+  port: Int!
+  isEnabled: Boolean
+  sSLInfo: SSLInfo
+  protocol: TargetServerProtocol
+  description: String
+}
+
+input TargetServerInput {
+  name: String!
+  host: String!
+  port: Int!
+  isEnabled: Boolean
+  protocol: TargetServerProtocol
+  description: String
+}
+
+enum TargetServerProtocol {
+  HTTP
+  GRPC
+  HTTP2
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Analytics Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type AnalyticsStatsResponse {
+  environments: [AnalyticsEnvironmentStats!]!
+  metaData: AnalyticsMetaData
+}
+
+type AnalyticsEnvironmentStats {
+  name: String!
+  metrics: [AnalyticsMetric!]
+  dimensions: [AnalyticsDimension!]
+}
+
+type AnalyticsMetric {
+  name: String!
+  values: [String!]
+}
+
+type AnalyticsDimension {
+  name: String!
+  metrics: [AnalyticsMetric!]
+}
+
+type AnalyticsMetaData {
+  errors: [String!]
+  notices: [String!]
+}
+
+type AnalyticsReport {
+  name: String!
+  displayName: String
+  environment: String
+  dimensions: [String!]
+  metrics: [AnalyticsReportMetric!]
+  filter: String
+  sortByCols: [String!]
+  sortOrder: String
+  topk: String
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+}
+
+type AnalyticsReportMetric {
+  name: String!
+  function: String
+}
+
+input AnalyticsQueryInput {
+  select: String!
+  timeRange: String!
+  filter: String
+  limit: Int
+  offset: Int
+  sort: String
+  sortby: String
+  timeUnit: String
+  tsAscending: Boolean
+  tzo: String
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Instance Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Instance {
+  name: String!
+  displayName: String
+  description: String
+  location: String!
+  host: String
+  port: String
+  state: ResourceState
+  diskEncryptionKeyName: String
+  ipRange: String
+  consumerAcceptList: [String!]
+  peeringCidrRange: PeeringCidrRange
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+}
+
+enum PeeringCidrRange {
+  SLASH_16
+  SLASH_17
+  SLASH_18
+  SLASH_19
+  SLASH_20
+  SLASH_22
+  SLASH_23
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Keystore / Certificate Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Keystore {
+  name: String!
+  aliases: [String!]
+}
+
+type Certificate {
+  alias: String!
+  type: CertificateType
+  certsInfo: CertsInfo
+}
+
+type CertsInfo {
+  certInfo: [CertInfo!]
+}
+
+type CertInfo {
+  subject: String
+  issuer: String
+  expiryDate: String
+  validFrom: String
+  isValid: String
+  version: String
+  sigAlgName: String
+  publicKey: String
+  basicConstraints: String
+  subjectAlternativeNames: [String!]
+  serialNumber: String
+}
+
+input KeystoreInput {
+  name: String!
+}
+
+input CertificateInput {
+  alias: String!
+  password: String
+  certData: String
+  keyData: String
+  ignoreExpiryValidation: Boolean
+  ignoreNewlineValidation: Boolean
+}
+
+enum CertificateType {
+  CERT
+  KEY_CERT
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Security Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type SecurityProfile {
+  name: String!
+  displayName: String
+  description: String
+  scoringConfigs: [SecurityScoringConfig!]
+  profileConfig: SecurityProfileConfig
+  environments: [SecurityProfileEnvironment!]
+  maxScore: Int
+  minScore: Int
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+}
+
+type SecurityScoringConfig {
+  title: String
+  scorePath: String
+  description: String
+}
+
+type SecurityProfileConfig {
+  categories: [SecurityCategory!]
+}
+
+type SecurityCategory {
+  cors: Boolean
+  threat: Boolean
+  mediation: Boolean
+  authorization: Boolean
+}
+
+type SecurityProfileEnvironment {
+  name: String!
+  attachTime: DateTime
+  securityStats: SecurityStats
+}
+
+type SecurityStats {
+  totalScore: Int
+  maxScore: Int
+}
+
+input SecurityProfileInput {
+  displayName: String!
+  description: String
+  scoringConfigs: [SecurityScoringConfigInput!]
+}
+
+input SecurityScoringConfigInput {
+  title: String!
+  scorePath: String!
+  description: String
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# API Hub Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type ApiHubApi {
+  name: String!
+  displayName: String
+  description: String
+  documentation: ApiHubDocumentation
+  owner: ApiHubOwner
+  targetUser: ApiHubAttributeValues
+  team: ApiHubAttributeValues
+  businessUnit: ApiHubAttributeValues
+  maturityLevel: ApiHubAttributeValues
+  versions: [ApiHubVersion!]
+  attributes: JSON
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type ApiHubVersion {
+  name: String!
+  displayName: String
+  description: String
+  documentation: ApiHubDocumentation
+  specs: [ApiHubSpec!]
+  apiOperations: [ApiHubOperation!]
+  definitions: [ApiHubDefinition!]
+  deployments: [String!]
+  lifecycle: ApiHubAttributeValues
+  compliance: ApiHubAttributeValues
+  accreditation: ApiHubAttributeValues
+  attributes: JSON
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type ApiHubSpec {
+  name: String!
+  displayName: String
+  specType: ApiHubAttributeValues
+  contents: ApiHubSpecContents
+  documentation: ApiHubDocumentation
+  lintResponse: LintResponse
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type ApiHubSpecContents {
+  contents: String
+  mimeType: String
+}
+
+type LintResponse {
+  issues: [LintIssue!]
+  summary: [LintIssueSummary!]
+  linter: String
+  lintTime: DateTime
+  state: LintState
+}
+
+type LintIssue {
+  path: [String!]
+  rule: String
+  severity: LintSeverity
+  range: LintRange
+  message: String
+}
+
+type LintIssueSummary {
+  count: Int
+  severity: LintSeverity
+}
+
+type LintRange {
+  start: LintLocation
+  end: LintLocation
+}
+
+type LintLocation {
+  line: Int
+  character: Int
+}
+
+type ApiHubOperation {
+  name: String!
+  spec: String
+  operationMetadata: OperationMetadata
+  details: OperationDetails
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type OperationMetadata {
+  path: String
+  method: HttpMethod
+}
+
+type OperationDetails {
+  description: String
+  documentation: ApiHubDocumentation
+  deprecated: Boolean
+}
+
+type ApiHubDefinition {
+  name: String!
+  spec: String
+  schema: SchemaDetails
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type SchemaDetails {
+  description: String
+  documentation: ApiHubDocumentation
+  rawValue: String
+}
+
+type ApiHubDeployment {
+  name: String!
+  displayName: String
+  description: String
+  documentation: ApiHubDocumentation
+  deploymentType: ApiHubAttributeValues
+  resourceUri: String
+  endpoints: [String!]
+  apiVersions: [String!]
+  sloFile: String
+  environment: ApiHubAttributeValues
+  attributes: JSON
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type ApiHubDependency {
+  name: String!
+  displayName: String
+  description: String
+  consumerDetail: DependencyDetail
+  supplierDetail: DependencyDetail
+  state: DependencyState
+  errorDetail: DependencyErrorDetail
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type DependencyDetail {
+  operationResourceName: String!
+  displayName: String
+}
+
+type DependencyErrorDetail {
+  error: DependencyError
+  errorTime: DateTime
+}
+
+type ApiHubDocumentation {
+  externalUri: String
+}
+
+type ApiHubOwner {
+  displayName: String
+  email: String
+}
+
+type ApiHubAttributeValues {
+  enumValues: ApiHubEnumAttributeValues
+  stringValues: ApiHubStringAttributeValues
+}
+
+type ApiHubEnumAttributeValues {
+  values: [ApiHubEnumValue!]
+}
+
+type ApiHubStringAttributeValues {
+  values: [String!]
+}
+
+type ApiHubEnumValue {
+  id: String!
+  displayName: String
+  description: String
+  immutable: Boolean
+}
+
+type ApiHubSearchResult {
+  displayName: String
+  name: String
+  resourceType: String
+  description: String
+  documentation: ApiHubDocumentation
+}
+
+input ApiHubApiInput {
+  displayName: String!
+  description: String
+  documentation: ApiHubDocumentationInput
+  targetUser: String
+  team: String
+  businessUnit: String
+  maturityLevel: String
+}
+
+input ApiHubVersionInput {
+  displayName: String!
+  description: String
+  documentation: ApiHubDocumentationInput
+  lifecycle: String
+  compliance: String
+}
+
+input ApiHubSpecInput {
+  displayName: String!
+  specType: String!
+  contents: ApiHubSpecContentsInput
+  documentation: ApiHubDocumentationInput
+}
+
+input ApiHubSpecContentsInput {
+  contents: String!
+  mimeType: String!
+}
+
+input ApiHubDeploymentInput {
+  displayName: String!
+  description: String
+  deploymentType: String
+  resourceUri: String!
+  endpoints: [String!]
+  environment: String
+}
+
+input ApiHubDependencyInput {
+  displayName: String
+  description: String
+  consumerDetail: DependencyDetailInput!
+  supplierDetail: DependencyDetailInput!
+}
+
+input DependencyDetailInput {
+  operationResourceName: String!
+}
+
+input ApiHubDocumentationInput {
+  externalUri: String
+}
+
+enum LintState {
+  LINT_STATE_UNSPECIFIED
+  ACTIVE
+  ALL_EXCEPTIONS
+}
+
+enum LintSeverity {
+  SEVERITY_UNSPECIFIED
+  ERROR
+  WARNING
+  INFO
+  HINT
+}
+
+enum DependencyState {
+  DEPENDENCY_STATE_UNSPECIFIED
+  PROPOSED
+  VALIDATED
+}
+
+enum DependencyError {
+  DEPENDENCY_ERROR_UNSPECIFIED
+  SUPPLIER_NOT_FOUND
+  SUPPLIER_RECREATED
+}
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+  HEAD
+  OPTIONS
+  TRACE
+  CONNECT
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Integration Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Integration {
+  name: String!
+  description: String
+  createTime: DateTime
+  updateTime: DateTime
+  state: IntegrationState
+  snapshotNumber: Long
+  triggerId: String
+  integrationParameters: [IntegrationParameter!]
+  integrationConfigParameters: [IntegrationConfigParameter!]
+}
+
+type IntegrationParameter {
+  key: String!
+  dataType: ParameterDataType
+  defaultValue: ParameterValue
+  displayName: String
+  isTransient: Boolean
+  jsonSchema: String
+  masked: Boolean
+  producer: String
+  searchable: Boolean
+  inputOutputType: InputOutputType
+}
+
+type IntegrationConfigParameter {
+  parameter: IntegrationParameter
+  value: ParameterValue
+}
+
+type ParameterValue {
+  stringValue: String
+  intValue: Long
+  doubleValue: Float
+  booleanValue: Boolean
+  stringArray: StringParameterArray
+  intArray: IntParameterArray
+  doubleArray: DoubleParameterArray
+  booleanArray: BooleanParameterArray
+  jsonValue: String
+}
+
+type StringParameterArray {
+  stringValues: [String!]
+}
+
+type IntParameterArray {
+  intValues: [Long!]
+}
+
+type DoubleParameterArray {
+  doubleValues: [Float!]
+}
+
+type BooleanParameterArray {
+  booleanValues: [Boolean!]
+}
+
+type IntegrationExecution {
+  name: String!
+  triggerId: String
+  integrationVersionId: String
+  requestParameters: JSON
+  responseParameters: JSON
+  createTime: DateTime
+  updateTime: DateTime
+  executionState: ExecutionState
+  executionDetails: ExecutionDetails
+}
+
+type ExecutionDetails {
+  executionSnapshots: [ExecutionSnapshot!]
+}
+
+type ExecutionSnapshot {
+  snapshotId: String
+  checkpointId: String
+  executionInfo: ExecutionInfo
+}
+
+type ExecutionInfo {
+  errorInfo: ErrorInfo
+  executionAttempt: Int
+  conditionResults: [ConditionResult!]
+}
+
+type ErrorInfo {
+  errorCode: String
+  errorMessage: String
+  retryInfo: RetryInfo
+  errorTime: DateTime
+}
+
+type RetryInfo {
+  continueOnFailure: Boolean
+  retriesCount: Int
+  retryStrategy: String
+}
+
+type ConditionResult {
+  currentTaskNumber: String
+  candidateTaskNumber: String
+  result: Boolean
+}
+
+type IntegrationExecuteResponse {
+  executionId: String
+  outputParameters: JSON
+  parameterEntries: [ParameterEntry!]
+}
+
+type ParameterEntry {
+  key: String!
+  value: ParameterValue
+}
+
+input IntegrationInput {
+  description: String
+  integrationParameters: [IntegrationParameterInput!]
+}
+
+input IntegrationParameterInput {
+  key: String!
+  dataType: ParameterDataType
+  defaultValue: ParameterValueInput
+  displayName: String
+}
+
+input ParameterValueInput {
+  stringValue: String
+  intValue: Long
+  doubleValue: Float
+  booleanValue: Boolean
+  jsonValue: String
+}
+
+input IntegrationExecuteInput {
+  triggerId: String!
+  inputParameters: JSON
+}
+
+enum IntegrationState {
+  INTEGRATION_STATE_UNSPECIFIED
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  SNAPSHOT
+}
+
+enum ExecutionState {
+  UNSPECIFIED
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  RETRY_ON_HOLD
+}
+
+enum ParameterDataType {
+  INT_VALUE
+  DOUBLE_VALUE
+  STRING_VALUE
+  BOOLEAN_VALUE
+  PROTO_VALUE
+  SERIALIZED_OBJECT_VALUE
+  STRING_ARRAY
+  INT_ARRAY
+  DOUBLE_ARRAY
+  BOOLEAN_ARRAY
+  PROTO_ARRAY
+  JSON_VALUE
+}
+
+enum InputOutputType {
+  IN_OUT_TYPE_UNSPECIFIED
+  IN
+  OUT
+  IN_OUT
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Auth Config Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type AuthConfig {
+  name: String!
+  displayName: String
+  description: String
+  decryptedCredential: Credential
+  encryptedCredential: String
+  secretVersion: String
+  visibility: AuthConfigVisibility
+  certificateId: String
+  credentialType: CredentialType
+  expiryNotificationDuration: [String!]
+  overrideValidTime: DateTime
+  reason: String
+  state: AuthConfigState
+  validTime: DateTime
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type Credential {
+  authToken: AuthToken
+  serviceAccountCredentials: ServiceAccountCredentials
+  oidcToken: OidcToken
+  usernameAndPassword: UsernameAndPassword
+  jwt: JwtCredential
+  oauth2AuthorizationCode: Oauth2AuthorizationCode
+  oauth2ClientCredentials: Oauth2ClientCredentials
+  oauth2ResourceOwnerCredentials: Oauth2ResourceOwnerCredentials
+}
+
+type AuthToken {
+  token: String
+  tokenType: String
+}
+
+type ServiceAccountCredentials {
+  serviceAccount: String
+  scope: String
+}
+
+type OidcToken {
+  serviceAccountEmail: String
+  audience: String
+  token: String
+  tokenExpireTime: DateTime
+}
+
+type UsernameAndPassword {
+  username: String
+  password: String
+}
+
+type JwtCredential {
+  jwtPayload: String
+  secret: String
+  jwtHeader: String
+}
+
+type Oauth2AuthorizationCode {
+  authEndpoint: String
+  tokenEndpoint: String
+  scopes: String
+  clientId: String
+  clientSecret: String
+  requestType: String
+  tokenParams: ParameterMap
+  authParams: ParameterMap
+  applyReauthPolicy: Boolean
+  accessToken: AccessToken
+}
+
+type Oauth2ClientCredentials {
+  tokenEndpoint: String
+  scopes: String
+  clientId: String
+  clientSecret: String
+  requestType: String
+  tokenParams: ParameterMap
+  accessToken: AccessToken
+}
+
+type Oauth2ResourceOwnerCredentials {
+  tokenEndpoint: String
+  scopes: String
+  clientId: String
+  clientSecret: String
+  requestType: String
+  username: String
+  password: String
+  tokenParams: ParameterMap
+  accessToken: AccessToken
+}
+
+type AccessToken {
+  token: String
+  tokenExpireTime: DateTime
+  refreshToken: String
+  refreshTokenExpireTime: DateTime
+  tokenType: String
+}
+
+type ParameterMap {
+  entries: [ParameterMapEntry!]
+}
+
+type ParameterMapEntry {
+  key: ParameterMapField
+  value: ParameterMapField
+}
+
+type ParameterMapField {
+  literalValue: ParameterValue
+  referenceKey: String
+}
+
+input AuthConfigInput {
+  displayName: String!
+  description: String
+  credentialType: CredentialType!
+  decryptedCredential: CredentialInput
+  expiryNotificationDuration: [String!]
+}
+
+input CredentialInput {
+  authToken: AuthTokenInput
+  usernameAndPassword: UsernameAndPasswordInput
+  oauth2ClientCredentials: Oauth2ClientCredentialsInput
+}
+
+input AuthTokenInput {
+  token: String!
+  tokenType: String!
+}
+
+input UsernameAndPasswordInput {
+  username: String!
+  password: String!
+}
+
+input Oauth2ClientCredentialsInput {
+  tokenEndpoint: String!
+  clientId: String!
+  clientSecret: String!
+  scopes: String
+}
+
+enum CredentialType {
+  CREDENTIAL_TYPE_UNSPECIFIED
+  USERNAME_AND_PASSWORD
+  API_KEY
+  OAUTH2_CLIENT_CREDENTIALS
+  OAUTH2_AUTHORIZATION_CODE
+  OAUTH2_RESOURCE_OWNER_CREDENTIALS
+  CLIENT_CERTIFICATE_ONLY
+  OIDC_TOKEN
+  JWT
+  AUTH_TOKEN
+  SERVICE_ACCOUNT
+}
+
+enum AuthConfigState {
+  STATUS_UNSPECIFIED
+  VALID
+  INVALID
+  SOFT_DELETED
+  EXPIRED
+  UNAUTHORIZED
+  UNSUPPORTED
+}
+
+enum AuthConfigVisibility {
+  AUTH_CONFIG_VISIBILITY_UNSPECIFIED
+  PRIVATE
+  CLIENT_VISIBLE
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Monetization Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type RatePlan {
+  id: String!
+  displayName: String
+  description: String
+  apiProduct: String
+  startTime: Long
+  endTime: Long
+  state: RatePlanState
+  billingPeriod: BillingPeriod
+  currency: String
+  fee: [RatePlanFee!]
+  consumptionPricingRates: [RatePlanRate!]
+  revenueShareRates: [RevenueShareRate!]
+  setupFee: Money
+  fixedRecurringFee: Money
+  fixedFeeFrequency: Int
+  paymentFundingModel: PaymentFundingModel
+  createdAt: DateTime
+  lastModifiedAt: DateTime
+}
+
+type RatePlanFee {
+  currency: String!
+  fee: Float!
+  feeType: RatePlanFeeType
+}
+
+type RatePlanRate {
+  start: Long
+  end: Long
+  fee: Money
+  unitFeeType: UnitFeeType
+}
+
+type RevenueShareRate {
+  start: Long
+  end: Long
+  sharePercentage: Float!
+}
+
+type Money {
+  currencyCode: String!
+  units: Long
+  nanos: Int
+}
+
+type DeveloperBalance {
+  wallets: [DeveloperWallet!]
+}
+
+type DeveloperWallet {
+  currency: String!
+  balance: Money
+  lastCreditTime: DateTime
+}
+
+type DeveloperMonetizationConfig {
+  billingType: BillingType
+}
+
+input RatePlanInput {
+  displayName: String!
+  description: String
+  startTime: Long!
+  endTime: Long
+  billingPeriod: BillingPeriod
+  currency: String!
+  setupFee: MoneyInput
+  fixedRecurringFee: MoneyInput
+  fixedFeeFrequency: Int
+  paymentFundingModel: PaymentFundingModel
+}
+
+input MoneyInput {
+  currencyCode: String!
+  units: Long!
+  nanos: Int
+}
+
+input DeveloperMonetizationConfigInput {
+  billingType: BillingType!
+}
+
+input TopUpInput {
+  amount: MoneyInput!
+  transactionId: String
+  note: String
+}
+
+enum RatePlanState {
+  DRAFT
+  PUBLISHED
+  UNPUBLISHED
+}
+
+enum BillingPeriod {
+  WEEKLY
+  MONTHLY
+}
+
+enum RatePlanFeeType {
+  STANDARD
+}
+
+enum UnitFeeType {
+  FIXED_PER_UNIT
+  VOLUME_BANDED
+}
+
+enum PaymentFundingModel {
+  PAYMENT_FUNDING_MODEL_UNSPECIFIED
+  PREPAID
+  POSTPAID
+}
+
+enum BillingType {
+  BILLING_TYPE_UNSPECIFIED
+  PREPAID
+  POSTPAID
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Common / Shared Types
+# ─────────────────────────────────────────────────────────────────────────────
+
+type Attribute {
+  name: String!
+  value: String
+}
+
+type NameValuePair {
+  name: String!
+  value: String
+}
+
+type EntityMetaData {
+  createdAt: Long
+  lastModifiedAt: Long
+  subType: String
+}
+
+type DeleteResult {
+  success: Boolean!
+  name: String
+}
+
+input AttributeInput {
+  name: String!
+  value: String!
+}
+
+input NameValuePairInput {
+  name: String!
+  value: String!
+}
+
+enum ResourceState {
+  STATE_UNSPECIFIED
+  CREATING
+  ACTIVE
+  DELETING
+  UPDATING
+}
