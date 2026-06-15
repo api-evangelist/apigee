@@ -1,0 +1,1426 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all APIs in the specified project and location. Returns API metadata including name, display name, and description."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the API resource, which will become the final component of the API's resource name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new API resource in the API Hub. The API represents a logical grouping of related API versions and specifications."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              }
+            ]
+          },
+          "docs": "Retrieves details of a specific API resource, including its display name, description, owner, and associated metadata."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. The list of fields to update. Use comma-separated field names."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API resource in the API Hub. Use the updateMask field to specify which fields to update."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              }
+            ]
+          },
+          "docs": "Deletes an API resource and all its child resources (versions, specs, operations) from the API Hub."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all versions of an API in the API Hub. Versions represent different releases or iterations of an API."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the version, which will become the final component of the version's resource name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new version for an API in the API Hub. A version represents a specific release of the API."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              }
+            ]
+          },
+          "docs": "Gets details about a specific API version, including its display name, description, lifecycle state, and compliance status."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API version. Use updateMask to specify fields."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              }
+            ]
+          },
+          "docs": "Deletes an API version and all its child resources (specs, operations)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Specs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Specifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all specifications for an API version. Specs are machine-readable API definitions such as OpenAPI or Protocol Buffer files."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the spec resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new specification for an API version. Specifications are machine-readable definitions of the API."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Gets details about a specific API specification, including metadata about the spec type, parsing mode, and lint results."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API specification. Use updateMask to specify fields."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Deletes an API specification from the API Hub."
+        },
+        {
+          "info": {
+            "name": "Apigee Get API Specification Contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId:getContents",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Retrieves the raw contents of an API specification file such as an OpenAPI document or Protocol Buffer definition."
+        },
+        {
+          "info": {
+            "name": "Apigee Lint an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId:lint",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Validates an API specification against style and correctness rules. Returns linting results with warnings and errors."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all API deployments in the specified project and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the deployment resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new deployment record in the API Hub to track where an API version is deployed."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the deployment resource."
+              }
+            ]
+          },
+          "docs": "Retrieves details about a specific API deployment."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the deployment resource."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing deployment record."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the deployment resource."
+              }
+            ]
+          },
+          "docs": "Deletes a deployment record from the API Hub."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Dependencies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Dependencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/dependencies",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all API dependencies in the specified project and location. Dependencies represent relationships between APIs."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Dependency",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/dependencies",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "dependencyId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the dependency resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new dependency between APIs in the API Hub."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Dependency",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/dependencies/:dependencyId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "dependencyId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the dependency resource."
+              }
+            ]
+          },
+          "docs": "Retrieves details about a specific API dependency."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Dependency",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/dependencies/:dependencyId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "dependencyId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the dependency resource."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API dependency."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Dependency",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/dependencies/:dependencyId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "dependencyId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the dependency resource."
+              }
+            ]
+          },
+          "docs": "Deletes an API dependency from the API Hub."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Attributes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/attributes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all custom attributes defined in the specified project and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/attributes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "attributeId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the attribute resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new custom attribute definition in the API Hub."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "External APIs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List External APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/externalApis",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all external API references in the specified project and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an External API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/externalApis",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "externalApiId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the external API resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new external API reference in the API Hub."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee Search API Hub Resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId:searchResources",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches across all resources in the API Hub including APIs, versions, specs, and deployments. Supports full-text search."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Runtime Project Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Runtime Project Attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/runtimeProjectAttachments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all runtime project attachments for the API Hub instance."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Runtime Project Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/runtimeProjectAttachments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "runtimeProjectAttachmentId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the attachment resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new runtime project attachment, linking a Google Cloud project to the API Hub for API discovery."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

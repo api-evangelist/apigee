@@ -1,0 +1,2059 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Management",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations"
+          },
+          "docs": "Lists the Apigee organizations that are available to the caller. Returns a list of organization names and metadata."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations",
+            "params": [
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Required. Name of the Google Cloud project in which to associate the Apigee organization. Pass the information as a query parameter using the format: projects/{project}."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Apigee organization. The organization is the top-level container for all Apigee resources including API proxies, products, developers, and environments."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ]
+          },
+          "docs": "Retrieves the properties for an Apigee organization, including configuration settings, subscription type, and metadata."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties for an Apigee organization. No other fields in the organization profile will be updated."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ]
+          },
+          "docs": "Deletes an Apigee organization. This is a long-running operation that deletes all resources associated with the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Proxies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists the names of all API proxies in an organization. The list includes information about the API proxy revisions available."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Name of the API proxy. Must be unique within the organization."
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Action to perform when importing an API proxy configuration bundle. Set to \"import\" when uploading a ZIP bundle."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API proxy. The API proxy created will not be accessible at runtime until it is deployed to an environment. Provide the proxy configuration as an API proxy bundle or as an inline configuration."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis/:apiId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              }
+            ]
+          },
+          "docs": "Gets an API proxy including a list of existing revisions, the proxy metadata, and the last modified date."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis/:apiId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. List of fields to update. Use comma-separated field names from the resource. Example: \"labels\"."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API proxy metadata such as labels. Does not update the proxy bundle or revision content."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis/:apiId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              }
+            ]
+          },
+          "docs": "Deletes an API proxy and all associated endpoints, policies, resources, and revisions. The proxy must be undeployed from all environments before it can be deleted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Proxy Revisions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Proxy Revisions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis/:apiId/revisions",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              }
+            ]
+          },
+          "docs": "Lists all revisions for an API proxy. Returns an array of revision numbers in string format."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis/:apiId/revisions/:revisionId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              }
+            ]
+          },
+          "docs": "Gets an API proxy revision. Returns the configuration and metadata for the specified revision of an API proxy."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apis/:apiId/revisions/:revisionId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              }
+            ]
+          },
+          "docs": "Deletes an API proxy revision. The revision must be undeployed from all environments before it can be deleted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apiproducts",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "attributename",
+                "value": "",
+                "type": "query",
+                "description": "Name of the attribute used to filter the search."
+              },
+              {
+                "name": "attributevalue",
+                "value": "",
+                "type": "query",
+                "description": "Value of the attribute used to filter the search."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to get expanded details about each API product."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of API products to return in the API call."
+              },
+              {
+                "name": "startKey",
+                "value": "",
+                "type": "query",
+                "description": "Name of the API product from which to start displaying the list of API products."
+              }
+            ]
+          },
+          "docs": "Lists all API product names for an organization. Filter the list using an attribute name and value query parameter."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apiproducts",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API product in an organization. API products bundle API resources for consumption by developers. An API product can contain API proxies and quota settings."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apiproducts/:apiProductId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiProductId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API product."
+              }
+            ]
+          },
+          "docs": "Gets the configuration for an API product. The API product name is required in the request URL."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apiproducts/:apiProductId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiProductId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API product."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API product. The full API product object must be included in the request body, even if only a subset of properties are being updated."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/apiproducts/:apiProductId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiProductId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API product."
+              }
+            ]
+          },
+          "docs": "Deletes an API product from an organization. Deleting an API product causes apps that are associated with the product to be unable to access the API resources defined in that product."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Developers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Developers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to return expanded developer details."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of developers to return."
+              },
+              {
+                "name": "startKey",
+                "value": "",
+                "type": "query",
+                "description": "Email of the developer from which to start the list."
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the name of the app owned by the developer."
+              }
+            ]
+          },
+          "docs": "Lists all developers in an organization by email address. Returns a list of developer email addresses or expanded developer objects."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Developer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a developer in an organization. A developer is a consumer of APIs, typically represented by a person or company who registers apps and obtains API keys."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Developer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              }
+            ]
+          },
+          "docs": "Returns the developer profile by email address or developer ID. Includes information about the developer apps and custom attributes."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Developer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a developer with the properties specified in the request body. The full developer object must be included in the request body."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Developer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              }
+            ]
+          },
+          "docs": "Deletes a developer from the organization. All apps and API keys associated with the developer are also removed. All pending push notifications are also deleted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Developer Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Developer Apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to return full app details."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of developer apps to return."
+              },
+              {
+                "name": "startKey",
+                "value": "",
+                "type": "query",
+                "description": "Name of the developer app from which to start the list."
+              }
+            ]
+          },
+          "docs": "Lists all apps created by a developer in an organization. Returns an array of app IDs or expanded app objects."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Developer App",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an app associated with a developer. This API associates the developer app with the specified API product and auto-generates an API key for the app to use in calls to API proxies inside that product."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Developer App",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              }
+            ]
+          },
+          "docs": "Returns the details for a developer app, including the API keys and API products associated with the app."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Developer App",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the attributes of the developer app. This API replaces the current attributes with those specified in the request body."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Developer App",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              }
+            ]
+          },
+          "docs": "Deletes a developer app. This operation also removes all API keys and associations to API products for the app."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Developer App Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Developer App Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId/keys",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              }
+            ]
+          },
+          "docs": "Returns a list of all API keys for a developer app, including consumer keys and secrets."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Developer App Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId/keys",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a custom consumer key and secret for a developer app. Useful when migrating existing consumer keys and secrets to Apigee."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Developer App Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId/keys/:keyId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "Consumer key of the developer app."
+              }
+            ]
+          },
+          "docs": "Returns details for a consumer key for a developer app, including the key, its status, and the associated API products."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Developer App Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId/keys/:keyId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "Consumer key of the developer app."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an API product to a developer app key, enabling the app to access the API resources bundled in the API product."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Developer App Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/developers/:developerId/apps/:appId/keys/:keyId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "developerId",
+                "value": "",
+                "type": "path",
+                "description": "Email address or ID of the developer."
+              },
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the developer app."
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "Consumer key of the developer app."
+              }
+            ]
+          },
+          "docs": "Deletes an app's consumer key. After the consumer key is deleted, it cannot be used to access any APIs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Environments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ]
+          },
+          "docs": "Lists all environments in an organization. Returns a list of environment names or expanded environment objects."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an environment in an organization. Environments provide a runtime execution context for API proxies, with separate settings for caches, target servers, keystores, and more."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ]
+          },
+          "docs": "Gets the profile for an environment in an organization, including properties, state, and deployment type."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing environment. The full environment object must be included in the request body."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ]
+          },
+          "docs": "Deletes an environment from an organization. Before deleting, all API proxies must be undeployed from the environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee Deploy an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/apis/:apiId/revisions/:revisionId/deployments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              },
+              {
+                "name": "override",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to force deployment of the new revision over the currently deployed revision by overriding conflict checks."
+              },
+              {
+                "name": "sequencedRollout",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to enable sequenced rollout, which deploys to pods in a gradual manner."
+              }
+            ]
+          },
+          "docs": "Deploys a revision of an API proxy to an environment. After deployment, the API proxy revision can accept requests from clients."
+        },
+        {
+          "info": {
+            "name": "Apigee Undeploy an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/apis/:apiId/revisions/:revisionId/deployments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              },
+              {
+                "name": "sequencedRollout",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to enable sequenced rollout for undeployment."
+              }
+            ]
+          },
+          "docs": "Undeploys an API proxy revision from an environment. After undeployment, the API proxy revision will no longer accept requests from clients."
+        },
+        {
+          "info": {
+            "name": "Apigee List Organization Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/deployments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "sharedFlows",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to return shared flow deployments instead of API proxy deployments."
+              }
+            ]
+          },
+          "docs": "Lists all deployments across all environments in an organization, including the API proxy name, revision, and environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Target Servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Target Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ]
+          },
+          "docs": "Lists all target servers in the specified environment of an organization. Target servers define backend service endpoints."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a target server in the specified environment. Target servers decouple TargetEndpoint configurations from concrete backend URLs."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers/:targetServerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "targetServerId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the target server."
+              }
+            ]
+          },
+          "docs": "Gets the configuration of a target server in the specified environment."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers/:targetServerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "targetServerId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the target server."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing target server in the specified environment. The full target server object must be included in the request body."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers/:targetServerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "targetServerId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the target server."
+              }
+            ]
+          },
+          "docs": "Deletes a target server from an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Key Value Maps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Key Value Maps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/keyvaluemaps",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ]
+          },
+          "docs": "Lists the key value maps in the specified environment."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Key Value Map",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/keyvaluemaps",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a key value map in the specified environment. Key value maps store data for retrieval at runtime by policies."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Key Value Map",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/keyvaluemaps/:keyValueMapId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "keyValueMapId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the key value map."
+              }
+            ]
+          },
+          "docs": "Deletes a key value map from the specified environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Shared Flows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Shared Flows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/sharedflows",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ]
+          },
+          "docs": "Lists all shared flows in an organization. Shared flows contain reusable logic that can be invoked from API proxy flows."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Shared Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/sharedflows",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Name of the shared flow. Must be unique within the organization."
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Set to \"import\" when uploading a ZIP bundle."
+              }
+            ]
+          },
+          "docs": "Uploads a ZIP-formatted shared flow configuration bundle. The bundle is imported into the organization as a new shared flow."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Shared Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/sharedflows/:sharedFlowId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "sharedFlowId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared flow."
+              }
+            ]
+          },
+          "docs": "Gets a shared flow including a list of existing revisions."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Shared Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/sharedflows/:sharedFlowId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "sharedFlowId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared flow."
+              }
+            ]
+          },
+          "docs": "Deletes a shared flow and all associated policies, resources, and revisions. The shared flow must be undeployed from all environments."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee Get Environment Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/stats/:dimensionName",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "dimensionName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the dimension to query. Common values include apiproxy, developer_email, developer_app, access_token, and others."
+              },
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of metrics. Example: sum(message_count), avg(total_response_time)."
+              },
+              {
+                "name": "timeRange",
+                "value": "",
+                "type": "query",
+                "description": "Time range for the query in the format MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM."
+              },
+              {
+                "name": "timeUnit",
+                "value": "",
+                "type": "query",
+                "description": "Granularity of the time series (second, minute, hour, day, week, month)."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              },
+              {
+                "name": "sortby",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of columns to sort the results."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)."
+              },
+              {
+                "name": "topk",
+                "value": "",
+                "type": "query",
+                "description": "Return the top k results."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves metrics for API proxy performance in an environment. Provides traffic, latency, error counts, and other analytics data across specified time ranges."
+        },
+        {
+          "info": {
+            "name": "Apigee List Analytics Data Stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/analytics/datastores",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ]
+          },
+          "docs": "Lists the data stores available for exporting analytics data."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Analytics Data Store",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/analytics/datastores",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a data store for exporting analytics data from an organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "App Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List App Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/appgroups",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all app groups in an organization. App groups organize developers and their applications."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an App Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/appgroups",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an app group in an organization. App groups provide a way to organize developers and their applications."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an App Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/appgroups/:appGroupId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "appGroupId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the app group."
+              }
+            ]
+          },
+          "docs": "Returns the app group details for a specified app group."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an App Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/appgroups/:appGroupId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "appGroupId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the app group."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an app group. The full app group object must be included in the request body."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an App Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/appgroups/:appGroupId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "appGroupId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the app group."
+              }
+            ]
+          },
+          "docs": "Deletes an app group from an organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Runtime Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/instances",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all Apigee runtime instances for the organization."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Runtime Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/instances",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Apigee runtime instance. This is a long-running operation that provisions the infrastructure for API runtime."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Runtime Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/instances/:instanceId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the runtime instance."
+              }
+            ]
+          },
+          "docs": "Gets the details for an Apigee runtime instance, including state, host, port, and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Runtime Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apigee.googleapis.com/v1/organizations/:organizationId/instances/:instanceId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the runtime instance."
+              }
+            ]
+          },
+          "docs": "Deletes an Apigee runtime instance. This is a long-running operation that deprovisions the runtime infrastructure."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

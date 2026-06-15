@@ -1,0 +1,704 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Management API",
+    "version": "1.0.0-alpha"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Observation Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Observation Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all API observation jobs in the specified project and location. Observation jobs analyze network traffic to discover shadow APIs."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Observation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the observation job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new API observation job that analyzes network traffic to discover and catalog undocumented APIs operating in the specified infrastructure."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Observation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific API observation job, including its state, configuration, and observation sources."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an Observation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              }
+            ]
+          },
+          "docs": "Deletes an API observation job. The job must be disabled before it can be deleted."
+        },
+        {
+          "info": {
+            "name": "Apigee Enable an Observation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId:enable",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              }
+            ]
+          },
+          "docs": "Enables a disabled observation job, resuming API traffic analysis and shadow API discovery."
+        },
+        {
+          "info": {
+            "name": "Apigee Disable an Observation Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId:disable",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              }
+            ]
+          },
+          "docs": "Disables an active observation job, pausing API traffic analysis."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Observations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Observations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId/apiObservations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all API observations discovered by the specified observation job. Each observation represents a shadow API endpoint detected through traffic analysis."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Observation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId/apiObservations/:apiObservationId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              },
+              {
+                "name": "apiObservationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API observation."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific API observation, including the discovered hostname, server IPs, request count, and last seen time."
+        },
+        {
+          "info": {
+            "name": "Apigee Batch Edit API Observation Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId/apiObservations:batchEditTags",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates tags on multiple API observations in a single batch operation. Tags help categorize and organize discovered APIs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId/apiObservations/:apiObservationId/apiOperations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              },
+              {
+                "name": "apiObservationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API observation."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all API operations discovered within a specific API observation. Operations represent individual HTTP endpoints with their methods, paths, and response codes."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationJobs/:observationJobId/apiObservations/:apiObservationId/apiOperations/:apiOperationId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              },
+              {
+                "name": "apiObservationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API observation."
+              },
+              {
+                "name": "apiOperationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API operation."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific discovered API operation, including HTTP method, path, request/response details, and traffic statistics."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Observation Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Observation Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationSources",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all observation sources configured in the specified project and location. Sources define the network infrastructure to monitor."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Observation Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationSources",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationSourceId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the observation source."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new observation source that defines which network infrastructure to monitor for API traffic."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Observation Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationSources/:observationSourceId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationSourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation source."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific observation source."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an Observation Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/observationSources/:observationSourceId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationSourceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation source."
+              }
+            ]
+          },
+          "docs": "Deletes an observation source. The source must not be in use by any active observation jobs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/operations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression."
+              }
+            ]
+          },
+          "docs": "Lists long-running operations in the specified project and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/operations/:operationId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path",
+                "description": "Operation identifier."
+              }
+            ]
+          },
+          "docs": "Gets the status of a long-running operation."
+        },
+        {
+          "info": {
+            "name": "Apigee Cancel an Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apim.googleapis.com/v1alpha/projects/:projectId/locations/:locationId/operations/:operationId:cancel",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path",
+                "description": "Operation identifier."
+              }
+            ]
+          },
+          "docs": "Cancels a long-running operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

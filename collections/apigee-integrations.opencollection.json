@@ -1,0 +1,1665 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee Integrations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by."
+              }
+            ]
+          },
+          "docs": "Lists all integrations in the specified project, location, and product. Returns integration metadata including name and description."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              }
+            ]
+          },
+          "docs": "Deletes an integration and all its versions. The integration must not have any active versions before deletion."
+        },
+        {
+          "info": {
+            "name": "Apigee Execute an Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId:execute",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes an integration synchronously. The caller blocks until the integration execution completes or times out."
+        },
+        {
+          "info": {
+            "name": "Apigee Schedule an Integration Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId:schedule",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedules an integration for execution at a specified time. The execution happens asynchronously."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Integration Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Integration Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by."
+              },
+              {
+                "name": "fieldMask",
+                "value": "",
+                "type": "query",
+                "description": "Fields to include in the response."
+              }
+            ]
+          },
+          "docs": "Lists all versions of an integration. Returns version metadata including status, snapshot number, and creation time."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "newIntegration",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to create a new integration and initial version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new version of an integration. A version contains the complete integration configuration including triggers, tasks, and parameters."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Integration version identifier."
+              }
+            ]
+          },
+          "docs": "Gets the details for a specific integration version, including the complete configuration of triggers, tasks, and parameters."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Integration version identifier."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing integration version. Only draft versions can be updated."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Integration version identifier."
+              }
+            ]
+          },
+          "docs": "Deletes an integration version. Active (published) versions cannot be deleted directly."
+        },
+        {
+          "info": {
+            "name": "Apigee Publish an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions/:versionId:publish",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Integration version identifier."
+              }
+            ]
+          },
+          "docs": "Publishes a draft integration version, making it the active version that receives new execution requests."
+        },
+        {
+          "info": {
+            "name": "Apigee Unpublish an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions/:versionId:unpublish",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Integration version identifier."
+              }
+            ]
+          },
+          "docs": "Unpublishes a published integration version, returning it to draft status so it no longer receives execution requests."
+        },
+        {
+          "info": {
+            "name": "Apigee Download an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions/:versionId:download",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Integration version identifier."
+              },
+              {
+                "name": "fileFormat",
+                "value": "",
+                "type": "query",
+                "description": "File format for the download."
+              }
+            ]
+          },
+          "docs": "Downloads the complete configuration of an integration version as a JSON bundle."
+        },
+        {
+          "info": {
+            "name": "Apigee Upload an Integration Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/versions:upload",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads an integration version configuration bundle, creating a new version."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Auth Configs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Auth Configs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/authConfigs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all authentication configurations for the specified product. Auth configs define credentials used by integrations to connect to external services."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Auth Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/authConfigs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new authentication configuration. Auth configs store credentials like OAuth tokens, API keys, or service account keys."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Auth Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/authConfigs/:authConfigId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "authConfigId",
+                "value": "",
+                "type": "path",
+                "description": "Auth config identifier."
+              }
+            ]
+          },
+          "docs": "Gets the details for a specific authentication configuration."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an Auth Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/authConfigs/:authConfigId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "authConfigId",
+                "value": "",
+                "type": "path",
+                "description": "Auth config identifier."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing authentication configuration."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an Auth Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/authConfigs/:authConfigId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "authConfigId",
+                "value": "",
+                "type": "path",
+                "description": "Auth config identifier."
+              }
+            ]
+          },
+          "docs": "Deletes an authentication configuration. The auth config must not be in use by any active integration version."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Certificates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Certificates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/certificates",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all certificates for the specified product. Certificates are used for TLS/SSL authentication with external services."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/certificates",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new certificate for use with integrations that require TLS/SSL authentication."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/certificates/:certificateId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "certificateId",
+                "value": "",
+                "type": "path",
+                "description": "Certificate identifier."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific certificate."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/certificates/:certificateId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "certificateId",
+                "value": "",
+                "type": "path",
+                "description": "Certificate identifier."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing certificate."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/certificates/:certificateId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "certificateId",
+                "value": "",
+                "type": "path",
+                "description": "Certificate identifier."
+              }
+            ]
+          },
+          "docs": "Deletes a certificate. The certificate must not be in use by any active integration version."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/executions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression (e.g., by status or time range)."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by."
+              }
+            ]
+          },
+          "docs": "Lists execution results for an integration. Returns execution metadata including status, start time, and trigger information."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an Execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/executions/:executionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "executionId",
+                "value": "",
+                "type": "path",
+                "description": "Execution identifier."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific integration execution, including input/output parameters and execution steps."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Suspensions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Suspensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/executions/:executionId/suspensions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "executionId",
+                "value": "",
+                "type": "path",
+                "description": "Execution identifier."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow results."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by."
+              }
+            ]
+          },
+          "docs": "Lists all suspensions for a specific execution. Suspensions pause execution flow pending human review or approval."
+        },
+        {
+          "info": {
+            "name": "Apigee Lift a Suspension",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/executions/:executionId/suspensions/:suspensionId:lift",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "executionId",
+                "value": "",
+                "type": "path",
+                "description": "Execution identifier."
+              },
+              {
+                "name": "suspensionId",
+                "value": "",
+                "type": "path",
+                "description": "Suspension identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lifts a suspension, allowing the paused execution to continue processing from where it stopped."
+        },
+        {
+          "info": {
+            "name": "Apigee Resolve a Suspension",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/integrations/:integrationId/executions/:executionId/suspensions/:suspensionId:resolve",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the integration."
+              },
+              {
+                "name": "executionId",
+                "value": "",
+                "type": "path",
+                "description": "Execution identifier."
+              },
+              {
+                "name": "suspensionId",
+                "value": "",
+                "type": "path",
+                "description": "Suspension identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolves a suspension with a final decision, completing the suspended task in the execution."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SFDC Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List SFDC Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/sfdcInstances",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all Salesforce instances configured for the product."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an SFDC Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/sfdcInstances",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Salesforce instance configuration for connecting integrations to Salesforce."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an SFDC Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/sfdcInstances/:sfdcInstanceId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "sfdcInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "SFDC instance identifier."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific Salesforce instance configuration."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an SFDC Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/sfdcInstances/:sfdcInstanceId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "sfdcInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "SFDC instance identifier."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing Salesforce instance configuration."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an SFDC Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/sfdcInstances/:sfdcInstanceId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "sfdcInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "SFDC instance identifier."
+              }
+            ]
+          },
+          "docs": "Deletes a Salesforce instance configuration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SFDC Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List SFDC Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/sfdcInstances/:sfdcInstanceId/sfdcChannels",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "sfdcInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "SFDC instance identifier."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all Salesforce channels configured for an SFDC instance."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an SFDC Channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integrations.googleapis.com/v1/projects/:projectId/locations/:locationId/products/:productId/sfdcInstances/:sfdcInstanceId/sfdcChannels",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product identifier (typically the Apigee product name)."
+              },
+              {
+                "name": "sfdcInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "SFDC instance identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Salesforce channel within an SFDC instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
