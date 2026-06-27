@@ -70,7 +70,7 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/tutorials
   - type: ReleaseNotes
     url: https://cloud.google.com/apigee/docs/release-notes
-  - type: Quickstart
+  - type: GettingStarted
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
@@ -96,7 +96,7 @@ apis:
     url: openapi/apigee-api-hub-openapi.yml
   - type: APIReference
     url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
-  - type: Quickstart
+  - type: GettingStarted
     url: https://cloud.google.com/apigee/docs/apihub/quickstart-intro
   - type: ReleaseNotes
     url: https://cloud.google.com/apigee/docs/apihub/release-notes
@@ -235,109 +235,81 @@ tags:
 common:
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/apigee/overview
-- type: ArazzoWorkflows
-  url: arazzo/
-  workflows:
-  - url: arazzo/apigee-analytics-datastore-setup-workflow.yml
-    name: Apigee Set Up Analytics Export and Read Stats
-    summary: Create an analytics datastore for export, then query environment statistics
-      for a dimension.
-  - url: arazzo/apigee-app-group-onboarding-workflow.yml
-    name: Apigee Onboard an App Group
-    summary: Create an app group, add a developer, register an app, and read the app
-      back.
-  - url: arazzo/apigee-catalog-api-hub-workflow.yml
-    name: Apigee API Hub Catalog and Lint
-    summary: Register an API in API Hub, add a version and spec, trigger a lint, then
-      read the lint outcome.
-  - url: arazzo/apigee-decommission-proxy-workflow.yml
-    name: Apigee Decommission an API Proxy
-    summary: Undeploy a proxy revision from an environment, delete that revision,
-      then delete the proxy.
-  - url: arazzo/apigee-discover-and-search-hub-workflow.yml
-    name: Apigee API Hub Discover and Search
-    summary: Run a full-text search across API Hub, then read a matching API and list
-      its versions.
-  - url: arazzo/apigee-environment-teardown-workflow.yml
-    name: Apigee Tear Down an Environment
-    summary: List deployments, undeploy a proxy revision from the environment, then
-      delete the environment.
-  - url: arazzo/apigee-grant-app-product-access-workflow.yml
-    name: Apigee Grant an App Access to a New Product
-    summary: Create a new API product, confirm the target app and its key, then bind
-      the product to the key.
-  - url: arazzo/apigee-integration-auth-setup-workflow.yml
-    name: Apigee Integration Auth Setup
-    summary: Create an auth config, list auth configs to confirm it, then author an
-      integration version.
-  - url: arazzo/apigee-integration-execution-monitor-workflow.yml
-    name: Apigee Integration Execution Monitor
-    summary: Execute an integration, list its recent executions, then read the execution
-      detail.
-  - url: arazzo/apigee-integration-publish-and-execute-workflow.yml
-    name: Apigee Publish and Execute an Integration
-    summary: Create an integration version, publish it, then execute it synchronously
-      and read the result.
-  - url: arazzo/apigee-onboard-developer-app-workflow.yml
-    name: Apigee Onboard a Developer App
-    summary: Create an API product, register a developer, create their app, and read
-      the issued API keys.
-  - url: arazzo/apigee-promote-proxy-revision-workflow.yml
-    name: Apigee Promote a New Proxy Revision
-    summary: List a proxy's revisions, deploy the newest one with override, then undeploy
-      the prior revision.
-  - url: arazzo/apigee-provision-environment-workflow.yml
-    name: Apigee Provision an Environment
-    summary: Create an environment, poll until it is active, then add a target server
-      and a key value map.
-  - url: arazzo/apigee-provision-runtime-instance-workflow.yml
-    name: Apigee Provision a Runtime Instance
-    summary: Create an Apigee runtime instance, poll until it is active, then create
-      an environment on it.
-  - url: arazzo/apigee-proxy-import-and-deploy-workflow.yml
-    name: Apigee Import and Deploy an API Proxy
-    summary: Import an API proxy bundle, find its newest revision, deploy it, and
-      confirm the deployment.
-  - url: arazzo/apigee-publish-api-product-workflow.yml
-    name: Apigee Publish an API Proxy as a Product
-    summary: Import a proxy, deploy its revision, then bundle it into an API product
-      ready for consumption.
-  - url: arazzo/apigee-register-deployment-dependency-workflow.yml
-    name: Apigee API Hub Deployment and Dependency
-    summary: Record a deployment in API Hub, declare a dependency between two APIs,
-      then read it back.
-  - url: arazzo/apigee-register-external-api-workflow.yml
-    name: Apigee API Hub Register External API
-    summary: Register an external API reference, define a custom attribute, then list
-      external APIs.
-  - url: arazzo/apigee-registry-catalog-version-workflow.yml
-    name: Apigee Registry Catalog an API Version
-    summary: Register an API in the Registry, add a version and a spec, then record
-      a deployment.
-  - url: arazzo/apigee-registry-spec-rollback-workflow.yml
-    name: Apigee Registry Spec Revision Rollback
-    summary: Read a spec's current revision, push a new revision via update, then
-      roll back to the original.
-  - url: arazzo/apigee-rotate-app-key-workflow.yml
-    name: Apigee Rotate a Developer App Key
-    summary: Issue a fresh consumer key for an app, grant it product access, then
-      revoke the old key.
-  - url: arazzo/apigee-shadow-api-discovery-workflow.yml
-    name: Apigee Shadow API Discovery
-    summary: Create an observation source, wait for it, start an observation job,
-      wait again, then enable it.
-  - url: arazzo/apigee-shared-flow-catalog-workflow.yml
-    name: Apigee Catalog a Shared Flow
-    summary: Import a shared flow bundle, read it back for its revisions, and list
-      shared flow deployments.
-  - url: arazzo/apigee-target-server-rollout-workflow.yml
-    name: Apigee Roll Out a Target Server Change
-    summary: Create a backend target server, read it back, then update its host and
-      port.
-  - url: arazzo/apigee-update-product-quota-workflow.yml
-    name: Apigee Update an API Product Quota
-    summary: Read an API product, then update its quota limits while preserving its
-      existing bindings.
+- type: Arazzo
+  url: arazzo/apigee-analytics-datastore-setup-workflow.yml
+  name: Apigee Set Up Analytics Export and Read Stats
+- type: Arazzo
+  url: arazzo/apigee-app-group-onboarding-workflow.yml
+  name: Apigee Onboard an App Group
+- type: Arazzo
+  url: arazzo/apigee-catalog-api-hub-workflow.yml
+  name: Apigee API Hub Catalog and Lint
+- type: Arazzo
+  url: arazzo/apigee-decommission-proxy-workflow.yml
+  name: Apigee Decommission an API Proxy
+- type: Arazzo
+  url: arazzo/apigee-discover-and-search-hub-workflow.yml
+  name: Apigee API Hub Discover and Search
+- type: Arazzo
+  url: arazzo/apigee-environment-teardown-workflow.yml
+  name: Apigee Tear Down an Environment
+- type: Arazzo
+  url: arazzo/apigee-grant-app-product-access-workflow.yml
+  name: Apigee Grant an App Access to a New Product
+- type: Arazzo
+  url: arazzo/apigee-integration-auth-setup-workflow.yml
+  name: Apigee Integration Auth Setup
+- type: Arazzo
+  url: arazzo/apigee-integration-execution-monitor-workflow.yml
+  name: Apigee Integration Execution Monitor
+- type: Arazzo
+  url: arazzo/apigee-integration-publish-and-execute-workflow.yml
+  name: Apigee Publish and Execute an Integration
+- type: Arazzo
+  url: arazzo/apigee-onboard-developer-app-workflow.yml
+  name: Apigee Onboard a Developer App
+- type: Arazzo
+  url: arazzo/apigee-promote-proxy-revision-workflow.yml
+  name: Apigee Promote a New Proxy Revision
+- type: Arazzo
+  url: arazzo/apigee-provision-environment-workflow.yml
+  name: Apigee Provision an Environment
+- type: Arazzo
+  url: arazzo/apigee-provision-runtime-instance-workflow.yml
+  name: Apigee Provision a Runtime Instance
+- type: Arazzo
+  url: arazzo/apigee-proxy-import-and-deploy-workflow.yml
+  name: Apigee Import and Deploy an API Proxy
+- type: Arazzo
+  url: arazzo/apigee-publish-api-product-workflow.yml
+  name: Apigee Publish an API Proxy as a Product
+- type: Arazzo
+  url: arazzo/apigee-register-deployment-dependency-workflow.yml
+  name: Apigee API Hub Deployment and Dependency
+- type: Arazzo
+  url: arazzo/apigee-register-external-api-workflow.yml
+  name: Apigee API Hub Register External API
+- type: Arazzo
+  url: arazzo/apigee-registry-catalog-version-workflow.yml
+  name: Apigee Registry Catalog an API Version
+- type: Arazzo
+  url: arazzo/apigee-registry-spec-rollback-workflow.yml
+  name: Apigee Registry Spec Revision Rollback
+- type: Arazzo
+  url: arazzo/apigee-rotate-app-key-workflow.yml
+  name: Apigee Rotate a Developer App Key
+- type: Arazzo
+  url: arazzo/apigee-shadow-api-discovery-workflow.yml
+  name: Apigee Shadow API Discovery
+- type: Arazzo
+  url: arazzo/apigee-shared-flow-catalog-workflow.yml
+  name: Apigee Catalog a Shared Flow
+- type: Arazzo
+  url: arazzo/apigee-target-server-rollout-workflow.yml
+  name: Apigee Roll Out a Target Server Change
+- type: Arazzo
+  url: arazzo/apigee-update-product-quota-workflow.yml
+  name: Apigee Update an API Product Quota
 - type: LinkedIn
   url: https://www.linkedin.com/company/apigee-legacy
 - type: Portal
@@ -366,7 +338,7 @@ common:
   url: https://cloud.google.com/apigee
 - type: Login
   url: https://console.cloud.google.com/
-- type: SignUp
+- type: Signup
   url: https://cloud.google.com/apigee
 - type: Pricing
   url: https://cloud.google.com/apigee/pricing
@@ -384,7 +356,7 @@ common:
   url: https://www.coursera.org/specializations/apigee-api-gcp
 - type: Security
   url: https://cloud.google.com/architecture/best-practices-securing-applications-and-apis-using-apigee
-- type: Developer Portal
+- type: DeveloperPortal
   url: https://cloud.google.com/apigee/docs/api-platform/publish/intro-portals
 - type: API Products
   url: https://cloud.google.com/apigee/docs/api-platform/publish/what-api-product
@@ -418,5 +390,5 @@ common:
   url: https://github.com/apigee/apigeelint
 - type: GitHubRepository
   url: https://github.com/apigee/devrel
-- type: LLMsTxt
+- type: LlmsText
   url: https://apigee.com/llms.txt
