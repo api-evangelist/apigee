@@ -233,6 +233,8 @@ tags:
 - Model Context Protocol
 - Monetization
 common:
+- type: OAuthScopes
+  url: scopes/apigee-scopes.yml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/apigee/overview
 - type: Arazzo

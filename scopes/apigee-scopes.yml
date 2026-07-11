@@ -1,0 +1,51 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/apigee-api-hub-openapi.yml, openapi/apigee-api-management-openapi.yml, openapi/apigee-apim-openapi.yml,
+  openapi/apigee-integrations-openapi.yml, openapi/apigee-registry-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/apigee-api-hub-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: Google OAuth 2.0 authentication
+- name: oauth2
+  source: openapi/apigee-api-management-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: Google OAuth 2.0 authentication
+- name: oauth2
+  source: openapi/apigee-apim-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: Google OAuth 2.0 authentication
+- name: oauth2
+  source: openapi/apigee-integrations-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: Google OAuth 2.0 authentication
+- name: oauth2
+  source: openapi/apigee-registry-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+  description: Google OAuth 2.0 authentication
+scopes:
+- scope: https://www.googleapis.com/auth/cloud-platform
+  description: Full access to Google Cloud Platform resources
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/apigee-api-hub-openapi.yml
+  - openapi/apigee-api-management-openapi.yml
+  - openapi/apigee-apim-openapi.yml
+  - openapi/apigee-integrations-openapi.yml
+  - openapi/apigee-registry-openapi.yml
