@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/apigee-api-hub-openapi.yml, openapi/apigee-api-management-openapi.yml, openapi/apigee-apim-openapi.yml,
+  openapi/apigee-integrations-openapi.yml, openapi/apigee-registry-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.google.com/o/oauth2/auth
+    tokenUrl: https://oauth2.googleapis.com/token
+    scopes: 1
+  description: Google OAuth 2.0 authentication
+  sources:
+  - openapi/apigee-api-hub-openapi.yml
+  - openapi/apigee-api-management-openapi.yml
+  - openapi/apigee-apim-openapi.yml
+  - openapi/apigee-integrations-openapi.yml
+  - openapi/apigee-registry-openapi.yml

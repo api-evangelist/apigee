@@ -233,6 +233,12 @@ tags:
 - Model Context Protocol
 - Monetization
 common:
+- type: VulnerabilityDisclosure
+  url: security/apigee-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/apigee-domain-security.yml
+- type: Authentication
+  url: authentication/apigee-authentication.yml
 - type: OAuthScopes
   url: scopes/apigee-scopes.yml
 - type: PostmanWorkspace
