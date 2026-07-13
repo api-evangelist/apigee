@@ -1,0 +1,62 @@
+# apigee — JSON Schema Spectral ruleset (strengthened)
+# Plain Spectral. Rules measured from this provider's own JSON Schema
+# conventions by strengthen_jsonschema.py, then self-validated against them.
+#
+# Provenance:
+#   - schema-declares-$schema: 110/110 roots
+#   - schema-draft-consistency: 2020-12 @ 100%
+#   - schema-has-title: 110/110 roots
+#   - property-name-casing: camel @ 56% (n=732)
+#   - def-name-casing: pascal @ 67% (n=12)
+rules:
+  schema-declares-$schema:
+    description: Every JSON Schema document should declare its $schema (draft).
+    severity: warn
+    given: $
+    then:
+      field: $schema
+      function: truthy
+  schema-draft-consistency:
+    description: $schema should reference the 2020-12 draft (this API's convention).
+    severity: warn
+    given: $.$schema
+    then:
+      function: pattern
+      functionOptions:
+        match: 2020\-12
+  schema-has-title:
+    description: JSON Schema documents should declare a title.
+    severity: info
+    given: $
+    then:
+      field: title
+      function: truthy
+  property-name-casing:
+    description: Schema properties should be camelCase (the dominant convention in this API).
+    severity: info
+    given: $..properties
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        match: ^[a-z][A-Za-z0-9]*$
+  defs-name-casing:
+    description: Schema $defs names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $..$defs
+    then: &id001
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+  definition-name-casing:
+    description: Schema definitions names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $..definitions
+    then: *id001
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings.
+    severity: warn
+    given: $..description
+    then:
+      function: truthy
