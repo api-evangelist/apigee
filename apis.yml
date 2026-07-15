@@ -233,6 +233,8 @@ tags:
 - Model Context Protocol
 - Monetization
 common:
+- type: AgenticAccess
+  url: agentic-access/apigee-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/apigee-vulnerability-disclosure.yml
 - type: DomainSecurity
