@@ -1,0 +1,686 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Integration Versions API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Integration Versions
+  description: Manage integration versions and publishing
+paths:
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:
+    get:
+      operationId: listIntegrationVersions
+      summary: Apigee List Integration Versions
+      description: Lists all versions of an integration. Returns version metadata including status, snapshot number, and creation time.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+      - name: fieldMask
+        in: query
+        description: Fields to include in the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of integration versions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListIntegrationVersionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createIntegrationVersion
+      summary: Apigee Create an Integration Version
+      description: Creates a new version of an integration. A version contains the complete integration configuration including triggers, tasks, and parameters.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - name: newIntegration
+        in: query
+        description: Set to true to create a new integration and initial version.
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationVersion'
+      responses:
+        '200':
+          description: Successful response with the created version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:
+    get:
+      operationId: getIntegrationVersion
+      summary: Apigee Get an Integration Version
+      description: Gets the details for a specific integration version, including the complete configuration of triggers, tasks, and parameters.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response with integration version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateIntegrationVersion
+      summary: Apigee Update an Integration Version
+      description: Updates an existing integration version. Only draft versions can be updated.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      - name: updateMask
+        in: query
+        description: Comma-separated list of fields to update.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationVersion'
+      responses:
+        '200':
+          description: Successful response with updated version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteIntegrationVersion
+      summary: Apigee Delete an Integration Version
+      description: Deletes an integration version. Active (published) versions cannot be deleted directly.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish
+  : post:
+      operationId: publishIntegrationVersion
+      summary: Apigee Publish an Integration Version
+      description: Publishes a draft integration version, making it the active version that receives new execution requests.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response with published version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationVersion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish
+  : post:
+      operationId: unpublishIntegrationVersion
+      summary: Apigee Unpublish an Integration Version
+      description: Unpublishes a published integration version, returning it to draft status so it no longer receives execution requests.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      responses:
+        '200':
+          description: Successful response confirming unpublication
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download
+  : get:
+      operationId: downloadIntegrationVersion
+      summary: Apigee Download an Integration Version
+      description: Downloads the complete configuration of an integration version as a JSON bundle.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/versionId'
+      - name: fileFormat
+        in: query
+        description: File format for the download.
+        schema:
+          type: string
+          enum:
+          - FILE_FORMAT_UNSPECIFIED
+          - JSON
+          - YAML
+      responses:
+        '200':
+          description: Successful response with integration bundle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadIntegrationVersionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:upload:
+    post:
+      operationId: uploadIntegrationVersion
+      summary: Apigee Upload an Integration Version
+      description: Uploads an integration version configuration bundle, creating a new version.
+      tags:
+      - Integration Versions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadIntegrationVersionRequest'
+      responses:
+        '200':
+          description: Successful response with uploaded version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadIntegrationVersionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  schemas:
+    UploadIntegrationVersionRequest:
+      type: object
+      description: Request to upload an integration version.
+      properties:
+        content:
+          type: string
+          description: Integration version content to upload.
+        fileFormat:
+          type: string
+          description: Format of the uploaded content.
+          enum:
+          - FILE_FORMAT_UNSPECIFIED
+          - JSON
+          - YAML
+    ListIntegrationVersionsResponse:
+      type: object
+      properties:
+        integrationVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationVersion'
+        nextPageToken:
+          type: string
+        noPermission:
+          type: boolean
+    IntegrationParameter:
+      type: object
+      description: A parameter used in an integration.
+      properties:
+        key:
+          type: string
+          description: Name of the parameter.
+        dataType:
+          type: string
+          description: Data type of the parameter.
+          enum:
+          - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
+          - STRING_VALUE
+          - INT_VALUE
+          - DOUBLE_VALUE
+          - BOOLEAN_VALUE
+          - STRING_ARRAY
+          - INT_ARRAY
+          - DOUBLE_ARRAY
+          - BOOLEAN_ARRAY
+          - JSON_VALUE
+          - PROTO_VALUE
+          - PROTO_ARRAY
+        defaultValue:
+          $ref: '#/components/schemas/ValueType'
+        inputOutputType:
+          type: string
+          description: Whether the parameter is input, output, or both.
+          enum:
+          - IN_OUT_TYPE_UNSPECIFIED
+          - IN
+          - OUT
+          - IN_OUT
+        isTransient:
+          type: boolean
+          description: Whether the parameter is transient.
+        producer:
+          type: string
+          description: Task that produces this parameter.
+    TriggerConfig:
+      type: object
+      description: Configuration for a trigger that starts an integration.
+      properties:
+        trigger:
+          type: string
+          description: Type of the trigger.
+        triggerId:
+          type: string
+          description: Unique ID of the trigger.
+        label:
+          type: string
+          description: Label for the trigger.
+        description:
+          type: string
+          description: Description of the trigger.
+        triggerType:
+          type: string
+          description: Trigger type.
+          enum:
+          - TRIGGER_TYPE_UNSPECIFIED
+          - CRON
+          - API
+          - SFDC_CHANNEL
+          - CLOUD_PUBSUB_EXTERNAL
+          - SFDC_CDC_CHANNEL
+          - CLOUD_SCHEDULER
+          - INTEGRATION_CONNECTOR_TRIGGER
+        triggerNumber:
+          type: string
+          description: Number for ordering triggers.
+        startTasks:
+          type: array
+          description: Tasks to start when trigger fires.
+          items:
+            type: object
+            properties:
+              taskId:
+                type: string
+              condition:
+                type: string
+              displayName:
+                type: string
+        properties:
+          type: object
+          description: Trigger-specific properties.
+          additionalProperties:
+            type: string
+    UploadIntegrationVersionResponse:
+      type: object
+      description: Response from uploading an integration version.
+      properties:
+        integrationVersion:
+          $ref: '#/components/schemas/IntegrationVersion'
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    IntegrationVersion:
+      type: object
+      description: A version of an integration containing the complete configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the version.
+          readOnly: true
+        description:
+          type: string
+          description: Description of the integration version.
+        taskConfigs:
+          type: array
+          description: List of task configurations in the integration.
+          items:
+            $ref: '#/components/schemas/TaskConfig'
+        triggerConfigs:
+          type: array
+          description: List of trigger configurations.
+          items:
+            $ref: '#/components/schemas/TriggerConfig'
+        integrationParameters:
+          type: array
+          description: Parameters used by the integration.
+          items:
+            $ref: '#/components/schemas/IntegrationParameter'
+        state:
+          type: string
+          description: State of the integration version.
+          enum:
+          - INTEGRATION_STATE_UNSPECIFIED
+          - DRAFT
+          - ACTIVE
+          - ARCHIVED
+          - SNAPSHOT
+        snapshotNumber:
+          type: string
+          format: int64
+          description: Output only. Auto-incrementing snapshot number.
+          readOnly: true
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the version was created.
+          readOnly: true
+        lastModifierEmail:
+          type: string
+          description: Output only. Email of the last person who modified.
+          readOnly: true
+        parentTemplateId:
+          type: string
+          description: ID of the template this version was created from.
+        userLabel:
+          type: string
+          description: User-defined label for the version.
+        databasePersistencePolicy:
+          type: string
+          description: Database persistence policy for execution logs.
+          enum:
+          - DATABASE_PERSISTENCE_POLICY_UNSPECIFIED
+          - DATABASE_PERSISTENCE_DISABLED
+          - DATABASE_PERSISTENCE_ASYNC
+    ValueType:
+      type: object
+      description: A value with a specific type.
+      properties:
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
+    DownloadIntegrationVersionResponse:
+      type: object
+      description: Response for downloading an integration version.
+      properties:
+        content:
+          type: string
+          description: Integration version content.
+    TaskConfig:
+      type: object
+      description: Configuration for a task in an integration.
+      properties:
+        task:
+          type: string
+          description: Type of the task (e.g., GenericRestV2Task, FieldMappingTask).
+        taskId:
+          type: string
+          description: Unique ID of the task within the integration.
+        displayName:
+          type: string
+          description: Display name for the task.
+        parameters:
+          type: object
+          description: Task parameters.
+          additionalProperties:
+            $ref: '#/components/schemas/EventParameter'
+        nextTasks:
+          type: array
+          description: Tasks to execute next.
+          items:
+            type: object
+            properties:
+              taskId:
+                type: string
+              condition:
+                type: string
+              displayName:
+                type: string
+              description:
+                type: string
+        taskExecutionStrategy:
+          type: string
+          description: Execution strategy for the task.
+          enum:
+          - WHEN_ALL_SUCCEED
+          - WHEN_ANY_SUCCEED
+          - WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED
+        failurePolicy:
+          type: object
+          description: Policy for handling task failures.
+          properties:
+            retryStrategy:
+              type: string
+              enum:
+              - RETRY_STRATEGY_UNSPECIFIED
+              - IGNORE
+              - NONE
+              - FATAL
+              - FIXED_INTERVAL
+              - LINEAR_BACKOFF
+              - EXPONENTIAL_BACKOFF
+              - RESTART_INTEGRATION_WITH_BACKOFF
+            maxRetries:
+              type: integer
+              format: int32
+            intervalTime:
+              type: string
+              format: date-time
+  parameters:
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: Integration version identifier.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

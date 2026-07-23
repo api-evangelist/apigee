@@ -1,0 +1,282 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Suspensions API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Suspensions
+  description: Manage integration execution suspensions
+paths:
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions
+  : get:
+      operationId: listSuspensions
+      summary: Apigee List Suspensions
+      description: Lists all suspensions for a specific execution. Suspensions pause execution flow pending human review or approval.
+      tags:
+      - Suspensions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow results.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of suspensions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSuspensionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift
+  : post:
+      operationId: liftSuspension
+      summary: Apigee Lift a Suspension
+      description: Lifts a suspension, allowing the paused execution to continue processing from where it stopped.
+      tags:
+      - Suspensions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
+      - $ref: '#/components/parameters/suspensionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LiftSuspensionRequest'
+      responses:
+        '200':
+          description: Successful response with lift result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiftSuspensionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  ? /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve
+  : post:
+      operationId: resolveSuspension
+      summary: Apigee Resolve a Suspension
+      description: Resolves a suspension with a final decision, completing the suspended task in the execution.
+      tags:
+      - Suspensions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
+      - $ref: '#/components/parameters/suspensionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveSuspensionRequest'
+      responses:
+        '200':
+          description: Successful response with resolution result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveSuspensionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    executionId:
+      name: executionId
+      in: path
+      description: Execution identifier.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    suspensionId:
+      name: suspensionId
+      in: path
+      description: Suspension identifier.
+      required: true
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListSuspensionsResponse:
+      type: object
+      properties:
+        suspensions:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              state:
+                type: string
+              eventExecutionInfoId:
+                type: string
+              taskId:
+                type: string
+              createTime:
+                type: string
+                format: date-time
+        nextPageToken:
+          type: string
+    LiftSuspensionResponse:
+      type: object
+      description: Response from lifting a suspension.
+      properties:
+        eventExecutionInfoId:
+          type: string
+          description: ID of the event execution info.
+    ResolveSuspensionResponse:
+      type: object
+      description: Response from resolving a suspension.
+    ResolveSuspensionRequest:
+      type: object
+      description: Request to resolve a suspension.
+      properties:
+        suspension:
+          type: object
+          description: The suspension resolution details.
+    LiftSuspensionRequest:
+      type: object
+      description: Request to lift a suspension.
+      properties:
+        suspensionResult:
+          type: string
+          description: Result of the suspension lift.
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

@@ -1,0 +1,280 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Shared Flows API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Shared Flows
+  description: Manage reusable shared flow logic
+paths:
+  /organizations/{organizationId}/sharedflows:
+    get:
+      operationId: listSharedFlows
+      summary: Apigee List Shared Flows
+      description: Lists all shared flows in an organization. Shared flows contain reusable logic that can be invoked from API proxy flows.
+      tags:
+      - Shared Flows
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with list of shared flows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSharedFlowsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createSharedFlow
+      summary: Apigee Create a Shared Flow
+      description: Uploads a ZIP-formatted shared flow configuration bundle. The bundle is imported into the organization as a new shared flow.
+      tags:
+      - Shared Flows
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: name
+        in: query
+        description: Name of the shared flow. Must be unique within the organization.
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        description: Set to "import" when uploading a ZIP bundle.
+        schema:
+          type: string
+          enum:
+          - import
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Successful response with the created shared flow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedFlowRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/sharedflows/{sharedFlowId}:
+    get:
+      operationId: getSharedFlow
+      summary: Apigee Get a Shared Flow
+      description: Gets a shared flow including a list of existing revisions.
+      tags:
+      - Shared Flows
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/sharedFlowId'
+      responses:
+        '200':
+          description: Successful response with shared flow details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedFlow'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSharedFlow
+      summary: Apigee Delete a Shared Flow
+      description: Deletes a shared flow and all associated policies, resources, and revisions. The shared flow must be undeployed from all environments.
+      tags:
+      - Shared Flows
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/sharedFlowId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedFlow'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    sharedFlowId:
+      name: sharedFlowId
+      in: path
+      description: Name of the shared flow.
+      required: true
+      schema:
+        type: string
+  schemas:
+    SharedFlow:
+      type: object
+      description: A reusable shared flow containing common logic.
+      properties:
+        name:
+          type: string
+          description: Output only. Name of the shared flow.
+          readOnly: true
+        revision:
+          type: array
+          description: Output only. List of revisions for the shared flow.
+          readOnly: true
+          items:
+            type: string
+        latestRevisionId:
+          type: string
+          description: Output only. ID of the latest revision.
+          readOnly: true
+        metaData:
+          $ref: '#/components/schemas/EntityMetadata'
+    EntityMetadata:
+      type: object
+      description: Metadata common to Apigee entities.
+      properties:
+        createdAt:
+          type: string
+          format: int64
+          description: Time the entity was created in milliseconds since epoch.
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Time the entity was last modified in milliseconds since epoch.
+        subType:
+          type: string
+          description: Subtype of the entity.
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    ListSharedFlowsResponse:
+      type: object
+      description: Response for listing shared flows.
+      properties:
+        sharedFlows:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedFlow'
+    SharedFlowRevision:
+      type: object
+      description: Metadata and details for a specific shared flow revision.
+      properties:
+        name:
+          type: string
+          description: Resource name of the shared flow revision.
+        revision:
+          type: string
+          description: Revision number.
+        displayName:
+          type: string
+          description: Human-readable name.
+        description:
+          type: string
+          description: Description of the revision.
+        createdAt:
+          type: string
+          format: date-time
+          description: Time the revision was created.
+        lastModifiedAt:
+          type: string
+          format: date-time
+          description: Time the revision was last modified.
+        policies:
+          type: array
+          description: List of policies in the shared flow.
+          items:
+            type: string
+        resources:
+          type: array
+          description: List of resource files.
+          items:
+            type: string
+        sharedFlows:
+          type: array
+          description: List of referenced shared flows.
+          items:
+            type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

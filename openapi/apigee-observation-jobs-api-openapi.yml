@@ -1,0 +1,343 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Observation Jobs API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Observation Jobs
+  description: Manage API observation jobs for shadow API discovery
+paths:
+  /projects/{projectId}/locations/{locationId}/observationJobs:
+    get:
+      operationId: listObservationJobs
+      summary: Apigee List Observation Jobs
+      description: Lists all API observation jobs in the specified project and location. Observation jobs analyze network traffic to discover shadow APIs.
+      tags:
+      - Observation Jobs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of observation jobs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListObservationJobsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createObservationJob
+      summary: Apigee Create an Observation Job
+      description: Creates a new API observation job that analyzes network traffic to discover and catalog undocumented APIs operating in the specified infrastructure.
+      tags:
+      - Observation Jobs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: observationJobId
+        in: query
+        description: Required. The ID to use for the observation job.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObservationJob'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:
+    get:
+      operationId: getObservationJob
+      summary: Apigee Get an Observation Job
+      description: Gets details for a specific API observation job, including its state, configuration, and observation sources.
+      tags:
+      - Observation Jobs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with observation job details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteObservationJob
+      summary: Apigee Delete an Observation Job
+      description: Deletes an API observation job. The job must be disabled before it can be deleted.
+      tags:
+      - Observation Jobs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:enable:
+    post:
+      operationId: enableObservationJob
+      summary: Apigee Enable an Observation Job
+      description: Enables a disabled observation job, resuming API traffic analysis and shadow API discovery.
+      tags:
+      - Observation Jobs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:disable:
+    post:
+      operationId: disableObservationJob
+      summary: Apigee Disable an Observation Job
+      description: Disables an active observation job, pausing API traffic analysis.
+      tags:
+      - Observation Jobs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/observationJobId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    observationJobId:
+      name: observationJobId
+      in: path
+      description: ID of the observation job.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    Operation:
+      type: object
+      description: A long-running operation.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    ListObservationJobsResponse:
+      type: object
+      properties:
+        observationJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationJob'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
+    ObservationJob:
+      type: object
+      description: An API observation job that analyzes traffic to discover shadow APIs.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the observation job.
+          readOnly: true
+        state:
+          type: string
+          description: State of the observation job.
+          enum:
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ENABLING
+          - ENABLED
+          - DISABLING
+          - DISABLED
+          - DELETING
+        sources:
+          type: array
+          description: Observation sources for this job.
+          items:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the job was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the job was last updated.
+          readOnly: true
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

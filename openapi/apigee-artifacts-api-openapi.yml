@@ -1,0 +1,336 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Artifacts API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Artifacts
+  description: Manage metadata artifacts
+paths:
+  /projects/{projectId}/locations/{locationId}/artifacts:
+    get:
+      operationId: listArtifacts
+      summary: Apigee List Artifacts
+      description: Lists all artifacts at the specified project/location level.
+      tags:
+      - Artifacts
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of artifacts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListArtifactsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createArtifact
+      summary: Apigee Create an Artifact
+      description: Creates a new artifact at the project/location level.
+      tags:
+      - Artifacts
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: artifactId
+        in: query
+        description: Required. The ID to use for the artifact.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artifact'
+      responses:
+        '200':
+          description: Successful response with the created artifact
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:
+    get:
+      operationId: getArtifact
+      summary: Apigee Get an Artifact
+      description: Gets details about a specific artifact.
+      tags:
+      - Artifacts
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
+      responses:
+        '200':
+          description: Successful response with artifact details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceArtifact
+      summary: Apigee Replace an Artifact
+      description: Replaces the contents of an existing artifact.
+      tags:
+      - Artifacts
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artifact'
+      responses:
+        '200':
+          description: Successful response with replaced artifact
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteArtifact
+      summary: Apigee Delete an Artifact
+      description: Deletes an artifact from the registry.
+      tags:
+      - Artifacts
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:getContents:
+    get:
+      operationId: getArtifactContents
+      summary: Apigee Get Artifact Contents
+      description: Retrieves the raw content of an artifact.
+      tags:
+      - Artifacts
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/artifactId'
+      responses:
+        '200':
+          description: Successful response with artifact contents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    artifactId:
+      name: artifactId
+      in: path
+      description: ID of the artifact.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListArtifactsResponse:
+      type: object
+      properties:
+        artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artifact'
+        nextPageToken:
+          type: string
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data.
+        extensions:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Artifact:
+      type: object
+      description: A metadata artifact associated with a registry resource.
+      properties:
+        name:
+          type: string
+          description: Resource name of the artifact.
+        mimeType:
+          type: string
+          description: MIME type of the artifact content.
+        sizeBytes:
+          type: integer
+          format: int32
+          description: Output only. Size of the artifact in bytes.
+          readOnly: true
+        hash:
+          type: string
+          description: Output only. Hash of the artifact content.
+          readOnly: true
+        contents:
+          type: string
+          format: byte
+          description: Raw artifact content.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

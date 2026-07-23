@@ -1,0 +1,307 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Observation Sources API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Observation Sources
+  description: Manage sources for API observation
+paths:
+  /projects/{projectId}/locations/{locationId}/observationSources:
+    get:
+      operationId: listObservationSources
+      summary: Apigee List Observation Sources
+      description: Lists all observation sources configured in the specified project and location. Sources define the network infrastructure to monitor.
+      tags:
+      - Observation Sources
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of observation sources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListObservationSourcesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createObservationSource
+      summary: Apigee Create an Observation Source
+      description: Creates a new observation source that defines which network infrastructure to monitor for API traffic.
+      tags:
+      - Observation Sources
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: observationSourceId
+        in: query
+        description: Required. The ID to use for the observation source.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObservationSource'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/observationSources/{observationSourceId}:
+    get:
+      operationId: getObservationSource
+      summary: Apigee Get an Observation Source
+      description: Gets details for a specific observation source.
+      tags:
+      - Observation Sources
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: observationSourceId
+        in: path
+        description: ID of the observation source.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with observation source details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationSource'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteObservationSource
+      summary: Apigee Delete an Observation Source
+      description: Deletes an observation source. The source must not be in use by any active observation jobs.
+      tags:
+      - Observation Sources
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: observationSourceId
+        in: path
+        description: ID of the observation source.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    ObservationSource:
+      type: object
+      description: A source of network traffic for API observation.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the source.
+          readOnly: true
+        gclbObservationSource:
+          type: object
+          description: Google Cloud Load Balancer as observation source.
+          properties:
+            pscNetworkConfigs:
+              type: array
+              description: Private Service Connect network configurations.
+              items:
+                type: object
+                properties:
+                  network:
+                    type: string
+                    description: VPC network resource name.
+                  subnetwork:
+                    type: string
+                    description: Subnetwork resource name.
+        state:
+          type: string
+          description: State of the observation source.
+          enum:
+          - STATE_UNSPECIFIED
+          - CREATING
+          - CREATED
+          - DELETING
+          - ERROR
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the source was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the source was last updated.
+          readOnly: true
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListObservationSourcesResponse:
+      type: object
+      properties:
+        observationSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationSource'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
+    Operation:
+      type: object
+      description: A long-running operation.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

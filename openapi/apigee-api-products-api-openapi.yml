@@ -1,0 +1,380 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics API Products API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: API Products
+  description: Bundle APIs into products for consumption
+paths:
+  /organizations/{organizationId}/apiproducts:
+    get:
+      operationId: listApiProducts
+      summary: Apigee List API Products
+      description: Lists all API product names for an organization. Filter the list using an attribute name and value query parameter.
+      tags:
+      - API Products
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: attributename
+        in: query
+        description: Name of the attribute used to filter the search.
+        schema:
+          type: string
+      - name: attributevalue
+        in: query
+        description: Value of the attribute used to filter the search.
+        schema:
+          type: string
+      - name: expand
+        in: query
+        description: Set to true to get expanded details about each API product.
+        schema:
+          type: boolean
+      - name: count
+        in: query
+        description: Number of API products to return in the API call.
+        schema:
+          type: integer
+          format: int64
+      - name: startKey
+        in: query
+        description: Name of the API product from which to start displaying the list of API products.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of API products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiProductsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiProduct
+      summary: Apigee Create an API Product
+      description: Creates an API product in an organization. API products bundle API resources for consumption by developers. An API product can contain API proxies and quota settings.
+      tags:
+      - API Products
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProduct'
+      responses:
+        '200':
+          description: Successful response with the created API product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /organizations/{organizationId}/apiproducts/{apiProductId}:
+    get:
+      operationId: getApiProduct
+      summary: Apigee Get an API Product
+      description: Gets the configuration for an API product. The API product name is required in the request URL.
+      tags:
+      - API Products
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiProductId'
+      responses:
+        '200':
+          description: Successful response with API product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateApiProduct
+      summary: Apigee Update an API Product
+      description: Updates an existing API product. The full API product object must be included in the request body, even if only a subset of properties are being updated.
+      tags:
+      - API Products
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiProductId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProduct'
+      responses:
+        '200':
+          description: Successful response with updated API product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiProduct
+      summary: Apigee Delete an API Product
+      description: Deletes an API product from an organization. Deleting an API product causes apps that are associated with the product to be unable to access the API resources defined in that product.
+      tags:
+      - API Products
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiProductId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProduct'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Attribute:
+      type: object
+      description: A key-value pair used for custom attributes.
+      properties:
+        name:
+          type: string
+          description: Name of the attribute.
+        value:
+          type: string
+          description: Value of the attribute.
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    OperationGroup:
+      type: object
+      description: Groups operations for access control on an API product.
+      properties:
+        operationConfigs:
+          type: array
+          description: List of operation configurations.
+          items:
+            $ref: '#/components/schemas/OperationConfig'
+        operationConfigType:
+          type: string
+          description: Type of operation configuration.
+    ListApiProductsResponse:
+      type: object
+      description: Response for listing API products.
+      properties:
+        apiProduct:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiProduct'
+    ApiProduct:
+      type: object
+      description: An API product bundles API resources for consumption.
+      properties:
+        name:
+          type: string
+          description: Internal name of the API product. Must be unique.
+        displayName:
+          type: string
+          description: Name displayed in the developer portal.
+        description:
+          type: string
+          description: Description of the API product.
+        approvalType:
+          type: string
+          description: How API keys are approved for the product.
+          enum:
+          - manual
+          - auto
+        attributes:
+          type: array
+          description: Custom attributes for the API product (max 18).
+          items:
+            $ref: '#/components/schemas/Attribute'
+        environments:
+          type: array
+          description: Environments where this product is available.
+          items:
+            type: string
+        proxies:
+          type: array
+          description: API proxies included in this product.
+          items:
+            type: string
+        scopes:
+          type: array
+          description: OAuth scopes associated with the product.
+          items:
+            type: string
+        quota:
+          type: string
+          description: Number of requests permitted per quota interval.
+        quotaInterval:
+          type: string
+          description: Time interval over which the quota is applied.
+        quotaTimeUnit:
+          type: string
+          description: Time unit for the quota interval.
+          enum:
+          - minute
+          - hour
+          - day
+          - month
+        operationGroup:
+          $ref: '#/components/schemas/OperationGroup'
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Unix time when the product was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Unix time when the product was last modified.
+          readOnly: true
+    OperationConfig:
+      type: object
+      description: Configuration for a set of operations on an API proxy.
+      properties:
+        apiSource:
+          type: string
+          description: Name of the API proxy this config applies to.
+        operations:
+          type: array
+          description: List of operations.
+          items:
+            type: object
+            properties:
+              resource:
+                type: string
+                description: REST resource path.
+              methods:
+                type: array
+                description: HTTP methods allowed.
+                items:
+                  type: string
+        quota:
+          type: object
+          description: Quota settings for this operation config.
+          properties:
+            limit:
+              type: string
+            interval:
+              type: string
+            timeUnit:
+              type: string
+        attributes:
+          type: array
+          description: Custom attributes for this config.
+          items:
+            $ref: '#/components/schemas/Attribute'
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    apiProductId:
+      name: apiProductId
+      in: path
+      description: Name of the API product.
+      required: true
+      schema:
+        type: string
+  responses:
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

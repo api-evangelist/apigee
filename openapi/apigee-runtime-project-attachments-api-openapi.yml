@@ -1,0 +1,182 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Runtime Project Attachments API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Runtime Project Attachments
+  description: Manage runtime project attachments
+paths:
+  /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments:
+    get:
+      operationId: listRuntimeProjectAttachments
+      summary: Apigee List Runtime Project Attachments
+      description: Lists all runtime project attachments for the API Hub instance.
+      tags:
+      - Runtime Project Attachments
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of attachments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRuntimeProjectAttachmentsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createRuntimeProjectAttachment
+      summary: Apigee Create a Runtime Project Attachment
+      description: Creates a new runtime project attachment, linking a Google Cloud project to the API Hub for API discovery.
+      tags:
+      - Runtime Project Attachments
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: runtimeProjectAttachmentId
+        in: query
+        description: Required. The ID to use for the attachment resource.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuntimeProjectAttachment'
+      responses:
+        '200':
+          description: Successful response with the created attachment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeProjectAttachment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListRuntimeProjectAttachmentsResponse:
+      type: object
+      properties:
+        runtimeProjectAttachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuntimeProjectAttachment'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    RuntimeProjectAttachment:
+      type: object
+      description: A runtime project attachment.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the attachment.
+          readOnly: true
+        runtimeProject:
+          type: string
+          description: Required. Google Cloud project to attach.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the attachment was created.
+          readOnly: true
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

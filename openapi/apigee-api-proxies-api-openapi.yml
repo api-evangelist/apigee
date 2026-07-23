@@ -1,0 +1,381 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics API Proxies API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: API Proxies
+  description: Create, deploy, and manage API proxy definitions
+paths:
+  /organizations/{organizationId}/apis:
+    get:
+      operationId: listApiProxies
+      summary: Apigee List API Proxies
+      description: Lists the names of all API proxies in an organization. The list includes information about the API proxy revisions available.
+      tags:
+      - API Proxies
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of API proxies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiProxiesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiProxy
+      summary: Apigee Create an API Proxy
+      description: Creates an API proxy. The API proxy created will not be accessible at runtime until it is deployed to an environment. Provide the proxy configuration as an API proxy bundle or as an inline configuration.
+      tags:
+      - API Proxies
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: name
+        in: query
+        description: Name of the API proxy. Must be unique within the organization.
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        description: Action to perform when importing an API proxy configuration bundle. Set to "import" when uploading a ZIP bundle.
+        schema:
+          type: string
+          enum:
+          - import
+      requestBody:
+        description: API proxy bundle or configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProxy'
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Successful response with the created API proxy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxyRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /organizations/{organizationId}/apis/{apiId}:
+    get:
+      operationId: getApiProxy
+      summary: Apigee Get an API Proxy
+      description: Gets an API proxy including a list of existing revisions, the proxy metadata, and the last modified date.
+      tags:
+      - API Proxies
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with API proxy details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiProxy
+      summary: Apigee Delete an API Proxy
+      description: Deletes an API proxy and all associated endpoints, policies, resources, and revisions. The proxy must be undeployed from all environments before it can be deleted.
+      tags:
+      - API Proxies
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: patchApiProxy
+      summary: Apigee Update an API Proxy
+      description: Updates an existing API proxy metadata such as labels. Does not update the proxy bundle or revision content.
+      tags:
+      - API Proxies
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      - name: updateMask
+        in: query
+        description: 'Required. List of fields to update. Use comma-separated field names from the resource. Example: "labels".'
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiProxy'
+      responses:
+        '200':
+          description: Successful response with updated API proxy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxy'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: Name of the API proxy.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+  schemas:
+    ListApiProxiesResponse:
+      type: object
+      description: Response for listing API proxies.
+      properties:
+        proxies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiProxy'
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    EntityMetadata:
+      type: object
+      description: Metadata common to Apigee entities.
+      properties:
+        createdAt:
+          type: string
+          format: int64
+          description: Time the entity was created in milliseconds since epoch.
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Time the entity was last modified in milliseconds since epoch.
+        subType:
+          type: string
+          description: Subtype of the entity.
+    ApiProxyRevision:
+      type: object
+      description: API proxy revision metadata and configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the API proxy revision.
+          readOnly: true
+        revision:
+          type: string
+          description: Output only. Revision number of the proxy.
+          readOnly: true
+        displayName:
+          type: string
+          description: Human-readable name of the API proxy.
+        description:
+          type: string
+          description: Description of the API proxy revision.
+        createdAt:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was last modified.
+          readOnly: true
+        basepaths:
+          type: array
+          description: Base path(s) for the API proxy.
+          items:
+            type: string
+        policies:
+          type: array
+          description: List of policy names included in this revision.
+          items:
+            type: string
+        resources:
+          type: array
+          description: List of resource files included in this revision.
+          items:
+            type: string
+        proxies:
+          type: array
+          description: List of proxy endpoint names in this revision.
+          items:
+            type: string
+        targets:
+          type: array
+          description: List of target endpoint names in this revision.
+          items:
+            type: string
+        sharedFlows:
+          type: array
+          description: List of shared flows referenced by this revision.
+          items:
+            type: string
+        type:
+          type: string
+          description: The type of the revision (e.g., Application).
+    ApiProxy:
+      type: object
+      description: Metadata about an API proxy.
+      properties:
+        name:
+          type: string
+          description: Output only. Name of the API proxy.
+          readOnly: true
+        revision:
+          type: array
+          description: Output only. List of revisions defined for the API proxy.
+          readOnly: true
+          items:
+            type: string
+        latestRevisionId:
+          type: string
+          description: Output only. The ID of the most recently created revision.
+          readOnly: true
+        metaData:
+          $ref: '#/components/schemas/EntityMetadata'
+        labels:
+          type: object
+          description: User-defined labels for organizing API proxies.
+          additionalProperties:
+            type: string
+        readOnly:
+          type: boolean
+          description: Output only. Whether this proxy is read-only.
+          readOnly: true
+        apiProxyType:
+          type: string
+          description: Type of the API proxy.
+          enum:
+          - API_PROXY_TYPE_UNSPECIFIED
+          - PROGRAMMABLE
+          - CONFIGURABLE
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

@@ -1,0 +1,227 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics API Proxy Revisions API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: API Proxy Revisions
+  description: Manage revisions of API proxies
+paths:
+  /organizations/{organizationId}/apis/{apiId}/revisions:
+    get:
+      operationId: listApiProxyRevisions
+      summary: Apigee List API Proxy Revisions
+      description: Lists all revisions for an API proxy. Returns an array of revision numbers in string format.
+      tags:
+      - API Proxy Revisions
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with list of revision numbers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/apis/{apiId}/revisions/{revisionId}:
+    get:
+      operationId: getApiProxyRevision
+      summary: Apigee Get an API Proxy Revision
+      description: Gets an API proxy revision. Returns the configuration and metadata for the specified revision of an API proxy.
+      tags:
+      - API Proxy Revisions
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
+      responses:
+        '200':
+          description: Successful response with API proxy revision details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxyRevision'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiProxyRevision
+      summary: Apigee Delete an API Proxy Revision
+      description: Deletes an API proxy revision. The revision must be undeployed from all environments before it can be deleted.
+      tags:
+      - API Proxy Revisions
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProxyRevision'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    revisionId:
+      name: revisionId
+      in: path
+      description: Revision number of the API proxy.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: Name of the API proxy.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    ApiProxyRevision:
+      type: object
+      description: API proxy revision metadata and configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the API proxy revision.
+          readOnly: true
+        revision:
+          type: string
+          description: Output only. Revision number of the proxy.
+          readOnly: true
+        displayName:
+          type: string
+          description: Human-readable name of the API proxy.
+        description:
+          type: string
+          description: Description of the API proxy revision.
+        createdAt:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was last modified.
+          readOnly: true
+        basepaths:
+          type: array
+          description: Base path(s) for the API proxy.
+          items:
+            type: string
+        policies:
+          type: array
+          description: List of policy names included in this revision.
+          items:
+            type: string
+        resources:
+          type: array
+          description: List of resource files included in this revision.
+          items:
+            type: string
+        proxies:
+          type: array
+          description: List of proxy endpoint names in this revision.
+          items:
+            type: string
+        targets:
+          type: array
+          description: List of target endpoint names in this revision.
+          items:
+            type: string
+        sharedFlows:
+          type: array
+          description: List of shared flows referenced by this revision.
+          items:
+            type: string
+        type:
+          type: string
+          description: The type of the revision (e.g., Application).
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

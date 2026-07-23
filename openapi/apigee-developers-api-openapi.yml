@@ -1,0 +1,325 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Developers API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Developers
+  description: Manage developer accounts and credentials
+paths:
+  /organizations/{organizationId}/developers:
+    get:
+      operationId: listDevelopers
+      summary: Apigee List Developers
+      description: Lists all developers in an organization by email address. Returns a list of developer email addresses or expanded developer objects.
+      tags:
+      - Developers
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: expand
+        in: query
+        description: Set to true to return expanded developer details.
+        schema:
+          type: boolean
+      - name: count
+        in: query
+        description: Number of developers to return.
+        schema:
+          type: integer
+          format: int64
+      - name: startKey
+        in: query
+        description: Email of the developer from which to start the list.
+        schema:
+          type: string
+      - name: app
+        in: query
+        description: Filter by the name of the app owned by the developer.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of developers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDevelopersResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDeveloper
+      summary: Apigee Create a Developer
+      description: Creates a developer in an organization. A developer is a consumer of APIs, typically represented by a person or company who registers apps and obtains API keys.
+      tags:
+      - Developers
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Developer'
+      responses:
+        '200':
+          description: Successful response with the created developer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /organizations/{organizationId}/developers/{developerId}:
+    get:
+      operationId: getDeveloper
+      summary: Apigee Get a Developer
+      description: Returns the developer profile by email address or developer ID. Includes information about the developer apps and custom attributes.
+      tags:
+      - Developers
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      responses:
+        '200':
+          description: Successful response with developer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateDeveloper
+      summary: Apigee Update a Developer
+      description: Updates a developer with the properties specified in the request body. The full developer object must be included in the request body.
+      tags:
+      - Developers
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Developer'
+      responses:
+        '200':
+          description: Successful response with updated developer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeveloper
+      summary: Apigee Delete a Developer
+      description: Deletes a developer from the organization. All apps and API keys associated with the developer are also removed. All pending push notifications are also deleted.
+      tags:
+      - Developers
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Developer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Attribute:
+      type: object
+      description: A key-value pair used for custom attributes.
+      properties:
+        name:
+          type: string
+          description: Name of the attribute.
+        value:
+          type: string
+          description: Value of the attribute.
+    ListDevelopersResponse:
+      type: object
+      description: Response for listing developers.
+      properties:
+        developer:
+          type: array
+          items:
+            $ref: '#/components/schemas/Developer'
+    Developer:
+      type: object
+      description: A developer registered in an Apigee organization.
+      properties:
+        email:
+          type: string
+          format: email
+          description: Required. Email address of the developer. Used as the unique identifier for the developer.
+        firstName:
+          type: string
+          description: Required. First name of the developer.
+        lastName:
+          type: string
+          description: Required. Last name of the developer.
+        userName:
+          type: string
+          description: Required. User name of the developer.
+        developerId:
+          type: string
+          description: Output only. ID of the developer.
+          readOnly: true
+        organizationName:
+          type: string
+          description: Output only. Name of the Apigee organization.
+          readOnly: true
+        status:
+          type: string
+          description: Status of the developer. Valid values are active or inactive.
+        apps:
+          type: array
+          description: Output only. List of apps owned by the developer.
+          readOnly: true
+          items:
+            type: string
+        attributes:
+          type: array
+          description: Custom attributes for the developer (max 18).
+          items:
+            $ref: '#/components/schemas/Attribute'
+        companies:
+          type: array
+          description: Output only. Companies associated with the developer.
+          readOnly: true
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the developer was created in milliseconds since epoch.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the developer was last modified in milliseconds since epoch.
+          readOnly: true
+        accessType:
+          type: string
+          description: Access type of the developer.
+      required:
+      - email
+      - firstName
+      - lastName
+      - userName
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    developerId:
+      name: developerId
+      in: path
+      description: Email address or ID of the developer.
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

@@ -1,0 +1,387 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Projects API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Projects
+paths:
+  /projects/{projectId}/locations/{locationId}/apis:
+    get:
+      operationId: listApis
+      summary: Apigee List APIs
+      description: Lists all APIs in the specified project and location. Returns API metadata including name, display name, and description.
+      tags:
+      - Projects
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of APIs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApisResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApi
+      summary: Apigee Create an API
+      description: Creates a new API resource in the API Hub. The API represents a logical grouping of related API versions and specifications.
+      tags:
+      - Projects
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: apiId
+        in: query
+        description: Required. The ID to use for the API resource, which will become the final component of the API's resource name.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api'
+      responses:
+        '200':
+          description: Successful response with the created API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}:
+    get:
+      operationId: getApi
+      summary: Apigee Get an API
+      description: Retrieves details of a specific API resource, including its display name, description, owner, and associated metadata.
+      tags:
+      - Projects
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response with API details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApi
+      summary: Apigee Update an API
+      description: Updates an existing API resource in the API Hub. Use the updateMask field to specify which fields to update.
+      tags:
+      - Projects
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - name: updateMask
+        in: query
+        description: Required. The list of fields to update. Use comma-separated field names.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api'
+      responses:
+        '200':
+          description: Successful response with updated API
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApi
+      summary: Apigee Delete an API
+      description: Deletes an API resource and all its child resources (versions, specs, operations) from the API Hub.
+      tags:
+      - Projects
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    Owner:
+      type: object
+      description: Owner of an API resource.
+      properties:
+        displayName:
+          type: string
+          description: Display name of the owner.
+        email:
+          type: string
+          format: email
+          description: Email address of the owner.
+    ListApisResponse:
+      type: object
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    Api:
+      type: object
+      description: An API resource in the API Hub.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the API.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the API.
+        description:
+          type: string
+          description: Description of the API.
+        owner:
+          $ref: '#/components/schemas/Owner'
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        versions:
+          type: array
+          description: Output only. Versions associated with this API.
+          readOnly: true
+          items:
+            type: string
+        deployments:
+          type: array
+          description: Output only. Deployments associated with this API.
+          readOnly: true
+          items:
+            type: string
+        attributes:
+          type: object
+          description: Custom attributes associated with the API.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the API was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the API was last updated.
+          readOnly: true
+        targetUser:
+          $ref: '#/components/schemas/AttributeValues'
+        team:
+          $ref: '#/components/schemas/AttributeValues'
+        businessUnit:
+          $ref: '#/components/schemas/AttributeValues'
+        maturityLevel:
+          $ref: '#/components/schemas/AttributeValues'
+        apiStyle:
+          $ref: '#/components/schemas/AttributeValues'
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

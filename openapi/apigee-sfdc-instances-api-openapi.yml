@@ -1,0 +1,305 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics SFDC Instances API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: SFDC Instances
+  description: Manage Salesforce instances
+paths:
+  /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances:
+    get:
+      operationId: listSfdcInstances
+      summary: Apigee List SFDC Instances
+      description: Lists all Salesforce instances configured for the product.
+      tags:
+      - SFDC Instances
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of SFDC instances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSfdcInstancesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createSfdcInstance
+      summary: Apigee Create an SFDC Instance
+      description: Creates a new Salesforce instance configuration for connecting integrations to Salesforce.
+      tags:
+      - SFDC Instances
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SfdcInstance'
+      responses:
+        '200':
+          description: Successful response with the created instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}:
+    get:
+      operationId: getSfdcInstance
+      summary: Apigee Get an SFDC Instance
+      description: Gets details for a specific Salesforce instance configuration.
+      tags:
+      - SFDC Instances
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
+      responses:
+        '200':
+          description: Successful response with SFDC instance details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcInstance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateSfdcInstance
+      summary: Apigee Update an SFDC Instance
+      description: Updates an existing Salesforce instance configuration.
+      tags:
+      - SFDC Instances
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
+      - name: updateMask
+        in: query
+        description: Comma-separated list of fields to update.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SfdcInstance'
+      responses:
+        '200':
+          description: Successful response with updated instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSfdcInstance
+      summary: Apigee Delete an SFDC Instance
+      description: Deletes a Salesforce instance configuration.
+      tags:
+      - SFDC Instances
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    sfdcInstanceId:
+      name: sfdcInstanceId
+      in: path
+      description: SFDC instance identifier.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListSfdcInstancesResponse:
+      type: object
+      properties:
+        sfdcInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/SfdcInstance'
+        nextPageToken:
+          type: string
+    SfdcInstance:
+      type: object
+      description: A Salesforce instance configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the SFDC instance.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the instance.
+        description:
+          type: string
+          description: Description of the SFDC instance.
+        sfdcOrgId:
+          type: string
+          description: Salesforce organization ID.
+        authConfigId:
+          type: array
+          description: Auth configs associated with this instance.
+          items:
+            type: string
+        serviceAuthority:
+          type: string
+          description: Service authority URL for the Salesforce instance.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the instance was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the instance was last updated.
+          readOnly: true
+        deleteTime:
+          type: string
+          format: date-time
+          description: Output only. Time the instance was deleted.
+          readOnly: true
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

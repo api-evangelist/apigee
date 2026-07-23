@@ -1,0 +1,548 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Specs API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Specs
+  description: Manage API specifications
+paths:
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs:
+    get:
+      operationId: listApiSpecs
+      summary: Apigee List API Specifications
+      description: Lists all specifications for an API version. Specs are machine-readable API definitions such as OpenAPI or Protocol Buffer files.
+      tags:
+      - Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of specs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiSpecsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiSpec
+      summary: Apigee Create an API Specification
+      description: Creates a new specification for an API version. Specifications are machine-readable definitions of the API.
+      tags:
+      - Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - name: specId
+        in: query
+        description: Required. The ID to use for the spec resource.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with the created spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:
+    get:
+      operationId: getApiSpec
+      summary: Apigee Get an API Specification
+      description: Gets details about a specific API specification, including metadata about the spec type, parsing mode, and lint results.
+      tags:
+      - Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApiSpec
+      summary: Apigee Update an API Specification
+      description: Updates an existing API specification. Use updateMask to specify fields.
+      tags:
+      - Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with updated spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiSpec
+      summary: Apigee Delete an API Specification
+      description: Deletes an API specification from the API Hub.
+      tags:
+      - Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents:
+    get:
+      operationId: getApiSpecContents
+      summary: Apigee Get API Specification Contents
+      description: Retrieves the raw contents of an API specification file such as an OpenAPI document or Protocol Buffer definition.
+      tags:
+      - Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec contents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:lint:
+    post:
+      operationId: lintApiSpec
+      summary: Apigee Lint an API Specification
+      description: Validates an API specification against style and correctness rules. Returns linting results with warnings and errors.
+      tags:
+      - Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with lint operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    specId:
+      name: specId
+      in: path
+      description: ID of the API spec resource.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version resource.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+  schemas:
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
+    Operation:
+      type: object
+      description: A long-running operation.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    ListApiSpecsResponse:
+      type: object
+      properties:
+        specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSpec'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    LintResponse:
+      type: object
+      description: Lint results for an API specification.
+      properties:
+        linter:
+          type: string
+          description: Name of the linter used.
+        state:
+          type: string
+          description: State of the linting process.
+          enum:
+          - STATE_UNSPECIFIED
+          - LINT_PENDING
+          - LINT_COMPLETED
+          - LINT_ERROR
+        issues:
+          type: array
+          description: List of lint issues found.
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              path:
+                type: array
+                items:
+                  type: string
+              message:
+                type: string
+              severity:
+                type: string
+                enum:
+                - SEVERITY_UNSPECIFIED
+                - ERROR
+                - WARNING
+                - INFO
+                - HINT
+        summary:
+          type: array
+          description: Summary of lint results by severity.
+          items:
+            type: object
+            properties:
+              severity:
+                type: string
+              count:
+                type: integer
+                format: int32
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data as bytes.
+        extensions:
+          type: array
+          description: Application-specific metadata.
+          items:
+            type: object
+            additionalProperties: true
+    ApiSpec:
+      type: object
+      description: A machine-readable API specification.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the spec.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the spec.
+        description:
+          type: string
+          description: Description of the specification.
+        specType:
+          $ref: '#/components/schemas/AttributeValues'
+        contents:
+          type: object
+          description: The spec contents.
+          properties:
+            contents:
+              type: string
+              format: byte
+              description: The spec content as bytes.
+            mimeType:
+              type: string
+              description: MIME type of the content.
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        sourceUri:
+          type: string
+          description: URI of the original spec source.
+        parsingMode:
+          type: string
+          description: Parsing mode for the specification.
+          enum:
+          - PARSING_MODE_UNSPECIFIED
+          - RELAXED
+          - STRICT
+        lintResponse:
+          $ref: '#/components/schemas/LintResponse'
+        attributes:
+          type: object
+          description: Custom attributes associated with this spec.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the spec was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the spec was last updated.
+          readOnly: true
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

@@ -1,0 +1,451 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics API Specs API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: API Specs
+  description: Manage API specification documents
+paths:
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs:
+    get:
+      operationId: listApiSpecs
+      summary: Apigee List API Specs
+      description: Lists all specs for an API version.
+      tags:
+      - API Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of specs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiSpecsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createApiSpec
+      summary: Apigee Create an API Spec
+      description: Creates a new specification for an API version in the registry.
+      tags:
+      - API Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - name: apiSpecId
+        in: query
+        description: Required. The ID to use for the spec.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with the created spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:
+    get:
+      operationId: getApiSpec
+      summary: Apigee Get an API Spec
+      description: Gets details about a specific API specification.
+      tags:
+      - API Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateApiSpec
+      summary: Apigee Update an API Spec
+      description: Updates an existing API spec. A new revision is created if the spec content changes.
+      tags:
+      - API Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      - name: allowMissing
+        in: query
+        description: If true, create if it does not exist.
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiSpec'
+      responses:
+        '200':
+          description: Successful response with updated spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteApiSpec
+      summary: Apigee Delete an API Spec
+      description: Deletes an API spec and all its revisions and child resources.
+      tags:
+      - API Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      - name: force
+        in: query
+        description: If true, delete child resources as well.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents:
+    get:
+      operationId: getApiSpecContents
+      summary: Apigee Get API Spec Contents
+      description: Retrieves the raw content of an API specification.
+      tags:
+      - API Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      responses:
+        '200':
+          description: Successful response with spec contents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:rollback:
+    post:
+      operationId: rollbackApiSpec
+      summary: Apigee Rollback an API Spec
+      description: Rolls back an API spec to a previous revision.
+      tags:
+      - API Specs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/versionId'
+      - $ref: '#/components/parameters/specId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                revisionId:
+                  type: string
+                  description: Required. Revision ID to roll back to.
+              required:
+              - revisionId
+      responses:
+        '200':
+          description: Successful response with rolled-back spec
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiSpec'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    specId:
+      name: specId
+      in: path
+      description: ID of the API spec.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ApiSpec:
+      type: object
+      description: A specification for an API version.
+      properties:
+        name:
+          type: string
+          description: Resource name of the spec.
+        filename:
+          type: string
+          description: Name of the spec file.
+        description:
+          type: string
+          description: Description of the spec.
+        mimeType:
+          type: string
+          description: MIME type of the spec content.
+        sourceUri:
+          type: string
+          description: URI of the original spec source.
+        sizeBytes:
+          type: integer
+          format: int32
+          description: Output only. Size of the spec in bytes.
+          readOnly: true
+        hash:
+          type: string
+          description: Output only. Hash of the spec content.
+          readOnly: true
+        revisionId:
+          type: string
+          description: Output only. Immutable revision identifier.
+          readOnly: true
+        revisionCreateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was created.
+          readOnly: true
+        revisionUpdateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the revision was last updated.
+          readOnly: true
+        contents:
+          type: string
+          format: byte
+          description: Raw spec content.
+        labels:
+          type: object
+          description: User-defined labels.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: User-defined annotations.
+          additionalProperties:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
+    ListApiSpecsResponse:
+      type: object
+      properties:
+        apiSpecs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSpec'
+        nextPageToken:
+          type: string
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data.
+        extensions:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

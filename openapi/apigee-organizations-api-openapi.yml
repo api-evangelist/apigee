@@ -1,0 +1,342 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Organizations API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Organizations
+  description: Manage Apigee organizations and their configuration
+paths:
+  /organizations:
+    get:
+      operationId: listOrganizations
+      summary: Apigee List Organizations
+      description: Lists the Apigee organizations that are available to the caller. Returns a list of organization names and metadata.
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Successful response with list of organizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createOrganization
+      summary: Apigee Create an Organization
+      description: Creates an Apigee organization. The organization is the top-level container for all Apigee resources including API proxies, products, developers, and environments.
+      tags:
+      - Organizations
+      parameters:
+      - name: parent
+        in: query
+        description: 'Required. Name of the Google Cloud project in which to associate the Apigee organization. Pass the information as a query parameter using the format: projects/{project}.'
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        '200':
+          description: Successful response with the created organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}:
+    get:
+      operationId: getOrganization
+      summary: Apigee Get an Organization
+      description: Retrieves the properties for an Apigee organization, including configuration settings, subscription type, and metadata.
+      tags:
+      - Organizations
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with organization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateOrganization
+      summary: Apigee Update an Organization
+      description: Updates the properties for an Apigee organization. No other fields in the organization profile will be updated.
+      tags:
+      - Organizations
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+      responses:
+        '200':
+          description: Successful response with updated organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteOrganization
+      summary: Apigee Delete an Organization
+      description: Deletes an Apigee organization. This is a long-running operation that deletes all resources associated with the organization.
+      tags:
+      - Organizations
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    ListOrganizationsResponse:
+      type: object
+      description: Response for listing organizations.
+      properties:
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+    Operation:
+      type: object
+      description: A long-running operation returned by asynchronous API calls.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata associated with the operation.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Organization:
+      type: object
+      description: Represents an Apigee organization.
+      properties:
+        name:
+          type: string
+          description: Output only. Name of the Apigee organization.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the organization.
+        description:
+          type: string
+          description: Description of the organization.
+        projectId:
+          type: string
+          description: Output only. Project ID associated with the organization.
+          readOnly: true
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the organization was created in milliseconds since epoch.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the organization was last modified in milliseconds since epoch.
+          readOnly: true
+        subscriptionType:
+          type: string
+          description: Output only. Subscription type of the organization.
+          readOnly: true
+          enum:
+          - SUBSCRIPTION_TYPE_UNSPECIFIED
+          - PAID
+          - TRIAL
+        state:
+          type: string
+          description: Output only. State of the organization.
+          readOnly: true
+          enum:
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ACTIVE
+          - DELETING
+          - UPDATING
+        analyticsRegion:
+          type: string
+          description: Required. Primary Google Cloud region for analytics data storage.
+        runtimeType:
+          type: string
+          description: Required. Runtime type of the Apigee organization.
+          enum:
+          - RUNTIME_TYPE_UNSPECIFIED
+          - CLOUD
+          - HYBRID
+        authorizedNetwork:
+          type: string
+          description: VPC network used for service networking.
+        environments:
+          type: array
+          description: Output only. List of environments in the organization.
+          readOnly: true
+          items:
+            type: string
+        properties:
+          $ref: '#/components/schemas/Properties'
+        billingType:
+          type: string
+          description: Billing type of the organization.
+          enum:
+          - BILLING_TYPE_UNSPECIFIED
+          - SUBSCRIPTION
+          - EVALUATION
+          - PAYG
+    Properties:
+      type: object
+      description: A collection of key-value property pairs.
+      properties:
+        property:
+          type: array
+          description: List of properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

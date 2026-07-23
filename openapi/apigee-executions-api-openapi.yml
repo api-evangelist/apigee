@@ -1,0 +1,297 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Executions API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Executions
+  description: View integration execution results
+paths:
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions:
+    get:
+      operationId: listExecutions
+      summary: Apigee List Executions
+      description: Lists execution results for an integration. Returns execution metadata including status, start time, and trigger information.
+      tags:
+      - Executions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression (e.g., by status or time range).
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of executions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListExecutionsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}:
+    get:
+      operationId: getExecution
+      summary: Apigee Get an Execution
+      description: Gets details for a specific integration execution, including input/output parameters and execution steps.
+      tags:
+      - Executions
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      - $ref: '#/components/parameters/executionId'
+      responses:
+        '200':
+          description: Successful response with execution details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Execution'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    executionId:
+      name: executionId
+      in: path
+      description: Execution identifier.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    Execution:
+      type: object
+      description: An integration execution record.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the execution.
+          readOnly: true
+        executionMethod:
+          type: string
+          description: Method by which the execution was triggered.
+          enum:
+          - EXECUTION_METHOD_UNSPECIFIED
+          - POST
+          - POST_TO_QUEUE
+          - SCHEDULE
+        requestParams:
+          type: object
+          description: Input parameters for the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/EventParameter'
+        responseParams:
+          type: object
+          description: Output parameters from the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/EventParameter'
+        executionDetails:
+          type: object
+          description: Detailed execution information.
+          properties:
+            state:
+              type: string
+              enum:
+              - STATE_UNSPECIFIED
+              - PENDING
+              - PROCESSING
+              - SUCCEEDED
+              - FAILED
+              - CANCELLED
+              - RETRY_ON_HOLD
+              - SUSPENDED
+            executionSnapshots:
+              type: array
+              items:
+                type: object
+                properties:
+                  checkpointTaskNumber:
+                    type: string
+                  executionSnapshotMetadata:
+                    type: object
+                    properties:
+                      executionAttempt:
+                        type: integer
+                        format: int32
+                      task:
+                        type: string
+                      taskLabel:
+                        type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the execution was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the execution was last updated.
+          readOnly: true
+        triggerId:
+          type: string
+          description: ID of the trigger that started the execution.
+        integrationVersionId:
+          type: string
+          description: ID of the integration version executed.
+    ValueType:
+      type: object
+      description: A value with a specific type.
+      properties:
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
+    ListExecutionsResponse:
+      type: object
+      properties:
+        executionInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Execution'
+        executions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Execution'
+        nextPageToken:
+          type: string
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

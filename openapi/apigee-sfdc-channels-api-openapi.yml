@@ -1,0 +1,213 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics SFDC Channels API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: SFDC Channels
+  description: Manage Salesforce channels
+paths:
+  /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels:
+    get:
+      operationId: listSfdcChannels
+      summary: Apigee List SFDC Channels
+      description: Lists all Salesforce channels configured for an SFDC instance.
+      tags:
+      - SFDC Channels
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of channels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSfdcChannelsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createSfdcChannel
+      summary: Apigee Create an SFDC Channel
+      description: Creates a new Salesforce channel within an SFDC instance.
+      tags:
+      - SFDC Channels
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/sfdcInstanceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SfdcChannel'
+      responses:
+        '200':
+          description: Successful response with the created channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SfdcChannel'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    sfdcInstanceId:
+      name: sfdcInstanceId
+      in: path
+      description: SFDC instance identifier.
+      required: true
+      schema:
+        type: string
+  schemas:
+    ListSfdcChannelsResponse:
+      type: object
+      properties:
+        sfdcChannels:
+          type: array
+          items:
+            $ref: '#/components/schemas/SfdcChannel'
+        nextPageToken:
+          type: string
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    SfdcChannel:
+      type: object
+      description: A Salesforce channel configuration.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the SFDC channel.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the channel.
+        description:
+          type: string
+          description: Description of the channel.
+        channelTopic:
+          type: string
+          description: Salesforce PushTopic or CDC channel name.
+        isActive:
+          type: boolean
+          description: Whether the channel is active.
+        lastReplayId:
+          type: string
+          description: Last replay ID used for event replay.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the channel was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the channel was last updated.
+          readOnly: true
+        deleteTime:
+          type: string
+          format: date-time
+          description: Output only. Time the channel was deleted.
+          readOnly: true
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

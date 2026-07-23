@@ -1,0 +1,585 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Deployments API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Deployments
+  description: Manage API deployments
+paths:
+  /projects/{projectId}/locations/{locationId}/deployments:
+    get:
+      operationId: listDeployments
+      summary: Apigee List Deployments
+      description: Lists all API deployments in the specified project and location.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDeployment
+      summary: Apigee Create a Deployment
+      description: Creates a new deployment record in the API Hub to track where an API version is deployed.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: deploymentId
+        in: query
+        description: Required. The ID to use for the deployment resource.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deployment'
+      responses:
+        '200':
+          description: Successful response with the created deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}:
+    get:
+      operationId: getDeployment
+      summary: Apigee Get a Deployment
+      description: Retrieves details about a specific API deployment.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/deploymentId'
+      responses:
+        '200':
+          description: Successful response with deployment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateDeployment
+      summary: Apigee Update a Deployment
+      description: Updates an existing deployment record.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/deploymentId'
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Deployment'
+      responses:
+        '200':
+          description: Successful response with updated deployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeployment
+      summary: Apigee Delete a Deployment
+      description: Deletes a deployment record from the API Hub.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/deploymentId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments:
+    post:
+      operationId: deployApiProxyRevision
+      summary: Apigee Deploy an API Proxy Revision
+      description: Deploys a revision of an API proxy to an environment. After deployment, the API proxy revision can accept requests from clients.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
+      - name: override
+        in: query
+        description: Set to true to force deployment of the new revision over the currently deployed revision by overriding conflict checks.
+        schema:
+          type: boolean
+      - name: sequencedRollout
+        in: query
+        description: Set to true to enable sequenced rollout, which deploys to pods in a gradual manner.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful response with deployment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment_2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden_2'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: undeployApiProxyRevision
+      summary: Apigee Undeploy an API Proxy Revision
+      description: Undeploys an API proxy revision from an environment. After undeployment, the API proxy revision will no longer accept requests from clients.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - $ref: '#/components/parameters/apiId'
+      - $ref: '#/components/parameters/revisionId'
+      - name: sequencedRollout
+        in: query
+        description: Set to true to enable sequenced rollout for undeployment.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful response confirming undeployment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment_2'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden_2'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organizations/{organizationId}/deployments:
+    get:
+      operationId: listOrganizationDeployments
+      summary: Apigee List Organization Deployments
+      description: Lists all deployments across all environments in an organization, including the API proxy name, revision, and environment.
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: sharedFlows
+        in: query
+        description: Set to true to return shared flow deployments instead of API proxy deployments.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful response with list of deployments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentsResponse_2'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden_2'
+components:
+  schemas:
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
+    PodStatus:
+      type: object
+      description: Status of a runtime pod.
+      properties:
+        podName:
+          type: string
+          description: Name of the pod.
+        podStatus:
+          type: string
+          description: Current status of the pod.
+        podStatusTime:
+          type: string
+          description: Time the status was last reported.
+        deploymentStatus:
+          type: string
+          description: Deployment status within the pod.
+        deploymentStatusTime:
+          type: string
+          description: Time the deployment status was reported.
+        deploymentTime:
+          type: string
+          description: Time the deployment was last updated in the pod.
+        appVersion:
+          type: string
+          description: Version of the app running in the pod.
+        statusCode:
+          type: string
+          description: Status code.
+        statusCodeDetails:
+          type: string
+          description: Human-readable details for the status code.
+    Error_2:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    Deployment:
+      type: object
+      description: An API deployment record.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the deployment.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the deployment.
+        description:
+          type: string
+          description: Description of the deployment.
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        deploymentType:
+          $ref: '#/components/schemas/AttributeValues'
+        resourceUri:
+          type: string
+          description: URI of the deployed API resource.
+        endpoints:
+          type: array
+          description: Endpoints where the API is accessible.
+          items:
+            type: string
+        apiVersions:
+          type: array
+          description: API versions deployed.
+          items:
+            type: string
+        slo:
+          $ref: '#/components/schemas/AttributeValues'
+        environment:
+          $ref: '#/components/schemas/AttributeValues'
+        attributes:
+          type: object
+          description: Custom attributes associated with this deployment.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the deployment was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the deployment was last updated.
+          readOnly: true
+    ListDeploymentsResponse:
+      type: object
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    Deployment_2:
+      type: object
+      description: Represents a deployment of an API proxy revision to an environment.
+      properties:
+        environment:
+          type: string
+          description: Environment where the proxy is deployed.
+        apiProxy:
+          type: string
+          description: API proxy name.
+        revision:
+          type: string
+          description: API proxy revision number.
+        deployStartTime:
+          type: string
+          format: date-time
+          description: Time the deployment was initiated.
+        state:
+          type: string
+          description: Current state of the deployment.
+          enum:
+          - RUNTIME_STATE_UNSPECIFIED
+          - READY
+          - PROGRESSING
+          - ERROR
+        pods:
+          type: array
+          description: Status reported by individual runtime pods.
+          items:
+            $ref: '#/components/schemas/PodStatus'
+        routeConflicts:
+          type: array
+          description: Conflicts with other deployments that share the same base path.
+          items:
+            type: object
+            properties:
+              deployedRevision:
+                type: string
+              environmentGroup:
+                type: string
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    ListDeploymentsResponse_2:
+      type: object
+      description: Response for listing deployments.
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment_2'
+  parameters:
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    deploymentId:
+      name: deploymentId
+      in: path
+      description: ID of the deployment resource.
+      required: true
+      schema:
+        type: string
+    revisionId:
+      name: revisionId
+      in: path
+      description: Revision number of the API proxy.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: Name of the API proxy.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden_2:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

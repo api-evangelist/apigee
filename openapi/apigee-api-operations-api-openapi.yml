@@ -1,0 +1,246 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics API Operations API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: API Operations
+  description: View discovered API operations
+paths:
+  ? /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations
+  : get:
+      operationId: listApiOperations
+      summary: Apigee List API Operations
+      description: Lists all API operations discovered within a specific API observation. Operations represent individual HTTP endpoints with their methods, paths, and response codes.
+      tags:
+      - API Operations
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/observationJobId'
+      - $ref: '#/components/parameters/apiObservationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of API operations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiOperationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  ? /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations/{apiOperationId}
+  : get:
+      operationId: getApiOperation
+      summary: Apigee Get an API Operation
+      description: Gets details for a specific discovered API operation, including HTTP method, path, request/response details, and traffic statistics.
+      tags:
+      - API Operations
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/observationJobId'
+      - $ref: '#/components/parameters/apiObservationId'
+      - name: apiOperationId
+        in: path
+        description: ID of the API operation.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with API operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiOperation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ApiOperation:
+      type: object
+      description: A discovered API operation from traffic observation.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the operation.
+          readOnly: true
+        httpOperation:
+          type: object
+          description: HTTP operation details.
+          properties:
+            method:
+              type: string
+              description: HTTP method (GET, POST, PUT, DELETE, etc.).
+              enum:
+              - METHOD_UNSPECIFIED
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - TRACE
+              - OPTIONS
+              - CONNECT
+            path:
+              type: object
+              description: Path details.
+              properties:
+                segments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - SEGMENT_TYPE_UNSPECIFIED
+                        - LITERAL
+                        - WILDCARD
+            pathItem:
+              type: string
+              description: Full path string.
+            queryParams:
+              type: object
+              description: Query parameters observed.
+              additionalProperties:
+                type: integer
+                format: int64
+            responseCodes:
+              type: object
+              description: Response codes and their counts.
+              additionalProperties:
+                type: integer
+                format: int64
+        requestCount:
+          type: string
+          format: int64
+          description: Number of requests for this operation.
+        firstSeenTime:
+          type: string
+          format: date-time
+          description: Time the operation was first observed.
+        lastSeenTime:
+          type: string
+          format: date-time
+          description: Time the operation was last observed.
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListApiOperationsResponse:
+      type: object
+      properties:
+        apiOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiOperation'
+        nextPageToken:
+          type: string
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    apiObservationId:
+      name: apiObservationId
+      in: path
+      description: ID of the API observation.
+      required: true
+      schema:
+        type: string
+    observationJobId:
+      name: observationJobId
+      in: path
+      description: ID of the observation job.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

@@ -1,0 +1,302 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics App Groups API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: App Groups
+  description: Manage developer groups and their applications
+paths:
+  /organizations/{organizationId}/appgroups:
+    get:
+      operationId: listAppGroups
+      summary: Apigee List App Groups
+      description: Lists all app groups in an organization. App groups organize developers and their applications.
+      tags:
+      - App Groups
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      responses:
+        '200':
+          description: Successful response with list of app groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAppGroupsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createAppGroup
+      summary: Apigee Create an App Group
+      description: Creates an app group in an organization. App groups provide a way to organize developers and their applications.
+      tags:
+      - App Groups
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppGroup'
+      responses:
+        '200':
+          description: Successful response with the created app group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/appgroups/{appGroupId}:
+    get:
+      operationId: getAppGroup
+      summary: Apigee Get an App Group
+      description: Returns the app group details for a specified app group.
+      tags:
+      - App Groups
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: appGroupId
+        in: path
+        description: Name of the app group.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with app group details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAppGroup
+      summary: Apigee Update an App Group
+      description: Updates an app group. The full app group object must be included in the request body.
+      tags:
+      - App Groups
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: appGroupId
+        in: path
+        description: Name of the app group.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppGroup'
+      responses:
+        '200':
+          description: Successful response with updated app group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAppGroup
+      summary: Apigee Delete an App Group
+      description: Deletes an app group from an organization.
+      tags:
+      - App Groups
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - name: appGroupId
+        in: path
+        description: Name of the app group.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Attribute:
+      type: object
+      description: A key-value pair used for custom attributes.
+      properties:
+        name:
+          type: string
+          description: Name of the attribute.
+        value:
+          type: string
+          description: Value of the attribute.
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    ListAppGroupsResponse:
+      type: object
+      description: Response for listing app groups.
+      properties:
+        appGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppGroup'
+        nextPageToken:
+          type: string
+          description: Token for retrieving the next page.
+        totalSize:
+          type: integer
+          format: int32
+          description: Total number of app groups.
+    AppGroup:
+      type: object
+      description: A group of developers and their applications.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the app group.
+          readOnly: true
+        appGroupId:
+          type: string
+          description: Output only. Internal ID of the app group.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name of the app group.
+        channelUri:
+          type: string
+          description: URI of the communication channel for the group.
+        channelId:
+          type: string
+          description: Channel ID for the group.
+        status:
+          type: string
+          description: Status of the app group.
+        attributes:
+          type: array
+          description: Custom attributes for the app group.
+          items:
+            $ref: '#/components/schemas/Attribute'
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Time the app group was created.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Time the app group was last modified.
+          readOnly: true
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

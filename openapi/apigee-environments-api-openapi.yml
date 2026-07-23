@@ -1,0 +1,347 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Environments API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Environments
+  description: Manage runtime execution environments
+paths:
+  /organizations/{organizationId}/environments:
+    get:
+      operationId: listEnvironments
+      summary: Apigee List Environments
+      description: Lists all environments in an organization. Returns a list of environment names or expanded environment objects.
+      tags:
+      - Environments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with list of environments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createEnvironment
+      summary: Apigee Create an Environment
+      description: Creates an environment in an organization. Environments provide a runtime execution context for API proxies, with separate settings for caches, target servers, keystores, and more.
+      tags:
+      - Environments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/environments/{environmentId}:
+    get:
+      operationId: getEnvironment
+      summary: Apigee Get an Environment
+      description: Gets the profile for an environment in an organization, including properties, state, and deployment type.
+      tags:
+      - Environments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: Successful response with environment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateEnvironment
+      summary: Apigee Update an Environment
+      description: Updates an existing environment. The full environment object must be included in the request body.
+      tags:
+      - Environments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+      responses:
+        '200':
+          description: Successful response with updated environment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteEnvironment
+      summary: Apigee Delete an Environment
+      description: Deletes an environment from an organization. Before deleting, all API proxies must be undeployed from the environment.
+      tags:
+      - Environments
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: Successful response with long-running operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Environment:
+      type: object
+      description: An environment in an Apigee organization for API proxy deployment.
+      properties:
+        name:
+          type: string
+          description: Required. Name of the environment.
+        displayName:
+          type: string
+          description: Display name for the environment.
+        description:
+          type: string
+          description: Description of the environment.
+        state:
+          type: string
+          description: Output only. State of the environment.
+          readOnly: true
+          enum:
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ACTIVE
+          - DELETING
+          - UPDATING
+        createdAt:
+          type: string
+          format: int64
+          description: Output only. Creation time in milliseconds since epoch.
+          readOnly: true
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Output only. Last modification time.
+          readOnly: true
+        deploymentType:
+          type: string
+          description: Deployment type of the environment.
+          enum:
+          - DEPLOYMENT_TYPE_UNSPECIFIED
+          - PROXY
+          - ARCHIVE
+        apiProxyType:
+          type: string
+          description: Type of API proxies deployed in this environment.
+          enum:
+          - API_PROXY_TYPE_UNSPECIFIED
+          - PROGRAMMABLE
+          - CONFIGURABLE
+        properties:
+          $ref: '#/components/schemas/Properties'
+        nodeConfig:
+          $ref: '#/components/schemas/NodeConfig'
+        forwardProxyUri:
+          type: string
+          description: Optional forward proxy URI for the environment.
+        type:
+          type: string
+          description: Type of the environment.
+          enum:
+          - ENVIRONMENT_TYPE_UNSPECIFIED
+          - BASE
+          - INTERMEDIATE
+          - COMPREHENSIVE
+    NodeConfig:
+      type: object
+      description: Runtime node configuration for an environment.
+      properties:
+        minNodeCount:
+          type: string
+          format: int64
+          description: Minimum number of gateway nodes.
+        maxNodeCount:
+          type: string
+          format: int64
+          description: Maximum number of gateway nodes.
+        currentAggregateNodeCount:
+          type: string
+          format: int64
+          description: Output only. Current total number of gateway nodes.
+          readOnly: true
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    Operation:
+      type: object
+      description: A long-running operation returned by asynchronous API calls.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata associated with the operation.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Properties:
+      type: object
+      description: A collection of key-value property pairs.
+      properties:
+        property:
+          type: array
+          description: List of properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

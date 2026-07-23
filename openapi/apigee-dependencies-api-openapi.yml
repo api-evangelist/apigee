@@ -1,0 +1,366 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Dependencies API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Dependencies
+  description: Track API dependencies
+paths:
+  /projects/{projectId}/locations/{locationId}/dependencies:
+    get:
+      operationId: listDependencies
+      summary: Apigee List Dependencies
+      description: Lists all API dependencies in the specified project and location. Dependencies represent relationships between APIs.
+      tags:
+      - Dependencies
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of dependencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDependenciesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDependency
+      summary: Apigee Create a Dependency
+      description: Creates a new dependency between APIs in the API Hub.
+      tags:
+      - Dependencies
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: dependencyId
+        in: query
+        description: Required. The ID to use for the dependency resource.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dependency'
+      responses:
+        '200':
+          description: Successful response with the created dependency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}:
+    get:
+      operationId: getDependency
+      summary: Apigee Get a Dependency
+      description: Retrieves details about a specific API dependency.
+      tags:
+      - Dependencies
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: dependencyId
+        in: path
+        description: ID of the dependency resource.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with dependency details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateDependency
+      summary: Apigee Update a Dependency
+      description: Updates an existing API dependency.
+      tags:
+      - Dependencies
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: dependencyId
+        in: path
+        description: ID of the dependency resource.
+        required: true
+        schema:
+          type: string
+      - name: updateMask
+        in: query
+        description: Required. Comma-separated list of fields to update.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dependency'
+      responses:
+        '200':
+          description: Successful response with updated dependency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dependency'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDependency
+      summary: Apigee Delete a Dependency
+      description: Deletes an API dependency from the API Hub.
+      tags:
+      - Dependencies
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: dependencyId
+        in: path
+        description: ID of the dependency resource.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    ListDependenciesResponse:
+      type: object
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dependency'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
+    Dependency:
+      type: object
+      description: A dependency relationship between APIs.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the dependency.
+          readOnly: true
+        description:
+          type: string
+          description: Description of the dependency.
+        consumer:
+          $ref: '#/components/schemas/DependencyEntityReference'
+        supplier:
+          $ref: '#/components/schemas/DependencyEntityReference'
+        state:
+          type: string
+          description: State of the dependency.
+          enum:
+          - STATE_UNSPECIFIED
+          - PROPOSED
+          - VALIDATED
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the dependency was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the dependency was last updated.
+          readOnly: true
+        attributes:
+          type: object
+          description: Custom attributes associated with this dependency.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+    DependencyEntityReference:
+      type: object
+      description: Reference to an entity in a dependency relationship.
+      properties:
+        displayName:
+          type: string
+          description: Output only. Display name of the referenced entity.
+          readOnly: true
+        operationResourceName:
+          type: string
+          description: Resource name of the operation.
+        externalApiResourceName:
+          type: string
+          description: Resource name of the external API.
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

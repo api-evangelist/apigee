@@ -1,0 +1,315 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Analytics
+  description: Query analytics data and manage data stores
+paths:
+  /organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}:
+    get:
+      operationId: getEnvironmentStats
+      summary: Apigee Get Environment Statistics
+      description: Retrieves metrics for API proxy performance in an environment. Provides traffic, latency, error counts, and other analytics data across specified time ranges.
+      tags:
+      - Analytics
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - name: dimensionName
+        in: path
+        description: Name of the dimension to query. Common values include apiproxy, developer_email, developer_app, access_token, and others.
+        required: true
+        schema:
+          type: string
+      - name: select
+        in: query
+        description: 'Comma-separated list of metrics. Example: sum(message_count), avg(total_response_time).'
+        required: true
+        schema:
+          type: string
+      - name: timeRange
+        in: query
+        description: Time range for the query in the format MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM.
+        required: true
+        schema:
+          type: string
+      - name: timeUnit
+        in: query
+        description: Granularity of the time series (second, minute, hour, day, week, month).
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      - name: sortby
+        in: query
+        description: Comma-separated list of columns to sort the results.
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sort order (ASC or DESC).
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      - name: topk
+        in: query
+        description: Return the top k results.
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Maximum number of records to return.
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Offset for pagination.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response with analytics data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/analytics/datastores:
+    get:
+      operationId: listDatastores
+      summary: Apigee List Analytics Data Stores
+      description: Lists the data stores available for exporting analytics data.
+      tags:
+      - Analytics
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      responses:
+        '200':
+          description: Successful response with list of data stores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDatastoresResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDatastore
+      summary: Apigee Create an Analytics Data Store
+      description: Creates a data store for exporting analytics data from an organization.
+      tags:
+      - Analytics
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Datastore'
+      responses:
+        '200':
+          description: Successful response with the created data store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Datastore'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  schemas:
+    ListDatastoresResponse:
+      type: object
+      description: Response for listing data stores.
+      properties:
+        datastores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Datastore'
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    Stats:
+      type: object
+      description: Analytics statistics response.
+      properties:
+        environments:
+          type: array
+          description: List of environment statistics.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              dimensions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    metrics:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          values:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                timestamp:
+                                  type: string
+                                value:
+                                  type: string
+        metaData:
+          type: object
+          description: Metadata about the statistics response.
+          properties:
+            errors:
+              type: array
+              items:
+                type: string
+            notices:
+              type: array
+              items:
+                type: string
+    Datastore:
+      type: object
+      description: Configuration for an analytics data store.
+      properties:
+        displayName:
+          type: string
+          description: Required. Display name for the data store.
+        self:
+          type: string
+          description: Output only. Resource URI of the data store.
+          readOnly: true
+        org:
+          type: string
+          description: Output only. Organization associated with the data store.
+          readOnly: true
+        targetType:
+          type: string
+          description: Required. Type of target for data export.
+        datastoreConfig:
+          type: object
+          description: Configuration for the data store target.
+          properties:
+            projectId:
+              type: string
+              description: Google Cloud project ID.
+            bucketName:
+              type: string
+              description: Cloud Storage bucket name.
+            path:
+              type: string
+              description: Path within the bucket.
+            datasetName:
+              type: string
+              description: BigQuery dataset name.
+            tablePrefix:
+              type: string
+              description: Prefix for BigQuery table names.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the data store was created.
+          readOnly: true
+        lastUpdateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the data store was last updated.
+          readOnly: true
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

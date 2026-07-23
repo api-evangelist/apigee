@@ -1,0 +1,301 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Developer App Keys API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Developer App Keys
+  description: Manage API keys and credentials for developer apps
+paths:
+  /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys:
+    get:
+      operationId: listDeveloperAppKeys
+      summary: Apigee List Developer App Keys
+      description: Returns a list of all API keys for a developer app, including consumer keys and secrets.
+      tags:
+      - Developer App Keys
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      responses:
+        '200':
+          description: Successful response with list of app keys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeveloperAppKeysResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createDeveloperAppKey
+      summary: Apigee Create a Developer App Key
+      description: Creates a custom consumer key and secret for a developer app. Useful when migrating existing consumer keys and secrets to Apigee.
+      tags:
+      - Developer App Keys
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeveloperAppKey'
+      responses:
+        '200':
+          description: Successful response with the created key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}:
+    get:
+      operationId: getDeveloperAppKey
+      summary: Apigee Get a Developer App Key
+      description: Returns details for a consumer key for a developer app, including the key, its status, and the associated API products.
+      tags:
+      - Developer App Keys
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/keyId'
+      responses:
+        '200':
+          description: Successful response with key details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateDeveloperAppKey
+      summary: Apigee Update a Developer App Key
+      description: Adds an API product to a developer app key, enabling the app to access the API resources bundled in the API product.
+      tags:
+      - Developer App Keys
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/keyId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeveloperAppKey'
+      responses:
+        '200':
+          description: Successful response with updated key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeveloperAppKey
+      summary: Apigee Delete a Developer App Key
+      description: Deletes an app's consumer key. After the consumer key is deleted, it cannot be used to access any APIs.
+      tags:
+      - Developer App Keys
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/developerId'
+      - $ref: '#/components/parameters/appId'
+      - $ref: '#/components/parameters/keyId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperAppKey'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Attribute:
+      type: object
+      description: A key-value pair used for custom attributes.
+      properties:
+        name:
+          type: string
+          description: Name of the attribute.
+        value:
+          type: string
+          description: Value of the attribute.
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    ListDeveloperAppKeysResponse:
+      type: object
+      description: Response for listing developer app keys.
+      properties:
+        developerAppKey:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeveloperAppKey'
+    DeveloperAppKey:
+      type: object
+      description: Consumer key and secret for a developer app.
+      properties:
+        consumerKey:
+          type: string
+          description: Consumer key (API key) for the developer app.
+        consumerSecret:
+          type: string
+          description: Consumer secret for the developer app.
+        apiProducts:
+          type: array
+          description: API products associated with this key.
+          items:
+            type: object
+            properties:
+              apiproduct:
+                type: string
+                description: Name of the API product.
+              status:
+                type: string
+                description: Approval status (approved, pending, revoked).
+        status:
+          type: string
+          description: Status of the credential (approved or revoked).
+        expiresAt:
+          type: string
+          format: int64
+          description: Time the key expires in milliseconds since epoch. -1 means never.
+        issuedAt:
+          type: string
+          format: int64
+          description: Output only. Time the key was issued in milliseconds since epoch.
+          readOnly: true
+        scopes:
+          type: array
+          description: OAuth scopes granted to the key.
+          items:
+            type: string
+        attributes:
+          type: array
+          description: Custom attributes for the key.
+          items:
+            $ref: '#/components/schemas/Attribute'
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    appId:
+      name: appId
+      in: path
+      description: Name of the developer app.
+      required: true
+      schema:
+        type: string
+    keyId:
+      name: keyId
+      in: path
+      description: Consumer key of the developer app.
+      required: true
+      schema:
+        type: string
+    developerId:
+      name: developerId
+      in: path
+      description: Email address or ID of the developer.
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

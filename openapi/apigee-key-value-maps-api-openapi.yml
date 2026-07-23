@@ -1,0 +1,183 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Key Value Maps API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Key Value Maps
+  description: Manage key-value storage maps
+paths:
+  /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps:
+    get:
+      operationId: listKeyValueMaps
+      summary: Apigee List Key Value Maps
+      description: Lists the key value maps in the specified environment.
+      tags:
+      - Key Value Maps
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      responses:
+        '200':
+          description: Successful response with list of key value map names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createKeyValueMap
+      summary: Apigee Create a Key Value Map
+      description: Creates a key value map in the specified environment. Key value maps store data for retrieval at runtime by policies.
+      tags:
+      - Key Value Maps
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyValueMap'
+      responses:
+        '200':
+          description: Successful response with the created key value map
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyValueMap'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}:
+    delete:
+      operationId: deleteKeyValueMap
+      summary: Apigee Delete a Key Value Map
+      description: Deletes a key value map from the specified environment.
+      tags:
+      - Key Value Maps
+      parameters:
+      - $ref: '#/components/parameters/organizationId'
+      - $ref: '#/components/parameters/environmentId'
+      - name: keyValueMapId
+        in: path
+        description: Name of the key value map.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyValueMap'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    KeyValueMap:
+      type: object
+      description: A key value map used for runtime data storage.
+      properties:
+        name:
+          type: string
+          description: Required. Name of the key value map.
+        encrypted:
+          type: boolean
+          description: Whether the values in the map are encrypted.
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

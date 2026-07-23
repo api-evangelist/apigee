@@ -1,0 +1,365 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Integrations API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Integrations
+  description: Manage and execute integrations
+paths:
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations:
+    get:
+      operationId: listIntegrations
+      summary: Apigee List Integrations
+      description: Lists all integrations in the specified project, location, and product. Returns integration metadata including name and description.
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of integrations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListIntegrationsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:
+    delete:
+      operationId: deleteIntegration
+      summary: Apigee Delete an Integration
+      description: Deletes an integration and all its versions. The integration must not have any active versions before deletion.
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:execute:
+    post:
+      operationId: executeIntegration
+      summary: Apigee Execute an Integration
+      description: Executes an integration synchronously. The caller blocks until the integration execution completes or times out.
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteIntegrationRequest'
+      responses:
+        '200':
+          description: Successful response with execution results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteIntegrationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:schedule:
+    post:
+      operationId: scheduleIntegration
+      summary: Apigee Schedule an Integration Execution
+      description: Schedules an integration for execution at a specified time. The execution happens asynchronously.
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/integrationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleIntegrationRequest'
+      responses:
+        '200':
+          description: Successful response with schedule confirmation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleIntegrationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    ScheduleIntegrationResponse:
+      type: object
+      description: Response from scheduling an integration execution.
+      properties:
+        executionInfoIds:
+          type: array
+          description: Execution info IDs for the scheduled run.
+          items:
+            type: string
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ScheduleIntegrationRequest:
+      type: object
+      description: Request to schedule an integration execution.
+      properties:
+        triggerId:
+          type: string
+          description: Trigger to use for the execution.
+        inputParameters:
+          type: object
+          description: Input parameters for the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/ValueType'
+        parameterEntries:
+          type: array
+          description: Alternative way to pass parameters.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+        scheduleTime:
+          type: string
+          format: date-time
+          description: Time to schedule the execution.
+        requestId:
+          type: string
+          description: Unique request ID for idempotency.
+    ExecuteIntegrationRequest:
+      type: object
+      description: Request to execute an integration synchronously.
+      properties:
+        triggerId:
+          type: string
+          description: Trigger to use for the execution.
+        inputParameters:
+          type: object
+          description: Input parameters for the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/ValueType'
+        parameterEntries:
+          type: array
+          description: Alternative way to pass parameters.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+        doNotPropagateError:
+          type: boolean
+          description: Whether to propagate errors to the caller.
+        requestId:
+          type: string
+          description: Unique request ID for idempotency.
+    ListIntegrationsResponse:
+      type: object
+      properties:
+        integrations:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              updateTime:
+                type: string
+                format: date-time
+              active:
+                type: boolean
+        nextPageToken:
+          type: string
+    ValueType:
+      type: object
+      description: A value with a specific type.
+      properties:
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
+    ExecuteIntegrationResponse:
+      type: object
+      description: Response from a synchronous integration execution.
+      properties:
+        executionId:
+          type: string
+          description: ID of the execution.
+        outputParameters:
+          type: object
+          description: Output parameters from the execution.
+          additionalProperties:
+            type: object
+        parameterEntries:
+          type: array
+          description: Output parameter entries.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

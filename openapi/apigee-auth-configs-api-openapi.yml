@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Auth Configs API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Auth Configs
+  description: Manage authentication configurations
+paths:
+  /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs:
+    get:
+      operationId: listAuthConfigs
+      summary: Apigee List Auth Configs
+      description: Lists all authentication configurations for the specified product. Auth configs define credentials used by integrations to connect to external services.
+      tags:
+      - Auth Configs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of auth configs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAuthConfigsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createAuthConfig
+      summary: Apigee Create an Auth Config
+      description: Creates a new authentication configuration. Auth configs store credentials like OAuth tokens, API keys, or service account keys.
+      tags:
+      - Auth Configs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthConfig'
+      responses:
+        '200':
+          description: Successful response with the created auth config
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /projects/{projectId}/locations/{locationId}/products/{productId}/authConfigs/{authConfigId}:
+    get:
+      operationId: getAuthConfig
+      summary: Apigee Get an Auth Config
+      description: Gets the details for a specific authentication configuration.
+      tags:
+      - Auth Configs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/authConfigId'
+      responses:
+        '200':
+          description: Successful response with auth config details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateAuthConfig
+      summary: Apigee Update an Auth Config
+      description: Updates an existing authentication configuration.
+      tags:
+      - Auth Configs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/authConfigId'
+      - name: updateMask
+        in: query
+        description: Comma-separated list of fields to update.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthConfig'
+      responses:
+        '200':
+          description: Successful response with updated auth config
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfig'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAuthConfig
+      summary: Apigee Delete an Auth Config
+      description: Deletes an authentication configuration. The auth config must not be in use by any active integration version.
+      tags:
+      - Auth Configs
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/productId'
+      - $ref: '#/components/parameters/authConfigId'
+      responses:
+        '200':
+          description: Successful response confirming deletion
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    authConfigId:
+      name: authConfigId
+      in: path
+      description: Auth config identifier.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    AuthConfig:
+      type: object
+      description: Authentication configuration for connecting to external services.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the auth config.
+          readOnly: true
+        displayName:
+          type: string
+          description: Display name for the auth config.
+        description:
+          type: string
+          description: Description of the auth config.
+        certificateId:
+          type: string
+          description: Certificate to use for authentication.
+        credentialType:
+          type: string
+          description: Type of credential stored.
+          enum:
+          - CREDENTIAL_TYPE_UNSPECIFIED
+          - USERNAME_AND_PASSWORD
+          - API_KEY
+          - OAUTH2_AUTHORIZATION_CODE
+          - OAUTH2_IMPLICIT
+          - OAUTH2_CLIENT_CREDENTIALS
+          - OAUTH2_RESOURCE_OWNER_CREDENTIALS
+          - JWT
+          - AUTH_TOKEN
+          - SERVICE_ACCOUNT
+          - CLIENT_CERTIFICATE_ONLY
+          - OIDC_TOKEN
+        visibility:
+          type: string
+          description: Visibility of the auth config.
+          enum:
+          - AUTH_CONFIG_VISIBILITY_UNSPECIFIED
+          - PRIVATE
+          - CLIENT_VISIBLE
+        state:
+          type: string
+          description: State of the auth config.
+          enum:
+          - STATE_UNSPECIFIED
+          - VALID
+          - INVALID
+          - SOFT_DELETED
+          - EXPIRED
+          - UNAUTHORIZED
+          - UNSUPPORTED
+        expiryNotificationDuration:
+          type: array
+          description: Notification durations before expiry.
+          items:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the config was created.
+          readOnly: true
+        lastModifierEmail:
+          type: string
+          description: Output only. Email of the last modifier.
+          readOnly: true
+        validTime:
+          type: string
+          format: date-time
+          description: Output only. Time until which the config is valid.
+          readOnly: true
+    ListAuthConfigsResponse:
+      type: object
+      properties:
+        authConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthConfig'
+        nextPageToken:
+          type: string
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest

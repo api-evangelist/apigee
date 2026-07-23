@@ -1,0 +1,249 @@
+openapi: 3.1.0
+info:
+  title: Apigee API Hub Analytics Attributes API
+  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  version: 1.0.0
+  contact:
+    name: Google Cloud Apigee
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  termsOfService: https://cloud.google.com/terms
+servers:
+- url: https://apihub.googleapis.com/v1
+  description: Apigee API Hub Production Server
+security:
+- oauth2: []
+tags:
+- name: Attributes
+  description: Manage custom attributes
+paths:
+  /projects/{projectId}/locations/{locationId}/attributes:
+    get:
+      operationId: listAttributes
+      summary: Apigee List Attributes
+      description: Lists all custom attributes defined in the specified project and location.
+      tags:
+      - Attributes
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageToken'
+      - name: filter
+        in: query
+        description: Filter expression to narrow the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of attributes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAttributesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createAttribute
+      summary: Apigee Create an Attribute
+      description: Creates a new custom attribute definition in the API Hub.
+      tags:
+      - Attributes
+      parameters:
+      - $ref: '#/components/parameters/projectId'
+      - $ref: '#/components/parameters/locationId'
+      - name: attributeId
+        in: query
+        description: Required. The ID to use for the attribute resource.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attribute'
+      responses:
+        '200':
+          description: Successful response with the created attribute
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attribute'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  schemas:
+    Attribute:
+      type: object
+      description: A custom attribute definition.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the attribute.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the attribute.
+        description:
+          type: string
+          description: Description of the attribute.
+        definitionType:
+          type: string
+          description: Type of the attribute definition.
+          enum:
+          - DEFINITION_TYPE_UNSPECIFIED
+          - SYSTEM_DEFINED
+          - USER_DEFINED
+        scope:
+          type: string
+          description: Scope of the attribute.
+          enum:
+          - SCOPE_UNSPECIFIED
+          - API
+          - VERSION
+          - SPEC
+          - API_OPERATION
+          - DEPLOYMENT
+          - DEPENDENCY
+        dataType:
+          type: string
+          description: Data type of the attribute values.
+          enum:
+          - DATA_TYPE_UNSPECIFIED
+          - ENUM
+          - JSON
+          - STRING
+        allowedValues:
+          type: array
+          description: Allowed values for ENUM data type.
+          items:
+            $ref: '#/components/schemas/AllowedValue'
+        cardinality:
+          type: integer
+          format: int32
+          description: Maximum number of values for the attribute.
+        mandatory:
+          type: boolean
+          description: Whether the attribute is mandatory.
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the attribute was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the attribute was last updated.
+          readOnly: true
+    ListAttributesResponse:
+      type: object
+      properties:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    AllowedValue:
+      type: object
+      description: An allowed value for an ENUM attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the allowed value.
+        displayName:
+          type: string
+          description: Display name of the allowed value.
+        description:
+          type: string
+          description: Description of the allowed value.
+        immutable:
+          type: boolean
+          description: Whether the value is immutable.
+  parameters:
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Google OAuth 2.0 authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
+externalDocs:
+  description: Apigee API Hub API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
