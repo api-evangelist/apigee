@@ -3,6 +3,19 @@ description: Apigee is Google Cloud's native API management platform for buildin
   managing, and securing APIs across any use case, environment, or scale. It provides
   API proxies, security, rate limiting, quotas, analytics, monetization, and developer
   portal capabilities.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-11'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -3968,6 +3981,14 @@ tags:
 - Model Context Protocol
 - Monetization
 common:
+- type: IssueTracker
+  url: https://github.com/apigee/apigeecli/issues
+- type: Releases
+  url: https://github.com/apigee/apigeecli/releases
+- type: SecurityPolicy
+  url: https://github.com/apigee/apigeecli/blob/main/SECURITY.md
+- type: ContributionGuide
+  url: https://github.com/apigee/apigeecli/blob/main/CONTRIBUTING.md
 - type: TrustCenter
   url: https://cloud.google.com/trust-center
 - type: SDKs
