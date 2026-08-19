@@ -1,0 +1,357 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics Specs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Specs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Specifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all specifications for an API version. Specs are machine-readable API definitions such as OpenAPI or Protocol Buffer files."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the spec resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new specification for an API version. Specifications are machine-readable definitions of the API."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Gets details about a specific API specification, including metadata about the spec type, parsing mode, and lint results."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API specification. Use updateMask to specify fields."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Deletes an API specification from the API Hub."
+        },
+        {
+          "info": {
+            "name": "Apigee Get API Specification Contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId:getContents",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Retrieves the raw contents of an API specification file such as an OpenAPI document or Protocol Buffer definition."
+        },
+        {
+          "info": {
+            "name": "Apigee Lint an API Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/apis/:apiId/versions/:versionId/specs/:specId:lint",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API resource."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API version resource."
+              },
+              {
+                "name": "specId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API spec resource."
+              }
+            ]
+          },
+          "docs": "Validates an API specification against style and correctness rules. Returns linting results with warnings and errors."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

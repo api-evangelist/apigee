@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee Get Environment Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/stats/:dimensionName",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "dimensionName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the dimension to query. Common values include apiproxy, developer_email, developer_app, access_token, and others."
+              },
+              {
+                "name": "select",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of metrics. Example: sum(message_count), avg(total_response_time)."
+              },
+              {
+                "name": "timeRange",
+                "value": "",
+                "type": "query",
+                "description": "Time range for the query in the format MM/DD/YYYY HH:MM~MM/DD/YYYY HH:MM."
+              },
+              {
+                "name": "timeUnit",
+                "value": "",
+                "type": "query",
+                "description": "Granularity of the time series (second, minute, hour, day, week, month)."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              },
+              {
+                "name": "sortby",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of columns to sort the results."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (ASC or DESC)."
+              },
+              {
+                "name": "topk",
+                "value": "",
+                "type": "query",
+                "description": "Return the top k results."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves metrics for API proxy performance in an environment. Provides traffic, latency, error counts, and other analytics data across specified time ranges."
+        },
+        {
+          "info": {
+            "name": "Apigee List Analytics Data Stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/analytics/datastores",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ]
+          },
+          "docs": "Lists the data stores available for exporting analytics data."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an Analytics Data Store",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/analytics/datastores",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a data store for exporting analytics data from an organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

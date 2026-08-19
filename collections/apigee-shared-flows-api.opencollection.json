@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics Shared Flows API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shared Flows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Shared Flows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/sharedflows",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ]
+          },
+          "docs": "Lists all shared flows in an organization. Shared flows contain reusable logic that can be invoked from API proxy flows."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Shared Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/sharedflows",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Name of the shared flow. Must be unique within the organization."
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Set to \"import\" when uploading a ZIP bundle."
+              }
+            ]
+          },
+          "docs": "Uploads a ZIP-formatted shared flow configuration bundle. The bundle is imported into the organization as a new shared flow."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Shared Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/sharedflows/:sharedFlowId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "sharedFlowId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared flow."
+              }
+            ]
+          },
+          "docs": "Gets a shared flow including a list of existing revisions."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Shared Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/sharedflows/:sharedFlowId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "sharedFlowId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared flow."
+              }
+            ]
+          },
+          "docs": "Deletes a shared flow and all associated policies, resources, and revisions. The shared flow must be undeployed from all environments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

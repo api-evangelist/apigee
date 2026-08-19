@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics Instances API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Runtime Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/instances",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all Apigee runtime instances for the organization."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Runtime Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/instances",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Apigee runtime instance. This is a long-running operation that provisions the infrastructure for API runtime."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Runtime Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/instances/:instanceId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the runtime instance."
+              }
+            ]
+          },
+          "docs": "Gets the details for an Apigee runtime instance, including state, host, port, and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Runtime Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/instances/:instanceId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the runtime instance."
+              }
+            ]
+          },
+          "docs": "Deletes an Apigee runtime instance. This is a long-running operation that deprovisions the runtime infrastructure."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Registry Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/instances",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the instance."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Provisions a new Apigee Registry instance in the specified project and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Registry Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/instances/:instanceId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the instance."
+              }
+            ]
+          },
+          "docs": "Gets details about a specific Registry instance."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Registry Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/instances/:instanceId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the instance."
+              }
+            ]
+          },
+          "docs": "Deletes a Registry instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

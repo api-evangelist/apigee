@@ -1,0 +1,1719 @@
+{
+  "item": [
+    {
+      "id": "5a3980f5-0c50-458a-a612-6f99bacb92bd",
+      "name": "API Products",
+      "description": {
+        "content": "Bundle APIs into products for consumption",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1addb06c-c3f4-401b-94d6-7a2d9d708fc4",
+          "name": "Apigee List API Products",
+          "request": {
+            "name": "Apigee List API Products",
+            "description": {
+              "content": "Lists all API product names for an organization. Filter the list using an attribute name and value query parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organizationId",
+                "apiproducts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "attributename",
+                  "value": "<string>",
+                  "description": "Name of the attribute used to filter the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "attributevalue",
+                  "value": "<string>",
+                  "description": "Value of the attribute used to filter the search."
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<boolean>",
+                  "description": "Set to true to get expanded details about each API product."
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "<long>",
+                  "description": "Number of API products to return in the API call."
+                },
+                {
+                  "disabled": false,
+                  "key": "startKey",
+                  "value": "<string>",
+                  "description": "Name of the API product from which to start displaying the list of API products."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organizationId",
+                  "description": "(Required) Name of the Apigee organization."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d205c47e-bfbc-4396-9b19-94324b062eef",
+              "name": "Successful response with list of API products",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributename",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributevalue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "count",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "startKey",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiProduct\": [\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"approvalType\": \"manual\",\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"environments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"proxies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"scopes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"quota\": \"string\",\n      \"quotaInterval\": \"string\",\n      \"quotaTimeUnit\": \"hour\",\n      \"operationGroup\": {\n        \"operationConfigs\": [\n          {\n            \"apiSource\": \"string\",\n            \"operations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"quota\": {\n              \"limit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interval\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timeUnit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"attributes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"apiSource\": \"string\",\n            \"operations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"quota\": {\n              \"limit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interval\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timeUnit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"attributes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"operationConfigType\": \"string\"\n      },\n      \"createdAt\": \"string\",\n      \"lastModifiedAt\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"approvalType\": \"auto\",\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"environments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"proxies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"scopes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"quota\": \"string\",\n      \"quotaInterval\": \"string\",\n      \"quotaTimeUnit\": \"hour\",\n      \"operationGroup\": {\n        \"operationConfigs\": [\n          {\n            \"apiSource\": \"string\",\n            \"operations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"quota\": {\n              \"limit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interval\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timeUnit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"attributes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"apiSource\": \"string\",\n            \"operations\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"quota\": {\n              \"limit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"interval\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"timeUnit\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"attributes\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"operationConfigType\": \"string\"\n      },\n      \"createdAt\": \"string\",\n      \"lastModifiedAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c92c3886-295a-4949-9397-4dde0475f979",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributename",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributevalue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "count",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "startKey",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c13ed02a-d9da-4cb4-b41b-5d0f6163ad79",
+              "name": "Forbidden. The caller does not have permission to perform this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributename",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributevalue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "count",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "startKey",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9da29a8f-9ea4-4b8c-8ac7-f3ca60c1622d",
+          "name": "Apigee Create an API Product",
+          "request": {
+            "name": "Apigee Create an API Product",
+            "description": {
+              "content": "Creates an API product in an organization. API products bundle API resources for consumption by developers. An API product can contain API proxies and quota settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organizationId",
+                "apiproducts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organizationId",
+                  "description": "(Required) Name of the Apigee organization."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"<string>\",\n        \"operations\": [\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"<string>\",\n          \"interval\": \"<string>\",\n          \"timeUnit\": \"<string>\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"<string>\",\n        \"operations\": [\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"<string>\",\n          \"interval\": \"<string>\",\n          \"timeUnit\": \"<string>\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fa32d81f-442d-4c4e-8840-9bd5aba2747a",
+              "name": "Successful response with the created API product",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"approvalType\": \"manual\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proxies\": [\n    \"string\",\n    \"string\"\n  ],\n  \"scopes\": [\n    \"string\",\n    \"string\"\n  ],\n  \"quota\": \"string\",\n  \"quotaInterval\": \"string\",\n  \"quotaTimeUnit\": \"month\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  },\n  \"createdAt\": \"string\",\n  \"lastModifiedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11f25119-7062-4ce0-a56c-a425501e9216",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db60d8a7-9318-4608-b1df-8e174bfa5a6f",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44913e51-dd8f-436a-9d72-57daa1ff465f",
+              "name": "Forbidden. The caller does not have permission to perform this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0677f06a-1186-4ace-a5eb-4dbb74b1127a",
+              "name": "Conflict. A resource with the same identifier already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5015dd98-6544-4eea-8304-16dcd5e07545",
+          "name": "Apigee Get an API Product",
+          "request": {
+            "name": "Apigee Get an API Product",
+            "description": {
+              "content": "Gets the configuration for an API product. The API product name is required in the request URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organizationId",
+                "apiproducts",
+                ":apiProductId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organizationId",
+                  "description": "(Required) Name of the Apigee organization."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiProductId",
+                  "description": "(Required) Name of the API product."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a56aab92-c160-40ef-9080-50d460cc9389",
+              "name": "Successful response with API product details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"approvalType\": \"manual\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proxies\": [\n    \"string\",\n    \"string\"\n  ],\n  \"scopes\": [\n    \"string\",\n    \"string\"\n  ],\n  \"quota\": \"string\",\n  \"quotaInterval\": \"string\",\n  \"quotaTimeUnit\": \"month\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  },\n  \"createdAt\": \"string\",\n  \"lastModifiedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74fae9a0-c3ca-4ae8-a022-6e8328e3e272",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cde5325-571f-4ed1-bac7-b75ed955b362",
+              "name": "Forbidden. The caller does not have permission to perform this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29bdb44c-eba2-4808-a0bc-a4b076cc6ca3",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d48cbc04-f5ad-48f1-8101-557616fbe097",
+          "name": "Apigee Update an API Product",
+          "request": {
+            "name": "Apigee Update an API Product",
+            "description": {
+              "content": "Updates an existing API product. The full API product object must be included in the request body, even if only a subset of properties are being updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organizationId",
+                "apiproducts",
+                ":apiProductId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organizationId",
+                  "description": "(Required) Name of the Apigee organization."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiProductId",
+                  "description": "(Required) Name of the API product."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"<string>\",\n        \"operations\": [\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"<string>\",\n          \"interval\": \"<string>\",\n          \"timeUnit\": \"<string>\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"<string>\",\n        \"operations\": [\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"resource\": \"<string>\",\n            \"methods\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"<string>\",\n          \"interval\": \"<string>\",\n          \"timeUnit\": \"<string>\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4dd90b1-8936-4aed-a7d2-6dbb812b2210",
+              "name": "Successful response with updated API product",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"approvalType\": \"manual\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proxies\": [\n    \"string\",\n    \"string\"\n  ],\n  \"scopes\": [\n    \"string\",\n    \"string\"\n  ],\n  \"quota\": \"string\",\n  \"quotaInterval\": \"string\",\n  \"quotaTimeUnit\": \"month\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  },\n  \"createdAt\": \"string\",\n  \"lastModifiedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "694f0642-ba92-43f9-8f67-32a201606882",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c548db5-14df-4705-8ad0-262437f01808",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff9f0cca-01b6-475d-89e1-00b2a0084903",
+              "name": "Forbidden. The caller does not have permission to perform this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dc23927-2927-4c86-905a-12fe27bdec3d",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"approvalType\": \"<string>\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proxies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"quota\": \"<string>\",\n  \"quotaInterval\": \"<string>\",\n  \"quotaTimeUnit\": \"<string>\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98eef51b-6a61-4814-b371-549edf6fb69d",
+          "name": "Apigee Delete an API Product",
+          "request": {
+            "name": "Apigee Delete an API Product",
+            "description": {
+              "content": "Deletes an API product from an organization. Deleting an API product causes apps that are associated with the product to be unable to access the API resources defined in that product.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organizationId",
+                "apiproducts",
+                ":apiProductId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organizationId",
+                  "description": "(Required) Name of the Apigee organization."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiProductId",
+                  "description": "(Required) Name of the API product."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fda73b9a-876a-423d-a990-dbac95cde7e3",
+              "name": "Successful response confirming deletion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"approvalType\": \"manual\",\n  \"attributes\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"environments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proxies\": [\n    \"string\",\n    \"string\"\n  ],\n  \"scopes\": [\n    \"string\",\n    \"string\"\n  ],\n  \"quota\": \"string\",\n  \"quotaInterval\": \"string\",\n  \"quotaTimeUnit\": \"month\",\n  \"operationGroup\": {\n    \"operationConfigs\": [\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"apiSource\": \"string\",\n        \"operations\": [\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"resource\": \"string\",\n            \"methods\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"quota\": {\n          \"limit\": \"string\",\n          \"interval\": \"string\",\n          \"timeUnit\": \"string\"\n        },\n        \"attributes\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"operationConfigType\": \"string\"\n  },\n  \"createdAt\": \"string\",\n  \"lastModifiedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bfda71d-4c6e-4aa6-b8a3-00f8c56a24f3",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d042aef7-d71e-4711-9a0d-332cde0950eb",
+              "name": "Forbidden. The caller does not have permission to perform this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2b00652-3aec-4142-ad91-3f75c2c695fb",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "apiproducts",
+                    ":apiProductId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) Name of the Apigee organization."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiProductId",
+                      "description": "(Required) Name of the API product."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 5804,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apihub.googleapis.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/cloud-platform"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c4c320c6-d5c3-411d-9d45-08e495ed577a",
+    "name": "Apigee API Hub Analytics API Products API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.\n\nContact Support:\n Name: Google Cloud Apigee",
+      "type": "text/plain"
+    }
+  }
+}

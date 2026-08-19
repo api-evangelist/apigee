@@ -1,0 +1,1756 @@
+{
+  "item": [
+    {
+      "id": "bfda6d99-6e60-47c8-bb35-1ebd0a842902",
+      "name": "Integrations",
+      "description": {
+        "content": "Manage and execute integrations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "06f6e836-410e-498d-9ce8-8cb38db66e7f",
+          "name": "Apigee List Integrations",
+          "request": {
+            "name": "Apigee List Integrations",
+            "description": {
+              "content": "Lists all integrations in the specified project, location, and product. Returns integration metadata including name and description.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "products",
+                ":productId",
+                "integrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "Page token returned from a previous list request."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter expression to narrow the results."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "Field to order results by."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productId",
+                  "description": "(Required) Product identifier (typically the Apigee product name)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1d03edb9-06f1-4c37-b0df-94c9bcaf26f5",
+              "name": "Successful response with list of integrations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"integrations\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"updateTime\": \"1952-05-11T10:44:24.415Z\",\n      \"active\": true\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"updateTime\": \"1959-06-06T22:35:44.528Z\",\n      \"active\": true\n    }\n  ],\n  \"nextPageToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6806c373-c50d-44b4-86c3-3682e4f9f848",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41ed80dc-b44c-4170-ad7c-2a7821adddc8",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84c0ceeb-d9e0-4a1a-889b-e2fa0be9cf45",
+          "name": "Apigee Delete an Integration",
+          "request": {
+            "name": "Apigee Delete an Integration",
+            "description": {
+              "content": "Deletes an integration and all its versions. The integration must not have any active versions before deletion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "products",
+                ":productId",
+                "integrations",
+                ":integrationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productId",
+                  "description": "(Required) Product identifier (typically the Apigee product name)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "integrationId",
+                  "description": "(Required) Name of the integration."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a9e1fccb-9b9a-4f06-b44d-d8ee1b06d63d",
+              "name": "Successful response confirming deletion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    ":integrationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) Name of the integration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f5c1e7e-0b33-4b91-984d-03053973b43c",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    ":integrationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) Name of the integration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa5d3ae5-a693-4239-bda3-3e4451d8db84",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    ":integrationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) Name of the integration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3876dc4f-dc83-4cc3-920b-2d989166d14d",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    ":integrationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "integrationId",
+                      "description": "(Required) Name of the integration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "acbc3a4c-bb20-4d8a-b3b1-55a49310bd8f",
+          "name": "Apigee Execute an Integration",
+          "request": {
+            "name": "Apigee Execute an Integration",
+            "description": {
+              "content": "Executes an integration synchronously. The caller blocks until the integration execution completes or times out.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "products",
+                ":productId",
+                "integrations",
+                "{{integrationId}}:execute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productId",
+                  "description": "(Required) Product identifier (typically the Apigee product name)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"<string>\",\n      \"intValue\": \"<int64>\",\n      \"doubleValue\": \"<double>\",\n      \"booleanValue\": \"<boolean>\",\n      \"stringArray\": {\n        \"stringValues\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"jsonValue\": \"<string>\"\n    },\n    \"key_1\": {\n      \"stringValue\": \"<string>\",\n      \"intValue\": \"<int64>\",\n      \"doubleValue\": \"<double>\",\n      \"booleanValue\": \"<boolean>\",\n      \"stringArray\": {\n        \"stringValues\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"jsonValue\": \"<string>\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": {\n        \"stringValue\": \"<string>\",\n        \"intValue\": \"<int64>\",\n        \"doubleValue\": \"<double>\",\n        \"booleanValue\": \"<boolean>\",\n        \"stringArray\": {\n          \"stringValues\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"jsonValue\": \"<string>\"\n      }\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": {\n        \"stringValue\": \"<string>\",\n        \"intValue\": \"<int64>\",\n        \"doubleValue\": \"<double>\",\n        \"booleanValue\": \"<boolean>\",\n        \"stringArray\": {\n          \"stringValues\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"jsonValue\": \"<string>\"\n      }\n    }\n  ],\n  \"doNotPropagateError\": \"<boolean>\",\n  \"requestId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b0cf8793-4fbd-41dd-a27a-944e4f21e014",
+              "name": "Successful response with execution results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 4064.0195298111325,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_1\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 551.3287797283872,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_2\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2418.710249904745,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_3\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 9144.26984830257,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 7577.262649172042,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5142.423880311864,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"doNotPropagateError\": \"<boolean>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"executionId\": \"string\",\n  \"outputParameters\": {\n    \"key_0\": {}\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 519.5536160260427,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 3958.17195893946,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b835949-80da-435d-a469-3c28dab0f748",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 4064.0195298111325,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_1\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 551.3287797283872,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_2\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2418.710249904745,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_3\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 9144.26984830257,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 7577.262649172042,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5142.423880311864,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"doNotPropagateError\": \"<boolean>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f862f6df-8835-449d-ad77-3f60538e601c",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 4064.0195298111325,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_1\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 551.3287797283872,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_2\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2418.710249904745,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_3\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 9144.26984830257,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 7577.262649172042,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5142.423880311864,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"doNotPropagateError\": \"<boolean>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49ea72ec-3e7f-4d20-a202-acc37aca7057",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 4064.0195298111325,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_1\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 551.3287797283872,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_2\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2418.710249904745,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_3\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 9144.26984830257,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 7577.262649172042,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5142.423880311864,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"doNotPropagateError\": \"<boolean>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d250315-2f58-450b-825e-d89c32cf566a",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 4064.0195298111325,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_1\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 551.3287797283872,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_2\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2418.710249904745,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    },\n    \"key_3\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 9144.26984830257,\n      \"booleanValue\": false,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 7577.262649172042,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5142.423880311864,\n        \"booleanValue\": true,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"doNotPropagateError\": \"<boolean>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a641d77b-83aa-4d9d-af3b-098f8dc9b646",
+          "name": "Apigee Schedule an Integration Execution",
+          "request": {
+            "name": "Apigee Schedule an Integration Execution",
+            "description": {
+              "content": "Schedules an integration for execution at a specified time. The execution happens asynchronously.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "products",
+                ":productId",
+                "integrations",
+                "{{integrationId}}:schedule"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productId",
+                  "description": "(Required) Product identifier (typically the Apigee product name)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"<string>\",\n      \"intValue\": \"<int64>\",\n      \"doubleValue\": \"<double>\",\n      \"booleanValue\": \"<boolean>\",\n      \"stringArray\": {\n        \"stringValues\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"jsonValue\": \"<string>\"\n    },\n    \"key_1\": {\n      \"stringValue\": \"<string>\",\n      \"intValue\": \"<int64>\",\n      \"doubleValue\": \"<double>\",\n      \"booleanValue\": \"<boolean>\",\n      \"stringArray\": {\n        \"stringValues\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"jsonValue\": \"<string>\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": {\n        \"stringValue\": \"<string>\",\n        \"intValue\": \"<int64>\",\n        \"doubleValue\": \"<double>\",\n        \"booleanValue\": \"<boolean>\",\n        \"stringArray\": {\n          \"stringValues\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"jsonValue\": \"<string>\"\n      }\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": {\n        \"stringValue\": \"<string>\",\n        \"intValue\": \"<int64>\",\n        \"doubleValue\": \"<double>\",\n        \"booleanValue\": \"<boolean>\",\n        \"stringArray\": {\n          \"stringValues\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        \"jsonValue\": \"<string>\"\n      }\n    }\n  ],\n  \"scheduleTime\": \"<dateTime>\",\n  \"requestId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91a23334-0bb0-4d9f-9437-eee400bcc18a",
+              "name": "Successful response with schedule confirmation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2077.595259623196,\n      \"booleanValue\": true,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5850.010898300644,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 6721.583513323522,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"scheduleTime\": \"<dateTime>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"executionInfoIds\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aad54f9f-05ba-4878-ae34-135499461f7a",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2077.595259623196,\n      \"booleanValue\": true,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5850.010898300644,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 6721.583513323522,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"scheduleTime\": \"<dateTime>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "010d0638-4a6c-4d31-814b-bad8d105cbe9",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2077.595259623196,\n      \"booleanValue\": true,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5850.010898300644,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 6721.583513323522,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"scheduleTime\": \"<dateTime>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5636b174-ff13-447e-931e-833d1c36188e",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2077.595259623196,\n      \"booleanValue\": true,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5850.010898300644,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 6721.583513323522,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"scheduleTime\": \"<dateTime>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09607ba7-c35b-44f6-a777-f2a799c400f0",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "products",
+                    ":productId",
+                    "integrations",
+                    "{{integrationId}}:schedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productId",
+                      "description": "(Required) Product identifier (typically the Apigee product name)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"triggerId\": \"<string>\",\n  \"inputParameters\": {\n    \"key_0\": {\n      \"stringValue\": \"string\",\n      \"intValue\": \"string\",\n      \"doubleValue\": 2077.595259623196,\n      \"booleanValue\": true,\n      \"stringArray\": {\n        \"stringValues\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValue\": \"string\"\n    }\n  },\n  \"parameterEntries\": [\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 5850.010898300644,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"value\": {\n        \"stringValue\": \"string\",\n        \"intValue\": \"string\",\n        \"doubleValue\": 6721.583513323522,\n        \"booleanValue\": false,\n        \"stringArray\": {\n          \"stringValues\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValue\": \"string\"\n      }\n    }\n  ],\n  \"scheduleTime\": \"<dateTime>\",\n  \"requestId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8254,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apihub.googleapis.com/v1",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) Name of the integration.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "integrationId"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/cloud-platform"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "46f649f0-93a7-4735-9e31-dd80cc90ad0e",
+    "name": "Apigee API Hub Analytics Integrations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.\n\nContact Support:\n Name: Google Cloud Apigee",
+      "type": "text/plain"
+    }
+  }
+}

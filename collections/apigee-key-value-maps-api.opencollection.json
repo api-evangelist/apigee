@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics Key Value Maps API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Key Value Maps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Key Value Maps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/keyvaluemaps",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ]
+          },
+          "docs": "Lists the key value maps in the specified environment."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Key Value Map",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/keyvaluemaps",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a key value map in the specified environment. Key value maps store data for retrieval at runtime by policies."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Key Value Map",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/keyvaluemaps/:keyValueMapId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "keyValueMapId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the key value map."
+              }
+            ]
+          },
+          "docs": "Deletes a key value map from the specified environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

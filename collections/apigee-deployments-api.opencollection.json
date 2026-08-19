@@ -1,0 +1,328 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics Deployments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter expression to narrow the results."
+              }
+            ]
+          },
+          "docs": "Lists all API deployments in the specified project and location."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "query",
+                "description": "Required. The ID to use for the deployment resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new deployment record in the API Hub to track where an API version is deployed."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the deployment resource."
+              }
+            ]
+          },
+          "docs": "Retrieves details about a specific API deployment."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the deployment resource."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. Comma-separated list of fields to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing deployment record."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the deployment resource."
+              }
+            ]
+          },
+          "docs": "Deletes a deployment record from the API Hub."
+        },
+        {
+          "info": {
+            "name": "Apigee Deploy an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/apis/:apiId/revisions/:revisionId/deployments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              },
+              {
+                "name": "override",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to force deployment of the new revision over the currently deployed revision by overriding conflict checks."
+              },
+              {
+                "name": "sequencedRollout",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to enable sequenced rollout, which deploys to pods in a gradual manner."
+              }
+            ]
+          },
+          "docs": "Deploys a revision of an API proxy to an environment. After deployment, the API proxy revision can accept requests from clients."
+        },
+        {
+          "info": {
+            "name": "Apigee Undeploy an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/apis/:apiId/revisions/:revisionId/deployments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              },
+              {
+                "name": "sequencedRollout",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to enable sequenced rollout for undeployment."
+              }
+            ]
+          },
+          "docs": "Undeploys an API proxy revision from an environment. After undeployment, the API proxy revision will no longer accept requests from clients."
+        },
+        {
+          "info": {
+            "name": "Apigee List Organization Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/deployments",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "sharedFlows",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to return shared flow deployments instead of API proxy deployments."
+              }
+            ]
+          },
+          "docs": "Lists all deployments across all environments in an organization, including the API proxy name, revision, and environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

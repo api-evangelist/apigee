@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics API Proxy Revisions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Proxy Revisions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Proxy Revisions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis/:apiId/revisions",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              }
+            ]
+          },
+          "docs": "Lists all revisions for an API proxy. Returns an array of revision numbers in string format."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis/:apiId/revisions/:revisionId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              }
+            ]
+          },
+          "docs": "Gets an API proxy revision. Returns the configuration and metadata for the specified revision of an API proxy."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Proxy Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis/:apiId/revisions/:revisionId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "revisionId",
+                "value": "",
+                "type": "path",
+                "description": "Revision number of the API proxy."
+              }
+            ]
+          },
+          "docs": "Deletes an API proxy revision. The revision must be undeployed from all environments before it can be deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

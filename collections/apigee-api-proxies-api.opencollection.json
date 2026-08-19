@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics API Proxies API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Proxies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists the names of all API proxies in an organization. The list includes information about the API proxy revisions available."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Name of the API proxy. Must be unique within the organization."
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Action to perform when importing an API proxy configuration bundle. Set to \"import\" when uploading a ZIP bundle."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API proxy. The API proxy created will not be accessible at runtime until it is deployed to an environment. Provide the proxy configuration as an API proxy bundle or as an inline configuration."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis/:apiId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              }
+            ]
+          },
+          "docs": "Gets an API proxy including a list of existing revisions, the proxy metadata, and the last modified date."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis/:apiId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              },
+              {
+                "name": "updateMask",
+                "value": "",
+                "type": "query",
+                "description": "Required. List of fields to update. Use comma-separated field names from the resource. Example: \"labels\"."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API proxy metadata such as labels. Does not update the proxy bundle or revision content."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apis/:apiId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API proxy."
+              }
+            ]
+          },
+          "docs": "Deletes an API proxy and all associated endpoints, policies, resources, and revisions. The proxy must be undeployed from all environments before it can be deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

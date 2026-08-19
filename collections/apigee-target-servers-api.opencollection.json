@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics Target Servers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Target Servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List Target Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ]
+          },
+          "docs": "Lists all target servers in the specified environment of an organization. Target servers define backend service endpoints."
+        },
+        {
+          "info": {
+            "name": "Apigee Create a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a target server in the specified environment. Target servers decouple TargetEndpoint configurations from concrete backend URLs."
+        },
+        {
+          "info": {
+            "name": "Apigee Get a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers/:targetServerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "targetServerId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the target server."
+              }
+            ]
+          },
+          "docs": "Gets the configuration of a target server in the specified environment."
+        },
+        {
+          "info": {
+            "name": "Apigee Update a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers/:targetServerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "targetServerId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the target server."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing target server in the specified environment. The full target server object must be included in the request body."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete a Target Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/environments/:environmentId/targetservers/:targetServerId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the environment."
+              },
+              {
+                "name": "targetServerId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the target server."
+              }
+            ]
+          },
+          "docs": "Deletes a target server from an environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

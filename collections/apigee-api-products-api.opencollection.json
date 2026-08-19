@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics API Products API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apiproducts",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "attributename",
+                "value": "",
+                "type": "query",
+                "description": "Name of the attribute used to filter the search."
+              },
+              {
+                "name": "attributevalue",
+                "value": "",
+                "type": "query",
+                "description": "Value of the attribute used to filter the search."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to get expanded details about each API product."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of API products to return in the API call."
+              },
+              {
+                "name": "startKey",
+                "value": "",
+                "type": "query",
+                "description": "Name of the API product from which to start displaying the list of API products."
+              }
+            ]
+          },
+          "docs": "Lists all API product names for an organization. Filter the list using an attribute name and value query parameter."
+        },
+        {
+          "info": {
+            "name": "Apigee Create an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apiproducts",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API product in an organization. API products bundle API resources for consumption by developers. An API product can contain API proxies and quota settings."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apiproducts/:apiProductId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiProductId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API product."
+              }
+            ]
+          },
+          "docs": "Gets the configuration for an API product. The API product name is required in the request URL."
+        },
+        {
+          "info": {
+            "name": "Apigee Update an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apiproducts/:apiProductId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiProductId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API product."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API product. The full API product object must be included in the request body, even if only a subset of properties are being updated."
+        },
+        {
+          "info": {
+            "name": "Apigee Delete an API Product",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apihub.googleapis.com/v1/organizations/:organizationId/apiproducts/:apiProductId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Apigee organization."
+              },
+              {
+                "name": "apiProductId",
+                "value": "",
+                "type": "path",
+                "description": "Name of the API product."
+              }
+            ]
+          },
+          "docs": "Deletes an API product from an organization. Deleting an API product causes apps that are associated with the product to be unable to access the API resources defined in that product."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

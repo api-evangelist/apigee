@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apigee API Hub Analytics API Operations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apigee List API Operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/observationJobs/:observationJobId/apiObservations/:apiObservationId/apiOperations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              },
+              {
+                "name": "apiObservationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API observation."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Page token returned from a previous list request."
+              }
+            ]
+          },
+          "docs": "Lists all API operations discovered within a specific API observation. Operations represent individual HTTP endpoints with their methods, paths, and response codes."
+        },
+        {
+          "info": {
+            "name": "Apigee Get an API Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apihub.googleapis.com/v1/projects/:projectId/locations/:locationId/observationJobs/:observationJobId/apiObservations/:apiObservationId/apiOperations/:apiOperationId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud project ID."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Google Cloud region or location."
+              },
+              {
+                "name": "observationJobId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the observation job."
+              },
+              {
+                "name": "apiObservationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API observation."
+              },
+              {
+                "name": "apiOperationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the API operation."
+              }
+            ]
+          },
+          "docs": "Gets details for a specific discovered API operation, including HTTP method, path, request/response details, and traffic statistics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

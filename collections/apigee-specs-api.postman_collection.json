@@ -1,0 +1,3160 @@
+{
+  "item": [
+    {
+      "id": "e2358d59-9b2f-4369-9c37-4482a83d7775",
+      "name": "Specs",
+      "description": {
+        "content": "Manage API specifications",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "db71fdae-fdb7-451b-9c4b-86402fe997c3",
+          "name": "Apigee List API Specifications",
+          "request": {
+            "name": "Apigee List API Specifications",
+            "description": {
+              "content": "Lists all specifications for an API version. Specs are machine-readable API definitions such as OpenAPI or Protocol Buffer files.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "apis",
+                ":apiId",
+                "versions",
+                ":versionId",
+                "specs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "Page token returned from a previous list request."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter expression to narrow the results."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) ID of the API resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "versionId",
+                  "description": "(Required) ID of the API version resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4c4ce5a5-a3d0-4b16-8914-4ca082013dd1",
+              "name": "Successful response with list of specs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"specs\": [\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"specType\": {\n        \"enumValues\": {\n          \"values\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"displayName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"displayName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        \"stringValues\": {\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValues\": {\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"attribute\": \"string\"\n      },\n      \"contents\": {\n        \"contents\": \"string\",\n        \"mimeType\": \"string\"\n      },\n      \"documentation\": {\n        \"externalUri\": \"string\"\n      },\n      \"sourceUri\": \"string\",\n      \"parsingMode\": \"STRICT\",\n      \"lintResponse\": {\n        \"linter\": \"string\",\n        \"state\": \"LINT_ERROR\",\n        \"issues\": [\n          {\n            \"code\": \"string\",\n            \"path\": [\n              \"string\",\n              \"string\"\n            ],\n            \"message\": \"string\",\n            \"severity\": \"WARNING\"\n          },\n          {\n            \"code\": \"string\",\n            \"path\": [\n              \"string\",\n              \"string\"\n            ],\n            \"message\": \"string\",\n            \"severity\": \"SEVERITY_UNSPECIFIED\"\n          }\n        ],\n        \"summary\": [\n          {\n            \"severity\": \"string\",\n            \"count\": 6051\n          },\n          {\n            \"severity\": \"string\",\n            \"count\": 3783\n          }\n        ]\n      },\n      \"attributes\": {\n        \"key_0\": {\n          \"enumValues\": {\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"stringValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"jsonValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"attribute\": \"string\"\n        }\n      },\n      \"createTime\": \"1999-07-10T20:56:48.877Z\",\n      \"updateTime\": \"2012-02-17T06:39:05.502Z\"\n    },\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"specType\": {\n        \"enumValues\": {\n          \"values\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"displayName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"displayName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        \"stringValues\": {\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"jsonValues\": {\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"attribute\": \"string\"\n      },\n      \"contents\": {\n        \"contents\": \"string\",\n        \"mimeType\": \"string\"\n      },\n      \"documentation\": {\n        \"externalUri\": \"string\"\n      },\n      \"sourceUri\": \"string\",\n      \"parsingMode\": \"PARSING_MODE_UNSPECIFIED\",\n      \"lintResponse\": {\n        \"linter\": \"string\",\n        \"state\": \"LINT_ERROR\",\n        \"issues\": [\n          {\n            \"code\": \"string\",\n            \"path\": [\n              \"string\",\n              \"string\"\n            ],\n            \"message\": \"string\",\n            \"severity\": \"WARNING\"\n          },\n          {\n            \"code\": \"string\",\n            \"path\": [\n              \"string\",\n              \"string\"\n            ],\n            \"message\": \"string\",\n            \"severity\": \"WARNING\"\n          }\n        ],\n        \"summary\": [\n          {\n            \"severity\": \"string\",\n            \"count\": 6728\n          },\n          {\n            \"severity\": \"string\",\n            \"count\": 8147\n          }\n        ]\n      },\n      \"attributes\": {\n        \"key_0\": {\n          \"enumValues\": {\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"stringValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"jsonValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"attribute\": \"string\"\n        }\n      },\n      \"createTime\": \"2002-07-14T22:07:49.775Z\",\n      \"updateTime\": \"1961-05-03T14:40:54.919Z\"\n    }\n  ],\n  \"nextPageToken\": \"string\",\n  \"totalSize\": 650\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fd5fc83-6ef7-44de-858b-1a963aa84924",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cb8b65d-dfdc-4e2e-afb8-3eec7ebc8c92",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "709b15e5-b708-4d87-9bdb-67df16d4fedc",
+          "name": "Apigee Create an API Specification",
+          "request": {
+            "name": "Apigee Create an API Specification",
+            "description": {
+              "content": "Creates a new specification for an API version. Specifications are machine-readable definitions of the API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "apis",
+                ":apiId",
+                "versions",
+                ":versionId",
+                "specs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "specId",
+                  "value": "<string>",
+                  "description": "(Required) Required. The ID to use for the spec resource."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) ID of the API resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "versionId",
+                  "description": "(Required) ID of the API version resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"attribute\": \"<string>\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"<string>\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"<string>\",\n    \"state\": \"<string>\",\n    \"issues\": [\n      {\n        \"code\": \"<string>\",\n        \"path\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"message\": \"<string>\",\n        \"severity\": \"<string>\"\n      },\n      {\n        \"code\": \"<string>\",\n        \"path\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"message\": \"<string>\",\n        \"severity\": \"<string>\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"<string>\",\n        \"count\": \"<integer>\"\n      },\n      {\n        \"severity\": \"<string>\",\n        \"count\": \"<integer>\"\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"<string>\"\n          },\n          {\n            \"id\": \"<string>\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"attribute\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "df1dc349-4330-435a-9415-821dd1c510cc",
+              "name": "Successful response with the created spec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "specId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\",\n          \"displayName\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"displayName\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"string\",\n    \"mimeType\": \"string\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"string\",\n  \"parsingMode\": \"STRICT\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_COMPLETED\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"SEVERITY_UNSPECIFIED\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"SEVERITY_UNSPECIFIED\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 5091\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 9071\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  },\n  \"createTime\": \"1976-08-29T07:02:55.581Z\",\n  \"updateTime\": \"2011-02-13T09:38:38.688Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1caf6b5e-d2ec-4e75-9827-a4005739fcbf",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "specId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d556ad4-fc4c-48e0-9ef9-453c738ca9f8",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "specId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "571ec543-b7a5-4905-a676-bf861b4443e6",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "specId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c1152df-d863-449e-8965-e2ae191b7472",
+          "name": "Apigee Get an API Specification",
+          "request": {
+            "name": "Apigee Get an API Specification",
+            "description": {
+              "content": "Gets details about a specific API specification, including metadata about the spec type, parsing mode, and lint results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "apis",
+                ":apiId",
+                "versions",
+                ":versionId",
+                "specs",
+                ":specId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) ID of the API resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "versionId",
+                  "description": "(Required) ID of the API version resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "specId",
+                  "description": "(Required) ID of the API spec resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bdc12279-46b3-4928-a5e1-3302b5a1bf10",
+              "name": "Successful response with spec details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\",\n          \"displayName\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"displayName\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"string\",\n    \"mimeType\": \"string\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"string\",\n  \"parsingMode\": \"STRICT\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_COMPLETED\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"SEVERITY_UNSPECIFIED\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"SEVERITY_UNSPECIFIED\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 5091\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 9071\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  },\n  \"createTime\": \"1976-08-29T07:02:55.581Z\",\n  \"updateTime\": \"2011-02-13T09:38:38.688Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cfc5907-adff-4cd3-8b54-02770a0358f0",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "876daad8-6d08-4706-8b9a-31938332a43a",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbd3fda6-a09d-470f-abab-fef5d0d8255d",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08c72d49-e9ad-40b2-b4a5-e1611fb5229d",
+          "name": "Apigee Update an API Specification",
+          "request": {
+            "name": "Apigee Update an API Specification",
+            "description": {
+              "content": "Updates an existing API specification. Use updateMask to specify fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "apis",
+                ":apiId",
+                "versions",
+                ":versionId",
+                "specs",
+                ":specId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "updateMask",
+                  "value": "<string>",
+                  "description": "(Required) Required. Comma-separated list of fields to update."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) ID of the API resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "versionId",
+                  "description": "(Required) ID of the API version resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "specId",
+                  "description": "(Required) ID of the API spec resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"attribute\": \"<string>\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"<string>\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"<string>\",\n    \"state\": \"<string>\",\n    \"issues\": [\n      {\n        \"code\": \"<string>\",\n        \"path\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"message\": \"<string>\",\n        \"severity\": \"<string>\"\n      },\n      {\n        \"code\": \"<string>\",\n        \"path\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"message\": \"<string>\",\n        \"severity\": \"<string>\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"<string>\",\n        \"count\": \"<integer>\"\n      },\n      {\n        \"severity\": \"<string>\",\n        \"count\": \"<integer>\"\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"<string>\"\n          },\n          {\n            \"id\": \"<string>\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"attribute\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "83c4e2ed-f7ce-4af2-a112-471ce3da291e",
+              "name": "Successful response with updated spec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updateMask",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\",\n          \"displayName\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"displayName\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"string\",\n    \"mimeType\": \"string\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"string\",\n  \"parsingMode\": \"STRICT\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_COMPLETED\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"SEVERITY_UNSPECIFIED\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"SEVERITY_UNSPECIFIED\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 5091\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 9071\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  },\n  \"createTime\": \"1976-08-29T07:02:55.581Z\",\n  \"updateTime\": \"2011-02-13T09:38:38.688Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfc6d91e-1f43-4d12-bbba-9d2f8d6e64e1",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updateMask",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76155ec3-a7d1-4a5b-a461-5d41695706e9",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updateMask",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edf82a9c-7c37-496d-b967-572178d96b2a",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updateMask",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba4dea62-916c-4096-9922-cebbdc5a08e6",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updateMask",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"specType\": {\n    \"enumValues\": {\n      \"values\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    \"stringValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"jsonValues\": {\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"attribute\": \"string\"\n  },\n  \"contents\": {\n    \"contents\": \"<byte>\",\n    \"mimeType\": \"<string>\"\n  },\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"sourceUri\": \"<string>\",\n  \"parsingMode\": \"<string>\",\n  \"lintResponse\": {\n    \"linter\": \"string\",\n    \"state\": \"LINT_ERROR\",\n    \"issues\": [\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"ERROR\"\n      },\n      {\n        \"code\": \"string\",\n        \"path\": [\n          \"string\",\n          \"string\"\n        ],\n        \"message\": \"string\",\n        \"severity\": \"WARNING\"\n      }\n    ],\n    \"summary\": [\n      {\n        \"severity\": \"string\",\n        \"count\": 6068\n      },\n      {\n        \"severity\": \"string\",\n        \"count\": 6067\n      }\n    ]\n  },\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "473eea8f-36ef-4509-b54c-71a571023671",
+          "name": "Apigee Delete an API Specification",
+          "request": {
+            "name": "Apigee Delete an API Specification",
+            "description": {
+              "content": "Deletes an API specification from the API Hub.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "apis",
+                ":apiId",
+                "versions",
+                ":versionId",
+                "specs",
+                ":specId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) ID of the API resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "versionId",
+                  "description": "(Required) ID of the API version resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "specId",
+                  "description": "(Required) ID of the API spec resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f419a51e-86c1-4a64-81b3-d125ea4eab65",
+              "name": "Successful response confirming deletion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9a2f05e-c737-4f92-98ed-6e4e4464185b",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1139bc3-e1f4-44b7-a7ec-634d1f438515",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4fe165c-7ed5-4534-a5aa-34a8992bed73",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    ":specId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "specId",
+                      "description": "(Required) ID of the API spec resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14b896d3-957b-4cea-ab44-63c95bbd1237",
+          "name": "Apigee Get API Specification Contents",
+          "request": {
+            "name": "Apigee Get API Specification Contents",
+            "description": {
+              "content": "Retrieves the raw contents of an API specification file such as an OpenAPI document or Protocol Buffer definition.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "apis",
+                ":apiId",
+                "versions",
+                ":versionId",
+                "specs",
+                "{{specId}}:getContents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) ID of the API resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "versionId",
+                  "description": "(Required) ID of the API version resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6297613f-2a2f-42ec-9b81-12be4d7aaf27",
+              "name": "Successful response with spec contents",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:getContents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contentType\": \"string\",\n  \"data\": \"string\",\n  \"extensions\": [\n    {\n      \"key_0\": 79.93704599179364\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": 5378.467729209799,\n      \"key_2\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd26ee9e-3c7c-4761-9e58-da711aba83d0",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:getContents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09e5f419-5943-44ba-8c98-bc802e0de6b2",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:getContents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8fac581-2148-4ca4-9c06-308789d9ec1c",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:getContents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "106a9dd0-9a87-41a9-a6bc-ba77020ce86d",
+          "name": "Apigee Lint an API Specification",
+          "request": {
+            "name": "Apigee Lint an API Specification",
+            "description": {
+              "content": "Validates an API specification against style and correctness rules. Returns linting results with warnings and errors.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "apis",
+                ":apiId",
+                "versions",
+                ":versionId",
+                "specs",
+                "{{specId}}:lint"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "apiId",
+                  "description": "(Required) ID of the API resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "versionId",
+                  "description": "(Required) ID of the API version resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6956414-157c-4e3b-9e68-7ae1c68aae2f",
+              "name": "Successful response with lint operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:lint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"done\": true,\n  \"error\": {\n    \"code\": 5331,\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"key_0\": 5905\n      },\n      {\n        \"key_0\": 9318.27450168671\n      }\n    ]\n  },\n  \"response\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55e2c94b-62e7-4d68-b1e8-2ee5e9ea4986",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:lint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51d98ed1-4d85-40bb-b911-f74042701090",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:lint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fff540a-5bd8-45d2-a6fe-eb4b0b473c89",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "apis",
+                    ":apiId",
+                    "versions",
+                    ":versionId",
+                    "specs",
+                    "{{specId}}:lint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "apiId",
+                      "description": "(Required) ID of the API resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "versionId",
+                      "description": "(Required) ID of the API version resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 8697,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apihub.googleapis.com/v1",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ID of the API spec resource.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "specId"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/cloud-platform"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2d3da89c-1789-4133-8911-d6458b3ad2e5",
+    "name": "Apigee API Hub Analytics Specs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.\n\nContact Support:\n Name: Google Cloud Apigee",
+      "type": "text/plain"
+    }
+  }
+}

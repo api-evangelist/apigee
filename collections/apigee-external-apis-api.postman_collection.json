@@ -1,0 +1,707 @@
+{
+  "item": [
+    {
+      "id": "aec7d541-6809-49d2-953d-df95440ed303",
+      "name": "External APIs",
+      "description": {
+        "content": "Manage external API references",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "896e75c5-db20-48fd-b5ec-d2653634aced",
+          "name": "Apigee List External APIs",
+          "request": {
+            "name": "Apigee List External APIs",
+            "description": {
+              "content": "Lists all external API references in the specified project and location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "externalApis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "Page token returned from a previous list request."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "596d829f-f478-49fe-a929-a252893a07aa",
+              "name": "Successful response with list of external APIs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "externalApis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalApis\": [\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"documentation\": {\n        \"externalUri\": \"string\"\n      },\n      \"endpoints\": [\n        \"string\",\n        \"string\"\n      ],\n      \"paths\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {\n        \"key_0\": {\n          \"enumValues\": {\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"stringValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"jsonValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"attribute\": \"string\"\n        },\n        \"key_1\": {\n          \"enumValues\": {\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"stringValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"jsonValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"attribute\": \"string\"\n        }\n      },\n      \"createTime\": \"1980-12-22T00:26:49.373Z\",\n      \"updateTime\": \"1980-04-02T19:02:19.063Z\"\n    },\n    {\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"documentation\": {\n        \"externalUri\": \"string\"\n      },\n      \"endpoints\": [\n        \"string\",\n        \"string\"\n      ],\n      \"paths\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {\n        \"key_0\": {\n          \"enumValues\": {\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"stringValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"jsonValues\": {\n            \"values\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          \"attribute\": \"string\"\n        }\n      },\n      \"createTime\": \"2024-10-20T20:32:37.448Z\",\n      \"updateTime\": \"2025-06-10T02:49:40.043Z\"\n    }\n  ],\n  \"nextPageToken\": \"string\",\n  \"totalSize\": 5297\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c62272e-f24e-496a-87ea-13dfa4cc119f",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "externalApis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 3302,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec041539-61b5-47fe-8c69-0a9e45ecbcfc",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "externalApis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 3302,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24b2f703-54d9-4ebc-a7fc-22e7a9aab990",
+          "name": "Apigee Create an External API",
+          "request": {
+            "name": "Apigee Create an External API",
+            "description": {
+              "content": "Creates a new external API reference in the API Hub.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":projectId",
+                "locations",
+                ":locationId",
+                "externalApis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "externalApiId",
+                  "value": "<string>",
+                  "description": "(Required) Required. The ID to use for the external API resource."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "projectId",
+                  "description": "(Required) Google Cloud project ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locationId",
+                  "description": "(Required) Google Cloud region or location."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"documentation\": {\n    \"externalUri\": \"<string>\"\n  },\n  \"endpoints\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paths\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"<string>\"\n          },\n          {\n            \"id\": \"<string>\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"attribute\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f46dca25-0f0a-4b98-a362-6634552a75e9",
+              "name": "Successful response with the created external API",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "externalApis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "externalApiId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"endpoints\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paths\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_1\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_2\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"endpoints\": [\n    \"string\",\n    \"string\"\n  ],\n  \"paths\": [\n    \"string\",\n    \"string\"\n  ],\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_1\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_2\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"displayName\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  },\n  \"createTime\": \"1982-09-25T18:35:57.786Z\",\n  \"updateTime\": \"2009-09-29T00:22:05.058Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3f735ee-e756-43dc-9fa6-bfce5103dbb7",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "externalApis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "externalApiId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"endpoints\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paths\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_1\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_2\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 3302,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d37c21f-ef7d-4625-b9c7-89548e99a854",
+              "name": "Unauthorized. Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "externalApis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "externalApiId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"endpoints\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paths\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_1\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_2\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 3302,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc1ed6cc-3f94-4617-8144-8babd9da09a1",
+              "name": "Forbidden. The caller does not have permission.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":projectId",
+                    "locations",
+                    ":locationId",
+                    "externalApis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "externalApiId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "projectId",
+                      "description": "(Required) Google Cloud project ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locationId",
+                      "description": "(Required) Google Cloud region or location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"documentation\": {\n    \"externalUri\": \"string\"\n  },\n  \"endpoints\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"paths\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attributes\": {\n    \"key_0\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_1\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    },\n    \"key_2\": {\n      \"enumValues\": {\n        \"values\": [\n          {\n            \"id\": \"string\"\n          },\n          {\n            \"id\": \"string\"\n          }\n        ]\n      },\n      \"stringValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"jsonValues\": {\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"attribute\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 3302,\n    \"message\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apihub.googleapis.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/cloud-platform"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0090099a-c42c-42ff-8b9f-18ac8962e7e3",
+    "name": "Apigee API Hub Analytics External APIs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.\n\nContact Support:\n Name: Google Cloud Apigee",
+      "type": "text/plain"
+    }
+  }
+}
