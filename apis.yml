@@ -1514,6 +1514,8 @@ apis:
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
   tags:
+  - Deployment
+  tags_raw:
   - Deployments
   properties:
   - type: OpenAPI
@@ -2004,6 +2006,8 @@ apis:
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
   tags:
+  - Execution
+  tags_raw:
   - Executions
   properties:
   - type: OpenAPI
@@ -2396,6 +2400,8 @@ apis:
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -2885,7 +2891,8 @@ apis:
   description: Manage long-running operations
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -2984,6 +2991,8 @@ apis:
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -3082,6 +3091,8 @@ apis:
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -3964,6 +3975,22 @@ maintainers:
 - name: Kin Lane
   email: kin@apievangelist.com
 tags:
+- Advanced API Security
+- Agentic AI
+- Analytics
+- API Gateway
+- API Governance
+- API Hub
+- API Management
+- Developer Portal
+- Enterprise
+- Generative AI
+- Hybrid
+- Integration
+- Microservices
+- MCP
+- Monetization
+tags_raw:
 - Advanced API Security
 - Agentic AI
 - Analytics
