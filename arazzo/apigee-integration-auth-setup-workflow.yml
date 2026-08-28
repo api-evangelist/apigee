@@ -11,8 +11,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeIntegrations
-  url: ../openapi/apigee-integrations-openapi.yml
+- name: authConfigsApi
+  url: ../openapi/apigee-auth-configs-api-openapi.yml
+  type: openapi
+- name: integrationVersionsApi
+  url: ../openapi/apigee-integration-versions-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: setup-integration-auth

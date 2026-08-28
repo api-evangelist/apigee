@@ -11,8 +11,14 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: environmentsApi
+  url: ../openapi/apigee-environments-api-openapi.yml
+  type: openapi
+- name: keyValueMapsApi
+  url: ../openapi/apigee-key-value-maps-api-openapi.yml
+  type: openapi
+- name: targetServersApi
+  url: ../openapi/apigee-target-servers-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-environment

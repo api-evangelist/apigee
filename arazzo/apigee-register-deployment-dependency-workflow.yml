@@ -11,8 +11,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiHub
-  url: ../openapi/apigee-api-hub-openapi.yml
+- name: dependenciesApi
+  url: ../openapi/apigee-dependencies-api-openapi.yml
+  type: openapi
+- name: deploymentsApi
+  url: ../openapi/apigee-deployments-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: register-deployment-and-dependency

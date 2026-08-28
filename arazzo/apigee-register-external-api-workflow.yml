@@ -11,8 +11,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiHub
-  url: ../openapi/apigee-api-hub-openapi.yml
+- name: attributesApi
+  url: ../openapi/apigee-attributes-api-openapi.yml
+  type: openapi
+- name: externalApisApi
+  url: ../openapi/apigee-external-apis-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: register-external-api

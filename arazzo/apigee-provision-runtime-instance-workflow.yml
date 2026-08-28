@@ -11,8 +11,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: environmentsApi
+  url: ../openapi/apigee-environments-api-openapi.yml
+  type: openapi
+- name: instancesApi
+  url: ../openapi/apigee-instances-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-runtime-instance

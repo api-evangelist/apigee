@@ -10,8 +10,14 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: appGroupsApi
+  url: ../openapi/apigee-app-groups-api-openapi.yml
+  type: openapi
+- name: developerAppsApi
+  url: ../openapi/apigee-developer-apps-api-openapi.yml
+  type: openapi
+- name: developersApi
+  url: ../openapi/apigee-developers-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: onboard-app-group

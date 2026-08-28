@@ -10,8 +10,8 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: analyticsApi
+  url: ../openapi/apigee-analytics-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: setup-analytics-datastore

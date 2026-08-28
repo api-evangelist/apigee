@@ -11,8 +11,8 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeRegistry
-  url: ../openapi/apigee-registry-openapi.yml
+- name: apiSpecsApi
+  url: ../openapi/apigee-api-specs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: rollback-spec-revision

@@ -11,8 +11,14 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: apiProductsApi
+  url: ../openapi/apigee-api-products-api-openapi.yml
+  type: openapi
+- name: apiProxiesApi
+  url: ../openapi/apigee-api-proxies-api-openapi.yml
+  type: openapi
+- name: deploymentsApi
+  url: ../openapi/apigee-deployments-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: publish-api-product

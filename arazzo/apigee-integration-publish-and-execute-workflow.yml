@@ -11,8 +11,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeIntegrations
-  url: ../openapi/apigee-integrations-openapi.yml
+- name: integrationVersionsApi
+  url: ../openapi/apigee-integration-versions-api-openapi.yml
+  type: openapi
+- name: integrationsApi
+  url: ../openapi/apigee-integrations-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: publish-and-execute-integration

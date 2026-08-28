@@ -10,8 +10,14 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiHub
-  url: ../openapi/apigee-api-hub-openapi.yml
+- name: apiVersionsApi
+  url: ../openapi/apigee-api-versions-api-openapi.yml
+  type: openapi
+- name: locationsApi
+  url: ../openapi/apigee-locations-api-openapi.yml
+  type: openapi
+- name: projectsApi
+  url: ../openapi/apigee-projects-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: discover-and-search-hub

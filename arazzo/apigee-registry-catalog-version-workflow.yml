@@ -10,8 +10,17 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeRegistry
-  url: ../openapi/apigee-registry-openapi.yml
+- name: apiDeploymentsApi
+  url: ../openapi/apigee-api-deployments-api-openapi.yml
+  type: openapi
+- name: apiSpecsApi
+  url: ../openapi/apigee-api-specs-api-openapi.yml
+  type: openapi
+- name: apiVersionsApi
+  url: ../openapi/apigee-api-versions-api-openapi.yml
+  type: openapi
+- name: projectsApi
+  url: ../openapi/apigee-projects-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: catalog-registry-version

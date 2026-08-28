@@ -12,8 +12,17 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: apiProductsApi
+  url: ../openapi/apigee-api-products-api-openapi.yml
+  type: openapi
+- name: developerAppKeysApi
+  url: ../openapi/apigee-developer-app-keys-api-openapi.yml
+  type: openapi
+- name: developerAppsApi
+  url: ../openapi/apigee-developer-apps-api-openapi.yml
+  type: openapi
+- name: developersApi
+  url: ../openapi/apigee-developers-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: onboard-developer-app

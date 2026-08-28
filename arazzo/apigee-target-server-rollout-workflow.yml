@@ -11,8 +11,8 @@ info:
     opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: targetServersApi
+  url: ../openapi/apigee-target-servers-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: rollout-target-server

@@ -10,8 +10,14 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApiManagement
-  url: ../openapi/apigee-api-management-openapi.yml
+- name: apiProxiesApi
+  url: ../openapi/apigee-api-proxies-api-openapi.yml
+  type: openapi
+- name: apiProxyRevisionsApi
+  url: ../openapi/apigee-api-proxy-revisions-api-openapi.yml
+  type: openapi
+- name: deploymentsApi
+  url: ../openapi/apigee-deployments-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: decommission-proxy

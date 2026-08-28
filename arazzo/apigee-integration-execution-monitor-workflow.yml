@@ -10,8 +10,11 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeIntegrations
-  url: ../openapi/apigee-integrations-openapi.yml
+- name: executionsApi
+  url: ../openapi/apigee-executions-api-openapi.yml
+  type: openapi
+- name: integrationsApi
+  url: ../openapi/apigee-integrations-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: monitor-integration-execution

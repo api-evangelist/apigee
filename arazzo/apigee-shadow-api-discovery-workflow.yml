@@ -12,8 +12,14 @@ info:
     opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apigeeApim
-  url: ../openapi/apigee-apim-openapi.yml
+- name: observationJobsApi
+  url: ../openapi/apigee-observation-jobs-api-openapi.yml
+  type: openapi
+- name: observationSourcesApi
+  url: ../openapi/apigee-observation-sources-api-openapi.yml
+  type: openapi
+- name: operationsApi
+  url: ../openapi/apigee-operations-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: discover-shadow-apis
