@@ -14,7 +14,7 @@ deliveryModel:
   - openapi
   - pricing
   - repository-unlicensed
-  generated: '2026-08-11'
+  generated: '2026-08-28'
   method: derived
 accessModel:
   pricing: paid
@@ -4008,6 +4008,9 @@ tags_raw:
 - Model Context Protocol
 - Monetization
 common:
+- type: CapabilityMap
+  url: capabilities/apigee-capability-edges.yml
+  name: Apigee Business Capability Map
 - type: IssueTracker
   url: https://github.com/apigee/apigeecli/issues
 - type: Releases
