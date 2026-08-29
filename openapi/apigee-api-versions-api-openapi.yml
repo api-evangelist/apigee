@@ -1,18 +1,18 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apigee API Hub Analytics API Versions API
-  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  title: Apigee Registry API Versions API
+  description: API for tracking and managing machine-readable descriptions of APIs, including specifications, versions, deployments, and related metadata. This is a legacy API and Google recommends using the Apigee API Hub APIs instead.
   version: 1.0.0
   contact:
     name: Google Cloud Apigee
-    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigeeregistry/rest
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   termsOfService: https://cloud.google.com/terms
 servers:
-- url: https://apihub.googleapis.com/v1
-  description: Apigee API Hub Production Server
+- url: https://apigeeregistry.googleapis.com/v1
+  description: Apigee Registry API Production Server
 security:
 - oauth2: []
 tags:
@@ -186,48 +186,31 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    versionId:
-      name: versionId
-      in: path
-      description: ID of the API version.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: ID of the API resource.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -242,15 +225,6 @@ components:
               type: string
             status:
               type: string
-    ListApiVersionsResponse:
-      type: object
-      properties:
-        apiVersions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiVersion'
-        nextPageToken:
-          type: string
     ApiVersion:
       type: object
       description: A version of an API.
@@ -287,31 +261,57 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
-  responses:
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    ListApiVersionsResponse:
+      type: object
+      properties:
+        apiVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        nextPageToken:
+          type: string
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     oauth2:
       type: oauth2
@@ -323,5 +323,5 @@ components:
           scopes:
             https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
 externalDocs:
-  description: Apigee API Hub API Reference Documentation
-  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+  description: Apigee Registry API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apigeeregistry/rest

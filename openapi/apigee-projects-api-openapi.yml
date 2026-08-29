@@ -1,18 +1,17 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apigee API Hub Analytics Projects API
-  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
+  title: Apigee Projects API
   version: 1.0.0
-  contact:
-    name: Google Cloud Apigee
-    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   termsOfService: https://cloud.google.com/terms
+  description: 'Operations tagged Projects across 2 of this provider''s published API definitions: apigee-api-hub-openapi.yml, apigee-registry-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://apihub.googleapis.com/v1
   description: Apigee API Hub Production Server
+- url: https://apigeeregistry.googleapis.com/v1
+  description: Apigee Registry API Production Server
 security:
 - oauth2: []
 tags:
@@ -82,6 +81,9 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '409':
           $ref: '#/components/responses/Conflict'
+    servers:
+    - url: https://apihub.googleapis.com/v1
+      description: Apigee API Hub Production Server
   /projects/{projectId}/locations/{locationId}/apis/{apiId}:
     get:
       operationId: getApi
@@ -166,43 +168,22 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+    servers:
+    - url: https://apihub.googleapis.com/v1
+      description: Apigee API Hub Production Server
 components:
-  parameters:
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: ID of the API resource.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
   schemas:
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -217,63 +198,6 @@ components:
               type: string
             status:
               type: string
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
-    AttributeValues:
-      type: object
-      description: Values assigned to an attribute.
-      properties:
-        enumValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                $ref: '#/components/schemas/EnumAttributeValue'
-        stringValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        jsonValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        attribute:
-          type: string
-          description: Resource name of the attribute definition.
-    Documentation:
-      type: object
-      description: Documentation associated with a resource.
-      properties:
-        externalUri:
-          type: string
-          description: URI of external documentation.
-    Owner:
-      type: object
-      description: Owner of an API resource.
-      properties:
-        displayName:
-          type: string
-          description: Display name of the owner.
-        email:
-          type: string
-          format: email
-          description: Email address of the owner.
     ListApisResponse:
       type: object
       properties:
@@ -341,25 +265,117 @@ components:
           $ref: '#/components/schemas/AttributeValues'
         apiStyle:
           $ref: '#/components/schemas/AttributeValues'
+    Owner:
+      type: object
+      description: Owner of an API resource.
+      properties:
+        displayName:
+          type: string
+          description: Display name of the owner.
+        email:
+          type: string
+          format: email
+          description: Email address of the owner.
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    Error_2:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListApisResponse_2:
+      type: object
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api_2'
+        nextPageToken:
+          type: string
+    Api_2:
+      type: object
+      description: An API resource in the registry.
+      properties:
+        name:
+          type: string
+          description: Resource name of the API.
+        displayName:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+          description: Description of the API.
+        availability:
+          type: string
+          description: Availability of the API.
+        recommendedVersion:
+          type: string
+          description: Resource name of the recommended API version.
+        recommendedDeployment:
+          type: string
+          description: Resource name of the recommended deployment.
+        labels:
+          type: object
+          description: User-defined labels.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: User-defined annotations.
+          additionalProperties:
+            type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Creation time.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Last update time.
+          readOnly: true
   responses:
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found. The specified resource does not exist.
       content:
@@ -372,6 +388,59 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     oauth2:
       type: oauth2
@@ -382,6 +451,6 @@ components:
           tokenUrl: https://oauth2.googleapis.com/token
           scopes:
             https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
-externalDocs:
-  description: Apigee API Hub API Reference Documentation
-  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+x-refined-from:
+- apigee-api-hub-openapi.yml
+- apigee-registry-openapi.yml

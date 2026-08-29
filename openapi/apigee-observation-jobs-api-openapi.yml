@@ -1,18 +1,18 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apigee API Hub Analytics Observation Jobs API
-  description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
-  version: 1.0.0
+  title: Apigee API Management Observation Jobs API
+  description: API for discovering and observing shadow APIs in existing Google Cloud infrastructure, enabling organizations to identify undocumented or unmanaged APIs operating within their environments.
+  version: 1.0.0-alpha
   contact:
     name: Google Cloud Apigee
-    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   termsOfService: https://cloud.google.com/terms
 servers:
-- url: https://apihub.googleapis.com/v1
-  description: Apigee API Hub Production Server
+- url: https://apim.googleapis.com/v1alpha
+  description: Apigee APIM API (Alpha)
 security:
 - oauth2: []
 tags:
@@ -172,41 +172,31 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    observationJobId:
-      name: observationJobId
-      in: path
-      description: ID of the observation job.
-      required: true
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -242,19 +232,20 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
-    ListObservationJobsResponse:
+    Status:
       type: object
+      description: The Status type defines a logical error model.
       properties:
-        observationJobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObservationJob'
-        nextPageToken:
+        code:
+          type: integer
+          format: int32
+        message:
           type: string
-        unreachable:
+        details:
           type: array
           items:
-            type: string
+            type: object
+            additionalProperties: true
     ObservationJob:
       type: object
       description: An API observation job that analyzes traffic to discover shadow APIs.
@@ -289,45 +280,54 @@ components:
           format: date-time
           description: Output only. Time the job was last updated.
           readOnly: true
-    Status:
+    ListObservationJobsResponse:
       type: object
-      description: The Status type defines a logical error model.
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
+        observationJobs:
           type: array
           items:
-            type: object
-            additionalProperties: true
-  responses:
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ObservationJob'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    observationJobId:
+      name: observationJobId
+      in: path
+      description: ID of the observation job.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
@@ -339,5 +339,5 @@ components:
           scopes:
             https://www.googleapis.com/auth/cloud-platform: Full access to Google Cloud Platform resources
 externalDocs:
-  description: Apigee API Hub API Reference Documentation
-  url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+  description: Apigee APIM API Reference Documentation
+  url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest

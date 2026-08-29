@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apigee API Hub Analytics Locations API
+  title: Apigee API Hub Locations API
   description: API for cataloging, organizing, and governing APIs across an organization. Enables API discovery, metadata management, dependency mapping, deployment tracking, and AI-powered specification boost.
   version: 1.0.0
   contact:
@@ -63,21 +63,6 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  parameters:
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
   schemas:
     EnumAttributeValue:
       type: object
@@ -89,6 +74,56 @@ components:
         displayName:
           type: string
           description: Output only. Display name of the enum value.
+          readOnly: true
+    Deployment:
+      type: object
+      description: An API deployment record.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the deployment.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the deployment.
+        description:
+          type: string
+          description: Description of the deployment.
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        deploymentType:
+          $ref: '#/components/schemas/AttributeValues'
+        resourceUri:
+          type: string
+          description: URI of the deployed API resource.
+        endpoints:
+          type: array
+          description: Endpoints where the API is accessible.
+          items:
+            type: string
+        apiVersions:
+          type: array
+          description: API versions deployed.
+          items:
+            type: string
+        slo:
+          $ref: '#/components/schemas/AttributeValues'
+        environment:
+          $ref: '#/components/schemas/AttributeValues'
+        attributes:
+          type: object
+          description: Custom attributes associated with this deployment.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the deployment was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the deployment was last updated.
           readOnly: true
     Error:
       type: object
@@ -104,6 +139,72 @@ components:
               type: string
             status:
               type: string
+    Api:
+      type: object
+      description: An API resource in the API Hub.
+      properties:
+        name:
+          type: string
+          description: Output only. Resource name of the API.
+          readOnly: true
+        displayName:
+          type: string
+          description: Required. Display name for the API.
+        description:
+          type: string
+          description: Description of the API.
+        owner:
+          $ref: '#/components/schemas/Owner'
+        documentation:
+          $ref: '#/components/schemas/Documentation'
+        versions:
+          type: array
+          description: Output only. Versions associated with this API.
+          readOnly: true
+          items:
+            type: string
+        deployments:
+          type: array
+          description: Output only. Deployments associated with this API.
+          readOnly: true
+          items:
+            type: string
+        attributes:
+          type: object
+          description: Custom attributes associated with the API.
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeValues'
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the API was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the API was last updated.
+          readOnly: true
+        targetUser:
+          $ref: '#/components/schemas/AttributeValues'
+        team:
+          $ref: '#/components/schemas/AttributeValues'
+        businessUnit:
+          $ref: '#/components/schemas/AttributeValues'
+        maturityLevel:
+          $ref: '#/components/schemas/AttributeValues'
+        apiStyle:
+          $ref: '#/components/schemas/AttributeValues'
+    Owner:
+      type: object
+      description: Owner of an API resource.
+      properties:
+        displayName:
+          type: string
+          description: Display name of the owner.
+        email:
+          type: string
+          format: email
+          description: Email address of the owner.
     AttributeValues:
       type: object
       description: Values assigned to an attribute.
@@ -132,80 +233,6 @@ components:
         attribute:
           type: string
           description: Resource name of the attribute definition.
-    Documentation:
-      type: object
-      description: Documentation associated with a resource.
-      properties:
-        externalUri:
-          type: string
-          description: URI of external documentation.
-    Owner:
-      type: object
-      description: Owner of an API resource.
-      properties:
-        displayName:
-          type: string
-          description: Display name of the owner.
-        email:
-          type: string
-          format: email
-          description: Email address of the owner.
-    ApiSpec:
-      type: object
-      description: A machine-readable API specification.
-      properties:
-        name:
-          type: string
-          description: Output only. Resource name of the spec.
-          readOnly: true
-        displayName:
-          type: string
-          description: Required. Display name for the spec.
-        description:
-          type: string
-          description: Description of the specification.
-        specType:
-          $ref: '#/components/schemas/AttributeValues'
-        contents:
-          type: object
-          description: The spec contents.
-          properties:
-            contents:
-              type: string
-              format: byte
-              description: The spec content as bytes.
-            mimeType:
-              type: string
-              description: MIME type of the content.
-        documentation:
-          $ref: '#/components/schemas/Documentation'
-        sourceUri:
-          type: string
-          description: URI of the original spec source.
-        parsingMode:
-          type: string
-          description: Parsing mode for the specification.
-          enum:
-          - PARSING_MODE_UNSPECIFIED
-          - RELAXED
-          - STRICT
-        lintResponse:
-          $ref: '#/components/schemas/LintResponse'
-        attributes:
-          type: object
-          description: Custom attributes associated with this spec.
-          additionalProperties:
-            $ref: '#/components/schemas/AttributeValues'
-        createTime:
-          type: string
-          format: date-time
-          description: Output only. Time the spec was created.
-          readOnly: true
-        updateTime:
-          type: string
-          format: date-time
-          description: Output only. Time the spec was last updated.
-          readOnly: true
     ApiVersion:
       type: object
       description: A version of an API.
@@ -315,56 +342,6 @@ components:
               count:
                 type: integer
                 format: int32
-    Deployment:
-      type: object
-      description: An API deployment record.
-      properties:
-        name:
-          type: string
-          description: Output only. Resource name of the deployment.
-          readOnly: true
-        displayName:
-          type: string
-          description: Required. Display name for the deployment.
-        description:
-          type: string
-          description: Description of the deployment.
-        documentation:
-          $ref: '#/components/schemas/Documentation'
-        deploymentType:
-          $ref: '#/components/schemas/AttributeValues'
-        resourceUri:
-          type: string
-          description: URI of the deployed API resource.
-        endpoints:
-          type: array
-          description: Endpoints where the API is accessible.
-          items:
-            type: string
-        apiVersions:
-          type: array
-          description: API versions deployed.
-          items:
-            type: string
-        slo:
-          $ref: '#/components/schemas/AttributeValues'
-        environment:
-          $ref: '#/components/schemas/AttributeValues'
-        attributes:
-          type: object
-          description: Custom attributes associated with this deployment.
-          additionalProperties:
-            $ref: '#/components/schemas/AttributeValues'
-        createTime:
-          type: string
-          format: date-time
-          description: Output only. Time the deployment was created.
-          readOnly: true
-        updateTime:
-          type: string
-          format: date-time
-          description: Output only. Time the deployment was last updated.
-          readOnly: true
     SearchResourcesResponse:
       type: object
       description: Response for searching API Hub resources.
@@ -387,62 +364,76 @@ components:
                     $ref: '#/components/schemas/Deployment'
         nextPageToken:
           type: string
-    Api:
+    Documentation:
       type: object
-      description: An API resource in the API Hub.
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    ApiSpec:
+      type: object
+      description: A machine-readable API specification.
       properties:
         name:
           type: string
-          description: Output only. Resource name of the API.
+          description: Output only. Resource name of the spec.
           readOnly: true
         displayName:
           type: string
-          description: Required. Display name for the API.
+          description: Required. Display name for the spec.
         description:
           type: string
-          description: Description of the API.
-        owner:
-          $ref: '#/components/schemas/Owner'
+          description: Description of the specification.
+        specType:
+          $ref: '#/components/schemas/AttributeValues'
+        contents:
+          type: object
+          description: The spec contents.
+          properties:
+            contents:
+              type: string
+              format: byte
+              description: The spec content as bytes.
+            mimeType:
+              type: string
+              description: MIME type of the content.
         documentation:
           $ref: '#/components/schemas/Documentation'
-        versions:
-          type: array
-          description: Output only. Versions associated with this API.
-          readOnly: true
-          items:
-            type: string
-        deployments:
-          type: array
-          description: Output only. Deployments associated with this API.
-          readOnly: true
-          items:
-            type: string
+        sourceUri:
+          type: string
+          description: URI of the original spec source.
+        parsingMode:
+          type: string
+          description: Parsing mode for the specification.
+          enum:
+          - PARSING_MODE_UNSPECIFIED
+          - RELAXED
+          - STRICT
+        lintResponse:
+          $ref: '#/components/schemas/LintResponse'
         attributes:
           type: object
-          description: Custom attributes associated with the API.
+          description: Custom attributes associated with this spec.
           additionalProperties:
             $ref: '#/components/schemas/AttributeValues'
         createTime:
           type: string
           format: date-time
-          description: Output only. Time the API was created.
+          description: Output only. Time the spec was created.
           readOnly: true
         updateTime:
           type: string
           format: date-time
-          description: Output only. Time the API was last updated.
+          description: Output only. Time the spec was last updated.
           readOnly: true
-        targetUser:
-          $ref: '#/components/schemas/AttributeValues'
-        team:
-          $ref: '#/components/schemas/AttributeValues'
-        businessUnit:
-          $ref: '#/components/schemas/AttributeValues'
-        maturityLevel:
-          $ref: '#/components/schemas/AttributeValues'
-        apiStyle:
-          $ref: '#/components/schemas/AttributeValues'
   responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Forbidden. The caller does not have permission.
       content:
@@ -455,12 +446,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
