@@ -1,8 +1,5 @@
 name: Apigee
-description: Apigee is Google Cloud's native API management platform for building,
-  managing, and securing APIs across any use case, environment, or scale. It provides
-  API proxies, security, rate limiting, quotas, analytics, monetization, and developer
-  portal capabilities.
+description: Apigee is Google Cloud's native API management platform for building, managing, and securing APIs across any use case, environment, or scale. It provides API proxies, security, rate limiting, quotas, analytics, monetization, and developer portal capabilities.
 deliveryModel:
   model: unknown
   open_source: unknown
@@ -109,13 +106,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -207,13 +202,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -305,13 +298,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -403,13 +394,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -501,13 +490,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -599,13 +586,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -697,13 +682,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -795,13 +778,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -893,13 +874,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -991,13 +970,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1089,13 +1066,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1187,13 +1162,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1285,13 +1258,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1383,13 +1354,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1481,13 +1450,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1581,13 +1548,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1679,13 +1644,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1777,13 +1740,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1875,13 +1836,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -1973,13 +1932,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2073,13 +2030,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2171,13 +2126,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2269,13 +2222,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2367,13 +2318,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2467,13 +2416,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2565,13 +2512,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2663,13 +2608,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2761,13 +2704,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2859,13 +2800,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -2958,13 +2897,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3058,13 +2995,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3158,13 +3093,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3256,13 +3189,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3354,13 +3285,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3452,13 +3381,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3550,13 +3477,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3648,13 +3573,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3746,13 +3669,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3844,13 +3765,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3942,13 +3861,11 @@ apis:
   - type: ModelContextProtocol
     url: https://cloud.google.com/apigee/docs/apihub/mcp-tools
   - type: AgenticAI
-    url: >-
-      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+    url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
   - type: SpecificationBoost
     url: https://cloud.google.com/apigee/docs/apihub/spec-boost
   - type: Documentation
-    url: >-
-      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
   - type: JSONSchema
     url: json-schema/apigee-integration-schema.json
   - type: APIReference
@@ -3969,6 +3886,53 @@ apis:
     url: https://github.com/apigee/registry
   - type: ReleaseNotes
     url: https://cloud.google.com/apigee/docs/registry/release-notes
+- aid: google-apigee:google-apigee
+  name: Google Apigee
+  description: Apigee is Google Cloud's API management platform enabling organizations to design, secure, publish, analyze, and scale their APIs with advanced analytics, developer portal, and monetization features.
+  humanURL: https://cloud.google.com/apigee
+  tags:
+  - API Gateway
+  - API Management
+  - Google Cloud
+  properties:
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
+- aid: google-apigee:google-apigee-connect-api
+  name: Google Apigee Connect API
+  description: The Apigee Connect API enables Apigee hybrid to connect the Apigee management plane to the customer-managed runtime plane without requiring the runtime plane to have an inbound firewall rule. It allows secure outbound-only connectivity from the on-premises or private cloud runtime to Google's management services.
+  humanURL: https://cloud.google.com/apigee/docs/hybrid/latest/apigee-connect
+  baseURL: https://apigeeconnect.googleapis.com
+  tags:
+  - Administration
+  - Connectivity
+  - Google Cloud
+  - Hybrid
+  properties:
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/hybrid/latest/apigee-connect
+  - type: Reference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigeeconnect/rest
+- aid: google-apigee:google-apigee-api-hub
+  name: Google Apigee API Hub
+  description: Apigee API Hub is a centralized repository and governance platform for discovering, managing, and analyzing APIs across an organization. It enables teams to register APIs, manage API versions and specifications, enforce API standards, and gain visibility into the full API portfolio across multiple gateways and environments.
+  humanURL: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  baseURL: https://apihub.googleapis.com
+  tags:
+  - API Catalog
+  - API Governance
+  - API Hub
+  - Google Cloud
+  properties:
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/apihub/get-started-api-hub
+  - type: Reference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/apihub/release-notes
 integrations:
 - name: Become a Partner
 maintainers:
@@ -4008,6 +3972,12 @@ tags_raw:
 - Model Context Protocol
 - Monetization
 common:
+- type: Console
+  url: https://console.cloud.google.com/apigee
+- type: StackOverflow
+  url: https://stackoverflow.com/questions/tagged/apigee
+- type: YouTube
+  url: https://www.youtube.com/@googlecloudtech
 - type: CapabilityMap
   url: capabilities/apigee-capability-edges.yml
   name: Apigee Business Capability Map
@@ -4192,3 +4162,5 @@ common:
   url: https://github.com/apigee/devrel
 - type: LlmsText
   url: https://apigee.com/llms.txt
+x-parent: google-cloud-platform
+x-relationship: acquisition
