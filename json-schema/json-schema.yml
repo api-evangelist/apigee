@@ -1,0 +1,214 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/google-apigee/refs/heads/main/json-schema/json-schema.yml
+title: Google Apigee Schema
+description: JSON Schema for Google Apigee API resources.
+type: object
+$defs:
+  Organization:
+    type: object
+    title: Organization
+    description: An Apigee organization that owns API proxies and environments.
+    properties:
+      name:
+        type: string
+        description: The organization resource name.
+      displayName:
+        type: string
+        description: The display name of the organization.
+      description:
+        type: string
+        description: A description of the organization.
+      projectId:
+        type: string
+        description: The Google Cloud project ID associated with the organization.
+      analyticsRegion:
+        type: string
+        description: The analytics region for the organization.
+      runtimeType:
+        type: string
+        description: The runtime type of the organization.
+        enum:
+          - RUNTIME_TYPE_UNSPECIFIED
+          - CLOUD
+          - HYBRID
+      state:
+        type: string
+        description: The current state of the organization.
+        enum:
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ACTIVE
+          - DELETING
+      environments:
+        type: array
+        description: List of environments in the organization.
+        items:
+          type: string
+    required:
+      - name
+  ApiProxy:
+    type: object
+    title: API Proxy
+    description: An API proxy that acts as a facade for backend services.
+    properties:
+      name:
+        type: string
+        description: The name of the API proxy.
+      revision:
+        type: array
+        description: List of revision numbers for the API proxy.
+        items:
+          type: string
+      latestRevisionId:
+        type: string
+        description: The latest revision number.
+    required:
+      - name
+  Environment:
+    type: object
+    title: Environment
+    description: An environment where API proxies are deployed.
+    properties:
+      name:
+        type: string
+        description: The environment name.
+      displayName:
+        type: string
+        description: The display name of the environment.
+      description:
+        type: string
+        description: A description of the environment.
+      state:
+        type: string
+        description: The current state of the environment.
+        enum:
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ACTIVE
+          - DELETING
+      createdAt:
+        type: string
+        format: date-time
+        description: The time when the environment was created.
+      lastModifiedAt:
+        type: string
+        format: date-time
+        description: The time when the environment was last modified.
+    required:
+      - name
+  ApiProduct:
+    type: object
+    title: API Product
+    description: An API product that bundles API proxies for developer access.
+    properties:
+      name:
+        type: string
+        description: The name of the API product.
+      displayName:
+        type: string
+        description: The display name of the API product.
+      description:
+        type: string
+        description: A description of the API product.
+      approvalType:
+        type: string
+        description: Whether developer access requires manual approval.
+        enum:
+          - manual
+          - auto
+      proxies:
+        type: array
+        description: API proxies included in this product.
+        items:
+          type: string
+      environments:
+        type: array
+        description: Environments where this product is available.
+        items:
+          type: string
+      quota:
+        type: string
+        description: Number of request messages permitted per time unit.
+      quotaInterval:
+        type: string
+        description: Time interval over which the quota is applied.
+      quotaTimeUnit:
+        type: string
+        description: Time unit for the quota interval.
+      scopes:
+        type: array
+        description: OAuth scopes required by the API product.
+        items:
+          type: string
+    required:
+      - name
+  Developer:
+    type: object
+    title: Developer
+    description: A developer registered to consume APIs.
+    properties:
+      email:
+        type: string
+        format: email
+        description: The developer email address.
+      firstName:
+        type: string
+        description: The developer first name.
+      lastName:
+        type: string
+        description: The developer last name.
+      userName:
+        type: string
+        description: The developer username.
+      organizationName:
+        type: string
+        description: The organization the developer belongs to.
+      status:
+        type: string
+        description: The developer account status.
+        enum:
+          - active
+          - inactive
+      apps:
+        type: array
+        description: List of developer app names.
+        items:
+          type: string
+      developerId:
+        type: string
+        description: The unique developer identifier.
+    required:
+      - email
+      - firstName
+      - lastName
+      - userName
+  Deployment:
+    type: object
+    title: Deployment
+    description: The deployment status of an API proxy revision in an environment.
+    properties:
+      environment:
+        type: string
+        description: The environment name.
+      apiProxy:
+        type: string
+        description: The API proxy name.
+      revision:
+        type: string
+        description: The revision number.
+      deployStartTime:
+        type: string
+        format: date-time
+        description: The time when the deployment started.
+      state:
+        type: string
+        description: The current deployment state.
+        enum:
+          - RUNTIME_STATE_UNSPECIFIED
+          - READY
+          - PROGRESSING
+          - ERROR
+    required:
+      - environment
+      - apiProxy
+      - revision
