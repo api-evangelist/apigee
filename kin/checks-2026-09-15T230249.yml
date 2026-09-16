@@ -2,8 +2,8 @@
 kin_checks:
   slug: apigee
   schema_version: 0.22.0
-  scored_at: '2026-09-14'
-  run_ts: 2026-09-14T064754
+  scored_at: '2026-09-15'
+  run_ts: 2026-09-15T230249
   note: Actionable checks only (missed + partial). earned/na are every other check
     in rubric/scoring-0.22.0.yml; counts below let you verify that.
   counts:
@@ -19,15 +19,15 @@ kin_checks:
     status: missed
   - id: openapi_3_2
     status: missed
-    detail: 0 of 40 openapi documents pass
+    detail: 0 of 41 openapi documents pass
   - id: openapi_3_0
     status: missed
-    detail: 0 of 40 openapi documents pass
+    detail: 0 of 41 openapi documents pass
   - id: examples_present
     status: missed
   - id: webhooks_or_callbacks
     status: missed
-    detail: 0 of 40 openapi documents pass
+    detail: 0 of 41 openapi documents pass
   - id: asyncapi_present
     status: missed
   - id: graphql_descriptions
@@ -96,16 +96,16 @@ kin_checks:
     status: missed
   - id: info_complete
     status: partial
-    earned: 3.7
-    detail: 37 of 40 openapi documents pass
+    earned: 3.71
+    detail: 38 of 41 openapi documents pass
   - id: operations_operation_ids
     status: partial
     earned: 3.9
-    detail: 39 of 40 openapi documents pass
+    detail: 40 of 41 openapi documents pass
   - id: components_reuse
     status: partial
-    earned: 1.58
-    detail: 21 of 40 openapi documents pass
+    earned: 1.61
+    detail: 22 of 41 openapi documents pass
   - id: rules_present
     status: partial
     earned: 2.5
