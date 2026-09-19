@@ -1867,6 +1867,8 @@ apis:
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
   tags:
+  - Environment
+  tags_raw:
   - Environments
   properties:
   - type: OpenAPI
@@ -2543,6 +2545,8 @@ apis:
   humanURL: https://cloud.google.com/apigee/docs
   baseURL: https://apigee.googleapis.com
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
@@ -3991,8 +3995,8 @@ tags:
 - Microservices
 - MCP
 - Monetization
-- Apigee
 tags_raw:
+- Apigee
 - Advanced API Security
 - Agentic AI
 - Analytics
