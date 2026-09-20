@@ -4015,6 +4015,8 @@ tags_raw:
 - Model Context Protocol
 - Monetization
 common:
+- type: RateLimits
+  url: rate-limits/apigee-rate-limits.yml
 - type: Plans
   url: plans/apigee-plans-pricing.yml
 - type: Console
