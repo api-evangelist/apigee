@@ -10,6 +10,11 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: developer-api
 pricing_basis: per-call
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-09-20'
+  managed_tier: Standard
 published: true
 note: Pay-as-you-go rates published per 1M API calls plus monthly environment fees; subscription tiers
   (Standard/Enterprise/Enterprise Plus) are quote-only.
