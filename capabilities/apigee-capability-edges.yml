@@ -1,0 +1,104 @@
+slug: apigee
+provider: Apigee
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 9
+edges:
+- tag: Developer App Keys
+  spec_file: apigee-developer-app-keys-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.9
+  evidence: '"Apigee Create a Developer App Key" / "Apigee Delete a Developer App Key", schema DeveloperAppKey
+    under /developers/{developerId}/apps/{appId}/keys'
+  reason: Issuance and lifecycle of consumer key/secret credentials for developer applications is exactly
+    developer identity and credential management on an API platform.
+- tag: Specs
+  spec_file: apigee-specs-api-openapi.yml
+  capability_id: BC-4270.10
+  capability_id_l1: BC-4270
+  capability_name: Public API Lifecycle Management
+  confidence: 0.85
+  evidence: Apigee Create an API Specification ... Apigee Get API Specification Contents ... Apigee Lint
+    an API Specification (schema ApiSpec, LintResponse)
+  reason: Operations create, update, retrieve and lint OpenAPI specifications attached to API versions
+    — specification lifecycle and governance of APIs exposed to consumers, i.e. Public API Lifecycle Management.
+- tag: Versions
+  spec_file: apigee-versions-api-openapi.yml
+  capability_id: BC-4270.10
+  capability_id_l1: BC-4270
+  capability_name: Public API Lifecycle Management
+  confidence: 0.85
+  evidence: POST /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions  createApiVersion  Apigee
+    Create an API Version (schema ApiVersion, Documentation)
+  reason: CRUD over versions of catalogued APIs with documentation metadata is versioning of APIs exposed
+    to developers — Public API Lifecycle Management.
+- tag: API Specs
+  spec_file: apigee-api-specs-api-openapi.yml
+  capability_id: BC-4270.10
+  capability_id_l1: BC-4270
+  capability_name: Public API Lifecycle Management
+  confidence: 0.8
+  evidence: createApiSpec, getApiSpecContents, rollbackApiSpec; schema ApiSpec
+  reason: Storage, versioning and rollback of API specifications per API version directly realises 'Specification,
+    versioning, and deprecation of public APIs exposed to external developers'.
+- tag: API Products
+  spec_file: apigee-api-products-api-openapi.yml
+  capability_id: BC-4270
+  capability_id_l1: BC-4270
+  capability_name: Developer Platform & API Ecosystem Management
+  confidence: 0.75
+  evidence: POST /organizations/{organizationId}/apiproducts createApiProduct; schemas ApiProduct, OperationConfig,
+    OperationGroup
+  reason: Apigee API Products bundle API resources with quotas for consumption by external developer apps
+    — squarely the developer platform / API ecosystem capability. Split between public API lifecycle and
+    consumption governance, so L2 withheld.
+- tag: API Deployments
+  spec_file: apigee-api-deployments-api-openapi.yml
+  capability_id: BC-4270.10
+  capability_id_l1: BC-4270
+  capability_name: Public API Lifecycle Management
+  confidence: 0.7
+  evidence: createApiDeployment / rollbackApiDeployment — 'Enables API discovery, metadata management,
+    dependency mapping, deployment tracking'
+  reason: API Hub deployment records track where catalogued APIs are deployed; this is cataloguing/lifecycle
+    metadata for APIs exposed to consumers, not actual production deployment orchestration of the vendor's
+    own service.
+- tag: API Versions
+  spec_file: apigee-api-versions-api-openapi.yml
+  capability_id: BC-4270.10
+  capability_id_l1: BC-4270
+  capability_name: Public API Lifecycle Management
+  confidence: 0.7
+  evidence: createApiVersion / updateApiVersion under /apis/{apiId}/versions
+  reason: Version entities for catalogued APIs; the versioning half of public API lifecycle management.
+    No other candidate fits a version registry.
+- tag: Deployments
+  spec_file: apigee-deployments-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.7
+  evidence: '"Apigee Deploy an API Proxy Revision" and "Apigee Undeploy an API Proxy Revision" on /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments'
+  reason: Operations deploy and undeploy specific API proxy revisions into runtime environments and track
+    deployment state — deployment orchestration of software changes.
+- tag: Developers
+  spec_file: apigee-developers-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.7
+  evidence: '"Apigee List Developers" / "Apigee Create a Developer", schema Developer under /organizations/{organizationId}/developers'
+  reason: Registering and maintaining external developer accounts on the API platform is developer identity
+    stewardship within the API ecosystem.
