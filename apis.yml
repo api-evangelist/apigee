@@ -4015,6 +4015,8 @@ tags_raw:
 - Model Context Protocol
 - Monetization
 common:
+- type: Plans
+  url: plans/apigee-plans-pricing.yml
 - type: Console
   url: https://console.cloud.google.com/apigee
 - type: StackOverflow

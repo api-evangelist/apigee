@@ -1,196 +1,93 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
-provider: Apigee
-providerId: apigee
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: true
-tags:
-  - API Management
-  - Gateways
-  - Google Cloud
-  - Monetization
-  - Developer Portal
-description: Apigee is sold as a Google Cloud product with a Pay-as-you-go option (hourly billing for
-  environments and per-call charges) and three annual subscription editions — Standard, Enterprise, and
-  Enterprise Plus — distinguished by environment count, included API call volume, support SLA, and advanced
-  features (analytics, monetization, security). A free Evaluation org is offered for 60 days. List prices
-  for subscriptions are negotiated via Google Cloud sales; PAYG rates are published per region.
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://cloud.google.com/apigee/pricing
 sources:
-  - https://cloud.google.com/apigee/pricing
+- https://cloud.google.com/apigee/pricing
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: per-call
+published: true
+note: Pay-as-you-go rates published per 1M API calls plus monthly environment fees; subscription tiers
+  (Standard/Enterprise/Enterprise Plus) are quote-only.
+plan_count: 11
+currency: USD
 plans:
-  - id: apigee-evaluation
-    name: Evaluation
-    type: freemium
-    description: 60-day free trial Apigee organization for developers and proofs-of-concept. Limited capacity
-      and no SLA.
-    entries:
-      - label: Trial duration
-        name: trial_duration
-        type: quota
-        metric: day
-        limit: 60
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Single eval organization
-      - name: Limited environments
-      - name: Community support
-      - name: No production SLA
-  - id: apigee-payg
-    name: Pay-as-you-go
-    type: pay-as-you-go
-    description: Hourly metered Apigee X consumption with no annual commitment. Bills per environment-hour
-      and per API call, with regional pricing on Google Cloud.
-    entries:
-      - label: Environment-hour
-        name: environment_hour
-        type: metered
-        metric: instance-hour
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: see https://cloud.google.com/apigee/pricing
-        userMultiplied: false
-      - label: API calls
-        name: api_calls
-        type: metered
-        metric: request
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1000000
-        price: see https://cloud.google.com/apigee/pricing
-        userMultiplied: false
-      - label: Networking egress
-        name: egress
-        type: metered
-        metric: GB
-        limit: -1
-        timeFrame: usage
-        geo: global
-        unit: 1
-        price: see Google Cloud networking pricing
-        userMultiplied: false
-    elements:
-      - name: No annual commitment
-      - name: Hourly billing
-      - name: Standard support (Google Cloud support tier applies)
-  - id: apigee-standard
-    name: Standard (Subscription)
-    type: subscription
-    description: Annual Apigee subscription tier sized for production deployments with predictable traffic.
-      Includes a fixed allotment of API calls and environments.
-    entries:
-      - label: Annual subscription
-        name: annual_subscription
-        type: subscription
-        metric: year
-        limit: 1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: contact sales
-        userMultiplied: false
-      - label: Included API calls
-        name: included_api_calls
-        type: quota
-        metric: request
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: contact sales
-        userMultiplied: false
-    elements:
-      - name: Annual commit pricing
-      - name: Production SLA
-      - name: API proxies, products, developer portal
-      - name: Quota and SpikeArrest policies
-      - name: Standard analytics
-  - id: apigee-enterprise
-    name: Enterprise (Subscription)
-    type: subscription
-    description: Higher-tier annual subscription with more environments, larger included call volume,
-      advanced API security and analytics, and access to the Integrated Developer Portal.
-    entries:
-      - label: Annual subscription
-        name: annual_subscription
-        type: subscription
-        metric: year
-        limit: 1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: contact sales
-        userMultiplied: false
-      - label: Included API calls
-        name: included_api_calls
-        type: quota
-        metric: request
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: contact sales
-        userMultiplied: false
-    elements:
-      - name: Multi-environment
-      - name: Advanced API analytics
-      - name: API security reporting
-      - name: Integrated developer portal
-      - name: Production SLA
-  - id: apigee-enterprise-plus
-    name: Enterprise Plus (Subscription)
-    type: subscription
-    description: Top-tier annual subscription with the highest capacity (up to 85 environments, 6,000
-      proxies/env), monetization, advanced security, and premium support.
-    entries:
-      - label: Annual subscription
-        name: annual_subscription
-        type: subscription
-        metric: year
-        limit: 1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: contact sales
-        userMultiplied: false
-      - label: Included API calls
-        name: included_api_calls
-        type: quota
-        metric: request
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: contact sales
-        userMultiplied: false
-      - label: Environments included
-        name: environments
-        type: quota
-        metric: environment
-        limit: 85
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: included
-        userMultiplied: false
-    elements:
-      - name: Up to 85 environments
-      - name: Apigee Monetization
-      - name: Advanced API security (Advanced API Security add-on)
-      - name: Premium support
-      - name: Multi-region failover
-      - name: Custom data retention
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- name: Evaluation (free trial)
+  price_text: Try it free
+  period: none
+  included_quota: Evaluate Apigee in your own sandbox at no cost for 60 days
+- name: Pay-as-you-go — Standard API Proxy
+  price_text: $20 (up to 50M API calls)
+  price: 20
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+  overage: $16 (from 50M to 500M API calls); $13 (above 500M API calls)
+- name: Pay-as-you-go — Extensible API Proxy
+  price_text: $100 (up to 50M API calls)
+  price: 100
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+  overage: $80 (from 50M to 500M API calls); $64 (above 500M API calls)
+- name: Base environment
+  price_text: $365 per month per region
+  price: 365
+  currency: USD
+  period: month
+  unit: per region
+  included_quota: Deploy five environments per project; up to 20 API proxies per environment per region;
+    Standard API Proxy only
+- name: Intermediate environment
+  price_text: $1,460 per month per region
+  price: 1460
+  currency: USD
+  period: month
+  unit: per region
+  included_quota: 50 API proxies/shared flows per environment per region
+- name: Comprehensive environment
+  price_text: $3,431 per month per region
+  price: 3431
+  currency: USD
+  period: month
+  unit: per region
+  included_quota: 100 API proxies/shared flows per environment per region
+  overage: $0.04/hour/region for additional deployments to a comprehensive environment
+- name: 'Add-on: API Analytics'
+  price_text: $20 per 1M API calls
+  price: 20
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+- name: 'Add-on: Advanced API Security'
+  price_text: $350 per 1M API calls
+  price: 350
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+- name: Standard (subscription)
+  price_text: Contact us
+  period: none
+  included_quota: Up to 1.25B Standard API Proxy calls or 250M Extensible API Proxy calls; Three environments;
+    250 deployments
+- name: Enterprise (subscription)
+  price_text: Contact us
+  period: none
+  included_quota: Up to 7.5B Standard API Proxy calls or 1.5B Extensible API Proxy calls; Six environments;
+    500 deployments
+- name: Enterprise Plus (subscription)
+  price_text: Contact us
+  period: none
+  included_quota: Up to 75B Standard API Proxy calls or 15B Extensible API Proxy calls; 12 environments;
+    1,500 deployments
+rate_limit_statements:
+- Up to 50 QPS
+- Up to 100 QPS
+- Autoscaled QPS
+- Deploy up to 20 API proxies per environment per region
+- Deploy up to 50 API proxies/shared flows per environment per region
+- Deploy up to 85 environments (limit) per project
