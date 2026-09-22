@@ -2,16 +2,16 @@
 kin_checks:
   slug: apigee
   schema_version: 0.22.0
-  scored_at: '2026-09-19'
-  run_ts: 2026-09-19T193153
+  scored_at: '2026-09-21'
+  run_ts: 2026-09-21T233935
   note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
     apply in `na`. Everything else in rubric/scoring-0.22.0.yml was earned; counts
     below let you verify that.
   counts:
     total: 136
-    earned: 58
-    partial: 17
-    missed: 38
+    earned: 60
+    partial: 13
+    missed: 40
     na: 23
   checks:
   - id: maintainer_present
@@ -42,6 +42,10 @@ kin_checks:
   - id: conformance_declared
     status: missed
   - id: overlay_published
+    status: missed
+  - id: rate_limits_documented
+    status: missed
+  - id: rate_limits_rich
     status: missed
   - id: deprecation_policy
     status: missed
@@ -116,12 +120,6 @@ kin_checks:
   - id: balanced_severities
     status: partial
     earned: 0.75
-  - id: rate_limits_documented
-    status: partial
-    earned: 2.0
-  - id: rate_limits_rich
-    status: partial
-    earned: 1.0
   - id: github_org_present
     status: partial
     earned: 1.0
@@ -129,12 +127,6 @@ kin_checks:
   - id: postman_present
     status: partial
     earned: 0.5
-  - id: plans_present
-    status: partial
-    earned: 2.0
-  - id: plans_multiple
-    status: partial
-    earned: 1.0
   - id: agentic_access
     status: partial
     earned: 2.5
