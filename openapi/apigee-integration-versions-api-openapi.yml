@@ -304,32 +304,98 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    DownloadIntegrationVersionResponse:
+      type: object
+      description: Response for downloading an integration version.
+      properties:
+        content:
+          type: string
+          description: Integration version content.
+    UploadIntegrationVersionRequest:
+      type: object
+      description: Request to upload an integration version.
+      properties:
+        content:
+          type: string
+          description: Integration version content to upload.
+        fileFormat:
+          type: string
+          description: Format of the uploaded content.
+          enum:
+          - FILE_FORMAT_UNSPECIFIED
+          - JSON
+          - YAML
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
+    TriggerConfig:
+      type: object
+      description: Configuration for a trigger that starts an integration.
+      properties:
+        trigger:
+          type: string
+          description: Type of the trigger.
+        triggerId:
+          type: string
+          description: Unique ID of the trigger.
+        label:
+          type: string
+          description: Label for the trigger.
+        description:
+          type: string
+          description: Description of the trigger.
+        triggerType:
+          type: string
+          description: Trigger type.
+          enum:
+          - TRIGGER_TYPE_UNSPECIFIED
+          - CRON
+          - API
+          - SFDC_CHANNEL
+          - CLOUD_PUBSUB_EXTERNAL
+          - SFDC_CDC_CHANNEL
+          - CLOUD_SCHEDULER
+          - INTEGRATION_CONNECTOR_TRIGGER
+        triggerNumber:
+          type: string
+          description: Number for ordering triggers.
+        startTasks:
+          type: array
+          description: Tasks to start when trigger fires.
+          items:
+            type: object
+            properties:
+              taskId:
+                type: string
+              condition:
+                type: string
+              displayName:
+                type: string
+        properties:
+          type: object
+          description: Trigger-specific properties.
+          additionalProperties:
+            type: string
     ValueType:
       type: object
       description: A value with a specific type.
@@ -353,38 +419,6 @@ components:
                 type: string
         jsonValue:
           type: string
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    DownloadIntegrationVersionResponse:
-      type: object
-      description: Response for downloading an integration version.
-      properties:
-        content:
-          type: string
-          description: Integration version content.
-    ListIntegrationVersionsResponse:
-      type: object
-      properties:
-        integrationVersions:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegrationVersion'
-        nextPageToken:
-          type: string
-        noPermission:
-          type: boolean
     IntegrationParameter:
       type: object
       description: A parameter used in an integration.
@@ -424,6 +458,83 @@ components:
         producer:
           type: string
           description: Task that produces this parameter.
+    TaskConfig:
+      type: object
+      description: Configuration for a task in an integration.
+      properties:
+        task:
+          type: string
+          description: Type of the task (e.g., GenericRestV2Task, FieldMappingTask).
+        taskId:
+          type: string
+          description: Unique ID of the task within the integration.
+        displayName:
+          type: string
+          description: Display name for the task.
+        parameters:
+          type: object
+          description: Task parameters.
+          additionalProperties:
+            $ref: '#/components/schemas/EventParameter'
+        nextTasks:
+          type: array
+          description: Tasks to execute next.
+          items:
+            type: object
+            properties:
+              taskId:
+                type: string
+              condition:
+                type: string
+              displayName:
+                type: string
+              description:
+                type: string
+        taskExecutionStrategy:
+          type: string
+          description: Execution strategy for the task.
+          enum:
+          - WHEN_ALL_SUCCEED
+          - WHEN_ANY_SUCCEED
+          - WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED
+        failurePolicy:
+          type: object
+          description: Policy for handling task failures.
+          properties:
+            retryStrategy:
+              type: string
+              enum:
+              - RETRY_STRATEGY_UNSPECIFIED
+              - IGNORE
+              - NONE
+              - FATAL
+              - FIXED_INTERVAL
+              - LINEAR_BACKOFF
+              - EXPONENTIAL_BACKOFF
+              - RESTART_INTEGRATION_WITH_BACKOFF
+            maxRetries:
+              type: integer
+              format: int32
+            intervalTime:
+              type: string
+              format: date-time
+    UploadIntegrationVersionResponse:
+      type: object
+      description: Response from uploading an integration version.
+      properties:
+        integrationVersion:
+          $ref: '#/components/schemas/IntegrationVersion'
+    ListIntegrationVersionsResponse:
+      type: object
+      properties:
+        integrationVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationVersion'
+        nextPageToken:
+          type: string
+        noPermission:
+          type: boolean
     IntegrationVersion:
       type: object
       description: A version of an integration containing the complete configuration.
@@ -486,142 +597,6 @@ components:
           - DATABASE_PERSISTENCE_POLICY_UNSPECIFIED
           - DATABASE_PERSISTENCE_DISABLED
           - DATABASE_PERSISTENCE_ASYNC
-    TaskConfig:
-      type: object
-      description: Configuration for a task in an integration.
-      properties:
-        task:
-          type: string
-          description: Type of the task (e.g., GenericRestV2Task, FieldMappingTask).
-        taskId:
-          type: string
-          description: Unique ID of the task within the integration.
-        displayName:
-          type: string
-          description: Display name for the task.
-        parameters:
-          type: object
-          description: Task parameters.
-          additionalProperties:
-            $ref: '#/components/schemas/EventParameter'
-        nextTasks:
-          type: array
-          description: Tasks to execute next.
-          items:
-            type: object
-            properties:
-              taskId:
-                type: string
-              condition:
-                type: string
-              displayName:
-                type: string
-              description:
-                type: string
-        taskExecutionStrategy:
-          type: string
-          description: Execution strategy for the task.
-          enum:
-          - WHEN_ALL_SUCCEED
-          - WHEN_ANY_SUCCEED
-          - WHEN_ALL_TASKS_AND_CONDITIONS_SUCCEED
-        failurePolicy:
-          type: object
-          description: Policy for handling task failures.
-          properties:
-            retryStrategy:
-              type: string
-              enum:
-              - RETRY_STRATEGY_UNSPECIFIED
-              - IGNORE
-              - NONE
-              - FATAL
-              - FIXED_INTERVAL
-              - LINEAR_BACKOFF
-              - EXPONENTIAL_BACKOFF
-              - RESTART_INTEGRATION_WITH_BACKOFF
-            maxRetries:
-              type: integer
-              format: int32
-            intervalTime:
-              type: string
-              format: date-time
-    UploadIntegrationVersionRequest:
-      type: object
-      description: Request to upload an integration version.
-      properties:
-        content:
-          type: string
-          description: Integration version content to upload.
-        fileFormat:
-          type: string
-          description: Format of the uploaded content.
-          enum:
-          - FILE_FORMAT_UNSPECIFIED
-          - JSON
-          - YAML
-    TriggerConfig:
-      type: object
-      description: Configuration for a trigger that starts an integration.
-      properties:
-        trigger:
-          type: string
-          description: Type of the trigger.
-        triggerId:
-          type: string
-          description: Unique ID of the trigger.
-        label:
-          type: string
-          description: Label for the trigger.
-        description:
-          type: string
-          description: Description of the trigger.
-        triggerType:
-          type: string
-          description: Trigger type.
-          enum:
-          - TRIGGER_TYPE_UNSPECIFIED
-          - CRON
-          - API
-          - SFDC_CHANNEL
-          - CLOUD_PUBSUB_EXTERNAL
-          - SFDC_CDC_CHANNEL
-          - CLOUD_SCHEDULER
-          - INTEGRATION_CONNECTOR_TRIGGER
-        triggerNumber:
-          type: string
-          description: Number for ordering triggers.
-        startTasks:
-          type: array
-          description: Tasks to start when trigger fires.
-          items:
-            type: object
-            properties:
-              taskId:
-                type: string
-              condition:
-                type: string
-              displayName:
-                type: string
-        properties:
-          type: object
-          description: Trigger-specific properties.
-          additionalProperties:
-            type: string
-    EventParameter:
-      type: object
-      description: A parameter with a key and value.
-      properties:
-        key:
-          type: string
-        value:
-          $ref: '#/components/schemas/ValueType'
-    UploadIntegrationVersionResponse:
-      type: object
-      description: Response from uploading an integration version.
-      properties:
-        integrationVersion:
-          $ref: '#/components/schemas/IntegrationVersion'
   parameters:
     integrationId:
       name: integrationId
@@ -637,10 +612,10 @@ components:
       required: true
       schema:
         type: string
-    projectId:
-      name: projectId
+    productId:
+      name: productId
       in: path
-      description: Google Cloud project ID.
+      description: Product identifier (typically the Apigee product name).
       required: true
       schema:
         type: string
@@ -651,17 +626,17 @@ components:
       schema:
         type: integer
         format: int32
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
     versionId:
       name: versionId
       in: path
       description: Integration version identifier.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
       required: true
       schema:
         type: string
@@ -671,6 +646,31 @@ components:
       description: Page token returned from a previous list request.
       schema:
         type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

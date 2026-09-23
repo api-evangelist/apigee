@@ -126,31 +126,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -166,9 +141,6 @@ components:
               type: string
             status:
               type: string
-    ResolveSuspensionResponse:
-      type: object
-      description: Response from resolving a suspension.
     ResolveSuspensionRequest:
       type: object
       description: Request to resolve a suspension.
@@ -176,6 +148,13 @@ components:
         suspension:
           type: object
           description: The suspension resolution details.
+    LiftSuspensionResponse:
+      type: object
+      description: Response from lifting a suspension.
+      properties:
+        eventExecutionInfoId:
+          type: string
+          description: ID of the event execution info.
     ListSuspensionsResponse:
       type: object
       properties:
@@ -197,6 +176,9 @@ components:
                 format: date-time
         nextPageToken:
           type: string
+    ResolveSuspensionResponse:
+      type: object
+      description: Response from resolving a suspension.
     LiftSuspensionRequest:
       type: object
       description: Request to lift a suspension.
@@ -204,18 +186,36 @@ components:
         suspensionResult:
           type: string
           description: Result of the suspension lift.
-    LiftSuspensionResponse:
-      type: object
-      description: Response from lifting a suspension.
-      properties:
-        eventExecutionInfoId:
-          type: string
-          description: ID of the event execution info.
+  responses:
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    productId:
-      name: productId
+    executionId:
+      name: executionId
       in: path
-      description: Product identifier (typically the Apigee product name).
+      description: Execution identifier.
       required: true
       schema:
         type: string
@@ -226,13 +226,27 @@ components:
       required: true
       schema:
         type: string
-    locationId:
-      name: locationId
+    productId:
+      name: productId
       in: path
-      description: Google Cloud region or location.
+      description: Product identifier (typically the Apigee product name).
       required: true
       schema:
         type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
     suspensionId:
       name: suspensionId
       in: path
@@ -246,24 +260,10 @@ components:
       description: Page token returned from a previous list request.
       schema:
         type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    executionId:
-      name: executionId
+    locationId:
+      name: locationId
       in: path
-      description: Execution identifier.
-      required: true
-      schema:
-        type: string
-    integrationId:
-      name: integrationId
-      in: path
-      description: Name of the integration.
+      description: Google Cloud region or location.
       required: true
       schema:
         type: string

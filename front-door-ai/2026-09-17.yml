@@ -1,0 +1,49 @@
+# Front Door AI Index — apigee — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: apigee
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: cloud.google.com
+  final_host: cloud.google.com
+  ownership: unresolved
+  owner: null
+  shares_host_with:
+  - elastifile
+  - google-artifact-registry
+  - google-cloud-dataflow
+  - google-cloud-datastore
+  - google-cloud-logging
+  - google-cloud-natural
+  - google-cloud-platform
+  - google-cloud-service-mesh
+  - google-data-studio
+  - google-dialogflow
+  - google-kubernetes-engine
+  - google-pub-sub
+  - stackdriver-google
+  inherited_from: null
+  verdict: scored
+  score: null
+  host_score: 93
+  density: null
+  words: 1906
+  tiers:
+    agentic: 12
+    core: 58
+    model: 23
+  ambiguous: 27
+  top_terms:
+    AI: 51
+    agent: 24
+    Gemini: 23
+    agentic: 6
+    generative ai: 4
+    AI agent: 3
+    foundation model: 2
+    intelligence: 2
+    virtual assistant: 2
+    automation: 1
+    conversational AI: 1
+    machine learning: 1

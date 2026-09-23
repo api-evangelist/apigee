@@ -269,6 +269,20 @@ paths:
       description: Apigee API Production Server
 components:
   schemas:
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
     EnumAttributeValue:
       type: object
       description: An enum value assigned to an attribute.
@@ -280,6 +294,18 @@ components:
           type: string
           description: Output only. Display name of the enum value.
           readOnly: true
+    ListDeploymentsResponse:
+      type: object
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
     Deployment:
       type: object
       description: An API deployment record.
@@ -330,20 +356,6 @@ components:
           format: date-time
           description: Output only. Time the deployment was last updated.
           readOnly: true
-    Error:
-      type: object
-      description: Error response from the API Hub API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     AttributeValues:
       type: object
       description: Values assigned to an attribute.
@@ -379,18 +391,23 @@ components:
         externalUri:
           type: string
           description: URI of external documentation.
-    ListDeploymentsResponse:
+    Error_2:
       type: object
+      description: Error response from the Apigee API.
       properties:
-        deployments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deployment'
-        nextPageToken:
-          type: string
-        totalSize:
-          type: integer
-          format: int32
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     PodStatus:
       type: object
       description: Status of a runtime pod.
@@ -422,6 +439,14 @@ components:
         statusCodeDetails:
           type: string
           description: Human-readable details for the status code.
+    ListDeploymentsResponse_2:
+      type: object
+      description: Response for listing deployments.
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment_2'
     Deployment_2:
       type: object
       description: Represents a deployment of an API proxy revision to an environment.
@@ -462,40 +487,9 @@ components:
                 type: string
               environmentGroup:
                 type: string
-    Error_2:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
-    ListDeploymentsResponse_2:
-      type: object
-      description: Response for listing deployments.
-      properties:
-        deployments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deployment_2'
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -506,8 +500,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -526,17 +526,11 @@ components:
       required: true
       schema:
         type: string
-    locationId:
-      name: locationId
+    deploymentId:
+      name: deploymentId
       in: path
-      description: Google Cloud region or location.
+      description: ID of the deployment resource.
       required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
       schema:
         type: string
     pageSize:
@@ -546,10 +540,23 @@ components:
       schema:
         type: integer
         format: int32
-    deploymentId:
-      name: deploymentId
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    locationId:
+      name: locationId
       in: path
-      description: ID of the deployment resource.
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    revisionId:
+      name: revisionId
+      in: path
+      description: Revision number of the API proxy.
       required: true
       schema:
         type: string
@@ -571,13 +578,6 @@ components:
       name: apiId
       in: path
       description: Name of the API proxy.
-      required: true
-      schema:
-        type: string
-    revisionId:
-      name: revisionId
-      in: path
-      description: Revision number of the API proxy.
       required: true
       schema:
         type: string

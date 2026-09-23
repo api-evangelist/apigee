@@ -173,17 +173,6 @@ paths:
       description: Apigee API Hub Production Server
 components:
   schemas:
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -210,6 +199,28 @@ components:
         totalSize:
           type: integer
           format: int32
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    Owner:
+      type: object
+      description: Owner of an API resource.
+      properties:
+        displayName:
+          type: string
+          description: Display name of the owner.
+        email:
+          type: string
+          format: email
+          description: Email address of the owner.
     Api:
       type: object
       description: An API resource in the API Hub.
@@ -265,17 +276,6 @@ components:
           $ref: '#/components/schemas/AttributeValues'
         apiStyle:
           $ref: '#/components/schemas/AttributeValues'
-    Owner:
-      type: object
-      description: Owner of an API resource.
-      properties:
-        displayName:
-          type: string
-          description: Display name of the owner.
-        email:
-          type: string
-          format: email
-          description: Email address of the owner.
     AttributeValues:
       type: object
       description: Values assigned to an attribute.
@@ -376,20 +376,8 @@ components:
           description: Output only. Last update time.
           readOnly: true
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict. A resource with the same identifier already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -400,8 +388,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -414,11 +414,17 @@ components:
       required: true
       schema:
         type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
       schema:
         type: string
     apiId:
@@ -428,19 +434,13 @@ components:
       required: true
       schema:
         type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
       schema:
         type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
   securitySchemes:
     oauth2:
       type: oauth2

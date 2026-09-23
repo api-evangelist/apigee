@@ -125,31 +125,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -168,14 +143,21 @@ components:
             status:
               type: string
               description: Error status string.
-    ListSharedFlowsResponse:
+    EntityMetadata:
       type: object
-      description: Response for listing shared flows.
+      description: Metadata common to Apigee entities.
       properties:
-        sharedFlows:
-          type: array
-          items:
-            $ref: '#/components/schemas/SharedFlow'
+        createdAt:
+          type: string
+          format: int64
+          description: Time the entity was created in milliseconds since epoch.
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Time the entity was last modified in milliseconds since epoch.
+        subType:
+          type: string
+          description: Subtype of the entity.
     SharedFlowRevision:
       type: object
       description: Metadata and details for a specific shared flow revision.
@@ -215,6 +197,14 @@ components:
           description: List of referenced shared flows.
           items:
             type: string
+    ListSharedFlowsResponse:
+      type: object
+      description: Response for listing shared flows.
+      properties:
+        sharedFlows:
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedFlow'
     SharedFlow:
       type: object
       description: A reusable shared flow containing common logic.
@@ -235,21 +225,31 @@ components:
           readOnly: true
         metaData:
           $ref: '#/components/schemas/EntityMetadata'
-    EntityMetadata:
-      type: object
-      description: Metadata common to Apigee entities.
-      properties:
-        createdAt:
-          type: string
-          format: int64
-          description: Time the entity was created in milliseconds since epoch.
-        lastModifiedAt:
-          type: string
-          format: int64
-          description: Time the entity was last modified in milliseconds since epoch.
-        subType:
-          type: string
-          description: Subtype of the entity.
+  responses:
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     organizationId:
       name: organizationId

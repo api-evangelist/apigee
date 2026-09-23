@@ -145,31 +145,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -185,6 +160,14 @@ components:
               type: string
             status:
               type: string
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
     ExecuteIntegrationResponse:
       type: object
       description: Response from a synchronous integration execution.
@@ -202,48 +185,6 @@ components:
           description: Output parameter entries.
           items:
             $ref: '#/components/schemas/EventParameter'
-    ExecuteIntegrationRequest:
-      type: object
-      description: Request to execute an integration synchronously.
-      properties:
-        triggerId:
-          type: string
-          description: Trigger to use for the execution.
-        inputParameters:
-          type: object
-          description: Input parameters for the execution.
-          additionalProperties:
-            $ref: '#/components/schemas/ValueType'
-        parameterEntries:
-          type: array
-          description: Alternative way to pass parameters.
-          items:
-            $ref: '#/components/schemas/EventParameter'
-        doNotPropagateError:
-          type: boolean
-          description: Whether to propagate errors to the caller.
-        requestId:
-          type: string
-          description: Unique request ID for idempotency.
-    ListIntegrationsResponse:
-      type: object
-      properties:
-        integrations:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              updateTime:
-                type: string
-                format: date-time
-              active:
-                type: boolean
-        nextPageToken:
-          type: string
     ValueType:
       type: object
       description: A value with a specific type.
@@ -267,14 +208,38 @@ components:
                 type: string
         jsonValue:
           type: string
-    EventParameter:
+    ExecuteIntegrationRequest:
       type: object
-      description: A parameter with a key and value.
+      description: Request to execute an integration synchronously.
       properties:
-        key:
+        triggerId:
           type: string
-        value:
-          $ref: '#/components/schemas/ValueType'
+          description: Trigger to use for the execution.
+        inputParameters:
+          type: object
+          description: Input parameters for the execution.
+          additionalProperties:
+            $ref: '#/components/schemas/ValueType'
+        parameterEntries:
+          type: array
+          description: Alternative way to pass parameters.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+        doNotPropagateError:
+          type: boolean
+          description: Whether to propagate errors to the caller.
+        requestId:
+          type: string
+          description: Unique request ID for idempotency.
+    ScheduleIntegrationResponse:
+      type: object
+      description: Response from scheduling an integration execution.
+      properties:
+        executionInfoIds:
+          type: array
+          description: Execution info IDs for the scheduled run.
+          items:
+            type: string
     ScheduleIntegrationRequest:
       type: object
       description: Request to schedule an integration execution.
@@ -299,23 +264,51 @@ components:
         requestId:
           type: string
           description: Unique request ID for idempotency.
-    ScheduleIntegrationResponse:
+    ListIntegrationsResponse:
       type: object
-      description: Response from scheduling an integration execution.
       properties:
-        executionInfoIds:
+        integrations:
           type: array
-          description: Execution info IDs for the scheduled run.
           items:
-            type: string
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              updateTime:
+                type: string
+                format: date-time
+              active:
+                type: boolean
+        nextPageToken:
+          type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
     projectId:
       name: projectId
       in: path
@@ -323,17 +316,18 @@ components:
       required: true
       schema:
         type: string
-    locationId:
-      name: locationId
+    productId:
+      name: productId
       in: path
-      description: Google Cloud region or location.
+      description: Product identifier (typically the Apigee product name).
       required: true
       schema:
         type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
       schema:
         type: string
     pageSize:
@@ -343,10 +337,16 @@ components:
       schema:
         type: integer
         format: int32
-    integrationId:
-      name: integrationId
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    locationId:
+      name: locationId
       in: path
-      description: Name of the integration.
+      description: Google Cloud region or location.
       required: true
       schema:
         type: string

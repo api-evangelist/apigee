@@ -144,31 +144,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -187,74 +162,6 @@ components:
             status:
               type: string
               description: Error status string.
-    NodeConfig:
-      type: object
-      description: Runtime node configuration for an environment.
-      properties:
-        minNodeCount:
-          type: string
-          format: int64
-          description: Minimum number of gateway nodes.
-        maxNodeCount:
-          type: string
-          format: int64
-          description: Maximum number of gateway nodes.
-        currentAggregateNodeCount:
-          type: string
-          format: int64
-          description: Output only. Current total number of gateway nodes.
-          readOnly: true
-    Properties:
-      type: object
-      description: A collection of key-value property pairs.
-      properties:
-        property:
-          type: array
-          description: List of properties.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              value:
-                type: string
-    Operation:
-      type: object
-      description: A long-running operation returned by asynchronous API calls.
-      properties:
-        name:
-          type: string
-          description: Name of the operation resource.
-        metadata:
-          type: object
-          description: Service-specific metadata associated with the operation.
-          additionalProperties: true
-        done:
-          type: boolean
-          description: Whether the operation is complete.
-        error:
-          $ref: '#/components/schemas/Status'
-        response:
-          type: object
-          description: The normal response of the operation.
-          additionalProperties: true
-    Status:
-      type: object
-      description: The Status type defines a logical error model.
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: The status code.
-        message:
-          type: string
-          description: A developer-facing error message.
-        details:
-          type: array
-          description: A list of messages that carry the error details.
-          items:
-            type: object
-            additionalProperties: true
     Environment:
       type: object
       description: An environment in an Apigee organization for API proxy deployment.
@@ -317,18 +224,111 @@ components:
           - BASE
           - INTERMEDIATE
           - COMPREHENSIVE
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
+    Operation:
+      type: object
+      description: A long-running operation returned by asynchronous API calls.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata associated with the operation.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Properties:
+      type: object
+      description: A collection of key-value property pairs.
+      properties:
+        property:
+          type: array
+          description: List of properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+    NodeConfig:
+      type: object
+      description: Runtime node configuration for an environment.
+      properties:
+        minNodeCount:
+          type: string
+          format: int64
+          description: Minimum number of gateway nodes.
+        maxNodeCount:
+          type: string
+          format: int64
+          description: Maximum number of gateway nodes.
+        currentAggregateNodeCount:
+          type: string
+          format: int64
+          description: Output only. Current total number of gateway nodes.
+          readOnly: true
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    environmentId:
-      name: environmentId
-      in: path
-      description: Name of the environment.
-      required: true
-      schema:
-        type: string
     organizationId:
       name: organizationId
       in: path
       description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
       required: true
       schema:
         type: string

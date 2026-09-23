@@ -182,17 +182,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -207,46 +196,17 @@ components:
               type: string
             status:
               type: string
-    ListDependenciesResponse:
+    EnumAttributeValue:
       type: object
+      description: An enum value assigned to an attribute.
       properties:
-        dependencies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Dependency'
-        nextPageToken:
+        id:
           type: string
-        totalSize:
-          type: integer
-          format: int32
-    AttributeValues:
-      type: object
-      description: Values assigned to an attribute.
-      properties:
-        enumValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                $ref: '#/components/schemas/EnumAttributeValue'
-        stringValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        jsonValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        attribute:
+          description: ID of the enum value.
+        displayName:
           type: string
-          description: Resource name of the attribute definition.
+          description: Output only. Display name of the enum value.
+          readOnly: true
     Dependency:
       type: object
       description: A dependency relationship between APIs.
@@ -298,15 +258,49 @@ components:
         externalApiResourceName:
           type: string
           description: Resource name of the external API.
+    ListDependenciesResponse:
+      type: object
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dependency'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -317,8 +311,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -331,19 +331,6 @@ components:
       required: true
       schema:
         type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     pageSize:
       name: pageSize
       in: query
@@ -351,6 +338,19 @@ components:
       schema:
         type: integer
         format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -99,31 +99,6 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -139,6 +114,14 @@ components:
               type: string
             status:
               type: string
+    BatchEditTagsResponse:
+      type: object
+      description: Response from batch editing tags.
+      properties:
+        apiObservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiObservation'
     ListApiObservationsResponse:
       type: object
       properties:
@@ -148,6 +131,31 @@ components:
             $ref: '#/components/schemas/ApiObservation'
         nextPageToken:
           type: string
+    BatchEditTagsRequest:
+      type: object
+      description: Request for batch editing tags on API observations.
+      properties:
+        requests:
+          type: array
+          description: List of tag edit requests.
+          items:
+            type: object
+            properties:
+              apiObservationId:
+                type: string
+              tagActions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag:
+                      type: string
+                    action:
+                      type: string
+                      enum:
+                      - ACTION_UNSPECIFIED
+                      - ADD
+                      - REMOVE
     ApiObservation:
       type: object
       description: A discovered shadow API from traffic observation.
@@ -208,39 +216,31 @@ components:
           format: date-time
           description: Output only. Time the observation was last updated.
           readOnly: true
-    BatchEditTagsResponse:
-      type: object
-      description: Response from batch editing tags.
-      properties:
-        apiObservations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiObservation'
-    BatchEditTagsRequest:
-      type: object
-      description: Request for batch editing tags on API observations.
-      properties:
-        requests:
-          type: array
-          description: List of tag edit requests.
-          items:
-            type: object
-            properties:
-              apiObservationId:
-                type: string
-              tagActions:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    tag:
-                      type: string
-                    action:
-                      type: string
-                      enum:
-                      - ACTION_UNSPECIFIED
-                      - ADD
-                      - REMOVE
+  responses:
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     projectId:
       name: projectId
@@ -249,26 +249,6 @@ components:
       required: true
       schema:
         type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     observationJobId:
       name: observationJobId
       in: path
@@ -280,6 +260,26 @@ components:
       name: apiObservationId
       in: path
       description: ID of the API observation.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
       required: true
       schema:
         type: string

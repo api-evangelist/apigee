@@ -159,48 +159,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    sfdcInstanceId:
-      name: sfdcInstanceId
-      in: path
-      description: SFDC instance identifier.
-      required: true
-      schema:
-        type: string
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
   schemas:
     Error:
       type: object
@@ -216,15 +174,6 @@ components:
               type: string
             status:
               type: string
-    ListSfdcInstancesResponse:
-      type: object
-      properties:
-        sfdcInstances:
-          type: array
-          items:
-            $ref: '#/components/schemas/SfdcInstance'
-        nextPageToken:
-          type: string
     SfdcInstance:
       type: object
       description: A Salesforce instance configuration.
@@ -265,15 +214,60 @@ components:
           format: date-time
           description: Output only. Time the instance was deleted.
           readOnly: true
+    ListSfdcInstancesResponse:
+      type: object
+      properties:
+        sfdcInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/SfdcInstance'
+        nextPageToken:
+          type: string
+  parameters:
+    sfdcInstanceId:
+      name: sfdcInstanceId
+      in: path
+      description: SFDC instance identifier.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -284,8 +278,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

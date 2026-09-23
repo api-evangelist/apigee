@@ -169,37 +169,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Conflict:
-      description: Conflict. A resource with the same identifier already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -218,6 +187,29 @@ components:
             status:
               type: string
               description: Error status string.
+    ListApiProxiesResponse:
+      type: object
+      description: Response for listing API proxies.
+      properties:
+        proxies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiProxy'
+    EntityMetadata:
+      type: object
+      description: Metadata common to Apigee entities.
+      properties:
+        createdAt:
+          type: string
+          format: int64
+          description: Time the entity was created in milliseconds since epoch.
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Time the entity was last modified in milliseconds since epoch.
+        subType:
+          type: string
+          description: Subtype of the entity.
     ApiProxy:
       type: object
       description: Metadata about an API proxy.
@@ -254,29 +246,6 @@ components:
           - API_PROXY_TYPE_UNSPECIFIED
           - PROGRAMMABLE
           - CONFIGURABLE
-    EntityMetadata:
-      type: object
-      description: Metadata common to Apigee entities.
-      properties:
-        createdAt:
-          type: string
-          format: int64
-          description: Time the entity was created in milliseconds since epoch.
-        lastModifiedAt:
-          type: string
-          format: int64
-          description: Time the entity was last modified in milliseconds since epoch.
-        subType:
-          type: string
-          description: Subtype of the entity.
-    ListApiProxiesResponse:
-      type: object
-      description: Response for listing API proxies.
-      properties:
-        proxies:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiProxy'
     ApiProxyRevision:
       type: object
       description: API proxy revision metadata and configuration.
@@ -338,25 +307,43 @@ components:
         type:
           type: string
           description: The type of the revision (e.g., Application).
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     organizationId:
       name: organizationId
       in: path
       description: Name of the Apigee organization.
       required: true
-      schema:
-        type: string
-    apiId:
-      name: apiId
-      in: path
-      description: Name of the API proxy.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
       schema:
         type: string
     pageSize:
@@ -366,6 +353,19 @@ components:
       schema:
         type: integer
         format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: Name of the API proxy.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -106,34 +106,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
   schemas:
     Error:
       type: object
@@ -149,15 +121,20 @@ components:
               type: string
             status:
               type: string
-    ListOperationsResponse:
+    Status:
       type: object
+      description: The Status type defines a logical error model.
       properties:
-        operations:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
           type: array
           items:
-            $ref: '#/components/schemas/Operation'
-        nextPageToken:
-          type: string
+            type: object
+            additionalProperties: true
     Operation:
       type: object
       description: A long-running operation.
@@ -178,23 +155,18 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
-    Status:
+    ListOperationsResponse:
       type: object
-      description: The Status type defines a logical error model.
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
+        operations:
           type: array
           items:
-            type: object
-            additionalProperties: true
+            $ref: '#/components/schemas/Operation'
+        nextPageToken:
+          type: string
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -205,12 +177,40 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

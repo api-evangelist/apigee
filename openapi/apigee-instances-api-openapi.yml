@@ -227,37 +227,6 @@ paths:
     - url: https://apigeeregistry.googleapis.com/v1
       description: Apigee Registry API Production Server
 components:
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden_2:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
   schemas:
     Error:
       type: object
@@ -276,6 +245,23 @@ components:
             status:
               type: string
               description: Error status string.
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
     Operation:
       type: object
       description: A long-running operation returned by asynchronous API calls.
@@ -296,23 +282,17 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
-    Status:
+    ListInstancesResponse:
       type: object
-      description: The Status type defines a logical error model.
+      description: Response for listing instances.
       properties:
-        code:
-          type: integer
-          format: int32
-          description: The status code.
-        message:
-          type: string
-          description: A developer-facing error message.
-        details:
+        instances:
           type: array
-          description: A list of messages that carry the error details.
           items:
-            type: object
-            additionalProperties: true
+            $ref: '#/components/schemas/Instance'
+        nextPageToken:
+          type: string
+          description: Token for retrieving the next page.
     Instance:
       type: object
       description: An Apigee runtime instance.
@@ -372,17 +352,6 @@ components:
           - SLASH_22
           - SLASH_23
           - SLASH_24
-    ListInstancesResponse:
-      type: object
-      description: Response for listing instances.
-      properties:
-        instances:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instance'
-        nextPageToken:
-          type: string
-          description: Token for retrieving the next page.
     Error_2:
       type: object
       properties:
@@ -396,6 +365,19 @@ components:
               type: string
             status:
               type: string
+    Status_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
     Operation_2:
       type: object
       description: A long-running operation.
@@ -412,19 +394,6 @@ components:
         response:
           type: object
           additionalProperties: true
-    Status_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
     Instance_2:
       type: object
       description: A Registry instance.
@@ -470,18 +439,43 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden_2:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
   parameters:
     organizationId:
       name: organizationId
       in: path
       description: Name of the Apigee organization.
       required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
       schema:
         type: string
     pageSize:
@@ -491,6 +485,12 @@ components:
       schema:
         type: integer
         format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
     projectId:
       name: projectId
       in: path

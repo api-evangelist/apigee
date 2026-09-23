@@ -172,17 +172,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -225,6 +214,36 @@ components:
         attribute:
           type: string
           description: Resource name of the attribute definition.
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    ListApiVersionsResponse:
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
     ApiVersion:
       type: object
       description: A version of an API.
@@ -286,40 +305,9 @@ components:
           format: date-time
           description: Output only. Time the version was last updated.
           readOnly: true
-    Documentation:
-      type: object
-      description: Documentation associated with a resource.
-      properties:
-        externalUri:
-          type: string
-          description: URI of external documentation.
-    ListApiVersionsResponse:
-      type: object
-      properties:
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiVersion'
-        nextPageToken:
-          type: string
-        totalSize:
-          type: integer
-          format: int32
   responses:
     NotFound:
       description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
       content:
         application/json:
           schema:
@@ -330,7 +318,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version resource.
+      required: true
+      schema:
+        type: string
     projectId:
       name: projectId
       in: path
@@ -338,10 +345,23 @@ components:
       required: true
       schema:
         type: string
-    versionId:
-      name: versionId
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    apiId:
+      name: apiId
       in: path
-      description: ID of the API version resource.
+      description: ID of the API resource.
       required: true
       schema:
         type: string
@@ -352,26 +372,6 @@ components:
       required: true
       schema:
         type: string
-    apiId:
-      name: apiId
-      in: path
-      description: ID of the API resource.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
   securitySchemes:
     oauth2:
       type: oauth2

@@ -81,56 +81,15 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    executionId:
-      name: executionId
-      in: path
-      description: Execution identifier.
-      required: true
-      schema:
-        type: string
-    integrationId:
-      name: integrationId
-      in: path
-      description: Name of the integration.
-      required: true
-      schema:
-        type: string
   schemas:
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
     Error:
       type: object
       description: Error response.
@@ -145,6 +104,29 @@ components:
               type: string
             status:
               type: string
+    ValueType:
+      type: object
+      description: A value with a specific type.
+      properties:
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
     ListExecutionsResponse:
       type: object
       properties:
@@ -232,40 +214,9 @@ components:
         integrationVersionId:
           type: string
           description: ID of the integration version executed.
-    ValueType:
-      type: object
-      description: A value with a specific type.
-      properties:
-        stringValue:
-          type: string
-        intValue:
-          type: string
-          format: int64
-        doubleValue:
-          type: number
-          format: double
-        booleanValue:
-          type: boolean
-        stringArray:
-          type: object
-          properties:
-            stringValues:
-              type: array
-              items:
-                type: string
-        jsonValue:
-          type: string
-    EventParameter:
-      type: object
-      description: A parameter with a key and value.
-      properties:
-        key:
-          type: string
-        value:
-          $ref: '#/components/schemas/ValueType'
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -276,12 +227,61 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    executionId:
+      name: executionId
+      in: path
+      description: Execution identifier.
+      required: true
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

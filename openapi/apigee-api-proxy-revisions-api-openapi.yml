@@ -171,26 +171,14 @@ components:
         type:
           type: string
           description: The type of the revision (e.g., Application).
-  responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
+    revisionId:
+      name: revisionId
+      in: path
+      description: Revision number of the API proxy.
+      required: true
+      schema:
+        type: string
     organizationId:
       name: organizationId
       in: path
@@ -205,13 +193,25 @@ components:
       required: true
       schema:
         type: string
-    revisionId:
-      name: revisionId
-      in: path
-      description: Revision number of the API proxy.
-      required: true
-      schema:
-        type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

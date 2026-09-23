@@ -73,7 +73,8 @@
     "apigee-registry-openapi.yml: declared missing tag: Projects",
     "tag 'Deployments' spans 2 source specs (apigee-api-hub-openapi.yml, apigee-api-management-openapi.yml): per-path servers applied",
     "tag 'Projects' spans 2 source specs (apigee-api-hub-openapi.yml, apigee-registry-openapi.yml): per-path servers applied",
-    "tag 'Instances' spans 2 source specs (apigee-api-management-openapi.yml, apigee-registry-openapi.yml): per-path servers applied"
+    "tag 'Instances' spans 2 source specs (apigee-api-management-openapi.yml, apigee-registry-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "apigee-analytics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
