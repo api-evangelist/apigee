@@ -91,8 +91,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -187,8 +185,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -283,8 +279,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -379,8 +373,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -475,8 +467,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -571,8 +561,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -667,8 +655,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -763,8 +749,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -859,8 +843,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -955,8 +937,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1051,8 +1031,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1147,8 +1125,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1243,8 +1219,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1339,8 +1313,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1435,8 +1407,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1533,8 +1503,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1629,8 +1597,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1725,8 +1691,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1821,8 +1785,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -1919,8 +1881,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2017,8 +1977,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2113,8 +2071,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2209,8 +2165,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2305,8 +2259,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2403,8 +2355,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2499,8 +2449,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2597,8 +2545,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2693,8 +2639,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2789,8 +2733,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2886,8 +2828,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -2984,8 +2924,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3082,8 +3020,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3178,8 +3114,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3274,8 +3208,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3370,8 +3302,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3466,8 +3396,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3562,8 +3490,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3658,8 +3584,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3754,8 +3678,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3850,8 +3772,6 @@ apis:
     url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
   - type: ChangeLog
     url: https://cloud.google.com/apigee/docs/release/release-notes
-  - type: GraphQL
-    url: graphql/apigee-graphql.md
   - type: Documentation
     url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
   - type: APIReference
@@ -3982,7 +3902,7 @@ maintainers:
 tags:
 - Apigee
 - Advanced API Security
-- Agentic AI
+- AI Agents
 - Analytics
 - API Gateway
 - API Governance
