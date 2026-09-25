@@ -1,0 +1,315 @@
+# Vendor facets — Apigee (Google Cloud). Full-lifecycle API management: proxies and policies, API
+# products with quotas, an integrated or Drupal developer portal, monetization rate plans, API hub, and
+# (2026) managed MCP endpoints generated from the proxy's OpenAPI and served on the customer's own
+# hostnames with OAuth protected-resource metadata. What it cannot reach: rate-limit headers (Quota
+# exposes flow variables; headers are hand-written with AssignMessage under names like QuotaLimit),
+# public pricing on the integrated portal, SDKs, idempotency.
+vendor: apigee
+name: Apigee (Google Cloud)
+website: https://cloud.google.com/apigee
+areas:
+- developer-portal
+- api-gateway
+registry_keys:
+- apigee
+rubric_schema_version: 0.22.0
+generated: '2026-09-25'
+features_refreshed: '2026-09-25'
+basis: capability
+summary: >-
+  Apigee's lift is strongest on agent readiness: its MCP Discovery Proxy turns a proxy's OpenAPI into
+  MCP tools served on the customer's own hostname (e.g. api.example.com/mcp), graded `templated` (0.6),
+  with protected-resource metadata that names the authorization servers. On the composite it earns portal,
+  reference, try-it and self-service registration once declared in apis.yml. Rate-limit signal is the
+  gap: Quota and SpikeArrest emit no response headers, and Google's own example returns QuotaLimit/QuotaUsed,
+  names the rubric does not read. Monetization rate plans surface only through the Drupal portal or a
+  custom build, not the integrated portal.
+features:
+- id: mcp-discovery-proxy
+  name: MCP in Apigee (MCP Discovery Proxy)
+  description: >-
+    A proxy template that exposes an existing API's operations as MCP tools, generated from its OpenAPI,
+    on the customer's environment-group hostnames (api.<customer>.com/mcp); tools/list is filtered to
+    the caller's API product.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+  tier: paid
+- id: mcp-oauth-prm
+  name: OAuth 2.1 / OIDC on hosted MCP endpoints with Protected Resource Metadata
+  description: >-
+    Hosted MCP endpoints support OAuth 2.1 and OIDC, and Protected Resource Metadata lets clients discover
+    the OAuth authorization servers.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+  tier: paid
+- id: api-hub-mcp-ingest
+  name: API hub ingestion of MCP proxies
+  description: >-
+    API hub automatically ingests the MCP proxy's OpenAPI, tags it as MCP style and maps operations to
+    tools for internal semantic search.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+  tier: paid
+- id: integrated-portal
+  name: Apigee integrated portal
+  description: >-
+    Hosted portal with Markdown/HTML pages, API reference rendered from OpenAPI 3, live requests from
+    the reference, custom domain, sign-up with terms and conditions, and self-service app registration
+    issuing an API key.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/publish/intro-portals
+  tier: paid
+- id: drupal-portal
+  name: Drupal 10 portal modules
+  description: >-
+    Self-hosted, fully customizable Drupal portal with the same reference and registration flows plus
+    monetization, blogs and forums.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/publish/intro-portals
+  tier: paid
+- id: quota-policy
+  name: Quota and SpikeArrest policies
+  description: >-
+    Per-app/per-developer quotas from API product settings and spike protection, returning 429; counters
+    are exposed as ratelimit.* flow variables and only reach the client if an AssignMessage policy copies
+    them into headers.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/reference/policies/quota-policy
+  tier: all
+- id: monetization
+  name: Apigee monetization rate plans
+  description: >-
+    Rate plans on API products (setup, recurring and consumption fees, prepaid/postpaid wallets) that
+    developers purchase through the Drupal portal or a custom portal.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/monetization/overview
+  tier: paid
+- id: portal-analytics
+  name: App analytics on the portal
+  description: Per-app analytics shown to developers in the Drupal portal.
+  source: https://docs.cloud.google.com/apigee/docs/api-platform/publish/intro-portals
+  tier: paid
+maps:
+- feature: integrated-portal
+  check: portal_present
+  layer: composite
+  provider_must: Declare the portal URL as a DeveloperPortal entry in apis.yml common[].
+  catalog_pass_rate: 0.228
+  facet: developer_ergonomics
+  points: 4
+  baseline_pass_rate: 0.633
+- feature: integrated-portal
+  check: api_reference_present
+  layer: composite
+  provider_must: Declare the rendered OpenAPI reference as an APIReference entry in apis.yml common[].
+  catalog_pass_rate: 0.222
+  facet: developer_ergonomics
+  points: 3
+  baseline_pass_rate: 0.942
+  saturated: true
+  saturated_note: >-
+    94% of providers with a contract, docs and a reference already earn this; the vendor cannot move it
+    for most of its buyers.
+- feature: integrated-portal
+  check: console_or_sandbox
+  layer: composite
+  provider_must: Declare the live-request reference as a Console entry in apis.yml common[].
+  catalog_pass_rate: 0.089
+  facet: developer_ergonomics
+  points: 3
+  baseline_pass_rate: 0.332
+- feature: integrated-portal
+  check: sign_up_present
+  layer: composite
+  provider_must: >-
+    Enable self-service registration and declare the sign-up/login page as SignUp or Login in apis.yml
+    common[].
+  catalog_pass_rate: 0.19
+  facet: access_clarity
+  points: 5
+  baseline_pass_rate: 0.463
+- feature: integrated-portal
+  check: terms_of_service
+  layer: composite
+  conditional: true
+  condition: >-
+    Only if the provider writes and publishes its own terms — the portal supplies a terms-acceptance step
+    at account creation, not the terms.
+  catalog_pass_rate: 0.425
+  facet: access_clarity
+  points: 4
+  baseline_pass_rate: 0.641
+- feature: monetization
+  check: plans_present
+  layer: composite
+  conditional: true
+  condition: >-
+    Only if the provider builds the purchase catalog into a Drupal or custom portal and makes rate plans
+    visible publicly — the integrated portal does not carry monetization, and the plans artifact is harvested
+    from public pages.
+  catalog_pass_rate: 0.172
+  facet: access_clarity
+  points: 8
+  baseline_pass_rate: 0.44
+- feature: monetization
+  check: pricing_link
+  layer: composite
+  conditional: true
+  condition: >-
+    Only if a public pricing page is built on the Drupal or custom portal and declared as Pricing in apis.yml.
+  catalog_pass_rate: 0.224
+  facet: access_clarity
+  points: 4
+  baseline_pass_rate: 0.47
+- feature: quota-policy
+  check: rate_limit_signal
+  layer: agent_readiness
+  grade: documented
+  partial: true
+  partial_note: >-
+    Quota and SpikeArrest add no response headers; Google's own example copies the counters into QuotaLimit/QuotaUsed/QuotaResetUTC
+    via AssignMessage — names the `verified` grade does not read even if declared in the OpenAPI. Apigee
+    reaches the `documented` fallback only when the provider publishes its product quotas as a rate_limits
+    artifact.
+  points: 7
+  baseline_pass_rate: 0.381
+- feature: mcp-discovery-proxy
+  check: mcp_server
+  layer: agent_readiness
+  grade: templated
+  note: >-
+    Generated from the provider's own OpenAPI and served on the provider's own hostname, so `templated`
+    (0.6) rather than `platform`; `verified` only when the catalog probe of the provider's mcp/ manifest
+    passes.
+  points: 12
+  baseline_pass_rate: 0.22
+- feature: mcp-oauth-prm
+  check: protected_resource_metadata
+  layer: agent_readiness
+  grade: verified
+  provider_must: >-
+    Configure OAuth on the MCP Discovery proxy so the served metadata names the authorization server,
+    on the host the catalog probes. Applies to the MCP endpoint, not to the provider's other APIs.
+  points: 5
+  baseline_pass_rate: 0.133
+- feature: mcp-oauth-prm
+  check: well_known_published
+  layer: composite
+  conditional: true
+  condition: >-
+    Only if the protected-resource document is served under /.well-known/ on the provider's probed API
+    host; the overview names Protected Resource Metadata but not its path.
+  catalog_pass_rate: 0.005
+  facet: discoverability
+  points: 6
+  baseline_pass_rate: 0.018
+earns_nothing:
+- feature: api-hub-mcp-ingest
+  check: well_known_catalog
+  why: >-
+    API hub is an internal, Google-console catalog; well_known_catalog reads a WellKnown/APICatalog pointer
+    the provider publishes, and API hub publishes nothing on the provider's domain.
+- feature: portal-analytics
+  why: Developer-facing analytics are valuable and no check reads them.
+- feature: quota-policy
+  check: rate_limits_documented
+  why: >-
+    Enforcing a quota is not publishing it; the check counts limits in a harvested rate_limits artifact,
+    which needs the provider to write the numbers down.
+- feature: mcp-oauth-prm
+  check: dynamic_client_registration
+  why: >-
+    DCR needs a registration_endpoint in the authorization server's discovery document; Apigee's hosted
+    MCP points at the customer's authorization servers rather than serving one.
+out_of_reach:
+  checks:
+  - sdk_count_1
+  - sdk_count_3
+  - cli_present
+  - idempotency
+  - dry_run_mode
+  - reversibility_documented
+  - agent_card
+  - llms_txt_published
+  - change_log_present
+  - status_page_present
+  - auth_clarity
+  - delegated_identity
+  note: >-
+    Apigee's OAuthV2 policy can mint tokens, but nothing fetched shows it serving an openid-configuration
+    discovery document, and SDKs, llms.txt, changelog and API behaviours sit outside the gateway.
+unscored_practice:
+- feature: mcp-discovery-proxy
+  why: >-
+    Per-tool authorization filtering (tools/list trimmed to the caller's API product) is a real agent-safety
+    control no check reads.
+- feature: quota-policy
+  why: >-
+    Fault responses and quota counters exist at runtime; the rubric only sees rate-limit or error semantics
+    when they are written into the provider's contract.
+surface:
+  discoverability:
+    reachable: 6.0
+    total: 54
+  developer_ergonomics:
+    reachable: 10.0
+    total: 42
+  access_clarity:
+    reachable: 21.0
+    total: 38
+  agent_readiness:
+    reachable: 15.7
+    total: 139
+hard_rule: >-
+  A model, not a score. Adopting this vendor changes a provider's Kin Score only when the provider publishes
+  the resulting artifacts on its own surface; nothing here writes a score, and no sponsorship or partnership
+  can.
+method: searched
+source:
+- https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+- https://docs.cloud.google.com/apigee/docs/api-platform/monetization/overview
+- https://docs.cloud.google.com/apigee/docs/api-platform/publish/intro-portals
+- https://docs.cloud.google.com/apigee/docs/api-platform/reference/policies/quota-policy
+measured:
+  cohort:
+    method: vendors-catalog.json detections (CNAME / header / URL shape / markup), never a name match
+    detected: 4
+    in_baseline: 1
+  control:
+    basis: providers earning contract_present + documentation_present + api_reference_present, minus the
+      cohort
+    n: 5215
+  metric: >-
+    cohort_pct / control_pct = mean share of the check's points earned (derived and platform credit weighted),
+    x100
+  measured_on: '2026-09-25'
+  status: 'not measurable: 1 detected customers clear the baseline (need 20)'
+simulation:
+  simulated_on: '2026-09-25'
+  rubric: 0.23.0
+  population: providers publishing a contract (contract_present earned), replayable exactly
+  providers: 8977
+  providers_unreplayable: 987
+  providers_moved: 8913
+  conditional_rows: excluded (they depend on what the API already does)
+  composite_lift:
+    median: 4.3
+    p75: 6.0
+    p90: 7.4
+    max: 7.5
+    mean_among_movers: 4.5
+  agent_readiness_lift:
+    median: 8.8
+    p75: 10.2
+    p90: 11.3
+    max: 13.1
+    mean_among_movers: 8.7
+  facet_lift_median_among_movers:
+    developer_ergonomics: 16.6
+    access_clarity: 13.1
+  composite_band_moves:
+    thin -> developing: 1716
+    developing -> strong: 659
+    emerging -> thin: 337
+    strong -> exemplar: 140
+    minimal -> emerging: 3
+  agent_readiness_band_moves:
+    agent-aware -> agent-ready: 4453
+    agent-ready -> agent-native: 290
+    agent-aware -> agent-native: 7
+  method: >-
+    each provider's own kin/checks file, the vendor's maps at their stated credit, the scorer's composite
+    formula; from -> to, nothing written
