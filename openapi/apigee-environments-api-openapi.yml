@@ -145,23 +145,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
     Environment:
       type: object
       description: An environment in an Apigee organization for API proxy deployment.
@@ -224,6 +207,23 @@ components:
           - BASE
           - INTERMEDIATE
           - COMPREHENSIVE
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     Status:
       type: object
       description: The Status type defines a logical error model.
@@ -241,26 +241,6 @@ components:
           items:
             type: object
             additionalProperties: true
-    Operation:
-      type: object
-      description: A long-running operation returned by asynchronous API calls.
-      properties:
-        name:
-          type: string
-          description: Name of the operation resource.
-        metadata:
-          type: object
-          description: Service-specific metadata associated with the operation.
-          additionalProperties: true
-        done:
-          type: boolean
-          description: Whether the operation is complete.
-        error:
-          $ref: '#/components/schemas/Status'
-        response:
-          type: object
-          description: The normal response of the operation.
-          additionalProperties: true
     Properties:
       type: object
       description: A collection of key-value property pairs.
@@ -292,6 +272,26 @@ components:
           format: int64
           description: Output only. Current total number of gateway nodes.
           readOnly: true
+    Operation:
+      type: object
+      description: A long-running operation returned by asynchronous API calls.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata associated with the operation.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
@@ -299,8 +299,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -311,8 +311,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
       content:
         application/json:
           schema:

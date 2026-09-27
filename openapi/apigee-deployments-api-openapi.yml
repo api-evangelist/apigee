@@ -269,6 +269,13 @@ paths:
       description: Apigee API Production Server
 components:
   schemas:
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -283,29 +290,6 @@ components:
               type: string
             status:
               type: string
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
-    ListDeploymentsResponse:
-      type: object
-      properties:
-        deployments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deployment'
-        nextPageToken:
-          type: string
-        totalSize:
-          type: integer
-          format: int32
     Deployment:
       type: object
       description: An API deployment record.
@@ -356,6 +340,18 @@ components:
           format: date-time
           description: Output only. Time the deployment was last updated.
           readOnly: true
+    ListDeploymentsResponse:
+      type: object
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
     AttributeValues:
       type: object
       description: Values assigned to an attribute.
@@ -384,13 +380,17 @@ components:
         attribute:
           type: string
           description: Resource name of the attribute definition.
-    Documentation:
+    EnumAttributeValue:
       type: object
-      description: Documentation associated with a resource.
+      description: An enum value assigned to an attribute.
       properties:
-        externalUri:
+        id:
           type: string
-          description: URI of external documentation.
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
     Error_2:
       type: object
       description: Error response from the Apigee API.
@@ -408,45 +408,6 @@ components:
             status:
               type: string
               description: Error status string.
-    PodStatus:
-      type: object
-      description: Status of a runtime pod.
-      properties:
-        podName:
-          type: string
-          description: Name of the pod.
-        podStatus:
-          type: string
-          description: Current status of the pod.
-        podStatusTime:
-          type: string
-          description: Time the status was last reported.
-        deploymentStatus:
-          type: string
-          description: Deployment status within the pod.
-        deploymentStatusTime:
-          type: string
-          description: Time the deployment status was reported.
-        deploymentTime:
-          type: string
-          description: Time the deployment was last updated in the pod.
-        appVersion:
-          type: string
-          description: Version of the app running in the pod.
-        statusCode:
-          type: string
-          description: Status code.
-        statusCodeDetails:
-          type: string
-          description: Human-readable details for the status code.
-    ListDeploymentsResponse_2:
-      type: object
-      description: Response for listing deployments.
-      properties:
-        deployments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deployment_2'
     Deployment_2:
       type: object
       description: Represents a deployment of an API proxy revision to an environment.
@@ -487,6 +448,45 @@ components:
                 type: string
               environmentGroup:
                 type: string
+    PodStatus:
+      type: object
+      description: Status of a runtime pod.
+      properties:
+        podName:
+          type: string
+          description: Name of the pod.
+        podStatus:
+          type: string
+          description: Current status of the pod.
+        podStatusTime:
+          type: string
+          description: Time the status was last reported.
+        deploymentStatus:
+          type: string
+          description: Deployment status within the pod.
+        deploymentStatusTime:
+          type: string
+          description: Time the deployment status was reported.
+        deploymentTime:
+          type: string
+          description: Time the deployment was last updated in the pod.
+        appVersion:
+          type: string
+          description: Version of the app running in the pod.
+        statusCode:
+          type: string
+          description: Status code.
+        statusCodeDetails:
+          type: string
+          description: Human-readable details for the status code.
+    ListDeploymentsResponse_2:
+      type: object
+      description: Response for listing deployments.
+      properties:
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment_2'
   responses:
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
@@ -494,8 +494,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -506,8 +506,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
       content:
         application/json:
           schema:
@@ -519,20 +519,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error_2'
   parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    deploymentId:
-      name: deploymentId
-      in: path
-      description: ID of the deployment resource.
-      required: true
-      schema:
-        type: string
     pageSize:
       name: pageSize
       in: query
@@ -540,10 +526,24 @@ components:
       schema:
         type: integer
         format: int32
+    deploymentId:
+      name: deploymentId
+      in: path
+      description: ID of the deployment resource.
+      required: true
+      schema:
+        type: string
     pageToken:
       name: pageToken
       in: query
       description: Page token returned from a previous list request.
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
       schema:
         type: string
     locationId:
@@ -567,17 +567,17 @@ components:
       required: true
       schema:
         type: string
-    environmentId:
-      name: environmentId
-      in: path
-      description: Name of the environment.
-      required: true
-      schema:
-        type: string
     apiId:
       name: apiId
       in: path
       description: Name of the API proxy.
+      required: true
+      schema:
+        type: string
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
       required: true
       schema:
         type: string

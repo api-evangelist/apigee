@@ -77,21 +77,26 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      description: Error response from the API Hub API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     RuntimeProjectAttachment:
       type: object
       description: A runtime project attachment.
@@ -108,6 +113,20 @@ components:
           format: date-time
           description: Output only. Time the attachment was created.
           readOnly: true
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
     ListRuntimeProjectAttachmentsResponse:
       type: object
       properties:
@@ -120,30 +139,11 @@ components:
         totalSize:
           type: integer
           format: int32
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    projectId:
-      name: projectId
+    locationId:
+      name: locationId
       in: path
-      description: Google Cloud project ID.
+      description: Google Cloud region or location.
       required: true
       schema:
         type: string
@@ -160,10 +160,10 @@ components:
       description: Page token returned from a previous list request.
       schema:
         type: string
-    locationId:
-      name: locationId
+    projectId:
+      name: projectId
       in: path
-      description: Google Cloud region or location.
+      description: Google Cloud project ID.
       required: true
       schema:
         type: string

@@ -134,7 +134,45 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    ListObservationSourcesResponse:
+      type: object
+      properties:
+        observationSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationSource'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
     Error:
       type: object
       description: Error response.
@@ -149,19 +187,6 @@ components:
               type: string
             status:
               type: string
-    ListObservationSourcesResponse:
-      type: object
-      properties:
-        observationSources:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObservationSource'
-        nextPageToken:
-          type: string
-        unreachable:
-          type: array
-          items:
-            type: string
     ObservationSource:
       type: object
       description: A source of network traffic for API observation.
@@ -205,20 +230,6 @@ components:
           format: date-time
           description: Output only. Time the source was last updated.
           readOnly: true
-    Status:
-      type: object
-      description: The Status type defines a logical error model.
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
     Operation:
       type: object
       description: A long-running operation.
@@ -239,39 +250,21 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
   parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
     pageSize:
       name: pageSize
       in: query
@@ -283,6 +276,13 @@ components:
       name: pageToken
       in: query
       description: Page token returned from a previous list request.
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
       schema:
         type: string
     locationId:

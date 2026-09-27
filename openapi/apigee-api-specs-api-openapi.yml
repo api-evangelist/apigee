@@ -258,28 +258,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    ListApiSpecsResponse:
-      type: object
-      properties:
-        apiSpecs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiSpec'
-        nextPageToken:
-          type: string
     ApiSpec:
       type: object
       description: A specification for an API version.
@@ -362,6 +340,28 @@ components:
           items:
             type: object
             additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListApiSpecsResponse:
+      type: object
+      properties:
+        apiSpecs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSpec'
+        nextPageToken:
+          type: string
   responses:
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
@@ -369,8 +369,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -381,8 +381,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
       content:
         application/json:
           schema:
@@ -395,17 +395,10 @@ components:
       required: true
       schema:
         type: string
-    projectId:
-      name: projectId
+    apiId:
+      name: apiId
       in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    specId:
-      name: specId
-      in: path
-      description: ID of the API spec.
+      description: ID of the API resource.
       required: true
       schema:
         type: string
@@ -416,16 +409,23 @@ components:
       schema:
         type: integer
         format: int32
+    specId:
+      name: specId
+      in: path
+      description: ID of the API spec.
+      required: true
+      schema:
+        type: string
     pageToken:
       name: pageToken
       in: query
       description: Page token returned from a previous list request.
       schema:
         type: string
-    apiId:
-      name: apiId
+    projectId:
+      name: projectId
       in: path
-      description: ID of the API resource.
+      description: Google Cloud project ID.
       required: true
       schema:
         type: string

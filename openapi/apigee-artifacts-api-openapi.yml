@@ -190,6 +190,22 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data.
+        extensions:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
     Error:
       type: object
       properties:
@@ -245,37 +261,9 @@ components:
             $ref: '#/components/schemas/Artifact'
         nextPageToken:
           type: string
-    HttpBody:
-      type: object
-      description: Raw HTTP body content.
-      properties:
-        contentType:
-          type: string
-          description: The HTTP Content-Type header value.
-        data:
-          type: string
-          format: byte
-          description: The raw HTTP body data.
-        extensions:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
   responses:
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
@@ -286,14 +274,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
     artifactId:
       name: artifactId
       in: path
@@ -312,6 +305,13 @@ components:
       name: pageToken
       in: query
       description: Page token returned from a previous list request.
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
       schema:
         type: string
     locationId:

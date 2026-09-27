@@ -99,6 +99,73 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    observationJobId:
+      name: observationJobId
+      in: path
+      description: ID of the observation job.
+      required: true
+      schema:
+        type: string
+    apiObservationId:
+      name: apiObservationId
+      in: path
+      description: ID of the API observation.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
   schemas:
     Error:
       type: object
@@ -114,14 +181,6 @@ components:
               type: string
             status:
               type: string
-    BatchEditTagsResponse:
-      type: object
-      description: Response from batch editing tags.
-      properties:
-        apiObservations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiObservation'
     ListApiObservationsResponse:
       type: object
       properties:
@@ -156,6 +215,14 @@ components:
                       - ACTION_UNSPECIFIED
                       - ADD
                       - REMOVE
+    BatchEditTagsResponse:
+      type: object
+      description: Response from batch editing tags.
+      properties:
+        apiObservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiObservation'
     ApiObservation:
       type: object
       description: A discovered shadow API from traffic observation.
@@ -216,73 +283,6 @@ components:
           format: date-time
           description: Output only. Time the observation was last updated.
           readOnly: true
-  responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    observationJobId:
-      name: observationJobId
-      in: path
-      description: ID of the observation job.
-      required: true
-      schema:
-        type: string
-    apiObservationId:
-      name: apiObservationId
-      in: path
-      description: ID of the API observation.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -173,6 +173,24 @@ paths:
       description: Apigee API Hub Production Server
 components:
   schemas:
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
+          type: string
+          description: URI of external documentation.
+    Owner:
+      type: object
+      description: Owner of an API resource.
+      properties:
+        displayName:
+          type: string
+          description: Display name of the owner.
+        email:
+          type: string
+          format: email
+          description: Email address of the owner.
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -187,40 +205,34 @@ components:
               type: string
             status:
               type: string
-    ListApisResponse:
+    AttributeValues:
       type: object
+      description: Values assigned to an attribute.
       properties:
-        apis:
-          type: array
-          items:
-            $ref: '#/components/schemas/Api'
-        nextPageToken:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
           type: string
-        totalSize:
-          type: integer
-          format: int32
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
-    Owner:
-      type: object
-      description: Owner of an API resource.
-      properties:
-        displayName:
-          type: string
-          description: Display name of the owner.
-        email:
-          type: string
-          format: email
-          description: Email address of the owner.
+          description: Resource name of the attribute definition.
     Api:
       type: object
       description: An API resource in the API Hub.
@@ -276,41 +288,29 @@ components:
           $ref: '#/components/schemas/AttributeValues'
         apiStyle:
           $ref: '#/components/schemas/AttributeValues'
-    AttributeValues:
+    EnumAttributeValue:
       type: object
-      description: Values assigned to an attribute.
+      description: An enum value assigned to an attribute.
       properties:
-        enumValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                $ref: '#/components/schemas/EnumAttributeValue'
-        stringValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        jsonValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        attribute:
+        id:
           type: string
-          description: Resource name of the attribute definition.
-    Documentation:
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    ListApisResponse:
       type: object
-      description: Documentation associated with a resource.
       properties:
-        externalUri:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+        nextPageToken:
           type: string
-          description: URI of external documentation.
+        totalSize:
+          type: integer
+          format: int32
     Error_2:
       type: object
       properties:
@@ -324,15 +324,6 @@ components:
               type: string
             status:
               type: string
-    ListApisResponse_2:
-      type: object
-      properties:
-        apis:
-          type: array
-          items:
-            $ref: '#/components/schemas/Api_2'
-        nextPageToken:
-          type: string
     Api_2:
       type: object
       description: An API resource in the registry.
@@ -375,27 +366,18 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
+    ListApisResponse_2:
+      type: object
+      properties:
+        apis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api_2'
+        nextPageToken:
+          type: string
   responses:
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict. A resource with the same identifier already exists.
       content:
         application/json:
           schema:
@@ -406,11 +388,29 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    projectId:
-      name: projectId
+    apiId:
+      name: apiId
       in: path
-      description: Google Cloud project ID.
+      description: ID of the API resource.
       required: true
       schema:
         type: string
@@ -427,10 +427,10 @@ components:
       description: Page token returned from a previous list request.
       schema:
         type: string
-    apiId:
-      name: apiId
+    projectId:
+      name: projectId
       in: path
-      description: ID of the API resource.
+      description: Google Cloud project ID.
       required: true
       schema:
         type: string

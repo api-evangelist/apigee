@@ -147,23 +147,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
     Datastore:
       type: object
       description: Configuration for an analytics data store.
@@ -211,14 +194,23 @@ components:
           format: date-time
           description: Output only. Time the data store was last updated.
           readOnly: true
-    ListDatastoresResponse:
+    Error:
       type: object
-      description: Response for listing data stores.
+      description: Error response from the Apigee API.
       properties:
-        datastores:
-          type: array
-          items:
-            $ref: '#/components/schemas/Datastore'
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     Stats:
       type: object
       description: Analytics statistics response.
@@ -266,6 +258,14 @@ components:
               type: array
               items:
                 type: string
+    ListDatastoresResponse:
+      type: object
+      description: Response for listing data stores.
+      properties:
+        datastores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Datastore'
   responses:
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
@@ -273,14 +273,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
       content:
         application/json:
           schema:

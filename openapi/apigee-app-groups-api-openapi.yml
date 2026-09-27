@@ -159,39 +159,32 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission to perform this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
-    ListAppGroupsResponse:
-      type: object
-      description: Response for listing app groups.
-      properties:
-        appGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppGroup'
-        nextPageToken:
-          type: string
-          description: Token for retrieving the next page.
-        totalSize:
-          type: integer
-          format: int32
-          description: Total number of app groups.
     AppGroup:
       type: object
       description: A group of developers and their applications.
@@ -231,6 +224,38 @@ components:
           format: int64
           description: Output only. Time the app group was last modified.
           readOnly: true
+    ListAppGroupsResponse:
+      type: object
+      description: Response for listing app groups.
+      properties:
+        appGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppGroup'
+        nextPageToken:
+          type: string
+          description: Token for retrieving the next page.
+        totalSize:
+          type: integer
+          format: int32
+          description: Total number of app groups.
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     Attribute:
       type: object
       description: A key-value pair used for custom attributes.
@@ -241,31 +266,6 @@ components:
         value:
           type: string
           description: Value of the attribute.
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission to perform this operation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     organizationId:
       name: organizationId

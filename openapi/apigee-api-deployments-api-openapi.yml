@@ -225,6 +225,31 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -310,43 +335,11 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    projectId:
-      name: projectId
+    apiId:
+      name: apiId
       in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    deploymentId:
-      name: deploymentId
-      in: path
-      description: ID of the API deployment.
+      description: ID of the API resource.
       required: true
       schema:
         type: string
@@ -357,16 +350,23 @@ components:
       schema:
         type: integer
         format: int32
+    deploymentId:
+      name: deploymentId
+      in: path
+      description: ID of the API deployment.
+      required: true
+      schema:
+        type: string
     pageToken:
       name: pageToken
       in: query
       description: Page token returned from a previous list request.
       schema:
         type: string
-    apiId:
-      name: apiId
+    projectId:
+      name: projectId
       in: path
-      description: ID of the API resource.
+      description: Google Cloud project ID.
       required: true
       schema:
         type: string

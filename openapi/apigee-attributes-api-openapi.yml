@@ -82,23 +82,38 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    AllowedValue:
+    ListAttributesResponse:
       type: object
-      description: An allowed value for an ENUM attribute.
       properties:
-        id:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        nextPageToken:
           type: string
-          description: ID of the allowed value.
-        displayName:
-          type: string
-          description: Display name of the allowed value.
-        description:
-          type: string
-          description: Description of the allowed value.
-        immutable:
-          type: boolean
-          description: Whether the value is immutable.
+        totalSize:
+          type: integer
+          format: int32
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -113,18 +128,6 @@ components:
               type: string
             status:
               type: string
-    ListAttributesResponse:
-      type: object
-      properties:
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attribute'
-        nextPageToken:
-          type: string
-        totalSize:
-          type: integer
-          format: int32
     Attribute:
       type: object
       description: A custom attribute definition.
@@ -187,33 +190,23 @@ components:
           format: date-time
           description: Output only. Time the attribute was last updated.
           readOnly: true
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    AllowedValue:
+      type: object
+      description: An allowed value for an ENUM attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the allowed value.
+        displayName:
+          type: string
+          description: Display name of the allowed value.
+        description:
+          type: string
+          description: Description of the allowed value.
+        immutable:
+          type: boolean
+          description: Whether the value is immutable.
   parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
     pageSize:
       name: pageSize
       in: query
@@ -225,6 +218,13 @@ components:
       name: pageToken
       in: query
       description: Page token returned from a previous list request.
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
       schema:
         type: string
     locationId:

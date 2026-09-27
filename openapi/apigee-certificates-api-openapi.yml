@@ -165,6 +165,15 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    ListCertificatesResponse:
+      type: object
+      properties:
+        certificate:
+          type: array
+          items:
+            $ref: '#/components/schemas/Certificate'
+        nextPageToken:
+          type: string
     Error:
       type: object
       description: Error response.
@@ -224,30 +233,7 @@ components:
           format: date-time
           description: Output only. End of validity period.
           readOnly: true
-    ListCertificatesResponse:
-      type: object
-      properties:
-        certificate:
-          type: array
-          items:
-            $ref: '#/components/schemas/Certificate'
-        nextPageToken:
-          type: string
   parameters:
-    certificateId:
-      name: certificateId
-      in: path
-      description: Certificate identifier.
-      required: true
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
     productId:
       name: productId
       in: path
@@ -268,6 +254,20 @@ components:
       description: Page token returned from a previous list request.
       schema:
         type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    certificateId:
+      name: certificateId
+      in: path
+      description: Certificate identifier.
+      required: true
+      schema:
+        type: string
     locationId:
       name: locationId
       in: path
@@ -282,8 +282,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -294,8 +294,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
       content:
         application/json:
           schema:
