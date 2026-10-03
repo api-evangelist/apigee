@@ -258,6 +258,35 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data.
+        extensions:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
     ApiSpec:
       type: object
       description: A specification for an API version.
@@ -324,35 +353,6 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
-    HttpBody:
-      type: object
-      description: Raw HTTP body content.
-      properties:
-        contentType:
-          type: string
-          description: The HTTP Content-Type header value.
-        data:
-          type: string
-          format: byte
-          description: The raw HTTP body data.
-        extensions:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     ListApiSpecsResponse:
       type: object
       properties:
@@ -362,31 +362,6 @@ components:
             $ref: '#/components/schemas/ApiSpec'
         nextPageToken:
           type: string
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     versionId:
       name: versionId
@@ -395,20 +370,6 @@ components:
       required: true
       schema:
         type: string
-    apiId:
-      name: apiId
-      in: path
-      description: ID of the API resource.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     specId:
       name: specId
       in: path
@@ -436,6 +397,45 @@ components:
       required: true
       schema:
         type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

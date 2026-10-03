@@ -111,6 +111,17 @@ components:
         totalSize:
           type: integer
           format: int32
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
     ExternalApi:
       type: object
       description: An external API reference.
@@ -180,24 +191,7 @@ components:
         attribute:
           type: string
           description: Resource name of the attribute definition.
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
   responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request. The request body or parameters are invalid.
       content:
@@ -210,14 +204,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     pageToken:
       name: pageToken
       in: query
@@ -238,6 +231,13 @@ components:
       required: true
       schema:
         type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     oauth2:
       type: oauth2

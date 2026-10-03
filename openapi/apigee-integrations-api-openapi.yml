@@ -146,6 +146,56 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ExecuteIntegrationResponse:
+      type: object
+      description: Response from a synchronous integration execution.
+      properties:
+        executionId:
+          type: string
+          description: ID of the execution.
+        outputParameters:
+          type: object
+          description: Output parameters from the execution.
+          additionalProperties:
+            type: object
+        parameterEntries:
+          type: array
+          description: Output parameter entries.
+          items:
+            $ref: '#/components/schemas/EventParameter'
+    ListIntegrationsResponse:
+      type: object
+      properties:
+        integrations:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              updateTime:
+                type: string
+                format: date-time
+              active:
+                type: boolean
+        nextPageToken:
+          type: string
     ExecuteIntegrationRequest:
       type: object
       description: Request to execute an integration synchronously.
@@ -169,46 +219,6 @@ components:
         requestId:
           type: string
           description: Unique request ID for idempotency.
-    ScheduleIntegrationResponse:
-      type: object
-      description: Response from scheduling an integration execution.
-      properties:
-        executionInfoIds:
-          type: array
-          description: Execution info IDs for the scheduled run.
-          items:
-            type: string
-    ExecuteIntegrationResponse:
-      type: object
-      description: Response from a synchronous integration execution.
-      properties:
-        executionId:
-          type: string
-          description: ID of the execution.
-        outputParameters:
-          type: object
-          description: Output parameters from the execution.
-          additionalProperties:
-            type: object
-        parameterEntries:
-          type: array
-          description: Output parameter entries.
-          items:
-            $ref: '#/components/schemas/EventParameter'
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     EventParameter:
       type: object
       description: A parameter with a key and value.
@@ -217,48 +227,6 @@ components:
           type: string
         value:
           $ref: '#/components/schemas/ValueType'
-    ValueType:
-      type: object
-      description: A value with a specific type.
-      properties:
-        stringValue:
-          type: string
-        intValue:
-          type: string
-          format: int64
-        doubleValue:
-          type: number
-          format: double
-        booleanValue:
-          type: boolean
-        stringArray:
-          type: object
-          properties:
-            stringValues:
-              type: array
-              items:
-                type: string
-        jsonValue:
-          type: string
-    ListIntegrationsResponse:
-      type: object
-      properties:
-        integrations:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              updateTime:
-                type: string
-                format: date-time
-              active:
-                type: boolean
-        nextPageToken:
-          type: string
     ScheduleIntegrationRequest:
       type: object
       description: Request to schedule an integration execution.
@@ -283,11 +251,63 @@ components:
         requestId:
           type: string
           description: Unique request ID for idempotency.
+    ScheduleIntegrationResponse:
+      type: object
+      description: Response from scheduling an integration execution.
+      properties:
+        executionInfoIds:
+          type: array
+          description: Execution info IDs for the scheduled run.
+          items:
+            type: string
+    ValueType:
+      type: object
+      description: A value with a specific type.
+      properties:
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
   parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
     productId:
       name: productId
       in: path
       description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
       required: true
       schema:
         type: string
@@ -305,33 +325,7 @@ components:
       required: true
       schema:
         type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
   responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request. The request body or parameters are invalid.
       content:
@@ -346,6 +340,12 @@ components:
             $ref: '#/components/schemas/Error'
     Forbidden:
       description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:

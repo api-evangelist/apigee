@@ -234,17 +234,6 @@ paths:
       description: Apigee Registry API Production Server
 components:
   schemas:
-    ListInstancesResponse:
-      type: object
-      description: Response for listing instances.
-      properties:
-        instances:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instance'
-        nextPageToken:
-          type: string
-          description: Token for retrieving the next page.
     Error:
       type: object
       description: Error response from the Apigee API.
@@ -262,6 +251,34 @@ components:
             status:
               type: string
               description: Error status string.
+    ListInstancesResponse:
+      type: object
+      description: Response for listing instances.
+      properties:
+        instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instance'
+        nextPageToken:
+          type: string
+          description: Token for retrieving the next page.
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
+          type: string
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
     Operation:
       type: object
       description: A long-running operation returned by asynchronous API calls.
@@ -341,23 +358,6 @@ components:
           - SLASH_22
           - SLASH_23
           - SLASH_24
-    Status:
-      type: object
-      description: The Status type defines a logical error model.
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: The status code.
-        message:
-          type: string
-          description: A developer-facing error message.
-        details:
-          type: array
-          description: A list of messages that carry the error details.
-          items:
-            type: object
-            additionalProperties: true
     Error_2:
       type: object
       properties:
@@ -371,6 +371,19 @@ components:
               type: string
             status:
               type: string
+    Status_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
     Operation_2:
       type: object
       description: A long-running operation.
@@ -432,26 +445,7 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
-    Status_2:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
   responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found. The specified resource does not exist.
       content:
@@ -470,6 +464,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden_2:
       description: Forbidden. The caller does not have permission.
       content:
@@ -477,11 +477,10 @@ components:
           schema:
             $ref: '#/components/schemas/Error_2'
   parameters:
-    organizationId:
-      name: organizationId
-      in: path
-      description: Name of the Apigee organization.
-      required: true
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
       schema:
         type: string
     pageSize:
@@ -491,10 +490,11 @@ components:
       schema:
         type: integer
         format: int32
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
       schema:
         type: string
     projectId:

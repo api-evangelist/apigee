@@ -304,76 +304,84 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  parameters:
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: Integration version identifier.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
   schemas:
-    DownloadIntegrationVersionResponse:
+    UploadIntegrationVersionRequest:
       type: object
-      description: Response for downloading an integration version.
+      description: Request to upload an integration version.
       properties:
         content:
           type: string
-          description: Integration version content.
-    ValueType:
+          description: Integration version content to upload.
+        fileFormat:
+          type: string
+          description: Format of the uploaded content.
+          enum:
+          - FILE_FORMAT_UNSPECIFIED
+          - JSON
+          - YAML
+    Error:
       type: object
-      description: A value with a specific type.
+      description: Error response.
       properties:
-        stringValue:
-          type: string
-        intValue:
-          type: string
-          format: int64
-        doubleValue:
-          type: number
-          format: double
-        booleanValue:
-          type: boolean
-        stringArray:
+        error:
           type: object
           properties:
-            stringValues:
-              type: array
-              items:
-                type: string
-        jsonValue:
-          type: string
-    IntegrationParameter:
-      type: object
-      description: A parameter used in an integration.
-      properties:
-        key:
-          type: string
-          description: Name of the parameter.
-        dataType:
-          type: string
-          description: Data type of the parameter.
-          enum:
-          - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
-          - STRING_VALUE
-          - INT_VALUE
-          - DOUBLE_VALUE
-          - BOOLEAN_VALUE
-          - STRING_ARRAY
-          - INT_ARRAY
-          - DOUBLE_ARRAY
-          - BOOLEAN_ARRAY
-          - JSON_VALUE
-          - PROTO_VALUE
-          - PROTO_ARRAY
-        defaultValue:
-          $ref: '#/components/schemas/ValueType'
-        inputOutputType:
-          type: string
-          description: Whether the parameter is input, output, or both.
-          enum:
-          - IN_OUT_TYPE_UNSPECIFIED
-          - IN
-          - OUT
-          - IN_OUT
-        isTransient:
-          type: boolean
-          description: Whether the parameter is transient.
-        producer:
-          type: string
-          description: Task that produces this parameter.
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
     IntegrationVersion:
       type: object
       description: A version of an integration containing the complete configuration.
@@ -436,20 +444,12 @@ components:
           - DATABASE_PERSISTENCE_POLICY_UNSPECIFIED
           - DATABASE_PERSISTENCE_DISABLED
           - DATABASE_PERSISTENCE_ASYNC
-    UploadIntegrationVersionRequest:
+    UploadIntegrationVersionResponse:
       type: object
-      description: Request to upload an integration version.
+      description: Response from uploading an integration version.
       properties:
-        content:
-          type: string
-          description: Integration version content to upload.
-        fileFormat:
-          type: string
-          description: Format of the uploaded content.
-          enum:
-          - FILE_FORMAT_UNSPECIFIED
-          - JSON
-          - YAML
+        integrationVersion:
+          $ref: '#/components/schemas/IntegrationVersion'
     ListIntegrationVersionsResponse:
       type: object
       properties:
@@ -461,6 +461,13 @@ components:
           type: string
         noPermission:
           type: boolean
+    DownloadIntegrationVersionResponse:
+      type: object
+      description: Response for downloading an integration version.
+      properties:
+        content:
+          type: string
+          description: Integration version content.
     TaskConfig:
       type: object
       description: Configuration for a task in an integration.
@@ -521,20 +528,6 @@ components:
             intervalTime:
               type: string
               format: date-time
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     EventParameter:
       type: object
       description: A parameter with a key and value.
@@ -543,12 +536,29 @@ components:
           type: string
         value:
           $ref: '#/components/schemas/ValueType'
-    UploadIntegrationVersionResponse:
+    ValueType:
       type: object
-      description: Response from uploading an integration version.
+      description: A value with a specific type.
       properties:
-        integrationVersion:
-          $ref: '#/components/schemas/IntegrationVersion'
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
     TriggerConfig:
       type: object
       description: Configuration for a trigger that starts an integration.
@@ -597,7 +607,58 @@ components:
           description: Trigger-specific properties.
           additionalProperties:
             type: string
+    IntegrationParameter:
+      type: object
+      description: A parameter used in an integration.
+      properties:
+        key:
+          type: string
+          description: Name of the parameter.
+        dataType:
+          type: string
+          description: Data type of the parameter.
+          enum:
+          - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
+          - STRING_VALUE
+          - INT_VALUE
+          - DOUBLE_VALUE
+          - BOOLEAN_VALUE
+          - STRING_ARRAY
+          - INT_ARRAY
+          - DOUBLE_ARRAY
+          - BOOLEAN_ARRAY
+          - JSON_VALUE
+          - PROTO_VALUE
+          - PROTO_ARRAY
+        defaultValue:
+          $ref: '#/components/schemas/ValueType'
+        inputOutputType:
+          type: string
+          description: Whether the parameter is input, output, or both.
+          enum:
+          - IN_OUT_TYPE_UNSPECIFIED
+          - IN
+          - OUT
+          - IN_OUT
+        isTransient:
+          type: boolean
+          description: Whether the parameter is transient.
+        producer:
+          type: string
+          description: Task that produces this parameter.
   responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
       content:
@@ -610,67 +671,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    integrationId:
-      name: integrationId
-      in: path
-      description: Name of the integration.
-      required: true
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    versionId:
-      name: versionId
-      in: path
-      description: Integration version identifier.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2

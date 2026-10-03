@@ -193,57 +193,6 @@ components:
               type: string
             status:
               type: string
-    AttributeValues:
-      type: object
-      description: Values assigned to an attribute.
-      properties:
-        enumValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                $ref: '#/components/schemas/EnumAttributeValue'
-        stringValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        jsonValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        attribute:
-          type: string
-          description: Resource name of the attribute definition.
-    ListApiVersionsResponse:
-      type: object
-      properties:
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiVersion'
-        nextPageToken:
-          type: string
-        totalSize:
-          type: integer
-          format: int32
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
     ApiVersion:
       type: object
       description: A version of an API.
@@ -305,31 +254,57 @@ components:
           format: date-time
           description: Output only. Time the version was last updated.
           readOnly: true
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
+    ListApiVersionsResponse:
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
   parameters:
     versionId:
       name: versionId
@@ -338,20 +313,6 @@ components:
       required: true
       schema:
         type: string
-    apiId:
-      name: apiId
-      in: path
-      description: ID of the API resource.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     pageToken:
       name: pageToken
       in: query
@@ -372,6 +333,45 @@ components:
       required: true
       schema:
         type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

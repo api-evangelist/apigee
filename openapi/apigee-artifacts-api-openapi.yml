@@ -190,35 +190,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    HttpBody:
-      type: object
-      description: Raw HTTP body content.
-      properties:
-        contentType:
-          type: string
-          description: The HTTP Content-Type header value.
-        data:
-          type: string
-          format: byte
-          description: The raw HTTP body data.
-        extensions:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     Artifact:
       type: object
       description: A metadata artifact associated with a registry resource.
@@ -252,6 +223,35 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    HttpBody:
+      type: object
+      description: Raw HTTP body content.
+      properties:
+        contentType:
+          type: string
+          description: The HTTP Content-Type header value.
+        data:
+          type: string
+          format: byte
+          description: The raw HTTP body data.
+        extensions:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
     ListArtifactsResponse:
       type: object
       properties:
@@ -262,12 +262,6 @@ components:
         nextPageToken:
           type: string
   responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found. The specified resource does not exist.
       content:
@@ -286,21 +280,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    artifactId:
-      name: artifactId
-      in: path
-      description: ID of the artifact.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     pageToken:
       name: pageToken
       in: query
@@ -318,6 +304,20 @@ components:
       name: locationId
       in: path
       description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    artifactId:
+      name: artifactId
+      in: path
+      description: ID of the artifact.
       required: true
       schema:
         type: string

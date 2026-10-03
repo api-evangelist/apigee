@@ -170,70 +170,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    apiProductId:
-      name: apiProductId
-      in: path
-      description: Name of the API product.
-      required: true
-      schema:
-        type: string
-    organizationId:
-      name: organizationId
-      in: path
-      description: Name of the Apigee organization.
-      required: true
-      schema:
-        type: string
   schemas:
-    OperationGroup:
-      type: object
-      description: Groups operations for access control on an API product.
-      properties:
-        operationConfigs:
-          type: array
-          description: List of operation configurations.
-          items:
-            $ref: '#/components/schemas/OperationConfig'
-        operationConfigType:
-          type: string
-          description: Type of operation configuration.
-    OperationConfig:
-      type: object
-      description: Configuration for a set of operations on an API proxy.
-      properties:
-        apiSource:
-          type: string
-          description: Name of the API proxy this config applies to.
-        operations:
-          type: array
-          description: List of operations.
-          items:
-            type: object
-            properties:
-              resource:
-                type: string
-                description: REST resource path.
-              methods:
-                type: array
-                description: HTTP methods allowed.
-                items:
-                  type: string
-        quota:
-          type: object
-          description: Quota settings for this operation config.
-          properties:
-            limit:
-              type: string
-            interval:
-              type: string
-            timeUnit:
-              type: string
-        attributes:
-          type: array
-          description: Custom attributes for this config.
-          items:
-            $ref: '#/components/schemas/Attribute'
     ListApiProductsResponse:
       type: object
       description: Response for listing API products.
@@ -242,6 +179,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApiProduct'
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     ApiProduct:
       type: object
       description: An API product bundles API resources for consumption.
@@ -307,23 +261,18 @@ components:
           format: int64
           description: Output only. Unix time when the product was last modified.
           readOnly: true
-    Error:
+    OperationGroup:
       type: object
-      description: Error response from the Apigee API.
+      description: Groups operations for access control on an API product.
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
+        operationConfigs:
+          type: array
+          description: List of operation configurations.
+          items:
+            $ref: '#/components/schemas/OperationConfig'
+        operationConfigType:
+          type: string
+          description: Type of operation configuration.
     Attribute:
       type: object
       description: A key-value pair used for custom attributes.
@@ -334,21 +283,45 @@ components:
         value:
           type: string
           description: Value of the attribute.
+    OperationConfig:
+      type: object
+      description: Configuration for a set of operations on an API proxy.
+      properties:
+        apiSource:
+          type: string
+          description: Name of the API proxy this config applies to.
+        operations:
+          type: array
+          description: List of operations.
+          items:
+            type: object
+            properties:
+              resource:
+                type: string
+                description: REST resource path.
+              methods:
+                type: array
+                description: HTTP methods allowed.
+                items:
+                  type: string
+        quota:
+          type: object
+          description: Quota settings for this operation config.
+          properties:
+            limit:
+              type: string
+            interval:
+              type: string
+            timeUnit:
+              type: string
+        attributes:
+          type: array
+          description: Custom attributes for this config.
+          items:
+            $ref: '#/components/schemas/Attribute'
   responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict. A resource with the same identifier already exists.
       content:
         application/json:
           schema:
@@ -365,6 +338,33 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    apiProductId:
+      name: apiProductId
+      in: path
+      description: Name of the API product.
+      required: true
+      schema:
+        type: string
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

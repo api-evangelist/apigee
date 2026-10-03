@@ -174,20 +174,6 @@ components:
             $ref: '#/components/schemas/Certificate'
         nextPageToken:
           type: string
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     Certificate:
       type: object
       description: An SSL/TLS certificate.
@@ -233,27 +219,21 @@ components:
           format: date-time
           description: Output only. End of validity period.
           readOnly: true
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
   parameters:
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     projectId:
       name: projectId
       in: path
@@ -261,10 +241,16 @@ components:
       required: true
       schema:
         type: string
-    certificateId:
-      name: certificateId
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    productId:
+      name: productId
       in: path
-      description: Certificate identifier.
+      description: Product identifier (typically the Apigee product name).
       required: true
       schema:
         type: string
@@ -275,13 +261,21 @@ components:
       required: true
       schema:
         type: string
+    certificateId:
+      name: certificateId
+      in: path
+      description: Certificate identifier.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found. The specified resource does not exist.
       content:
@@ -296,6 +290,12 @@ components:
             $ref: '#/components/schemas/Error'
     Forbidden:
       description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:

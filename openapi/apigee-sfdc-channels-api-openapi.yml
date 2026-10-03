@@ -76,6 +76,29 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListSfdcChannelsResponse:
+      type: object
+      properties:
+        sfdcChannels:
+          type: array
+          items:
+            $ref: '#/components/schemas/SfdcChannel'
+        nextPageToken:
+          type: string
     SfdcChannel:
       type: object
       description: A Salesforce channel configuration.
@@ -114,71 +137,6 @@ components:
           format: date-time
           description: Output only. Time the channel was deleted.
           readOnly: true
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    ListSfdcChannelsResponse:
-      type: object
-      properties:
-        sfdcChannels:
-          type: array
-          items:
-            $ref: '#/components/schemas/SfdcChannel'
-        nextPageToken:
-          type: string
-  parameters:
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
-    sfdcInstanceId:
-      name: sfdcInstanceId
-      in: path
-      description: SFDC instance identifier.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
   responses:
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
@@ -198,6 +156,48 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    sfdcInstanceId:
+      name: sfdcInstanceId
+      in: path
+      description: SFDC instance identifier.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

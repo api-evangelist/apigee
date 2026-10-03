@@ -172,66 +172,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    ObservationJob:
-      type: object
-      description: An API observation job that analyzes traffic to discover shadow APIs.
-      properties:
-        name:
-          type: string
-          description: Output only. Resource name of the observation job.
-          readOnly: true
-        state:
-          type: string
-          description: State of the observation job.
-          enum:
-          - STATE_UNSPECIFIED
-          - CREATING
-          - ENABLING
-          - ENABLED
-          - DISABLING
-          - DISABLED
-          - DELETING
-        sources:
-          type: array
-          description: Observation sources for this job.
-          items:
-            type: string
-        createTime:
-          type: string
-          format: date-time
-          description: Output only. Time the job was created.
-          readOnly: true
-        updateTime:
-          type: string
-          format: date-time
-          description: Output only. Time the job was last updated.
-          readOnly: true
     Error:
       type: object
       description: Error response.
@@ -246,6 +187,19 @@ components:
               type: string
             status:
               type: string
+    ListObservationJobsResponse:
+      type: object
+      properties:
+        observationJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationJob'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
     Status:
       type: object
       description: The Status type defines a logical error model.
@@ -280,44 +234,58 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
-    ListObservationJobsResponse:
+    ObservationJob:
       type: object
+      description: An API observation job that analyzes traffic to discover shadow APIs.
       properties:
-        observationJobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObservationJob'
-        nextPageToken:
+        name:
           type: string
-        unreachable:
+          description: Output only. Resource name of the observation job.
+          readOnly: true
+        state:
+          type: string
+          description: State of the observation job.
+          enum:
+          - STATE_UNSPECIFIED
+          - CREATING
+          - ENABLING
+          - ENABLED
+          - DISABLING
+          - DISABLED
+          - DELETING
+        sources:
           type: array
+          description: Observation sources for this job.
           items:
             type: string
+        createTime:
+          type: string
+          format: date-time
+          description: Output only. Time the job was created.
+          readOnly: true
+        updateTime:
+          type: string
+          format: date-time
+          description: Output only. Time the job was last updated.
+          readOnly: true
   parameters:
-    observationJobId:
-      name: observationJobId
+    projectId:
+      name: projectId
       in: path
-      description: ID of the observation job.
+      description: Google Cloud project ID.
       required: true
       schema:
         type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     pageToken:
       name: pageToken
       in: query
       description: Page token returned from a previous list request.
       schema:
         type: string
-    projectId:
-      name: projectId
+    observationJobId:
+      name: observationJobId
       in: path
-      description: Google Cloud project ID.
+      description: ID of the observation job.
       required: true
       schema:
         type: string
@@ -328,6 +296,38 @@ components:
       required: true
       schema:
         type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+  responses:
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

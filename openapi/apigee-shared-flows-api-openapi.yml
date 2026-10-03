@@ -225,13 +225,22 @@ components:
         subType:
           type: string
           description: Subtype of the entity.
+  parameters:
+    sharedFlowId:
+      name: sharedFlowId
+      in: path
+      description: Name of the shared flow.
+      required: true
+      schema:
+        type: string
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
   responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found. The specified resource does not exist.
       content:
@@ -250,21 +259,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    organizationId:
-      name: organizationId
-      in: path
-      description: Name of the Apigee organization.
-      required: true
-      schema:
-        type: string
-    sharedFlowId:
-      name: sharedFlowId
-      in: path
-      description: Name of the shared flow.
-      required: true
-      schema:
-        type: string
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

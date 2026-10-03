@@ -82,38 +82,23 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    ListAttributesResponse:
+    AllowedValue:
       type: object
+      description: An allowed value for an ENUM attribute.
       properties:
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attribute'
-        nextPageToken:
+        id:
           type: string
-        totalSize:
-          type: integer
-          format: int32
+          description: ID of the allowed value.
+        displayName:
+          type: string
+          description: Display name of the allowed value.
+        description:
+          type: string
+          description: Description of the allowed value.
+        immutable:
+          type: boolean
+          description: Whether the value is immutable.
     Error:
       type: object
       description: Error response from the API Hub API.
@@ -190,41 +175,30 @@ components:
           format: date-time
           description: Output only. Time the attribute was last updated.
           readOnly: true
-    AllowedValue:
+    ListAttributesResponse:
       type: object
-      description: An allowed value for an ENUM attribute.
       properties:
-        id:
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        nextPageToken:
           type: string
-          description: ID of the allowed value.
-        displayName:
-          type: string
-          description: Display name of the allowed value.
-        description:
-          type: string
-          description: Description of the allowed value.
-        immutable:
-          type: boolean
-          description: Whether the value is immutable.
+        totalSize:
+          type: integer
+          format: int32
   parameters:
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     projectId:
       name: projectId
       in: path
       description: Google Cloud project ID.
       required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
       schema:
         type: string
     locationId:
@@ -234,6 +208,32 @@ components:
       required: true
       schema:
         type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
