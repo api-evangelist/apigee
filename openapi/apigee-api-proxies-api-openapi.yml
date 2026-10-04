@@ -170,23 +170,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
     EntityMetadata:
       type: object
       description: Metadata common to Apigee entities.
@@ -263,14 +246,6 @@ components:
         type:
           type: string
           description: The type of the revision (e.g., Application).
-    ListApiProxiesResponse:
-      type: object
-      description: Response for listing API proxies.
-      properties:
-        proxies:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiProxy'
     ApiProxy:
       type: object
       description: Metadata about an API proxy.
@@ -307,43 +282,46 @@ components:
           - API_PROXY_TYPE_UNSPECIFIED
           - PROGRAMMABLE
           - CONFIGURABLE
-  parameters:
-    apiId:
-      name: apiId
-      in: path
-      description: Name of the API proxy.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    organizationId:
-      name: organizationId
-      in: path
-      description: Name of the Apigee organization.
-      required: true
-      schema:
-        type: string
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
+    ListApiProxiesResponse:
+      type: object
+      description: Response for listing API proxies.
+      properties:
+        proxies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiProxy'
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -360,12 +338,34 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict. A resource with the same identifier already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    apiId:
+      name: apiId
+      in: path
+      description: Name of the API proxy.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     oauth2:
       type: oauth2

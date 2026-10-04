@@ -172,27 +172,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Documentation:
-      type: object
-      description: Documentation associated with a resource.
-      properties:
-        externalUri:
-          type: string
-          description: URI of external documentation.
-    Error:
-      type: object
-      description: Error response from the API Hub API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     ApiVersion:
       type: object
       description: A version of an API.
@@ -254,17 +233,25 @@ components:
           format: date-time
           description: Output only. Time the version was last updated.
           readOnly: true
-    EnumAttributeValue:
+    ListApiVersionsResponse:
       type: object
-      description: An enum value assigned to an attribute.
       properties:
-        id:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersion'
+        nextPageToken:
           type: string
-          description: ID of the enum value.
-        displayName:
+        totalSize:
+          type: integer
+          format: int32
+    Documentation:
+      type: object
+      description: Documentation associated with a resource.
+      properties:
+        externalUri:
           type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
+          description: URI of external documentation.
     AttributeValues:
       type: object
       description: Values assigned to an attribute.
@@ -293,36 +280,50 @@ components:
         attribute:
           type: string
           description: Resource name of the attribute definition.
-    ListApiVersionsResponse:
+    EnumAttributeValue:
       type: object
+      description: An enum value assigned to an attribute.
       properties:
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiVersion'
-        nextPageToken:
+        id:
           type: string
-        totalSize:
-          type: integer
-          format: int32
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
   parameters:
-    versionId:
-      name: versionId
-      in: path
-      description: ID of the API version resource.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     projectId:
       name: projectId
       in: path
       description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    apiId:
+      name: apiId
+      in: path
+      description: ID of the API resource.
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version resource.
       required: true
       schema:
         type: string
@@ -333,6 +334,12 @@ components:
       required: true
       schema:
         type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
     pageSize:
       name: pageSize
       in: query
@@ -340,22 +347,15 @@ components:
       schema:
         type: integer
         format: int32
-    apiId:
-      name: apiId
-      in: path
-      description: ID of the API resource.
-      required: true
-      schema:
-        type: string
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

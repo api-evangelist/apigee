@@ -1,0 +1,664 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-data-model.py
+source:
+- openapi/apigee-analytics-api-openapi.yml
+- openapi/apigee-api-deployments-api-openapi.yml
+- openapi/apigee-api-observations-api-openapi.yml
+- openapi/apigee-api-operations-api-openapi.yml
+- openapi/apigee-api-products-api-openapi.yml
+- openapi/apigee-api-proxies-api-openapi.yml
+- openapi/apigee-api-proxy-revisions-api-openapi.yml
+- openapi/apigee-api-specs-api-openapi.yml
+- openapi/apigee-api-versions-api-openapi.yml
+- openapi/apigee-app-groups-api-openapi.yml
+- openapi/apigee-artifacts-api-openapi.yml
+- openapi/apigee-attributes-api-openapi.yml
+notation: has_one = property $ref; has_many = array of $ref; belongs_to = <entity>_id field
+summary:
+  entities: 114
+  entities_in_spec: 114
+  relationships: 81
+entities:
+- name: AllowedValue
+  fields: 4
+  description: An allowed value for an ENUM attribute.
+- name: Api
+  fields: 15
+  description: An API resource in the API Hub.
+- name: ApiDeployment
+  fields: 15
+  description: A deployment record for an API.
+- name: ApiObservation
+  fields: 12
+  description: A discovered shadow API from traffic observation.
+- name: ApiOperation
+  fields: 5
+  description: A discovered API operation from traffic observation.
+- name: ApiProduct
+  fields: 14
+  description: An API product bundles API resources for consumption.
+- name: ApiProxy
+  fields: 7
+  description: Metadata about an API proxy.
+- name: ApiProxyRevision
+  fields: 13
+  description: API proxy revision metadata and configuration.
+- name: ApiSpec
+  fields: 15
+  description: A specification for an API version.
+- name: ApiVersion
+  fields: 8
+  description: A version of an API.
+- name: Api_2
+  fields: 10
+  description: An API resource in the registry.
+- name: AppGroup
+  fields: 9
+  description: A group of developers and their applications.
+- name: Artifact
+  fields: 7
+  description: A metadata artifact associated with a registry resource.
+- name: Attribute
+  fields: 2
+  description: A key-value pair used for custom attributes.
+- name: AttributeValues
+  fields: 4
+  description: Values assigned to an attribute.
+- name: AuthConfig
+  fields: 11
+  description: Authentication configuration for connecting to external services.
+- name: BatchEditTagsRequest
+  fields: 1
+  description: Request for batch editing tags on API observations.
+- name: BatchEditTagsResponse
+  fields: 1
+  description: Response from batch editing tags.
+- name: Certificate
+  fields: 7
+  description: An SSL/TLS certificate.
+- name: Datastore
+  fields: 7
+  description: Configuration for an analytics data store.
+- name: Dependency
+  fields: 8
+  description: A dependency relationship between APIs.
+- name: DependencyEntityReference
+  fields: 3
+  description: Reference to an entity in a dependency relationship.
+- name: Deployment
+  fields: 13
+  description: An API deployment record.
+- name: Deployment_2
+  fields: 7
+  description: Represents a deployment of an API proxy revision to an environment.
+- name: Developer
+  fields: 13
+  description: A developer registered in an Apigee organization.
+- name: DeveloperApp
+  fields: 11
+  description: A developer app that is associated with a developer.
+- name: DeveloperAppKey
+  fields: 8
+  description: Consumer key and secret for a developer app.
+- name: Documentation
+  fields: 1
+  description: Documentation associated with a resource.
+- name: DownloadIntegrationVersionResponse
+  fields: 1
+  description: Response for downloading an integration version.
+- name: EntityMetadata
+  fields: 3
+  description: Metadata common to Apigee entities.
+- name: EnumAttributeValue
+  fields: 2
+  description: An enum value assigned to an attribute.
+- name: Environment
+  fields: 12
+  description: An environment in an Apigee organization for API proxy deployment.
+- name: Error
+  fields: 1
+  description: Error response from the Apigee API.
+- name: Error_2
+  fields: 1
+  description: Error response from the Apigee API.
+- name: EventParameter
+  fields: 2
+  description: A parameter with a key and value.
+- name: ExecuteIntegrationRequest
+  fields: 5
+  description: Request to execute an integration synchronously.
+- name: ExecuteIntegrationResponse
+  fields: 3
+  description: Response from a synchronous integration execution.
+- name: Execution
+  fields: 9
+  description: An integration execution record.
+- name: ExternalApi
+  fields: 9
+  description: An external API reference.
+- name: HttpBody
+  fields: 3
+  description: Raw HTTP body content.
+- name: Instance
+  fields: 12
+  description: An Apigee runtime instance.
+- name: Instance_2
+  fields: 6
+  description: A Registry instance.
+- name: IntegrationParameter
+  fields: 6
+  description: A parameter used in an integration.
+- name: IntegrationVersion
+  fields: 12
+  description: A version of an integration containing the complete configuration.
+- name: KeyValueMap
+  fields: 2
+  description: A key value map used for runtime data storage.
+- name: LiftSuspensionRequest
+  fields: 1
+  description: Request to lift a suspension.
+- name: LiftSuspensionResponse
+  fields: 1
+  description: Response from lifting a suspension.
+- name: LintResponse
+  fields: 4
+  description: Lint results for an API specification.
+- name: ListApiDeploymentsResponse
+  fields: 2
+- name: ListApiObservationsResponse
+  fields: 2
+- name: ListApiOperationsResponse
+  fields: 2
+- name: ListApiProductsResponse
+  fields: 1
+  description: Response for listing API products.
+- name: ListApiProxiesResponse
+  fields: 1
+  description: Response for listing API proxies.
+- name: ListApiSpecsResponse
+  fields: 2
+- name: ListApiVersionsResponse
+  fields: 2
+- name: ListApisResponse
+  fields: 3
+- name: ListApisResponse_2
+  fields: 2
+- name: ListAppGroupsResponse
+  fields: 3
+  description: Response for listing app groups.
+- name: ListArtifactsResponse
+  fields: 2
+- name: ListAttributesResponse
+  fields: 3
+- name: ListAuthConfigsResponse
+  fields: 2
+- name: ListCertificatesResponse
+  fields: 2
+- name: ListDatastoresResponse
+  fields: 1
+  description: Response for listing data stores.
+- name: ListDependenciesResponse
+  fields: 3
+- name: ListDeploymentsResponse
+  fields: 3
+- name: ListDeploymentsResponse_2
+  fields: 1
+  description: Response for listing deployments.
+- name: ListDeveloperAppKeysResponse
+  fields: 1
+  description: Response for listing developer app keys.
+- name: ListDeveloperAppsResponse
+  fields: 1
+  description: Response for listing developer apps.
+- name: ListDevelopersResponse
+  fields: 1
+  description: Response for listing developers.
+- name: ListExecutionsResponse
+  fields: 3
+- name: ListExternalApisResponse
+  fields: 3
+- name: ListInstancesResponse
+  fields: 2
+  description: Response for listing instances.
+- name: ListIntegrationVersionsResponse
+  fields: 3
+- name: ListIntegrationsResponse
+  fields: 2
+- name: ListObservationJobsResponse
+  fields: 3
+- name: ListObservationSourcesResponse
+  fields: 3
+- name: ListOperationsResponse
+  fields: 2
+- name: ListOrganizationsResponse
+  fields: 1
+  description: Response for listing organizations.
+- name: ListRuntimeProjectAttachmentsResponse
+  fields: 3
+- name: ListSfdcChannelsResponse
+  fields: 2
+- name: ListSfdcInstancesResponse
+  fields: 2
+- name: ListSharedFlowsResponse
+  fields: 1
+  description: Response for listing shared flows.
+- name: ListSuspensionsResponse
+  fields: 2
+- name: NodeConfig
+  fields: 3
+  description: Runtime node configuration for an environment.
+- name: ObservationJob
+  fields: 5
+  description: An API observation job that analyzes traffic to discover shadow APIs.
+- name: ObservationSource
+  fields: 5
+  description: A source of network traffic for API observation.
+- name: Operation
+  fields: 5
+  description: A long-running operation returned by asynchronous API calls.
+- name: OperationConfig
+  fields: 4
+  description: Configuration for a set of operations on an API proxy.
+- name: OperationGroup
+  fields: 2
+  description: Groups operations for access control on an API product.
+- name: Operation_2
+  fields: 5
+  description: A long-running operation.
+- name: Organization
+  fields: 14
+  description: Represents an Apigee organization.
+- name: Owner
+  fields: 2
+  description: Owner of an API resource.
+- name: PodStatus
+  fields: 9
+  description: Status of a runtime pod.
+- name: Properties
+  fields: 1
+  description: A collection of key-value property pairs.
+- name: ResolveSuspensionRequest
+  fields: 1
+  description: Request to resolve a suspension.
+- name: ResolveSuspensionResponse
+  fields: 0
+  description: Response from resolving a suspension.
+- name: RuntimeProjectAttachment
+  fields: 3
+  description: A runtime project attachment.
+- name: ScheduleIntegrationRequest
+  fields: 5
+  description: Request to schedule an integration execution.
+- name: ScheduleIntegrationResponse
+  fields: 1
+  description: Response from scheduling an integration execution.
+- name: SearchResourcesResponse
+  fields: 2
+  description: Response for searching API Hub resources.
+- name: SfdcChannel
+  fields: 9
+  description: A Salesforce channel configuration.
+- name: SfdcInstance
+  fields: 9
+  description: A Salesforce instance configuration.
+- name: SharedFlow
+  fields: 4
+  description: A reusable shared flow containing common logic.
+- name: SharedFlowRevision
+  fields: 9
+  description: Metadata and details for a specific shared flow revision.
+- name: Stats
+  fields: 2
+  description: Analytics statistics response.
+- name: Status
+  fields: 3
+  description: The Status type defines a logical error model.
+- name: Status_2
+  fields: 3
+- name: TargetServer
+  fields: 7
+  description: Configuration for a backend target server.
+- name: TaskConfig
+  fields: 7
+  description: Configuration for a task in an integration.
+- name: TlsInfo
+  fields: 8
+  description: TLS configuration for a target server.
+- name: TriggerConfig
+  fields: 8
+  description: Configuration for a trigger that starts an integration.
+- name: UploadIntegrationVersionRequest
+  fields: 2
+  description: Request to upload an integration version.
+- name: UploadIntegrationVersionResponse
+  fields: 1
+  description: Response from uploading an integration version.
+- name: ValueType
+  fields: 6
+  description: A value with a specific type.
+relationships:
+- from: ListDatastoresResponse
+  to: Datastore
+  type: has_many
+  via: datastores
+- from: ListApiDeploymentsResponse
+  to: ApiDeployment
+  type: has_many
+  via: apiDeployments
+- from: BatchEditTagsResponse
+  to: ApiObservation
+  type: has_many
+  via: apiObservations
+- from: ListApiObservationsResponse
+  to: ApiObservation
+  type: has_many
+  via: apiObservations
+- from: ListApiOperationsResponse
+  to: ApiOperation
+  type: has_many
+  via: apiOperations
+- from: ListApiProductsResponse
+  to: ApiProduct
+  type: has_many
+  via: apiProduct
+- from: ApiProduct
+  to: Attribute
+  type: has_many
+  via: attributes
+- from: ApiProduct
+  to: OperationGroup
+  type: has_one
+  via: operationGroup
+- from: OperationGroup
+  to: OperationConfig
+  type: has_many
+  via: operationConfigs
+- from: OperationConfig
+  to: Attribute
+  type: has_many
+  via: attributes
+- from: ListApiProxiesResponse
+  to: ApiProxy
+  type: has_many
+  via: proxies
+- from: ApiProxy
+  to: EntityMetadata
+  type: has_one
+  via: metaData
+- from: ListApiSpecsResponse
+  to: ApiSpec
+  type: has_many
+  via: apiSpecs
+- from: ListApiVersionsResponse
+  to: ApiVersion
+  type: has_many
+  via: apiVersions
+- from: AppGroup
+  to: Attribute
+  type: has_many
+  via: attributes
+- from: ListAppGroupsResponse
+  to: AppGroup
+  type: has_many
+  via: appGroups
+- from: ListArtifactsResponse
+  to: Artifact
+  type: has_many
+  via: artifacts
+- from: ListAttributesResponse
+  to: Attribute
+  type: has_many
+  via: attributes
+- from: ListAuthConfigsResponse
+  to: AuthConfig
+  type: has_many
+  via: authConfigs
+- from: AuthConfig
+  to: Certificate
+  type: belongs_to
+  via: certificateId
+- from: ListCertificatesResponse
+  to: Certificate
+  type: has_many
+  via: certificate
+- from: Dependency
+  to: DependencyEntityReference
+  type: has_one
+  via: consumer
+- from: Dependency
+  to: DependencyEntityReference
+  type: has_one
+  via: supplier
+- from: ListDependenciesResponse
+  to: Dependency
+  type: has_many
+  via: dependencies
+- from: ListDeploymentsResponse
+  to: Deployment
+  type: has_many
+  via: deployments
+- from: Deployment
+  to: Documentation
+  type: has_one
+  via: documentation
+- from: Deployment
+  to: AttributeValues
+  type: has_one
+  via: deploymentType
+- from: Deployment
+  to: AttributeValues
+  type: has_one
+  via: slo
+- from: Deployment
+  to: AttributeValues
+  type: has_one
+  via: environment
+- from: ListDeploymentsResponse_2
+  to: Deployment_2
+  type: has_many
+  via: deployments
+- from: Deployment_2
+  to: PodStatus
+  type: has_many
+  via: pods
+- from: ListDeveloperAppKeysResponse
+  to: DeveloperAppKey
+  type: has_many
+  via: developerAppKey
+- from: DeveloperAppKey
+  to: Attribute
+  type: has_many
+  via: attributes
+- from: DeveloperApp
+  to: Developer
+  type: belongs_to
+  via: developerId
+- from: DeveloperApp
+  to: Attribute
+  type: has_many
+  via: attributes
+- from: DeveloperApp
+  to: DeveloperAppKey
+  type: has_many
+  via: credentials
+- from: ListDeveloperAppsResponse
+  to: DeveloperApp
+  type: has_many
+  via: app
+- from: ListDevelopersResponse
+  to: Developer
+  type: has_many
+  via: developer
+- from: Developer
+  to: Attribute
+  type: has_many
+  via: attributes
+- from: Environment
+  to: Properties
+  type: has_one
+  via: properties
+- from: Environment
+  to: NodeConfig
+  type: has_one
+  via: nodeConfig
+- from: Operation
+  to: Status
+  type: has_one
+  via: error
+- from: ListExecutionsResponse
+  to: Execution
+  type: has_many
+  via: executionInfos
+- from: ListExecutionsResponse
+  to: Execution
+  type: has_many
+  via: executions
+- from: EventParameter
+  to: ValueType
+  type: has_one
+  via: value
+- from: Execution
+  to: IntegrationVersion
+  type: belongs_to
+  via: integrationVersionId
+- from: ListExternalApisResponse
+  to: ExternalApi
+  type: has_many
+  via: externalApis
+- from: ExternalApi
+  to: Documentation
+  type: has_one
+  via: documentation
+- from: ListInstancesResponse
+  to: Instance
+  type: has_many
+  via: instances
+- from: Operation_2
+  to: Status_2
+  type: has_one
+  via: error
+- from: IntegrationVersion
+  to: TaskConfig
+  type: has_many
+  via: taskConfigs
+- from: IntegrationVersion
+  to: TriggerConfig
+  type: has_many
+  via: triggerConfigs
+- from: IntegrationVersion
+  to: IntegrationParameter
+  type: has_many
+  via: integrationParameters
+- from: UploadIntegrationVersionResponse
+  to: IntegrationVersion
+  type: has_one
+  via: integrationVersion
+- from: ListIntegrationVersionsResponse
+  to: IntegrationVersion
+  type: has_many
+  via: integrationVersions
+- from: IntegrationParameter
+  to: ValueType
+  type: has_one
+  via: defaultValue
+- from: ExecuteIntegrationResponse
+  to: Execution
+  type: belongs_to
+  via: executionId
+- from: ExecuteIntegrationResponse
+  to: EventParameter
+  type: has_many
+  via: parameterEntries
+- from: ExecuteIntegrationRequest
+  to: EventParameter
+  type: has_many
+  via: parameterEntries
+- from: ScheduleIntegrationRequest
+  to: EventParameter
+  type: has_many
+  via: parameterEntries
+- from: Api
+  to: Owner
+  type: has_one
+  via: owner
+- from: Api
+  to: Documentation
+  type: has_one
+  via: documentation
+- from: Api
+  to: AttributeValues
+  type: has_one
+  via: targetUser
+- from: Api
+  to: AttributeValues
+  type: has_one
+  via: team
+- from: Api
+  to: AttributeValues
+  type: has_one
+  via: businessUnit
+- from: Api
+  to: AttributeValues
+  type: has_one
+  via: maturityLevel
+- from: Api
+  to: AttributeValues
+  type: has_one
+  via: apiStyle
+- from: ListObservationJobsResponse
+  to: ObservationJob
+  type: has_many
+  via: observationJobs
+- from: ListObservationSourcesResponse
+  to: ObservationSource
+  type: has_many
+  via: observationSources
+- from: ListOperationsResponse
+  to: Operation
+  type: has_many
+  via: operations
+- from: ListOrganizationsResponse
+  to: Organization
+  type: has_many
+  via: organizations
+- from: Organization
+  to: Properties
+  type: has_one
+  via: properties
+- from: ListApisResponse
+  to: Api
+  type: has_many
+  via: apis
+- from: ListApisResponse_2
+  to: Api_2
+  type: has_many
+  via: apis
+- from: ListRuntimeProjectAttachmentsResponse
+  to: RuntimeProjectAttachment
+  type: has_many
+  via: runtimeProjectAttachments
+- from: ListSfdcChannelsResponse
+  to: SfdcChannel
+  type: has_many
+  via: sfdcChannels
+- from: SfdcInstance
+  to: AuthConfig
+  type: belongs_to
+  via: authConfigId
+- from: ListSfdcInstancesResponse
+  to: SfdcInstance
+  type: has_many
+  via: sfdcInstances
+- from: SharedFlow
+  to: EntityMetadata
+  type: has_one
+  via: metaData
+- from: ListSharedFlowsResponse
+  to: SharedFlow
+  type: has_many
+  via: sharedFlows
+- from: TargetServer
+  to: TlsInfo
+  type: has_one
+  via: sSLInfo

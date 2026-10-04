@@ -143,45 +143,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Properties:
-      type: object
-      description: A collection of key-value property pairs.
-      properties:
-        property:
-          type: array
-          description: List of properties.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              value:
-                type: string
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
-    ListOrganizationsResponse:
-      type: object
-      description: Response for listing organizations.
-      properties:
-        organizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Organization'
     Status:
       type: object
       description: The Status type defines a logical error model.
@@ -219,6 +180,45 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
+    Properties:
+      type: object
+      description: A collection of key-value property pairs.
+      properties:
+        property:
+          type: array
+          description: List of properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+    ListOrganizationsResponse:
+      type: object
+      description: Response for listing organizations.
+      properties:
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     Organization:
       type: object
       description: Represents an Apigee organization.
@@ -295,14 +295,14 @@ components:
           - EVALUATION
           - PAYG
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

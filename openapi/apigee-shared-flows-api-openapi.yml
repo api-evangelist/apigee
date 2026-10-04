@@ -126,6 +126,58 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    EntityMetadata:
+      type: object
+      description: Metadata common to Apigee entities.
+      properties:
+        createdAt:
+          type: string
+          format: int64
+          description: Time the entity was created in milliseconds since epoch.
+        lastModifiedAt:
+          type: string
+          format: int64
+          description: Time the entity was last modified in milliseconds since epoch.
+        subType:
+          type: string
+          description: Subtype of the entity.
+    SharedFlow:
+      type: object
+      description: A reusable shared flow containing common logic.
+      properties:
+        name:
+          type: string
+          description: Output only. Name of the shared flow.
+          readOnly: true
+        revision:
+          type: array
+          description: Output only. List of revisions for the shared flow.
+          readOnly: true
+          items:
+            type: string
+        latestRevisionId:
+          type: string
+          description: Output only. ID of the latest revision.
+          readOnly: true
+        metaData:
+          $ref: '#/components/schemas/EntityMetadata'
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     SharedFlowRevision:
       type: object
       description: Metadata and details for a specific shared flow revision.
@@ -165,43 +217,6 @@ components:
           description: List of referenced shared flows.
           items:
             type: string
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
-    SharedFlow:
-      type: object
-      description: A reusable shared flow containing common logic.
-      properties:
-        name:
-          type: string
-          description: Output only. Name of the shared flow.
-          readOnly: true
-        revision:
-          type: array
-          description: Output only. List of revisions for the shared flow.
-          readOnly: true
-          items:
-            type: string
-        latestRevisionId:
-          type: string
-          description: Output only. ID of the latest revision.
-          readOnly: true
-        metaData:
-          $ref: '#/components/schemas/EntityMetadata'
     ListSharedFlowsResponse:
       type: object
       description: Response for listing shared flows.
@@ -210,21 +225,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SharedFlow'
-    EntityMetadata:
-      type: object
-      description: Metadata common to Apigee entities.
-      properties:
-        createdAt:
-          type: string
-          format: int64
-          description: Time the entity was created in milliseconds since epoch.
-        lastModifiedAt:
-          type: string
-          format: int64
-          description: Time the entity was last modified in milliseconds since epoch.
-        subType:
-          type: string
-          description: Subtype of the entity.
   parameters:
     sharedFlowId:
       name: sharedFlowId
@@ -241,14 +241,14 @@ components:
       schema:
         type: string
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

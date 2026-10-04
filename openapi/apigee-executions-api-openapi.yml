@@ -82,41 +82,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ListExecutionsResponse:
-      type: object
-      properties:
-        executionInfos:
-          type: array
-          items:
-            $ref: '#/components/schemas/Execution'
-        executions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Execution'
-        nextPageToken:
-          type: string
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    EventParameter:
-      type: object
-      description: A parameter with a key and value.
-      properties:
-        key:
-          type: string
-        value:
-          $ref: '#/components/schemas/ValueType'
     Execution:
       type: object
       description: An integration execution record.
@@ -191,6 +156,41 @@ components:
         integrationVersionId:
           type: string
           description: ID of the integration version executed.
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
+    ListExecutionsResponse:
+      type: object
+      properties:
+        executionInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Execution'
+        executions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Execution'
+        nextPageToken:
+          type: string
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
     ValueType:
       type: object
       description: A value with a specific type.
@@ -222,12 +222,6 @@ components:
       required: true
       schema:
         type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     productId:
       name: productId
       in: path
@@ -242,13 +236,6 @@ components:
       required: true
       schema:
         type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     executionId:
       name: executionId
       in: path
@@ -263,15 +250,28 @@ components:
       required: true
       schema:
         type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

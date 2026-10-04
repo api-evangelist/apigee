@@ -135,6 +135,19 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    ListObservationSourcesResponse:
+      type: object
+      properties:
+        observationSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationSource'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
     ObservationSource:
       type: object
       description: A source of network traffic for API observation.
@@ -178,33 +191,6 @@ components:
           format: date-time
           description: Output only. Time the source was last updated.
           readOnly: true
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    ListObservationSourcesResponse:
-      type: object
-      properties:
-        observationSources:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObservationSource'
-        nextPageToken:
-          type: string
-        unreachable:
-          type: array
-          items:
-            type: string
     Status:
       type: object
       description: The Status type defines a logical error model.
@@ -239,6 +225,20 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
   parameters:
     projectId:
       name: projectId
@@ -247,17 +247,17 @@ components:
       required: true
       schema:
         type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     locationId:
       name: locationId
       in: path
       description: Google Cloud region or location.
       required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
       schema:
         type: string
     pageSize:
@@ -268,14 +268,14 @@ components:
         type: integer
         format: int32
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

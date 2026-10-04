@@ -1,0 +1,40 @@
+generated: '2026-10-04'
+method: none
+source: pre-flight dossier (docs platform, portal detections) + CNAME chains and response headers of the hosts apis.yml names
+registry: all/0-working/vendors.yml
+areas_vocabulary:
+- documentation
+- developer-portal
+- api-gateway
+- cdn
+- hosting
+- sdk-generation
+- api-collections
+- status-page
+- support
+- community
+- identity
+- mcp-hosting
+vendors: []
+reliance:
+  areas_vendor_served: []
+  vendor_count: 0
+  areas_observed: 12
+  share_of_observable_areas: 0.0
+  note: areas where a third party was DETECTED serving this provider; an area absent here was either self-run or not observed, and this script
+    cannot tell those apart
+checked:
+- 'docs-platform: custom'
+- cloud.google.com (Portal)
+- cloud.google.com (Documentation)
+- cloud.google.com (GettingStarted)
+- status.cloud.google.com (StatusPage)
+- cloud.google.com (Support)
+- www.googlecloudcommunity.com (Community)
+- cloud.google.com (Website)
+- console.cloud.google.com (Login)
+- cloud.google.com (DeveloperPortal)
+- apigee.googleapis.com (baseURL)
+- apigeeconnect.googleapis.com (baseURL)
+- apihub.googleapis.com (baseURL)
+note: no vendor fingerprint on any host the record names; a hand-built surface, or hosts the pipeline has not yet found

@@ -171,14 +171,64 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ListApiProductsResponse:
+    OperationConfig:
       type: object
-      description: Response for listing API products.
+      description: Configuration for a set of operations on an API proxy.
       properties:
-        apiProduct:
+        apiSource:
+          type: string
+          description: Name of the API proxy this config applies to.
+        operations:
           type: array
+          description: List of operations.
           items:
-            $ref: '#/components/schemas/ApiProduct'
+            type: object
+            properties:
+              resource:
+                type: string
+                description: REST resource path.
+              methods:
+                type: array
+                description: HTTP methods allowed.
+                items:
+                  type: string
+        quota:
+          type: object
+          description: Quota settings for this operation config.
+          properties:
+            limit:
+              type: string
+            interval:
+              type: string
+            timeUnit:
+              type: string
+        attributes:
+          type: array
+          description: Custom attributes for this config.
+          items:
+            $ref: '#/components/schemas/Attribute'
+    OperationGroup:
+      type: object
+      description: Groups operations for access control on an API product.
+      properties:
+        operationConfigs:
+          type: array
+          description: List of operation configurations.
+          items:
+            $ref: '#/components/schemas/OperationConfig'
+        operationConfigType:
+          type: string
+          description: Type of operation configuration.
+    Attribute:
+      type: object
+      description: A key-value pair used for custom attributes.
+      properties:
+        name:
+          type: string
+          description: Name of the attribute.
+        value:
+          type: string
+          description: Value of the attribute.
     Error:
       type: object
       description: Error response from the Apigee API.
@@ -196,6 +246,14 @@ components:
             status:
               type: string
               description: Error status string.
+    ListApiProductsResponse:
+      type: object
+      description: Response for listing API products.
+      properties:
+        apiProduct:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiProduct'
     ApiProduct:
       type: object
       description: An API product bundles API resources for consumption.
@@ -261,73 +319,9 @@ components:
           format: int64
           description: Output only. Unix time when the product was last modified.
           readOnly: true
-    OperationGroup:
-      type: object
-      description: Groups operations for access control on an API product.
-      properties:
-        operationConfigs:
-          type: array
-          description: List of operation configurations.
-          items:
-            $ref: '#/components/schemas/OperationConfig'
-        operationConfigType:
-          type: string
-          description: Type of operation configuration.
-    Attribute:
-      type: object
-      description: A key-value pair used for custom attributes.
-      properties:
-        name:
-          type: string
-          description: Name of the attribute.
-        value:
-          type: string
-          description: Value of the attribute.
-    OperationConfig:
-      type: object
-      description: Configuration for a set of operations on an API proxy.
-      properties:
-        apiSource:
-          type: string
-          description: Name of the API proxy this config applies to.
-        operations:
-          type: array
-          description: List of operations.
-          items:
-            type: object
-            properties:
-              resource:
-                type: string
-                description: REST resource path.
-              methods:
-                type: array
-                description: HTTP methods allowed.
-                items:
-                  type: string
-        quota:
-          type: object
-          description: Quota settings for this operation config.
-          properties:
-            limit:
-              type: string
-            interval:
-              type: string
-            timeUnit:
-              type: string
-        attributes:
-          type: array
-          description: Custom attributes for this config.
-          items:
-            $ref: '#/components/schemas/Attribute'
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    Conflict:
+      description: Conflict. A resource with the same identifier already exists.
       content:
         application/json:
           schema:
@@ -338,14 +332,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Conflict. A resource with the same identifier already exists.
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:

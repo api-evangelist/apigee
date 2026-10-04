@@ -153,17 +153,17 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    keyId:
-      name: keyId
-      in: path
-      description: Consumer key of the developer app.
-      required: true
-      schema:
-        type: string
     developerId:
       name: developerId
       in: path
       description: Email address or ID of the developer.
+      required: true
+      schema:
+        type: string
+    keyId:
+      name: keyId
+      in: path
+      description: Consumer key of the developer app.
       required: true
       schema:
         type: string
@@ -182,31 +182,6 @@ components:
       schema:
         type: string
   schemas:
-    ListDeveloperAppKeysResponse:
-      type: object
-      description: Response for listing developer app keys.
-      properties:
-        developerAppKey:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeveloperAppKey'
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
     DeveloperAppKey:
       type: object
       description: Consumer key and secret for a developer app.
@@ -251,6 +226,14 @@ components:
           description: Custom attributes for the key.
           items:
             $ref: '#/components/schemas/Attribute'
+    ListDeveloperAppKeysResponse:
+      type: object
+      description: Response for listing developer app keys.
+      properties:
+        developerAppKey:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeveloperAppKey'
     Attribute:
       type: object
       description: A key-value pair used for custom attributes.
@@ -261,15 +244,32 @@ components:
         value:
           type: string
           description: Value of the attribute.
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

@@ -82,37 +82,35 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  parameters:
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
   schemas:
-    AllowedValue:
-      type: object
-      description: An allowed value for an ENUM attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the allowed value.
-        displayName:
-          type: string
-          description: Display name of the allowed value.
-        description:
-          type: string
-          description: Description of the allowed value.
-        immutable:
-          type: boolean
-          description: Whether the value is immutable.
-    Error:
-      type: object
-      description: Error response from the API Hub API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
     Attribute:
       type: object
       description: A custom attribute definition.
@@ -175,6 +173,36 @@ components:
           format: date-time
           description: Output only. Time the attribute was last updated.
           readOnly: true
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    AllowedValue:
+      type: object
+      description: An allowed value for an ENUM attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the allowed value.
+        displayName:
+          type: string
+          description: Display name of the allowed value.
+        description:
+          type: string
+          description: Description of the allowed value.
+        immutable:
+          type: boolean
+          description: Whether the value is immutable.
     ListAttributesResponse:
       type: object
       properties:
@@ -187,34 +215,6 @@ components:
         totalSize:
           type: integer
           format: int32
-  parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
   responses:
     BadRequest:
       description: Bad request. The request body or parameters are invalid.

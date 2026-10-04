@@ -234,34 +234,6 @@ paths:
       description: Apigee Registry API Production Server
 components:
   schemas:
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
-    ListInstancesResponse:
-      type: object
-      description: Response for listing instances.
-      properties:
-        instances:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instance'
-        nextPageToken:
-          type: string
-          description: Token for retrieving the next page.
     Status:
       type: object
       description: The Status type defines a logical error model.
@@ -299,6 +271,17 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
+    ListInstancesResponse:
+      type: object
+      description: Response for listing instances.
+      properties:
+        instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instance'
+        nextPageToken:
+          type: string
+          description: Token for retrieving the next page.
     Instance:
       type: object
       description: An Apigee runtime instance.
@@ -358,8 +341,9 @@ components:
           - SLASH_22
           - SLASH_23
           - SLASH_24
-    Error_2:
+    Error:
       type: object
+      description: Error response from the Apigee API.
       properties:
         error:
           type: object
@@ -367,10 +351,13 @@ components:
             code:
               type: integer
               format: int32
+              description: HTTP error code.
             message:
               type: string
+              description: Error message.
             status:
               type: string
+              description: Error status string.
     Status_2:
       type: object
       properties:
@@ -445,15 +432,28 @@ components:
           format: date-time
           description: Output only. Last update time.
           readOnly: true
+    Error_2:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -483,13 +483,6 @@ components:
       description: Page token returned from a previous list request.
       schema:
         type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     organizationId:
       name: organizationId
       in: path
@@ -497,6 +490,13 @@ components:
       required: true
       schema:
         type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
     projectId:
       name: projectId
       in: path

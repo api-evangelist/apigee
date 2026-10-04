@@ -2,6 +2,7 @@
 generated: '2026-09-20'
 method: searched
 source: https://docs.cloud.google.com/apigee/docs/api-platform/develop/comparing-quota-and-spike-arrest-policies
+name: Apigee API Rate Limits
 sources:
 - https://docs.cloud.google.com/apigee/docs/api-platform/develop/comparing-quota-and-spike-arrest-policies
 provenance:

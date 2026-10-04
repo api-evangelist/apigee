@@ -1,0 +1,34 @@
+generated: '2026-10-04'
+method: generated
+generator: extract-docs-artifacts.py skills (local)
+source: openapi/apigee-api-proxies-api-openapi.yml
+skills:
+- file: skills/apigee-create-api-proxy.md
+  name: apigee-create-api-proxy
+  api: openapi/apigee-api-proxies-api-openapi.yml
+  operations:
+  - createApiProxy
+  - getApiProxy
+  - listApiProxies
+  - deleteApiProxy
+- file: skills/apigee-create-api-product.md
+  name: apigee-create-api-product
+  api: openapi/apigee-api-products-api-openapi.yml
+  operations:
+  - listApiProducts
+  - createApiProduct
+  - getApiProduct
+- file: skills/apigee-create-developer-app.md
+  name: apigee-create-developer-app
+  api: openapi/apigee-developer-apps-api-openapi.yml
+  operations:
+  - createDeveloperApp
+  - getDeveloperApp
+  - listDeveloperApps
+- file: skills/apigee-manage-operations.md
+  name: apigee-manage-operations
+  api: openapi/apigee-operations-api-openapi.yml
+  operations:
+  - listOperations
+  - getOperation
+  - cancelOperation

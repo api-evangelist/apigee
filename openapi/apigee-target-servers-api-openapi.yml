@@ -150,17 +150,17 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    targetServerId:
-      name: targetServerId
-      in: path
-      description: Name of the target server.
-      required: true
-      schema:
-        type: string
     environmentId:
       name: environmentId
       in: path
       description: Name of the environment.
+      required: true
+      schema:
+        type: string
+    targetServerId:
+      name: targetServerId
+      in: path
+      description: Name of the target server.
       required: true
       schema:
         type: string
@@ -172,23 +172,6 @@ components:
       schema:
         type: string
   schemas:
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
     TargetServer:
       type: object
       description: Configuration for a backend target server.
@@ -224,6 +207,23 @@ components:
       - name
       - host
       - port
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     TlsInfo:
       type: object
       description: TLS configuration for a target server.
@@ -262,14 +262,14 @@ components:
             wildcardMatch:
               type: boolean
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

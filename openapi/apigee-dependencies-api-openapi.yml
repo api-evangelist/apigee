@@ -182,31 +182,20 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
+    DependencyEntityReference:
       type: object
-      description: Error response from the API Hub API.
+      description: Reference to an entity in a dependency relationship.
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    EnumAttributeValue:
-      type: object
-      description: An enum value assigned to an attribute.
-      properties:
-        id:
-          type: string
-          description: ID of the enum value.
         displayName:
           type: string
-          description: Output only. Display name of the enum value.
+          description: Output only. Display name of the referenced entity.
           readOnly: true
+        operationResourceName:
+          type: string
+          description: Resource name of the operation.
+        externalApiResourceName:
+          type: string
+          description: Resource name of the external API.
     Dependency:
       type: object
       description: A dependency relationship between APIs.
@@ -244,32 +233,6 @@ components:
           description: Custom attributes associated with this dependency.
           additionalProperties:
             $ref: '#/components/schemas/AttributeValues'
-    DependencyEntityReference:
-      type: object
-      description: Reference to an entity in a dependency relationship.
-      properties:
-        displayName:
-          type: string
-          description: Output only. Display name of the referenced entity.
-          readOnly: true
-        operationResourceName:
-          type: string
-          description: Resource name of the operation.
-        externalApiResourceName:
-          type: string
-          description: Resource name of the external API.
-    ListDependenciesResponse:
-      type: object
-      properties:
-        dependencies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Dependency'
-        nextPageToken:
-          type: string
-        totalSize:
-          type: integer
-          format: int32
     AttributeValues:
       type: object
       description: Values assigned to an attribute.
@@ -298,6 +261,43 @@ components:
         attribute:
           type: string
           description: Resource name of the attribute definition.
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
+    Error:
+      type: object
+      description: Error response from the API Hub API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListDependenciesResponse:
+      type: object
+      properties:
+        dependencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dependency'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
   parameters:
     projectId:
       name: projectId
@@ -306,17 +306,17 @@ components:
       required: true
       schema:
         type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     locationId:
       name: locationId
       in: path
       description: Google Cloud region or location.
       required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
       schema:
         type: string
     pageSize:
@@ -327,8 +327,8 @@ components:
         type: integer
         format: int32
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -339,14 +339,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
       content:
         application/json:
           schema:
