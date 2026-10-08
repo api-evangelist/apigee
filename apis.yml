@@ -3942,6 +3942,8 @@ tags_raw:
 - Model Context Protocol
 - Monetization
 common:
+- type: FinOps
+  url: finops/apigee-finops.yml
 - type: VendorFacets
   url: vendor-facets/apigee-vendor-facets.yml
 - type: RateLimits
