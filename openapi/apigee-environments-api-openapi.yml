@@ -144,38 +144,22 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
+      required: true
+      schema:
+        type: string
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
   schemas:
-    Properties:
-      type: object
-      description: A collection of key-value property pairs.
-      properties:
-        property:
-          type: array
-          description: List of properties.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              value:
-                type: string
-    Error:
-      type: object
-      description: Error response from the Apigee API.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-              description: HTTP error code.
-            message:
-              type: string
-              description: Error message.
-            status:
-              type: string
-              description: Error status string.
     NodeConfig:
       type: object
       description: Runtime node configuration for an environment.
@@ -193,6 +177,40 @@ components:
           format: int64
           description: Output only. Current total number of gateway nodes.
           readOnly: true
+    Operation:
+      type: object
+      description: A long-running operation returned by asynchronous API calls.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata associated with the operation.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Properties:
+      type: object
+      description: A collection of key-value property pairs.
+      properties:
+        property:
+          type: array
+          description: List of properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
     Status:
       type: object
       description: The Status type defines a logical error model.
@@ -210,6 +228,23 @@ components:
           items:
             type: object
             additionalProperties: true
+    Error:
+      type: object
+      description: Error response from the Apigee API.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+              description: HTTP error code.
+            message:
+              type: string
+              description: Error message.
+            status:
+              type: string
+              description: Error status string.
     Environment:
       type: object
       description: An environment in an Apigee organization for API proxy deployment.
@@ -272,35 +307,15 @@ components:
           - BASE
           - INTERMEDIATE
           - COMPREHENSIVE
-    Operation:
-      type: object
-      description: A long-running operation returned by asynchronous API calls.
-      properties:
-        name:
-          type: string
-          description: Name of the operation resource.
-        metadata:
-          type: object
-          description: Service-specific metadata associated with the operation.
-          additionalProperties: true
-        done:
-          type: boolean
-          description: Whether the operation is complete.
-        error:
-          $ref: '#/components/schemas/Status'
-        response:
-          type: object
-          description: The normal response of the operation.
-          additionalProperties: true
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -317,21 +332,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    environmentId:
-      name: environmentId
-      in: path
-      description: Name of the environment.
-      required: true
-      schema:
-        type: string
-    organizationId:
-      name: organizationId
-      in: path
-      description: Name of the Apigee organization.
-      required: true
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2

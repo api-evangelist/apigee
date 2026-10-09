@@ -304,55 +304,6 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  parameters:
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    integrationId:
-      name: integrationId
-      in: path
-      description: Name of the integration.
-      required: true
-      schema:
-        type: string
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    versionId:
-      name: versionId
-      in: path
-      description: Integration version identifier.
-      required: true
-      schema:
-        type: string
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
   schemas:
     UploadIntegrationVersionRequest:
       type: object
@@ -368,20 +319,73 @@ components:
           - FILE_FORMAT_UNSPECIFIED
           - JSON
           - YAML
-    Error:
+    ListIntegrationVersionsResponse:
       type: object
-      description: Error response.
       properties:
-        error:
+        integrationVersions:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationVersion'
+        nextPageToken:
+          type: string
+        noPermission:
+          type: boolean
+    TriggerConfig:
+      type: object
+      description: Configuration for a trigger that starts an integration.
+      properties:
+        trigger:
+          type: string
+          description: Type of the trigger.
+        triggerId:
+          type: string
+          description: Unique ID of the trigger.
+        label:
+          type: string
+          description: Label for the trigger.
+        description:
+          type: string
+          description: Description of the trigger.
+        triggerType:
+          type: string
+          description: Trigger type.
+          enum:
+          - TRIGGER_TYPE_UNSPECIFIED
+          - CRON
+          - API
+          - SFDC_CHANNEL
+          - CLOUD_PUBSUB_EXTERNAL
+          - SFDC_CDC_CHANNEL
+          - CLOUD_SCHEDULER
+          - INTEGRATION_CONNECTOR_TRIGGER
+        triggerNumber:
+          type: string
+          description: Number for ordering triggers.
+        startTasks:
+          type: array
+          description: Tasks to start when trigger fires.
+          items:
+            type: object
+            properties:
+              taskId:
+                type: string
+              condition:
+                type: string
+              displayName:
+                type: string
+        properties:
           type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
+          description: Trigger-specific properties.
+          additionalProperties:
+            type: string
+    EventParameter:
+      type: object
+      description: A parameter with a key and value.
+      properties:
+        key:
+          type: string
+        value:
+          $ref: '#/components/schemas/ValueType'
     IntegrationVersion:
       type: object
       description: A version of an integration containing the complete configuration.
@@ -444,23 +448,20 @@ components:
           - DATABASE_PERSISTENCE_POLICY_UNSPECIFIED
           - DATABASE_PERSISTENCE_DISABLED
           - DATABASE_PERSISTENCE_ASYNC
-    UploadIntegrationVersionResponse:
+    Error:
       type: object
-      description: Response from uploading an integration version.
+      description: Error response.
       properties:
-        integrationVersion:
-          $ref: '#/components/schemas/IntegrationVersion'
-    ListIntegrationVersionsResponse:
-      type: object
-      properties:
-        integrationVersions:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegrationVersion'
-        nextPageToken:
-          type: string
-        noPermission:
-          type: boolean
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
     DownloadIntegrationVersionResponse:
       type: object
       description: Response for downloading an integration version.
@@ -468,6 +469,68 @@ components:
         content:
           type: string
           description: Integration version content.
+    IntegrationParameter:
+      type: object
+      description: A parameter used in an integration.
+      properties:
+        key:
+          type: string
+          description: Name of the parameter.
+        dataType:
+          type: string
+          description: Data type of the parameter.
+          enum:
+          - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
+          - STRING_VALUE
+          - INT_VALUE
+          - DOUBLE_VALUE
+          - BOOLEAN_VALUE
+          - STRING_ARRAY
+          - INT_ARRAY
+          - DOUBLE_ARRAY
+          - BOOLEAN_ARRAY
+          - JSON_VALUE
+          - PROTO_VALUE
+          - PROTO_ARRAY
+        defaultValue:
+          $ref: '#/components/schemas/ValueType'
+        inputOutputType:
+          type: string
+          description: Whether the parameter is input, output, or both.
+          enum:
+          - IN_OUT_TYPE_UNSPECIFIED
+          - IN
+          - OUT
+          - IN_OUT
+        isTransient:
+          type: boolean
+          description: Whether the parameter is transient.
+        producer:
+          type: string
+          description: Task that produces this parameter.
+    ValueType:
+      type: object
+      description: A value with a specific type.
+      properties:
+        stringValue:
+          type: string
+        intValue:
+          type: string
+          format: int64
+        doubleValue:
+          type: number
+          format: double
+        booleanValue:
+          type: boolean
+        stringArray:
+          type: object
+          properties:
+            stringValues:
+              type: array
+              items:
+                type: string
+        jsonValue:
+          type: string
     TaskConfig:
       type: object
       description: Configuration for a task in an integration.
@@ -528,127 +591,70 @@ components:
             intervalTime:
               type: string
               format: date-time
-    EventParameter:
+    UploadIntegrationVersionResponse:
       type: object
-      description: A parameter with a key and value.
+      description: Response from uploading an integration version.
       properties:
-        key:
-          type: string
-        value:
-          $ref: '#/components/schemas/ValueType'
-    ValueType:
-      type: object
-      description: A value with a specific type.
-      properties:
-        stringValue:
-          type: string
-        intValue:
-          type: string
-          format: int64
-        doubleValue:
-          type: number
-          format: double
-        booleanValue:
-          type: boolean
-        stringArray:
-          type: object
-          properties:
-            stringValues:
-              type: array
-              items:
-                type: string
-        jsonValue:
-          type: string
-    TriggerConfig:
-      type: object
-      description: Configuration for a trigger that starts an integration.
-      properties:
-        trigger:
-          type: string
-          description: Type of the trigger.
-        triggerId:
-          type: string
-          description: Unique ID of the trigger.
-        label:
-          type: string
-          description: Label for the trigger.
-        description:
-          type: string
-          description: Description of the trigger.
-        triggerType:
-          type: string
-          description: Trigger type.
-          enum:
-          - TRIGGER_TYPE_UNSPECIFIED
-          - CRON
-          - API
-          - SFDC_CHANNEL
-          - CLOUD_PUBSUB_EXTERNAL
-          - SFDC_CDC_CHANNEL
-          - CLOUD_SCHEDULER
-          - INTEGRATION_CONNECTOR_TRIGGER
-        triggerNumber:
-          type: string
-          description: Number for ordering triggers.
-        startTasks:
-          type: array
-          description: Tasks to start when trigger fires.
-          items:
-            type: object
-            properties:
-              taskId:
-                type: string
-              condition:
-                type: string
-              displayName:
-                type: string
-        properties:
-          type: object
-          description: Trigger-specific properties.
-          additionalProperties:
-            type: string
-    IntegrationParameter:
-      type: object
-      description: A parameter used in an integration.
-      properties:
-        key:
-          type: string
-          description: Name of the parameter.
-        dataType:
-          type: string
-          description: Data type of the parameter.
-          enum:
-          - INTEGRATION_PARAMETER_DATA_TYPE_UNSPECIFIED
-          - STRING_VALUE
-          - INT_VALUE
-          - DOUBLE_VALUE
-          - BOOLEAN_VALUE
-          - STRING_ARRAY
-          - INT_ARRAY
-          - DOUBLE_ARRAY
-          - BOOLEAN_ARRAY
-          - JSON_VALUE
-          - PROTO_VALUE
-          - PROTO_ARRAY
-        defaultValue:
-          $ref: '#/components/schemas/ValueType'
-        inputOutputType:
-          type: string
-          description: Whether the parameter is input, output, or both.
-          enum:
-          - IN_OUT_TYPE_UNSPECIFIED
-          - IN
-          - OUT
-          - IN_OUT
-        isTransient:
-          type: boolean
-          description: Whether the parameter is transient.
-        producer:
-          type: string
-          description: Task that produces this parameter.
+        integrationVersion:
+          $ref: '#/components/schemas/IntegrationVersion'
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    versionId:
+      name: versionId
+      in: path
+      description: Integration version identifier.
+      required: true
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
   responses:
     BadRequest:
       description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -661,12 +667,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

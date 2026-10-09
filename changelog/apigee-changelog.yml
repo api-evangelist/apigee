@@ -1,0 +1,29 @@
+generated: '2026-10-04'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://docs.cloud.google.com/apigee/docs/release-notes
+sources:
+- https://docs.cloud.google.com/apigee/docs/release-notes
+- https://docs.cloud.google.com/apigee/docs/api-platform/envoy-adapter/release-notes
+- https://docs.cloud.google.com/apigee/docs/api-security/release-notes
+- https://docs.cloud.google.com/apigee/docs/api-platform/analytics/release-notes
+entries:
+- breaking: false
+  highlights:
+  - On October 2, 2026, we released an updated version of Apigee (1-18-0-apigee-6).
+  - Rollouts of this release began today and can take four or more business days to complete across all Google Cloud zones.
+  date: '2026-10-02'
+- breaking: false
+  highlights:
+  - AI performance and Tool performance dashboards in API insights now include token usage, model latency, traffic, throughput, payload sizes,
+    and latency metrics.
+  date: '2026-09-30'
+- breaking: false
+  highlights:
+  - Apigee hybrid v1.17.1 adds support for connecting an Apigee hybrid runtime to a Cassandra datastore that runs in a separate Kubernetes cluster
+    (external datastore mode).
+  - The Apigee operator's Kubernetes manager role now includes the core endpoints permission.
+  date: '2026-09-30'
+current_version: 1-18-0-apigee-6
+note: Versioning scheme follows a dash‑separated numeric pattern (e.g., 1-18-0-apigee-6).
+docs: https://docs.cloud.google.com/apigee/docs/release-notes

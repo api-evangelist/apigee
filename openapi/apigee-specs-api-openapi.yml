@@ -229,37 +229,10 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    apiId:
-      name: apiId
+    projectId:
+      name: projectId
       in: path
-      description: ID of the API resource.
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    versionId:
-      name: versionId
-      in: path
-      description: ID of the API version resource.
+      description: Google Cloud project ID.
       required: true
       schema:
         type: string
@@ -270,56 +243,85 @@ components:
       required: true
       schema:
         type: string
-    projectId:
-      name: projectId
+    apiId:
+      name: apiId
       in: path
-      description: Google Cloud project ID.
+      description: ID of the API resource.
       required: true
       schema:
         type: string
+    versionId:
+      name: versionId
+      in: path
+      description: ID of the API version resource.
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    AttributeValues:
+    Documentation:
       type: object
-      description: Values assigned to an attribute.
+      description: Documentation associated with a resource.
       properties:
-        enumValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                $ref: '#/components/schemas/EnumAttributeValue'
-        stringValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        jsonValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        attribute:
+        externalUri:
           type: string
-          description: Resource name of the attribute definition.
-    Error:
+          description: URI of external documentation.
+    ListApiSpecsResponse:
       type: object
-      description: Error response from the API Hub API.
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
+        specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiSpec'
+        nextPageToken:
+          type: string
+        totalSize:
+          type: integer
+          format: int32
     HttpBody:
       type: object
       description: Raw HTTP body content.
@@ -337,34 +339,20 @@ components:
           items:
             type: object
             additionalProperties: true
-    EnumAttributeValue:
+    Error:
       type: object
-      description: An enum value assigned to an attribute.
+      description: Error response from the API Hub API.
       properties:
-        id:
-          type: string
-          description: ID of the enum value.
-        displayName:
-          type: string
-          description: Output only. Display name of the enum value.
-          readOnly: true
-    Status:
-      type: object
-      description: The Status type defines a logical error model.
-      properties:
-        code:
-          type: integer
-          format: int32
-          description: The status code.
-        message:
-          type: string
-          description: A developer-facing error message.
-        details:
-          type: array
-          description: A list of messages that carry the error details.
-          items:
-            type: object
-            additionalProperties: true
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
     ApiSpec:
       type: object
       description: A machine-readable API specification.
@@ -421,18 +409,6 @@ components:
           format: date-time
           description: Output only. Time the spec was last updated.
           readOnly: true
-    ListApiSpecsResponse:
-      type: object
-      properties:
-        specs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiSpec'
-        nextPageToken:
-          type: string
-        totalSize:
-          type: integer
-          format: int32
     LintResponse:
       type: object
       description: Lint results for an API specification.
@@ -481,13 +457,51 @@ components:
               count:
                 type: integer
                 format: int32
-    Documentation:
+    Status:
       type: object
-      description: Documentation associated with a resource.
+      description: The Status type defines a logical error model.
       properties:
-        externalUri:
+        code:
+          type: integer
+          format: int32
+          description: The status code.
+        message:
           type: string
-          description: URI of external documentation.
+          description: A developer-facing error message.
+        details:
+          type: array
+          description: A list of messages that carry the error details.
+          items:
+            type: object
+            additionalProperties: true
+    AttributeValues:
+      type: object
+      description: Values assigned to an attribute.
+      properties:
+        enumValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
+          type: string
+          description: Resource name of the attribute definition.
     Operation:
       type: object
       description: A long-running operation.
@@ -508,31 +522,17 @@ components:
           type: object
           description: The normal response of the operation.
           additionalProperties: true
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    EnumAttributeValue:
+      type: object
+      description: An enum value assigned to an attribute.
+      properties:
+        id:
+          type: string
+          description: ID of the enum value.
+        displayName:
+          type: string
+          description: Output only. Display name of the enum value.
+          readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

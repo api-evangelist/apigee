@@ -85,32 +85,34 @@ components:
         externalUri:
           type: string
           description: URI of external documentation.
-    Error:
+    AttributeValues:
       type: object
-      description: Error response from the API Hub API.
+      description: Values assigned to an attribute.
       properties:
-        error:
+        enumValues:
           type: object
           properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    ListExternalApisResponse:
-      type: object
-      properties:
-        externalApis:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalApi'
-        nextPageToken:
+            values:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnumAttributeValue'
+        stringValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        jsonValues:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: string
+        attribute:
           type: string
-        totalSize:
-          type: integer
-          format: int32
+          description: Resource name of the attribute definition.
     EnumAttributeValue:
       type: object
       description: An enum value assigned to an attribute.
@@ -163,60 +165,33 @@ components:
           format: date-time
           description: Output only. Time the external API was last updated.
           readOnly: true
-    AttributeValues:
+    Error:
       type: object
-      description: Values assigned to an attribute.
+      description: Error response from the API Hub API.
       properties:
-        enumValues:
+        error:
           type: object
           properties:
-            values:
-              type: array
-              items:
-                $ref: '#/components/schemas/EnumAttributeValue'
-        stringValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        jsonValues:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-        attribute:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListExternalApisResponse:
+      type: object
+      properties:
+        externalApis:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalApi'
+        nextPageToken:
           type: string
-          description: Resource name of the attribute definition.
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+        totalSize:
+          type: integer
+          format: int32
   parameters:
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
     projectId:
       name: projectId
       in: path
@@ -231,6 +206,12 @@ components:
       required: true
       schema:
         type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
     pageSize:
       name: pageSize
       in: query
@@ -238,6 +219,25 @@ components:
       schema:
         type: integer
         format: int32
+  responses:
+    Unauthorized:
+      description: Unauthorized. Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

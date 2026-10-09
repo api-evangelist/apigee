@@ -173,67 +173,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    ListObservationJobsResponse:
-      type: object
-      properties:
-        observationJobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObservationJob'
-        nextPageToken:
-          type: string
-        unreachable:
-          type: array
-          items:
-            type: string
-    Status:
-      type: object
-      description: The Status type defines a logical error model.
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-    Operation:
-      type: object
-      description: A long-running operation.
-      properties:
-        name:
-          type: string
-          description: Name of the operation resource.
-        metadata:
-          type: object
-          description: Service-specific metadata.
-          additionalProperties: true
-        done:
-          type: boolean
-          description: Whether the operation is complete.
-        error:
-          $ref: '#/components/schemas/Status'
-        response:
-          type: object
-          description: The normal response of the operation.
-          additionalProperties: true
     ObservationJob:
       type: object
       description: An API observation job that analyzes traffic to discover shadow APIs.
@@ -268,18 +207,73 @@ components:
           format: date-time
           description: Output only. Time the job was last updated.
           readOnly: true
+    Status:
+      type: object
+      description: The Status type defines a logical error model.
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Operation:
+      type: object
+      description: A long-running operation.
+      properties:
+        name:
+          type: string
+          description: Name of the operation resource.
+        metadata:
+          type: object
+          description: Service-specific metadata.
+          additionalProperties: true
+        done:
+          type: boolean
+          description: Whether the operation is complete.
+        error:
+          $ref: '#/components/schemas/Status'
+        response:
+          type: object
+          description: The normal response of the operation.
+          additionalProperties: true
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    ListObservationJobsResponse:
+      type: object
+      properties:
+        observationJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObservationJob'
+        nextPageToken:
+          type: string
+        unreachable:
+          type: array
+          items:
+            type: string
   parameters:
     projectId:
       name: projectId
       in: path
       description: Google Cloud project ID.
       required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
       schema:
         type: string
     observationJobId:
@@ -296,6 +290,12 @@ components:
       required: true
       schema:
         type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
     pageSize:
       name: pageSize
       in: query
@@ -304,14 +304,14 @@ components:
         type: integer
         format: int32
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:

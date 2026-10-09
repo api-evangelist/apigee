@@ -126,38 +126,63 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    suspensionId:
+      name: suspensionId
+      in: path
+      description: Suspension identifier.
+      required: true
+      schema:
+        type: string
+    projectId:
+      name: projectId
+      in: path
+      description: Google Cloud project ID.
+      required: true
+      schema:
+        type: string
+    productId:
+      name: productId
+      in: path
+      description: Product identifier (typically the Apigee product name).
+      required: true
+      schema:
+        type: string
+    locationId:
+      name: locationId
+      in: path
+      description: Google Cloud region or location.
+      required: true
+      schema:
+        type: string
+    executionId:
+      name: executionId
+      in: path
+      description: Execution identifier.
+      required: true
+      schema:
+        type: string
+    integrationId:
+      name: integrationId
+      in: path
+      description: Name of the integration.
+      required: true
+      schema:
+        type: string
+    pageToken:
+      name: pageToken
+      in: query
+      description: Page token returned from a previous list request.
+      schema:
+        type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   schemas:
-    ResolveSuspensionResponse:
-      type: object
-      description: Response from resolving a suspension.
-    Error:
-      type: object
-      description: Error response.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              format: int32
-            message:
-              type: string
-            status:
-              type: string
-    LiftSuspensionResponse:
-      type: object
-      description: Response from lifting a suspension.
-      properties:
-        eventExecutionInfoId:
-          type: string
-          description: ID of the event execution info.
-    LiftSuspensionRequest:
-      type: object
-      description: Request to lift a suspension.
-      properties:
-        suspensionResult:
-          type: string
-          description: Result of the suspension lift.
     ListSuspensionsResponse:
       type: object
       properties:
@@ -179,6 +204,9 @@ components:
                 format: date-time
         nextPageToken:
           type: string
+    ResolveSuspensionResponse:
+      type: object
+      description: Response from resolving a suspension.
     ResolveSuspensionRequest:
       type: object
       description: Request to resolve a suspension.
@@ -186,63 +214,41 @@ components:
         suspension:
           type: object
           description: The suspension resolution details.
-  parameters:
-    projectId:
-      name: projectId
-      in: path
-      description: Google Cloud project ID.
-      required: true
-      schema:
-        type: string
-    pageToken:
-      name: pageToken
-      in: query
-      description: Page token returned from a previous list request.
-      schema:
-        type: string
-    productId:
-      name: productId
-      in: path
-      description: Product identifier (typically the Apigee product name).
-      required: true
-      schema:
-        type: string
-    suspensionId:
-      name: suspensionId
-      in: path
-      description: Suspension identifier.
-      required: true
-      schema:
-        type: string
-    locationId:
-      name: locationId
-      in: path
-      description: Google Cloud region or location.
-      required: true
-      schema:
-        type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
-    executionId:
-      name: executionId
-      in: path
-      description: Execution identifier.
-      required: true
-      schema:
-        type: string
-    integrationId:
-      name: integrationId
-      in: path
-      description: Name of the integration.
-      required: true
-      schema:
-        type: string
+    Error:
+      type: object
+      description: Error response.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            status:
+              type: string
+    LiftSuspensionRequest:
+      type: object
+      description: Request to lift a suspension.
+      properties:
+        suspensionResult:
+          type: string
+          description: Result of the suspension lift.
+    LiftSuspensionResponse:
+      type: object
+      description: Response from lifting a suspension.
+      properties:
+        eventExecutionInfoId:
+          type: string
+          description: ID of the event execution info.
   responses:
+    Forbidden:
+      description: Forbidden. The caller does not have permission.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: Not found. The specified resource does not exist.
       content:
@@ -251,12 +257,6 @@ components:
             $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Forbidden. The caller does not have permission.
       content:
         application/json:
           schema:

@@ -2,6 +2,7 @@
 generated: '2026-09-20'
 method: searched
 source: https://cloud.google.com/apigee/pricing
+name: Apigee API Plans
 sources:
 - https://cloud.google.com/apigee/pricing
 provenance:

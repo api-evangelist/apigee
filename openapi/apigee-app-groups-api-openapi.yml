@@ -199,6 +199,16 @@ components:
           format: int64
           description: Output only. Time the app group was last modified.
           readOnly: true
+    Attribute:
+      type: object
+      description: A key-value pair used for custom attributes.
+      properties:
+        name:
+          type: string
+          description: Name of the attribute.
+        value:
+          type: string
+          description: Value of the attribute.
     Error:
       type: object
       description: Error response from the Apigee API.
@@ -231,25 +241,15 @@ components:
           type: integer
           format: int32
           description: Total number of app groups.
-    Attribute:
-      type: object
-      description: A key-value pair used for custom attributes.
-      properties:
-        name:
-          type: string
-          description: Name of the attribute.
-        value:
-          type: string
-          description: Value of the attribute.
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -273,13 +273,6 @@ components:
       description: Page token returned from a previous list request.
       schema:
         type: string
-    pageSize:
-      name: pageSize
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        format: int32
     organizationId:
       name: organizationId
       in: path
@@ -287,6 +280,13 @@ components:
       required: true
       schema:
         type: string
+    pageSize:
+      name: pageSize
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     oauth2:
       type: oauth2

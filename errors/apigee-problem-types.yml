@@ -1,0 +1,59 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/apigee-analytics-api-openapi.yml
+- openapi/apigee-api-deployments-api-openapi.yml
+- openapi/apigee-api-observations-api-openapi.yml
+- openapi/apigee-api-operations-api-openapi.yml
+- openapi/apigee-api-products-api-openapi.yml
+- openapi/apigee-api-proxies-api-openapi.yml
+- openapi/apigee-api-proxy-revisions-api-openapi.yml
+- openapi/apigee-api-specs-api-openapi.yml
+- openapi/apigee-api-versions-api-openapi.yml
+- openapi/apigee-app-groups-api-openapi.yml
+- openapi/apigee-artifacts-api-openapi.yml
+- openapi/apigee-attributes-api-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: Error
+coverage:
+  operations: 179
+  statuses_declared: 5
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad request. The request body or parameters are invalid.
+  operations: 67
+  media_types:
+  - application/json
+  schema: Error
+- status: 401
+  title: Unauthorized
+  description: Unauthorized. Authentication credentials are missing or invalid.
+  operations: 179
+  media_types:
+  - application/json
+  schema: Error
+- status: 403
+  title: Forbidden
+  description: Forbidden. The caller does not have permission.
+  operations: 179
+  media_types:
+  - application/json
+  schema: Error
+- status: 404
+  title: Not Found
+  description: Not found. The specified resource does not exist.
+  operations: 103
+  media_types:
+  - application/json
+  schema: Error
+- status: 409
+  title: Conflict
+  description: Conflict. A resource with the same identifier already exists.
+  operations: 4
+  media_types:
+  - application/json
+  schema: Error

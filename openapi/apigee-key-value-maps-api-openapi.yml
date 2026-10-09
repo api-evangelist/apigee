@@ -100,6 +100,21 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    environmentId:
+      name: environmentId
+      in: path
+      description: Name of the environment.
+      required: true
+      schema:
+        type: string
+    organizationId:
+      name: organizationId
+      in: path
+      description: Name of the Apigee organization.
+      required: true
+      schema:
+        type: string
   schemas:
     Error:
       type: object
@@ -129,14 +144,14 @@ components:
           type: boolean
           description: Whether the values in the map are encrypted.
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -153,21 +168,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    environmentId:
-      name: environmentId
-      in: path
-      description: Name of the environment.
-      required: true
-      schema:
-        type: string
-    organizationId:
-      name: organizationId
-      in: path
-      description: Name of the Apigee organization.
-      required: true
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2
