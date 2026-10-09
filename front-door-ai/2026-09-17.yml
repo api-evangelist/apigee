@@ -15,7 +15,9 @@ front_door_ai:
   - google-cloud-dataflow
   - google-cloud-datastore
   - google-cloud-logging
+  - google-cloud-monitoring
   - google-cloud-natural
+  - google-cloud-operations-suite
   - google-cloud-platform
   - google-cloud-service-mesh
   - google-data-studio
@@ -24,8 +26,11 @@ front_door_ai:
   - google-pub-sub
   - stackdriver-google
   inherited_from: null
+  alias_of: null
   verdict: scored
   score: null
+  band: null
+  band_label: null
   host_score: 93
   density: null
   words: 1906

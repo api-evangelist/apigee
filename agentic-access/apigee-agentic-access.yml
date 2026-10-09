@@ -1,25 +1,40 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/apigee-api-hub-openapi.yml, openapi/apigee-api-management-openapi.yml, openapi/apigee-apim-openapi.yml,
-  openapi/apigee-integrations-openapi.yml, openapi/apigee-registry-openapi.yml
+source: openapi/apigee-analytics-api-openapi.yml, openapi/apigee-api-deployments-api-openapi.yml,
+  openapi/apigee-api-observations-api-openapi.yml, openapi/apigee-api-operations-api-openapi.yml,
+  openapi/apigee-api-products-api-openapi.yml, openapi/apigee-api-proxies-api-openapi.yml, openapi/apigee-api-proxy-revisions-api-openapi.yml,
+  openapi/apigee-api-specs-api-openapi.yml, openapi/apigee-api-versions-api-openapi.yml, openapi/apigee-app-groups-api-openapi.yml,
+  openapi/apigee-artifacts-api-openapi.yml, openapi/apigee-attributes-api-openapi.yml, openapi/apigee-auth-configs-api-openapi.yml,
+  openapi/apigee-certificates-api-openapi.yml, openapi/apigee-dependencies-api-openapi.yml,
+  openapi/apigee-deployments-api-openapi.yml, openapi/apigee-developer-app-keys-api-openapi.yml,
+  openapi/apigee-developer-apps-api-openapi.yml, openapi/apigee-developers-api-openapi.yml,
+  openapi/apigee-environments-api-openapi.yml, openapi/apigee-executions-api-openapi.yml, openapi/apigee-external-apis-api-openapi.yml,
+  openapi/apigee-instances-api-openapi.yml, openapi/apigee-integration-versions-api-openapi.yml,
+  openapi/apigee-integrations-api-openapi.yml, openapi/apigee-key-value-maps-api-openapi.yml,
+  openapi/apigee-locations-api-openapi.yml, openapi/apigee-observation-jobs-api-openapi.yml,
+  openapi/apigee-observation-sources-api-openapi.yml, openapi/apigee-operations-api-openapi.yml,
+  openapi/apigee-organizations-api-openapi.yml, openapi/apigee-projects-api-openapi.yml, openapi/apigee-runtime-project-attachments-api-openapi.yml,
+  openapi/apigee-sfdc-channels-api-openapi.yml, openapi/apigee-sfdc-instances-api-openapi.yml,
+  openapi/apigee-shared-flows-api-openapi.yml, openapi/apigee-specs-api-openapi.yml, openapi/apigee-suspensions-api-openapi.yml,
+  openapi/apigee-target-servers-api-openapi.yml, openapi/apigee-versions-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 184
+  operations: 179
   by_action_class:
-    connected: 79
-    acting: 105
+    connected: 78
+    acting: 101
   by_consequence:
-    read: 79
-    write: 95
+    read: 78
+    write: 91
     physical: 9
     safety-critical: 1
   human_in_the_loop_required: 1
 operations:
-- path: /projects/{projectId}/locations/{locationId}/apis
+- path: /organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}
   method: get
-  operationId: listApis
+  operationId: getEnvironmentStats
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -27,9 +42,19 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis
+- path: /organizations/{organizationId}/analytics/datastores
+  method: get
+  operationId: listDatastores
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/analytics/datastores
   method: post
-  operationId: createApi
+  operationId: createDatastore
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -43,9 +68,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments
   method: get
-  operationId: getApi
+  operationId: listApiDeployments
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -53,213 +78,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}
-  method: patch
-  operationId: updateApi
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}
-  method: delete
-  operationId: deleteApi
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
-  method: get
-  operationId: listApiVersions
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments
   method: post
-  operationId: createApiVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
-  method: get
-  operationId: getApiVersion
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
-  method: patch
-  operationId: updateApiVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
-  method: delete
-  operationId: deleteApiVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
-  method: get
-  operationId: listApiSpecs
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
-  method: post
-  operationId: createApiSpec
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}
-  method: get
-  operationId: getApiSpec
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}
-  method: patch
-  operationId: updateApiSpec
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}
-  method: delete
-  operationId: deleteApiSpec
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents
-  method: get
-  operationId: getApiSpecContents
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:lint
-  method: post
-  operationId: lintApiSpec
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/deployments
-  method: get
-  operationId: listDeployments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/deployments
-  method: post
-  operationId: createDeployment
+  operationId: createApiDeployment
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -275,9 +96,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}
   method: get
-  operationId: getDeployment
+  operationId: getApiDeployment
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -285,9 +106,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}
   method: patch
-  operationId: updateDeployment
+  operationId: updateApiDeployment
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -303,9 +124,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}
   method: delete
-  operationId: deleteDeployment
+  operationId: deleteApiDeployment
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -321,35 +142,27 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/dependencies
-  method: get
-  operationId: listDependencies
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/dependencies
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:rollback
   method: post
-  operationId: createDependency
+  operationId: rollbackApiDeployment
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: physical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
     escalation:
       human-in-the-loop: conditional
       triggers:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations
   method: get
-  operationId: getDependency
+  operationId: listApiObservations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -357,41 +170,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}
-  method: patch
-  operationId: updateDependency
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}
-  method: delete
-  operationId: deleteDependency
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/attributes
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}
   method: get
-  operationId: listAttributes
+  operationId: getApiObservation
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -399,9 +180,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/attributes
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:batchEditTags
   method: post
-  operationId: createAttribute
+  operationId: batchEditApiObservationTags
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -415,9 +196,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/externalApis
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations
   method: get
-  operationId: listExternalApis
+  operationId: listApiOperations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -425,41 +206,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/externalApis
-  method: post
-  operationId: createExternalApi
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}:searchResources
-  method: post
-  operationId: searchResources
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations/{apiOperationId}
   method: get
-  operationId: listRuntimeProjectAttachments
+  operationId: getApiOperation
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -467,9 +216,19 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments
+- path: /organizations/{organizationId}/apiproducts
+  method: get
+  operationId: listApiProducts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/apiproducts
   method: post
-  operationId: createRuntimeProjectAttachment
+  operationId: createApiProduct
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -483,9 +242,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations
+- path: /organizations/{organizationId}/apiproducts/{apiProductId}
   method: get
-  operationId: listOrganizations
+  operationId: getApiProduct
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -493,35 +252,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /organizations
-  method: post
-  operationId: createOrganization
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}
-  method: get
-  operationId: getOrganization
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}
+- path: /organizations/{organizationId}/apiproducts/{apiProductId}
   method: put
-  operationId: updateOrganization
+  operationId: updateApiProduct
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -535,9 +268,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}
+- path: /organizations/{organizationId}/apiproducts/{apiProductId}
   method: delete
-  operationId: deleteOrganization
+  operationId: deleteApiProduct
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -655,9 +388,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/apiproducts
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
   method: get
-  operationId: listApiProducts
+  operationId: listApiSpecs
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -665,9 +398,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /organizations/{organizationId}/apiproducts
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs
   method: post
-  operationId: createApiProduct
+  operationId: createApiSpec
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -681,9 +414,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/apiproducts/{apiProductId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}
   method: get
-  operationId: getApiProduct
+  operationId: getApiSpec
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -691,9 +424,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /organizations/{organizationId}/apiproducts/{apiProductId}
-  method: put
-  operationId: updateApiProduct
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}
+  method: patch
+  operationId: updateApiSpec
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -707,9 +440,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/apiproducts/{apiProductId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}
   method: delete
-  operationId: deleteApiProduct
+  operationId: deleteApiSpec
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -723,9 +456,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/developers
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:getContents
   method: get
-  operationId: listDevelopers
+  operationId: getApiSpecContents
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -733,9 +466,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /organizations/{organizationId}/developers
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:rollback
   method: post
-  operationId: createDeveloper
+  operationId: rollbackApiSpec
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -749,9 +482,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/developers/{developerId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
   method: get
-  operationId: getDeveloper
+  operationId: listApiVersions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -759,9 +492,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /organizations/{organizationId}/developers/{developerId}
-  method: put
-  operationId: updateDeveloper
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+  method: post
+  operationId: createApiVersion
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -775,457 +508,35 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/developers/{developerId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
+  method: get
+  operationId: getApiVersion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
+  method: patch
+  operationId: updateApiVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
   method: delete
-  operationId: deleteDeveloper
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/developers/{developerId}/apps
-  method: get
-  operationId: listDeveloperApps
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/developers/{developerId}/apps
-  method: post
-  operationId: createDeveloperApp
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
-  method: get
-  operationId: getDeveloperApp
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
-  method: put
-  operationId: updateDeveloperApp
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
-  method: delete
-  operationId: deleteDeveloperApp
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys
-  method: get
-  operationId: listDeveloperAppKeys
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys
-  method: post
-  operationId: createDeveloperAppKey
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}
-  method: get
-  operationId: getDeveloperAppKey
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}
-  method: put
-  operationId: updateDeveloperAppKey
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}
-  method: delete
-  operationId: deleteDeveloperAppKey
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments
-  method: get
-  operationId: listEnvironments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/environments
-  method: post
-  operationId: createEnvironment
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}
-  method: get
-  operationId: getEnvironment
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/environments/{environmentId}
-  method: put
-  operationId: updateEnvironment
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}
-  method: delete
-  operationId: deleteEnvironment
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments
-  method: post
-  operationId: deployApiProxyRevision
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments
-  method: delete
-  operationId: undeployApiProxyRevision
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/deployments
-  method: get
-  operationId: listOrganizationDeployments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/environments/{environmentId}/targetservers
-  method: get
-  operationId: listTargetServers
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/environments/{environmentId}/targetservers
-  method: post
-  operationId: createTargetServer
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}
-  method: get
-  operationId: getTargetServer
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}
-  method: put
-  operationId: updateTargetServer
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}
-  method: delete
-  operationId: deleteTargetServer
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps
-  method: get
-  operationId: listKeyValueMaps
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps
-  method: post
-  operationId: createKeyValueMap
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}
-  method: delete
-  operationId: deleteKeyValueMap
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/sharedflows
-  method: get
-  operationId: listSharedFlows
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/sharedflows
-  method: post
-  operationId: createSharedFlow
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/sharedflows/{sharedFlowId}
-  method: get
-  operationId: getSharedFlow
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/sharedflows/{sharedFlowId}
-  method: delete
-  operationId: deleteSharedFlow
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /organizations/{organizationId}/environments/{environmentId}/stats/{dimensionName}
-  method: get
-  operationId: getEnvironmentStats
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/analytics/datastores
-  method: get
-  operationId: listDatastores
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organizations/{organizationId}/analytics/datastores
-  method: post
-  operationId: createDatastore
+  operationId: deleteApiVersion
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1307,9 +618,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/instances
+- path: /projects/{projectId}/locations/{locationId}/artifacts
   method: get
-  operationId: listInstances
+  operationId: listArtifacts
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1317,9 +628,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /organizations/{organizationId}/instances
+- path: /projects/{projectId}/locations/{locationId}/artifacts
   method: post
-  operationId: createInstance
+  operationId: createArtifact
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1333,9 +644,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organizations/{organizationId}/instances/{instanceId}
+- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}
   method: get
-  operationId: getInstance
+  operationId: getArtifact
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1343,9 +654,25 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /organizations/{organizationId}/instances/{instanceId}
+- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}
+  method: put
+  operationId: replaceArtifact
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}
   method: delete
-  operationId: deleteInstance
+  operationId: deleteArtifact
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1359,9 +686,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/observationJobs
+- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:getContents
   method: get
-  operationId: listObservationJobs
+  operationId: getArtifactContents
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1369,395 +696,19 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationJobs
+- path: /projects/{projectId}/locations/{locationId}/attributes
+  method: get
+  operationId: listAttributes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/attributes
   method: post
-  operationId: createObservationJob
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}
-  method: get
-  operationId: getObservationJob
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}
-  method: delete
-  operationId: deleteObservationJob
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:enable
-  method: post
-  operationId: enableObservationJob
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:disable
-  method: post
-  operationId: disableObservationJob
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations
-  method: get
-  operationId: listApiObservations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}
-  method: get
-  operationId: getApiObservation
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations:batchEditTags
-  method: post
-  operationId: batchEditApiObservationTags
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations
-  method: get
-  operationId: listApiOperations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}/apiObservations/{apiObservationId}/apiOperations/{apiOperationId}
-  method: get
-  operationId: getApiOperation
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationSources
-  method: get
-  operationId: listObservationSources
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationSources
-  method: post
-  operationId: createObservationSource
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/observationSources/{observationSourceId}
-  method: get
-  operationId: getObservationSource
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/observationSources/{observationSourceId}
-  method: delete
-  operationId: deleteObservationSource
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/operations
-  method: get
-  operationId: listOperations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/operations/{operationId}
-  method: get
-  operationId: getOperation
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/operations/{operationId}:cancel
-  method: post
-  operationId: cancelOperation
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations
-  method: get
-  operationId: listIntegrations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}
-  method: delete
-  operationId: deleteIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:execute
-  method: post
-  operationId: executeIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:schedule
-  method: post
-  operationId: scheduleIntegration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions
-  method: get
-  operationId: listIntegrationVersions
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions
-  method: post
-  operationId: createIntegrationVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}
-  method: get
-  operationId: getIntegrationVersion
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}
-  method: patch
-  operationId: updateIntegrationVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}
-  method: delete
-  operationId: deleteIntegrationVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish
-  method: post
-  operationId: publishIntegrationVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish
-  method: post
-  operationId: unpublishIntegrationVersion
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download
-  method: get
-  operationId: downloadIntegrationVersion
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:upload
-  method: post
-  operationId: uploadIntegrationVersion
+  operationId: createAttribute
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1907,6 +858,466 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /projects/{projectId}/locations/{locationId}/dependencies
+  method: get
+  operationId: listDependencies
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/dependencies
+  method: post
+  operationId: createDependency
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}
+  method: get
+  operationId: getDependency
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}
+  method: patch
+  operationId: updateDependency
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/dependencies/{dependencyId}
+  method: delete
+  operationId: deleteDependency
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/deployments
+  method: get
+  operationId: listDeployments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/deployments
+  method: post
+  operationId: createDeployment
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}
+  method: get
+  operationId: getDeployment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}
+  method: patch
+  operationId: updateDeployment
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/deployments/{deploymentId}
+  method: delete
+  operationId: deleteDeployment
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments
+  method: post
+  operationId: deployApiProxyRevision
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}/apis/{apiId}/revisions/{revisionId}/deployments
+  method: delete
+  operationId: undeployApiProxyRevision
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/deployments
+  method: get
+  operationId: listOrganizationDeployments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys
+  method: get
+  operationId: listDeveloperAppKeys
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys
+  method: post
+  operationId: createDeveloperAppKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}
+  method: get
+  operationId: getDeveloperAppKey
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}
+  method: put
+  operationId: updateDeveloperAppKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}/keys/{keyId}
+  method: delete
+  operationId: deleteDeveloperAppKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers/{developerId}/apps
+  method: get
+  operationId: listDeveloperApps
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/developers/{developerId}/apps
+  method: post
+  operationId: createDeveloperApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
+  method: get
+  operationId: getDeveloperApp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
+  method: put
+  operationId: updateDeveloperApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers/{developerId}/apps/{appId}
+  method: delete
+  operationId: deleteDeveloperApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers
+  method: get
+  operationId: listDevelopers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/developers
+  method: post
+  operationId: createDeveloper
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers/{developerId}
+  method: get
+  operationId: getDeveloper
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/developers/{developerId}
+  method: put
+  operationId: updateDeveloper
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/developers/{developerId}
+  method: delete
+  operationId: deleteDeveloper
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments
+  method: get
+  operationId: listEnvironments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/environments
+  method: post
+  operationId: createEnvironment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}
+  method: get
+  operationId: getEnvironment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/environments/{environmentId}
+  method: put
+  operationId: updateEnvironment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}
+  method: delete
+  operationId: deleteEnvironment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions
   method: get
   operationId: listExecutions
@@ -1927,9 +1338,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions
+- path: /projects/{projectId}/locations/{locationId}/externalApis
   method: get
-  operationId: listSuspensions
+  operationId: listExternalApis
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1937,9 +1348,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift
+- path: /projects/{projectId}/locations/{locationId}/externalApis
   method: post
-  operationId: liftSuspension
+  operationId: createExternalApi
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1953,25 +1364,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve
-  method: post
-  operationId: resolveSuspension
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances
+- path: /organizations/{organizationId}/instances
   method: get
-  operationId: listSfdcInstances
+  operationId: listInstances
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1979,9 +1374,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances
+- path: /organizations/{organizationId}/instances
   method: post
-  operationId: createSfdcInstance
+  operationId: createInstance
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1995,9 +1390,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}
+- path: /organizations/{organizationId}/instances/{instanceId}
   method: get
-  operationId: getSfdcInstance
+  operationId: getInstance
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2005,25 +1400,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}
-  method: patch
-  operationId: updateSfdcInstance
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}
+- path: /organizations/{organizationId}/instances/{instanceId}
   method: delete
-  operationId: deleteSfdcInstance
+  operationId: deleteInstance
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2037,9 +1416,25 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels
+- path: /projects/{projectId}/locations/{locationId}/instances
+  method: post
+  operationId: createInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/instances/{instanceId}
   method: get
-  operationId: listSfdcChannels
+  operationId: getInstance
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2047,9 +1442,485 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels
+- path: /projects/{projectId}/locations/{locationId}/instances/{instanceId}
+  method: delete
+  operationId: deleteInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions
+  method: get
+  operationId: listIntegrationVersions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions
   method: post
-  operationId: createSfdcChannel
+  operationId: createIntegrationVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}
+  method: get
+  operationId: getIntegrationVersion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}
+  method: patch
+  operationId: updateIntegrationVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}
+  method: delete
+  operationId: deleteIntegrationVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:publish
+  method: post
+  operationId: publishIntegrationVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:unpublish
+  method: post
+  operationId: unpublishIntegrationVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions/{versionId}:download
+  method: get
+  operationId: downloadIntegrationVersion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/versions:upload
+  method: post
+  operationId: uploadIntegrationVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations
+  method: get
+  operationId: listIntegrations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}
+  method: delete
+  operationId: deleteIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:execute
+  method: post
+  operationId: executeIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}:schedule
+  method: post
+  operationId: scheduleIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps
+  method: get
+  operationId: listKeyValueMaps
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps
+  method: post
+  operationId: createKeyValueMap
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}/keyvaluemaps/{keyValueMapId}
+  method: delete
+  operationId: deleteKeyValueMap
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}:searchResources
+  method: post
+  operationId: searchResources
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/observationJobs
+  method: get
+  operationId: listObservationJobs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/observationJobs
+  method: post
+  operationId: createObservationJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}
+  method: get
+  operationId: getObservationJob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}
+  method: delete
+  operationId: deleteObservationJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:enable
+  method: post
+  operationId: enableObservationJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/observationJobs/{observationJobId}:disable
+  method: post
+  operationId: disableObservationJob
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/observationSources
+  method: get
+  operationId: listObservationSources
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/observationSources
+  method: post
+  operationId: createObservationSource
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/observationSources/{observationSourceId}
+  method: get
+  operationId: getObservationSource
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/observationSources/{observationSourceId}
+  method: delete
+  operationId: deleteObservationSource
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/operations
+  method: get
+  operationId: listOperations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/operations/{operationId}
+  method: get
+  operationId: getOperation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/operations/{operationId}:cancel
+  method: post
+  operationId: cancelOperation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations
+  method: get
+  operationId: listOrganizations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations
+  method: post
+  operationId: createOrganization
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}
+  method: get
+  operationId: getOrganization
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}
+  method: put
+  operationId: updateOrganization
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}
+  method: delete
+  operationId: deleteOrganization
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2131,9 +2002,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+- path: /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments
   method: get
-  operationId: listApiVersions
+  operationId: listRuntimeProjectAttachments
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2141,9 +2012,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
+- path: /projects/{projectId}/locations/{locationId}/runtimeProjectAttachments
   method: post
-  operationId: createApiVersion
+  operationId: createRuntimeProjectAttachment
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2157,9 +2028,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels
   method: get
-  operationId: getApiVersion
+  operationId: listSfdcChannels
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2167,9 +2038,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
-  method: patch
-  operationId: updateApiVersion
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}/sfdcChannels
+  method: post
+  operationId: createSfdcChannel
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2183,9 +2054,113 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances
+  method: get
+  operationId: listSfdcInstances
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances
+  method: post
+  operationId: createSfdcInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}
+  method: get
+  operationId: getSfdcInstance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}
+  method: patch
+  operationId: updateSfdcInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/sfdcInstances/{sfdcInstanceId}
   method: delete
-  operationId: deleteApiVersion
+  operationId: deleteSfdcInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/sharedflows
+  method: get
+  operationId: listSharedFlows
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/sharedflows
+  method: post
+  operationId: createSharedFlow
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/sharedflows/{sharedFlowId}
+  method: get
+  operationId: getSharedFlow
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/sharedflows/{sharedFlowId}
+  method: delete
+  operationId: deleteSharedFlow
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2277,9 +2252,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:rollback
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}/specs/{specId}:lint
   method: post
-  operationId: rollbackApiSpec
+  operationId: lintApiSpec
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2293,9 +2268,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions
   method: get
-  operationId: listApiDeployments
+  operationId: listSuspensions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2303,101 +2278,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:lift
   method: post
-  operationId: createApiDeployment
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}
-  method: get
-  operationId: getApiDeployment
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}
-  method: patch
-  operationId: updateApiDeployment
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}
-  method: delete
-  operationId: deleteApiDeployment
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/deployments/{deploymentId}:rollback
-  method: post
-  operationId: rollbackApiDeployment
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /projects/{projectId}/locations/{locationId}/artifacts
-  method: get
-  operationId: listArtifacts
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /projects/{projectId}/locations/{locationId}/artifacts
-  method: post
-  operationId: createArtifact
+  operationId: liftSuspension
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2411,9 +2294,25 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}
+- path: /projects/{projectId}/locations/{locationId}/products/{productId}/integrations/{integrationId}/executions/{executionId}/suspensions/{suspensionId}:resolve
+  method: post
+  operationId: resolveSuspension
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}/targetservers
   method: get
-  operationId: getArtifact
+  operationId: listTargetServers
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2421,9 +2320,35 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}
+- path: /organizations/{organizationId}/environments/{environmentId}/targetservers
+  method: post
+  operationId: createTargetServer
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}
+  method: get
+  operationId: getTargetServer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}
   method: put
-  operationId: replaceArtifact
+  operationId: updateTargetServer
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2437,9 +2362,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}
+- path: /organizations/{organizationId}/environments/{environmentId}/targetservers/{targetServerId}
   method: delete
-  operationId: deleteArtifact
+  operationId: deleteTargetServer
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2453,9 +2378,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/artifacts/{artifactId}:getContents
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
   method: get
-  operationId: getArtifactContents
+  operationId: listApiVersions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2463,9 +2388,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/instances
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions
   method: post
-  operationId: createInstance
+  operationId: createApiVersion
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -2479,9 +2404,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /projects/{projectId}/locations/{locationId}/instances/{instanceId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
   method: get
-  operationId: getInstance
+  operationId: getApiVersion
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -2489,9 +2414,25 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /projects/{projectId}/locations/{locationId}/instances/{instanceId}
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
+  method: patch
+  operationId: updateApiVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /projects/{projectId}/locations/{locationId}/apis/{apiId}/versions/{versionId}
   method: delete
-  operationId: deleteInstance
+  operationId: deleteApiVersion
   x-agentic-access:
     action-class: acting
     consequence: write

@@ -48,7 +48,7 @@ workflows:
     description: >-
       Create the Apigee runtime instance, which returns a long-running operation
       while infrastructure is provisioned.
-    operationId: createInstance
+    operationId: postProjectsByProjectIdLocationsByLocationIdInstances
     parameters:
     - name: organizationId
       in: path
@@ -67,7 +67,7 @@ workflows:
     description: >-
       Poll the instance until its state reports ACTIVE before creating the
       environment.
-    operationId: getInstance
+    operationId: getProjectsByProjectIdLocationsByLocationIdInstancesByInstanceId
     parameters:
     - name: organizationId
       in: path
