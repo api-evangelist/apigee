@@ -1,45 +1,49 @@
-# Kin Score artifact — apigee — 2026-09-05T072335
+# Kin Score artifact — apigee — 2026-10-11T110117
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: apigee
-  schema_version: 0.18.3
-  scored_at: '2026-09-05'
-  run_ts: 2026-09-05T072335
-  composite: 62.8
-  band: strong
+  schema_version: 0.23.0
+  scored_at: '2026-10-11'
+  run_ts: 2026-10-11T110117
+  composite: 73.1
+  band: exemplar
   facets:
-    discoverability: 83.3
-    contract_quality: 74.2
-    governance: 13.6
-    operational_transparency: 52.6
-    developer_ergonomics: 82.1
-    commercial_clarity: 55.3
-    contract_governance: 13.6
-    access_clarity: 55.3
+    discoverability: 85.7
+    contract_quality: 67.2
+    contract_governance: 43.6
+    operational_transparency: 44.7
+    developer_ergonomics: 88.6
+    access_clarity: 78.9
   agent_readiness:
-    score: 26.5
-    band: agent-aware
+    score: 33.7
+    band: agent-ready
     dimensions:
       spec_presence: true
       agentic_access: derived
       reversibility_documented: documented
       mcp_server: false
-      auth_clarity: negotiable
+      auth_clarity: served
       idempotency: false
-      error_semantics: false
+      error_semantics: derived
       openapi_examples: false
       rate_limit_signal: documented
       event_surface_described: false
-      agent_skills: false
+      agent_skills: unknown
       well_known_catalog: false
       consent_identity: false
       agent_card: false
       dry_run_mode: false
-      delegated_identity: documented
+      delegated_identity: served
       protected_resource_metadata: false
       dynamic_client_registration: false
       agentic_commerce: false
+  regulatory:
+    applies: true
+    regime: Horizontal (data, software, accessibility, platform)
+    regime_id: horizontal
+    score: 41.8
+    matched_via: fallback
   provenance:
     agentic_access: derived
     contracts:
