@@ -4060,8 +4060,6 @@ common:
   name: Apigee Update an API Product Quota
 - type: LinkedIn
   url: https://www.linkedin.com/company/apigee-legacy
-- type: Portal
-  url: https://cloud.google.com/apigee
 - type: Documentation
   url: https://cloud.google.com/apigee/docs
 - type: GettingStarted
