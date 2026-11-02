@@ -98,7 +98,7 @@ rate_limit_statements:
 - Deploy up to 50 API proxies/shared flows per environment per region
 - Deploy up to 85 environments (limit) per project
 x-canonical:
-  generated: '2026-11-01'
+  generated: '2026-11-02'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - hybrid
