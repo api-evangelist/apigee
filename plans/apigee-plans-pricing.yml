@@ -1,0 +1,192 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://cloud.google.com/apigee/pricing
+name: Apigee API Plans
+sources:
+- https://cloud.google.com/apigee/pricing
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: per-call
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-09-20'
+  managed_tier: Standard
+published: true
+note: Pay-as-you-go rates published per 1M API calls plus monthly environment fees; subscription tiers
+  (Standard/Enterprise/Enterprise Plus) are quote-only.
+plan_count: 11
+currency: USD
+plans:
+- name: Evaluation (free trial)
+  price_text: Try it free
+  period: none
+  included_quota: Evaluate Apigee in your own sandbox at no cost for 60 days
+- name: Pay-as-you-go — Standard API Proxy
+  price_text: $20 (up to 50M API calls)
+  price: 20
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+  overage: $16 (from 50M to 500M API calls); $13 (above 500M API calls)
+- name: Pay-as-you-go — Extensible API Proxy
+  price_text: $100 (up to 50M API calls)
+  price: 100
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+  overage: $80 (from 50M to 500M API calls); $64 (above 500M API calls)
+- name: Base environment
+  price_text: $365 per month per region
+  price: 365
+  currency: USD
+  period: month
+  unit: per region
+  included_quota: Deploy five environments per project; up to 20 API proxies per environment per region;
+    Standard API Proxy only
+- name: Intermediate environment
+  price_text: $1,460 per month per region
+  price: 1460
+  currency: USD
+  period: month
+  unit: per region
+  included_quota: 50 API proxies/shared flows per environment per region
+- name: Comprehensive environment
+  price_text: $3,431 per month per region
+  price: 3431
+  currency: USD
+  period: month
+  unit: per region
+  included_quota: 100 API proxies/shared flows per environment per region
+  overage: $0.04/hour/region for additional deployments to a comprehensive environment
+- name: 'Add-on: API Analytics'
+  price_text: $20 per 1M API calls
+  price: 20
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+- name: 'Add-on: Advanced API Security'
+  price_text: $350 per 1M API calls
+  price: 350
+  currency: USD
+  period: per-use
+  unit: per 1M API calls
+- name: Standard (subscription)
+  price_text: Contact us
+  period: none
+  included_quota: Up to 1.25B Standard API Proxy calls or 250M Extensible API Proxy calls; Three environments;
+    250 deployments
+- name: Enterprise (subscription)
+  price_text: Contact us
+  period: none
+  included_quota: Up to 7.5B Standard API Proxy calls or 1.5B Extensible API Proxy calls; Six environments;
+    500 deployments
+- name: Enterprise Plus (subscription)
+  price_text: Contact us
+  period: none
+  included_quota: Up to 75B Standard API Proxy calls or 15B Extensible API Proxy calls; 12 environments;
+    1,500 deployments
+rate_limit_statements:
+- Up to 50 QPS
+- Up to 100 QPS
+- Autoscaled QPS
+- Deploy up to 20 API proxies per environment per region
+- Deploy up to 50 API proxies/shared flows per environment per region
+- Deploy up to 85 environments (limit) per project
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - request
+  plans:
+  - name: Evaluation (free trial)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Pay-as-you-go — Standard API Proxy
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - request
+    periods:
+    - other
+  - name: Pay-as-you-go — Extensible API Proxy
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - request
+    periods:
+    - other
+  - name: Base environment
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Intermediate environment
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Comprehensive environment
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: 'Add-on: API Analytics'
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - request
+    periods:
+    - other
+  - name: 'Add-on: Advanced API Security'
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - request
+    periods:
+    - other
+  - name: Standard (subscription)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Enterprise (subscription)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Enterprise Plus (subscription)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
