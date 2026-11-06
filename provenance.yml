@@ -89,6 +89,9 @@ artifacts:
   changelog/apigee-changelog.yml:
     method: searched
     evidence: declared in the artifact
+  cli/apigee-cli.yml:
+    method: searched
+    evidence: declared in the artifact
   collections/apigee-analytics-api.opencollection.json:
     method: derived
     evidence: openapi/apigee-analytics-api
@@ -360,6 +363,9 @@ artifacts:
     method: derived
     evidence: openapi/apigee-versions-api
   conformance/apigee-conformance.yml:
+    method: derived
+    evidence: declared in the artifact
+  conventions/apigee-conventions.yml:
     method: derived
     evidence: declared in the artifact
   data-model/apigee-data-model.yml:
@@ -845,11 +851,20 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  lifecycle/apigee-lifecycle.yml:
+    method: searched
+    evidence: declared in the artifact
   llms/apigee-llms-probe.yml:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
+  llms/apigee-llms-provenance.yml:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
+  llms/apigee-llms.txt:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   mcp/apigee-mcp.yml:
-    method: derived
+    method: searched
     evidence: declared in the artifact
   onboarding/apigee-api-auth.mjs:
     method: unknown
@@ -1115,8 +1130,11 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   packages/apigee-packages.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: searched
+    evidence: declared in the artifact
+  patterns/apigee-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/apigee-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -1187,8 +1205,8 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   vocabulary/apigee-vocabulary.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: declared in the artifact
   well-known/apigee-accounts-oauth-authorization-server.json:
     method: unknown
     evidence: no authorship recorded
