@@ -86,6 +86,12 @@ artifacts:
   capabilities/apigee-capability-edges.yml:
     method: unknown
     evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/apigee-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -93,17 +99,17 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   collections/apigee-analytics-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-analytics-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-analytics-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-analytics-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-deployments-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-deployments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-deployments-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-deployments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-hub.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -117,47 +123,47 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   collections/apigee-api-observations-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-observations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-observations-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-observations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-operations-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-operations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-operations-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-operations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-products-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-products-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-products-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-products-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-proxies-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-proxies-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-proxies-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-proxies-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-proxy-revisions-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-proxy-revisions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-proxy-revisions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-proxy-revisions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-specs-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-specs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-specs-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-specs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-versions-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-api-versions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-api-versions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-api-versions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-apim.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -165,137 +171,137 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   collections/apigee-app-groups-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-app-groups-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-app-groups-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-app-groups-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-artifacts-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-artifacts-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-artifacts-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-artifacts-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-attributes-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-attributes-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-attributes-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-attributes-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-auth-configs-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-auth-configs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-auth-configs-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-auth-configs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-certificates-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-certificates-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-certificates-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-certificates-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-dependencies-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-dependencies-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-dependencies-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-dependencies-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-deployments-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-deployments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-deployments-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-deployments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-developer-app-keys-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-developer-app-keys-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-developer-app-keys-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-developer-app-keys-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-developer-apps-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-developer-apps-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-developer-apps-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-developer-apps-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-developers-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-developers-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-developers-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-developers-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-environments-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-environments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-environments-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-environments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-executions-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-executions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-executions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-executions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-external-apis-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-external-apis-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-external-apis-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-external-apis-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-instances-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-instances-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-instances-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-instances-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-integration-versions-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-integration-versions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-integration-versions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-integration-versions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-integrations-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-integrations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-integrations-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-integrations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-integrations.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-integrations
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-integrations.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-integrations
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-key-value-maps-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-key-value-maps-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-key-value-maps-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-key-value-maps-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-locations-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-locations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-locations-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-locations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-observation-jobs-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-observation-jobs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-observation-jobs-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-observation-jobs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-observation-sources-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-observation-sources-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-observation-sources-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-observation-sources-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-operations-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-operations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-operations-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-operations-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-organizations-api.opencollection.json:
     method: derived
     evidence: openapi/apigee-organizations-api
@@ -315,61 +321,78 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   collections/apigee-runtime-project-attachments-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-runtime-project-attachments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-runtime-project-attachments-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-runtime-project-attachments-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-sfdc-channels-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-sfdc-channels-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-sfdc-channels-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-sfdc-channels-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-sfdc-instances-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-sfdc-instances-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-sfdc-instances-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-sfdc-instances-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-shared-flows-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-shared-flows-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-shared-flows-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-shared-flows-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-specs-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-specs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-specs-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-specs-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-suspensions-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-suspensions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-suspensions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-suspensions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-target-servers-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-target-servers-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-target-servers-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-target-servers-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-versions-api.opencollection.json:
-    method: derived
-    evidence: openapi/apigee-versions-api
+    method: unknown
+    evidence: no authorship recorded
   collections/apigee-versions-api.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-versions-api
+    method: unknown
+    evidence: no authorship recorded
   conformance/apigee-conformance.yml:
     method: derived
     evidence: declared in the artifact
   conventions/apigee-conventions.yml:
     method: derived
     evidence: declared in the artifact
+  data-license/apigee-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/apigee-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  deprecation/apigee-deprecation-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
+  discovery/apigee-v1.json:
+    method: harvested
+    evidence: byte-identical to https://apigee.googleapis.com/$discovery/rest?version=v1 (sha256 cfb908c50165,
+      fetched 2026-11-12T01:31:25+00:00)
+  discovery/apihub-v1.json:
+    method: harvested
+    evidence: byte-identical to https://apihub.googleapis.com/$discovery/rest?version=v1 (sha256 5779856a98cb,
+      fetched 2026-11-12T01:31:25+00:00)
+  eligibility/apigee-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/apigee-problem-types.yml:
     method: derived
@@ -405,6 +428,12 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   heartbeat/2026-11-02.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-06.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
   hosts/apigee-hosts.yml:
@@ -782,7 +811,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -851,6 +880,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/apigee-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -869,144 +901,28 @@ artifacts:
   onboarding/apigee-api-auth.mjs:
     method: unknown
     evidence: no authorship recorded
-  openapi/_original/apigee-api-hub-openapi.yml:
+  openapi/_original/apigee-apigee-hybrid-api-openapi.yml:
+    method: harvested
+    evidence: declared in the artifact
+  openapi/_original/apigee-apigee-organizations-api-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
       to the provider's source is unverified
-  openapi/_original/apigee-api-management-openapi.yml:
+  openapi/_original/apigee-apigee-projects-api-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
       to the provider's source is unverified
-  openapi/_original/apigee-apim-openapi.yml:
+  openapi/_original/apigee-apihub-projects-api-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
       to the provider's source is unverified
-  openapi/_original/apigee-integrations-openapi.yml:
+  openapi/apigee-hybrid-api-openapi.yml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/_original/apigee-registry-openapi.yml:
-    method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/apigee-analytics-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-deployments-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-observations-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-operations-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-products-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-proxies-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-proxy-revisions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-specs-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-api-versions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-app-groups-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-artifacts-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-attributes-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-auth-configs-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-certificates-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-dependencies-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-deployments-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-developer-app-keys-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-developer-apps-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-developers-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-environments-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-executions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-external-apis-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-instances-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-integration-versions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-integrations-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-key-value-maps-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-locations-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-observation-jobs-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-observation-sources-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-operations-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    evidence: declared in the artifact
   openapi/apigee-organizations-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/apigee-projects-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-runtime-project-attachments-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-sfdc-channels-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-sfdc-instances-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-shared-flows-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-specs-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-suspensions-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-target-servers-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/apigee-versions-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/apigee-analytics-api-phrasing-overlay.yaml:
@@ -1151,11 +1067,14 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   postman/apigee-integrations.postman_collection.json:
-    method: derived
-    evidence: openapi/apigee-integrations
+    method: unknown
+    evidence: no authorship recorded
   postman/apigee-registry.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
+  privacy/apigee-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/apigee-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -1194,6 +1113,9 @@ artifacts:
     evidence: declared in the artifact
   sla/apigee-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/apigee-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vendor-facets/apigee-vendor-facets.yml:
     method: unknown

@@ -1,0 +1,684 @@
+name: Apigee
+
+description: Apigee is Google Cloud's native API management platform for building, managing, and securing APIs across any use case, environment, or scale. It provides API proxies, security, rate limiting, quotas, analytics, monetization, and developer portal capabilities.
+
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - apigee/api-platform-samples
+    - apigee/apigeecli
+    - apigee/apigeelint
+    - apigee/devrel
+    - apigee/registry
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
+
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  gated: none
+  gated_source:
+  - onboarding
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  probe_state: covered
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  generated: '2026-11-13'
+  method: derived
+image: https://www.apigee.com/about/sites/default/files/apigee-logo.png
+
+url: https://cloud.google.com/apigee
+
+created: '2024-01-01'
+
+modified: '2026-05-22'
+
+jsonLdUrl: json-ld/apigee-context.jsonld
+
+specificationVersion: '0.23'
+
+segments:
+- Gateways
+
+maintainers:
+- name: Kin Lane
+  email: kin@apievangelist.com
+
+tags:
+- Apigee
+- Advanced API Security
+- AI Agents
+- Analytics
+- API Gateway
+- API Governance
+- API Hub
+- API Management
+- Developer Portal
+- Enterprise
+- Generative AI
+- Hybrid
+- Integration
+- Microservices
+- MCP
+- Monetization
+
+common:
+- type: Spectral
+  url: rules/apigee-spectral-rules.yml
+- type: Spectral
+  url: rules/apigee-rules.yml
+- type: Spectral
+  url: rules/apigee-jsonschema-spectral-rules.yml
+- type: JSONLD
+  url: json-ld/apigee-context.jsonld
+- type: Vocabulary
+  url: vocabulary/apigee-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/apigee-data-model.yml
+- type: CLI
+  url: cli/apigee-cli.yml
+- type: Conventions
+  url: conventions/apigee-conventions.yml
+- type: Deprecation
+  url: https://docs.cloud.google.com/apigee/docs/deprecations
+- type: Lifecycle
+  url: lifecycle/apigee-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/apigee-problem-types.yml
+- type: Conformance
+  url: conformance/apigee-conformance.yml
+- type: Overlay
+  url: overlays/apigee-analytics-api-phrasing-overlay.yaml
+- type: LLMsTxt
+  url: llms/apigee-llms.txt
+- type: WellKnown
+  url: well-known/apigee-well-known.yml
+- type: Hosts
+  url: hosts/apigee-hosts.yml
+- type: IntegrationEdges
+  url: integrations/apigee-integration-edges.yml
+- type: Packages
+  url: packages/apigee-packages.yml
+- type: APIReference
+  url: https://cloud.google.com/cpp/docs/reference/bigtable/2.29.0
+- type: FinOps
+  url: finops/apigee-finops.yml
+- type: VendorFacets
+  url: vendor-facets/apigee-vendor-facets.yml
+- type: RateLimits
+  url: rate-limits/apigee-rate-limits.yml
+- type: Plans
+  url: plans/apigee-plans-pricing.yml
+- type: Console
+  url: https://console.cloud.google.com/apigee
+- type: StackOverflow
+  url: https://stackoverflow.com/questions/tagged/apigee
+- type: YouTube
+  url: https://www.youtube.com/@googlecloudtech
+- type: CapabilityMap
+  url: capabilities/apigee-capability-edges.yml
+  name: Apigee Business Capability Map
+- type: IssueTracker
+  url: https://github.com/apigee/apigeecli/issues
+- type: Releases
+  url: https://github.com/apigee/apigeecli/releases
+- type: SecurityPolicy
+  url: https://github.com/apigee/apigeecli/blob/main/SECURITY.md
+- type: ContributionGuide
+  url: https://github.com/apigee/apigeecli/blob/main/CONTRIBUTING.md
+- type: TrustCenter
+  url: https://cloud.google.com/trust-center
+- type: SDKs
+  url: https://cloud.google.com/sdk
+- type: AgenticAccess
+  url: agentic-access/apigee-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/apigee-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/apigee-domain-security.yml
+- type: Authentication
+  url: authentication/apigee-authentication.yml
+- type: OAuthScopes
+  url: scopes/apigee-scopes.yml
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/apigee/overview
+- type: Arazzo
+  url: arazzo/apigee-analytics-datastore-setup-workflow.yml
+  name: Apigee Set Up Analytics Export and Read Stats
+- type: Arazzo
+  url: arazzo/apigee-app-group-onboarding-workflow.yml
+  name: Apigee Onboard an App Group
+- type: Arazzo
+  url: arazzo/apigee-catalog-api-hub-workflow.yml
+  name: Apigee API Hub Catalog and Lint
+- type: Arazzo
+  url: arazzo/apigee-decommission-proxy-workflow.yml
+  name: Apigee Decommission an API Proxy
+- type: Arazzo
+  url: arazzo/apigee-discover-and-search-hub-workflow.yml
+  name: Apigee API Hub Discover and Search
+- type: Arazzo
+  url: arazzo/apigee-environment-teardown-workflow.yml
+  name: Apigee Tear Down an Environment
+- type: Arazzo
+  url: arazzo/apigee-grant-app-product-access-workflow.yml
+  name: Apigee Grant an App Access to a New Product
+- type: Arazzo
+  url: arazzo/apigee-integration-auth-setup-workflow.yml
+  name: Apigee Integration Auth Setup
+- type: Arazzo
+  url: arazzo/apigee-integration-execution-monitor-workflow.yml
+  name: Apigee Integration Execution Monitor
+- type: Arazzo
+  url: arazzo/apigee-integration-publish-and-execute-workflow.yml
+  name: Apigee Publish and Execute an Integration
+- type: Arazzo
+  url: arazzo/apigee-onboard-developer-app-workflow.yml
+  name: Apigee Onboard a Developer App
+- type: Arazzo
+  url: arazzo/apigee-promote-proxy-revision-workflow.yml
+  name: Apigee Promote a New Proxy Revision
+- type: Arazzo
+  url: arazzo/apigee-provision-environment-workflow.yml
+  name: Apigee Provision an Environment
+- type: Arazzo
+  url: arazzo/apigee-provision-runtime-instance-workflow.yml
+  name: Apigee Provision a Runtime Instance
+- type: Arazzo
+  url: arazzo/apigee-proxy-import-and-deploy-workflow.yml
+  name: Apigee Import and Deploy an API Proxy
+- type: Arazzo
+  url: arazzo/apigee-publish-api-product-workflow.yml
+  name: Apigee Publish an API Proxy as a Product
+- type: Arazzo
+  url: arazzo/apigee-register-deployment-dependency-workflow.yml
+  name: Apigee API Hub Deployment and Dependency
+- type: Arazzo
+  url: arazzo/apigee-register-external-api-workflow.yml
+  name: Apigee API Hub Register External API
+- type: Arazzo
+  url: arazzo/apigee-registry-catalog-version-workflow.yml
+  name: Apigee Registry Catalog an API Version
+- type: Arazzo
+  url: arazzo/apigee-registry-spec-rollback-workflow.yml
+  name: Apigee Registry Spec Revision Rollback
+- type: Arazzo
+  url: arazzo/apigee-rotate-app-key-workflow.yml
+  name: Apigee Rotate a Developer App Key
+- type: Arazzo
+  url: arazzo/apigee-shadow-api-discovery-workflow.yml
+  name: Apigee Shadow API Discovery
+- type: Arazzo
+  url: arazzo/apigee-shared-flow-catalog-workflow.yml
+  name: Apigee Catalog a Shared Flow
+- type: Arazzo
+  url: arazzo/apigee-target-server-rollout-workflow.yml
+  name: Apigee Roll Out a Target Server Change
+- type: Arazzo
+  url: arazzo/apigee-update-product-quota-workflow.yml
+  name: Apigee Update an API Product Quota
+- type: LinkedIn
+  url: https://www.linkedin.com/company/apigee-legacy
+- type: Documentation
+  url: https://cloud.google.com/apigee/docs
+- type: GettingStarted
+  url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
+- type: Authentication
+  url: https://cloud.google.com/apigee/docs/api-platform/security/oauth/oauth-home
+- type: Blog
+  url: https://cloud.google.com/blog/products/api-management
+- type: StatusPage
+  url: https://status.cloud.google.com/
+- type: Support
+  url: https://cloud.google.com/apigee/support
+- type: TermsOfService
+  url: https://cloud.google.com/terms
+- type: PrivacyPolicy
+  url: https://cloud.google.com/terms/cloud-privacy-notice
+- type: GitHubOrganization
+  url: https://github.com/apigee
+- type: Community
+  url: https://www.googlecloudcommunity.com/gc/Apigee/bd-p/cloud-apigee
+- type: Website
+  url: https://cloud.google.com/apigee
+- type: Login
+  url: https://console.cloud.google.com/
+- type: Signup
+  url: https://cloud.google.com/apigee
+- type: Pricing
+  url: https://cloud.google.com/apigee/pricing
+- type: ReleaseNotes
+  url: https://cloud.google.com/apigee/docs/release-notes
+- type: ChangeLog
+  url: https://cloud.google.com/apigee/docs/release/release-notes
+- type: SDKs
+  url: https://cloud.google.com/apigee/docs/apihub/libraries
+- type: Tutorials
+  url: https://cloud.google.com/apigee/docs/api-platform/get-started/tutorials
+- type: Coursera
+  url: https://www.coursera.org/specializations/apigee-api-gcp
+- type: Security
+  url: https://cloud.google.com/architecture/best-practices-securing-applications-and-apis-using-apigee
+- type: DeveloperPortal
+  url: https://cloud.google.com/apigee/docs/api-platform/publish/intro-portals
+- type: API Products
+  url: https://cloud.google.com/apigee/docs/api-platform/publish/what-api-product
+- type: Analytics
+  url: https://cloud.google.com/apigee/docs/api-platform/analytics/analytics-services-overview
+- type: Monetization
+  url: https://cloud.google.com/apigee/docs/api-platform/monetization/overview
+- type: Hybrid
+  url: https://cloud.google.com/apigee/docs/hybrid/v1.9/what-is-hybrid
+- type: Envoy Adapter
+  url: https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v2.0.x/operation
+- type: Advanced API Security
+  url: https://cloud.google.com/apigee/docs/api-security
+- type: Integrations
+  url: https://cloud.google.com/marketplace
+- type: ModelContextProtocol
+  url: https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+- type: AgenticAI
+  url: https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+- type: SpecificationBoost
+  url: https://cloud.google.com/apigee/docs/apihub/spec-boost
+- type: CLI
+  url: https://github.com/apigee/apigeecli
+- type: AnalystReport
+  url: https://cloud.google.com/blog/products/api-management/apigee-named-leader-in-gartner-magic-quadrant-for-api-management
+- type: GitHubRepository
+  url: https://github.com/apigee/api-platform-samples
+- type: GitHubRepository
+  url: https://github.com/apigee/apigeecli
+- type: GitHubRepository
+  url: https://github.com/apigee/apigeelint
+- type: GitHubRepository
+  url: https://github.com/apigee/devrel
+- type: LlmsText
+  url: https://apigee.com/llms.txt
+- type: UsageTerms
+  url: terms/apigee-terms-of-service.yml
+- type: DataProcessing
+  url: privacy/apigee-privacy-policy.yml
+- type: DeprecationSchedule
+  url: deprecation/apigee-deprecation-policy.yml
+- type: Eligibility
+  url: eligibility/apigee-eligibility.yml
+- type: DataLicense
+  url: data-license/apigee-data-license.yml
+
+apis:
+- aid: google-apigee:google-apigee
+  name: Google Apigee
+  description: >-
+    Apigee is Google Cloud's API management platform enabling organizations to design, secure, publish,
+    analyze, and scale their APIs with advanced analytics, developer portal, and monetization features.
+  humanURL: https://cloud.google.com/apigee
+  tags:
+  - API Gateway
+  - API Management
+  - Google Cloud
+  properties:
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
+- aid: google-apigee:google-apigee-connect-api
+  name: Google Apigee Connect API
+  description: >-
+    The Apigee Connect API enables Apigee hybrid to connect the Apigee management plane to the customer-managed
+    runtime plane without requiring the runtime plane to have an inbound firewall rule. It allows secure
+    outbound-only connectivity from the on-premises or private cloud runtime to Google's management services.
+  humanURL: https://cloud.google.com/apigee/docs/hybrid/latest/apigee-connect
+  baseURL: https://apigeeconnect.googleapis.com
+  tags:
+  - Administration
+  - Connectivity
+  - Google Cloud
+  - Hybrid
+  properties:
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/hybrid/latest/apigee-connect
+  - type: Reference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigeeconnect/rest
+- aid: google-apigee:google-apigee-api-hub
+  name: Google Apigee API Hub
+  description: >-
+    Apigee API Hub is a centralized repository and governance platform for discovering, managing, and
+    analyzing APIs across an organization. It enables teams to register APIs, manage API versions and
+    specifications, enforce API standards, and gain visibility into the full API portfolio across multiple
+    gateways and environments.
+  humanURL: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  baseURL: https://apihub.googleapis.com
+  tags:
+  - API Catalog
+  - API Governance
+  - API Hub
+  - Google Cloud
+  properties:
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  - type: Reference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/apihub/release-notes
+- aid: google-apigee:google-apigee-analytics-api
+  name: Google Apigee Analytics API
+  description: >-
+    The Apigee Analytics API provides access to API usage metrics, traffic data, error rates, latency
+    statistics, and custom reports generated by the Apigee analytics engine. It allows developers and
+    operations teams to query and export analytics data programmatically for custom dashboards and business
+    intelligence tooling.
+  humanURL: >-
+    https://cloud.google.com/apigee/docs/api-platform/analytics/use-analytics-api-measure-api-program-performance
+  baseURL: https://apigee.googleapis.com
+  tags:
+  - Analytics
+  - API Management
+  - Google Cloud
+  - Reporting
+  properties:
+  - type: Documentation
+    url: >-
+      https://cloud.google.com/apigee/docs/api-platform/analytics/use-analytics-api-measure-api-program-performance
+  - type: Reference
+    url: >-
+      https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations.environments.analytics.exports
+- aid: apigee:apigee-hybrid-api
+  name: Apigee Hybrid API
+  description: The Hybrid API from Apigee — 1 operation(s) for hybrid.
+  humanURL: https://cloud.google.com/apigee
+  baseURL: https://apigee.googleapis.com
+  tags:
+  - Hybrid
+  properties:
+  - type: OpenAPI
+    url: openapi/apigee-hybrid-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/what-apigee
+  - type: Pricing
+    url: https://cloud.google.com/apigee/pricing
+  - type: StatusPage
+    url: https://status.cloud.google.com/
+  - type: Support
+    url: https://cloud.google.com/apigee/support
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
+  - type: CLI
+    url: https://github.com/apigee/apigeecli
+  - type: ModelContextProtocol
+    url: https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+  - type: TermsOfService
+    url: https://cloud.google.com/terms
+  - type: PrivacyPolicy
+    url: https://cloud.google.com/terms/cloud-privacy-notice
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
+  - type: Tutorials
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/tutorials
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/release-notes
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/release/release-notes
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/apihub/quickstart-intro
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/apihub/release-notes
+  - type: SDKs
+    url: https://cloud.google.com/apigee/docs/apihub/libraries
+  - type: ModelContextProtocol
+    url: https://docs.cloud.google.com/apigee/docs/apihub/manage-mcp-tools
+  - type: AgenticAI
+    url: >-
+      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+  - type: SpecificationBoost
+    url: https://cloud.google.com/apigee/docs/apihub/spec-boost
+  - type: Documentation
+    url: >-
+      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+  - type: Tutorials
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/tutorials
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/connectors/get-started-connectors
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+  - type: GitHub
+    url: https://github.com/apigee/registry
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/registry/release-notes
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
+  - type: Reference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/release/notes/apigee-release-notes
+  - type: JSONSchema
+    url: json-schema/json-schema.yml
+- aid: apigee:apigee-organizations-api
+  name: Apigee Organizations API
+  description: The Organizations API from Apigee — 214 operation(s) for organizations.
+  humanURL: https://cloud.google.com/apigee
+  baseURL: https://apigee.googleapis.com
+  tags:
+  - Organization
+  tags_raw:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/apigee-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/what-apigee
+  - type: Pricing
+    url: https://cloud.google.com/apigee/pricing
+  - type: StatusPage
+    url: https://status.cloud.google.com/
+  - type: Support
+    url: https://cloud.google.com/apigee/support
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
+  - type: CLI
+    url: https://github.com/apigee/apigeecli
+  - type: ModelContextProtocol
+    url: https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+  - type: TermsOfService
+    url: https://cloud.google.com/terms
+  - type: PrivacyPolicy
+    url: https://cloud.google.com/terms/cloud-privacy-notice
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
+  - type: Tutorials
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/tutorials
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/release-notes
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/release/release-notes
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/apihub/quickstart-intro
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/apihub/release-notes
+  - type: SDKs
+    url: https://cloud.google.com/apigee/docs/apihub/libraries
+  - type: ModelContextProtocol
+    url: https://docs.cloud.google.com/apigee/docs/apihub/manage-mcp-tools
+  - type: AgenticAI
+    url: >-
+      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+  - type: SpecificationBoost
+    url: https://cloud.google.com/apigee/docs/apihub/spec-boost
+  - type: Documentation
+    url: >-
+      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+  - type: Tutorials
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/tutorials
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/connectors/get-started-connectors
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+  - type: GitHub
+    url: https://github.com/apigee/registry
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/registry/release-notes
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
+  - type: Reference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/release/notes/apigee-release-notes
+  - type: JSONSchema
+    url: json-schema/json-schema.yml
+- aid: apigee:apigee-projects-api
+  name: Apigee Projects API
+  description: The Projects API from Apigee — 62 operation(s) for projects.
+  humanURL: https://cloud.google.com/apigee
+  baseURL: https://apigee.googleapis.com
+  tags:
+  - Project
+  tags_raw:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/apigee-projects-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/what-apigee
+  - type: Pricing
+    url: https://cloud.google.com/apigee/pricing
+  - type: StatusPage
+    url: https://status.cloud.google.com/
+  - type: Support
+    url: https://cloud.google.com/apigee/support
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/overview
+  - type: CLI
+    url: https://github.com/apigee/apigeecli
+  - type: ModelContextProtocol
+    url: https://docs.cloud.google.com/apigee/docs/api-platform/apigee-mcp/apigee-mcp-overview
+  - type: TermsOfService
+    url: https://cloud.google.com/terms
+  - type: PrivacyPolicy
+    url: https://cloud.google.com/terms/cloud-privacy-notice
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
+  - type: Tutorials
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/tutorials
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/release-notes
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/get-started/get-started
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/release/release-notes
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apihub/rest
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/apihub/quickstart-intro
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/apihub/release-notes
+  - type: SDKs
+    url: https://cloud.google.com/apigee/docs/apihub/libraries
+  - type: ModelContextProtocol
+    url: https://docs.cloud.google.com/apigee/docs/apihub/manage-mcp-tools
+  - type: AgenticAI
+    url: >-
+      https://cloud.google.com/blog/products/api-management/turn-your-api-sprawl-into-an-agent-ready-catalog
+  - type: SpecificationBoost
+    url: https://cloud.google.com/apigee/docs/apihub/spec-boost
+  - type: Documentation
+    url: >-
+      https://cloud.google.com/apigee/docs/api-platform/integration/using-application-integration
+  - type: Tutorials
+    url: https://cloud.google.com/apigee/docs/api-platform/integration/tutorials
+  - type: GettingStarted
+    url: https://cloud.google.com/apigee/docs/api-platform/connectors/get-started-connectors
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+  - type: APIReference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apim/rest
+  - type: GitHub
+    url: https://github.com/apigee/registry
+  - type: ReleaseNotes
+    url: https://cloud.google.com/apigee/docs/registry/release-notes
+  - type: Documentation
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest
+  - type: Reference
+    url: https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations
+  - type: ChangeLog
+    url: https://cloud.google.com/apigee/docs/release/notes/apigee-release-notes
+  - type: JSONSchema
+    url: json-schema/json-schema.yml
+integrations:
+- name: Become a Partner
+
+tags_raw:
+- Apigee
+- Advanced API Security
+- Agentic AI
+- Analytics
+- API Gateway
+- API Governance
+- API Hub
+- API Management
+- Developer Portal
+- Enterprise
+- Generative AI
+- Hybrid
+- Integrations
+- Microservices
+- MCP
+- Model Context Protocol
+- Monetization
+
+x-parent: google-cloud-platform
+
+x-relationship: acquisition
+
+x-acquired: 2016
+
+x-acquisition-source: https://cloud.google.com/blog/products/api-management/apigee-is-now-part-of-google
+x-enrichment:
+  date: '2026-11-12'
+  status: nochange
+  artifacts_added: 0
+  pass: local-v6
+x-coverage:
+  state: covered
+  reason: covered
+  detail: Apigee's contract is Google's own Discovery documents (apigee v1, apihub v1) converted to OpenAPI; every artifact was already present and schema-valid, and this pass found nothing new.
+  evidence:
+  - url: https://cloud.google.com/apigee
+    status: 200
+  checked: '2026-11-12'
